@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Font faces are declared via next/font/local in app/layout.tsx, which
+  generates the @font-face rules automatically and exposes them through the
+  --font-serif / --font-sans / --font-mono CSS variables used in tailwind.config.ts.
+  We intentionally do NOT hand-write @font-face here to avoid duplicate, drifting
+  declarations (next/font fingerprints the files on build).
+*/
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #faf7f2; /* cream */
+  color: #2c2118; /* bark */
+}
+
+/* Mono labels are always uppercase with letter-spacing per the brand spec */
+.mono-label {
+  font-family: var(--font-mono), "DM Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
