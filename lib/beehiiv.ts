@@ -11,7 +11,8 @@ const PUBLICATION_ID = rawPubId
 /**
  * Total active subscribers on the publication, used for the "X on the waitlist"
  * social proof. Returns null if unconfigured or the request fails, so callers
- * can fall back to static copy. Cached for an hour (the number moves slowly).
+ * can fall back to static copy. Cached for 60s so new signups show up quickly
+ * without hitting beehiiv on every request.
  */
 export async function getActiveSubscriberCount(): Promise<number | null> {
   if (!API_KEY || !PUBLICATION_ID) return null;
@@ -21,7 +22,7 @@ export async function getActiveSubscriberCount(): Promise<number | null> {
       `https://api.beehiiv.com/v2/publications/${PUBLICATION_ID}?expand[]=stats`,
       {
         headers: { Authorization: `Bearer ${API_KEY}` },
-        next: { revalidate: 3600 },
+        next: { revalidate: 60 },
       }
     );
     if (!res.ok) return null;
