@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import LogoLockup from "./LogoLockup";
 import WaitlistForm from "./WaitlistForm";
 import MonoLabel from "@/components/ui/MonoLabel";
-import Placeholder from "@/components/ui/Placeholder";
 import { fadeUp, stagger } from "@/lib/animations";
 import { clean, lines } from "@/lib/text";
 import { ctaPanel } from "@/content";
@@ -64,10 +63,17 @@ export default function CTAPanel({
       {/* Footer links pinned to the bottom of the panel */}
       <motion.div
         variants={fadeUp}
-        className="mt-auto flex flex-wrap gap-3 pt-6 font-sans text-xs text-driftwood"
+        className="mt-auto flex flex-wrap gap-4 pt-6 font-sans text-xs text-driftwood"
       >
-        <Placeholder>[Privacy Policy - add link before launch]</Placeholder>
-        <Placeholder>[Terms of Service - add link before launch]</Placeholder>
+        {ctaPanel.links.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            className="underline-offset-4 transition-colors hover:text-ivory hover:underline"
+          >
+            {link.label}
+          </a>
+        ))}
       </motion.div>
     </motion.div>
   );

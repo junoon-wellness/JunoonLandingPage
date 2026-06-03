@@ -42,10 +42,9 @@ export const ctaPanel = {
     label: "people already on the waitlist",
   },
 
-  // Links — leave as placeholder strings; website should render these visibly
   links: [
-    { label: "Privacy Policy",    href: "PLACEHOLDER_PRIVACY_POLICY_URL" },
-    { label: "Terms of Service",  href: "PLACEHOLDER_TERMS_URL" },
+    { label: "Privacy Policy",    href: "/privacy" },
+    { label: "Terms of Service",  href: "/terms" },
   ],
 
   appStore: {
@@ -250,9 +249,9 @@ export const testimonials = {
 export const footer = {
   tagline: "Ancient practice, built around you.",
   links: [
-    { label: "Privacy Policy",   href: "PLACEHOLDER_PRIVACY_POLICY_URL" },
-    { label: "Terms of Service", href: "PLACEHOLDER_TERMS_URL" },
-    { label: "Contact",          href: "PLACEHOLDER_CONTACT_EMAIL" },
+    { label: "Privacy Policy",   href: "/privacy" },
+    { label: "Terms of Service", href: "/terms" },
+    { label: "Contact",          href: "mailto:admin@junoonwellness.com" },
   ],
   social: [
     { label: "Instagram", href: "https://www.instagram.com/junoonwellness/" },
