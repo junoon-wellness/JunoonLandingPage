@@ -11,7 +11,17 @@
 */
 
 :root {
-  color-scheme: light;
+  /* The waitlist page is dark end-to-end. */
+  color-scheme: dark;
+
+  /*
+    The waitlist components were authored against --font-cormorant / --font-dm-sans.
+    This repo already loads those same two families locally as --font-serif and
+    --font-sans, so we alias rather than loading them a second time.
+    (--font-devanagari is genuinely new — see app/layout.tsx.)
+  */
+  --font-cormorant: var(--font-serif);
+  --font-dm-sans: var(--font-sans);
 }
 
 html {
@@ -21,8 +31,15 @@ html {
 }
 
 body {
-  background-color: #faf7f2; /* cream */
-  color: #2c2118; /* bark */
+  background-color: #1c1410; /* bark */
+  color: #f5f0e8; /* ivory */
+  font-size: 16px;
+  line-height: 1.6;
+  /*
+    Load-bearing: the [data-reveal-direction] rules park elements 32px off-axis
+    before they animate in, which is wider than the mobile gutter.
+  */
+  overflow-x: hidden;
 }
 
 /* Mono labels are always uppercase with letter-spacing per the brand spec */
@@ -30,4 +47,644 @@ body {
   font-family: var(--font-mono), "DM Mono", monospace;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+}
+
+/* ── page grain: sits above every section, hence the z-index:2 below ── */
+/* Page-level grain — sits on top of every section so the bark feels alive */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.45;
+}
+
+/* ── eyebrow, entrance + scroll-reveal primitives ── */
+/* Monospace eyebrow / label — Courier-style accent type for app-y feel */
+.eyebrow {
+  font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #B5522A;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: #B5522A;
+}
+.eyebrow.no-rule::before { display: none; }
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.25s; }
+.delay-3 { animation-delay: 0.4s; }
+.delay-4 { animation-delay: 0.55s; }
+.delay-5 { animation-delay: 0.7s; }
+
+.noise-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.noise-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── SCROLL-TRIGGERED REVEALS ─── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0);
+}
+[data-reveal-stagger="1"] { transition-delay: 0.08s; }
+[data-reveal-stagger="2"] { transition-delay: 0.18s; }
+[data-reveal-stagger="3"] { transition-delay: 0.28s; }
+[data-reveal-stagger="4"] { transition-delay: 0.38s; }
+
+[data-reveal-direction="left"] { transform: translateX(-32px); }
+[data-reveal-direction="right"] { transform: translateX(32px); }
+
+/* ── ambient drift, nav pill, counter, pillar hover ── */
+/* ─── AMBIENT DRIFT (DARK SECTIONS) ─── */
+@keyframes ambientDrift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(2%, -2%); }
+}
+.drift-bg::after {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(circle at 28% 55%, rgba(200, 144, 42, 0.07), transparent 55%),
+    radial-gradient(circle at 72% 28%, rgba(181, 82, 42, 0.06), transparent 50%);
+  animation: ambientDrift 22s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── NAV PILL PULSE ─── */
+@keyframes pillPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 144, 42, 0); }
+  50% { box-shadow: 0 0 0 5px rgba(200, 144, 42, 0.10); }
+}
+.nav-pill {
+  animation: pillPulse 3.4s ease-in-out infinite;
+}
+
+/* ─── COUNTER NUMERIC ─── */
+.count-up {
+  font-variant-numeric: tabular-nums;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.count-up.flashing {
+  transform: scale(1.08);
+}
+
+/* ─── PILLAR CARD V2 — bottom-accent line on hover ─── */
+.pillar-card-v2 {
+  position: relative;
+}
+.pillar-card-v2::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--pillar-accent, #B5522A);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.pillar-card-v2:hover {
+  background: rgba(245, 240, 232, 0.022);
+}
+.pillar-card-v2:hover::before {
+  transform: scaleX(1);
+}
+
+/* ─── REDUCED MOTION ─── */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .nav-pill,
+  .drift-bg::after {
+    animation: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   V2 — product-first redesign
+   Purely additive. Everything above still drives the original page at
+   `/`; these `.v2-*` rules only affect components under components/v2.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ─── Faint engineering grid — replaces the 720px yantra motif ───
+   A real element, not a pseudo-element, because .noise-bg::before and
+   .drift-bg::after are both already spoken for on the hero. */
+.v2-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    repeating-linear-gradient(to right, rgba(245, 240, 232, 0.038) 0 1px, transparent 1px 72px),
+    repeating-linear-gradient(to bottom, rgba(245, 240, 232, 0.038) 0 1px, transparent 1px 72px);
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 72% 42%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(ellipse 70% 65% at 72% 42%, #000 0%, transparent 72%);
+}
+
+/* ─── Device frame glow behind the app screenshots ─── */
+.v2-device-glow {
+  position: absolute;
+  inset: -20% -14%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 54% 48% at 46% 44%, rgba(181, 82, 42, 0.42), transparent 70%),
+    radial-gradient(ellipse 44% 40% at 66% 64%, rgba(200, 144, 42, 0.28), transparent 68%);
+  filter: blur(10px);
+}
+
+/* ─── Form fields ─── */
+.v2-field {
+  width: 100%;
+  border-radius: 4px;
+  padding: 13px 16px;
+  min-height: 46px;
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: #F5F0E8;
+  background: rgba(245, 240, 232, 0.06);
+  border: 0.5px solid rgba(245, 240, 232, 0.14);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.v2-field::placeholder {
+  color: rgba(245, 240, 232, 0.34);
+}
+.v2-field:hover {
+  background: rgba(245, 240, 232, 0.08);
+}
+.v2-field:focus {
+  background: rgba(245, 240, 232, 0.10);
+  border-color: rgba(181, 82, 42, 0.55);
+}
+.v2-field[aria-invalid='true'] {
+  border-color: rgba(200, 90, 60, 0.75);
+}
+
+/* Visible focus ring. The old form set `outline: none` inline with no
+   replacement, which left keyboard users with no focus indicator at all. */
+.v2-field:focus-visible,
+.v2-btn:focus-visible,
+.v2-link:focus-visible {
+  outline: 2px solid #C8902A;
+  outline-offset: 2px;
+}
+
+/* ─── Buttons ─── */
+.v2-btn {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #F5F0E8;
+  background: #B5522A;
+  border: none;
+  border-radius: 4px;
+  padding: 13px 26px;
+  min-height: 46px;
+  cursor: pointer;
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.2s ease,
+    box-shadow 0.3s ease;
+}
+.v2-btn:hover:not(:disabled) {
+  background: #c25c31;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px -12px rgba(181, 82, 42, 0.6);
+}
+.v2-btn:active:not(:disabled) {
+  transform: scale(0.985) translateY(0);
+  box-shadow: none;
+}
+.v2-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.v2-btn-ghost {
+  background: transparent;
+  border: 0.5px solid rgba(245, 240, 232, 0.22);
+  color: rgba(245, 240, 232, 0.9);
+}
+.v2-btn-ghost:hover:not(:disabled) {
+  background: rgba(245, 240, 232, 0.06);
+  border-color: rgba(245, 240, 232, 0.36);
+  box-shadow: none;
+}
+
+/* ─── Section rhythm — tighter than the editorial original (96px → 80px) ─── */
+.v2-section {
+  position: relative;
+  z-index: 2;
+  padding: 80px 48px;
+}
+.v2-section-tight {
+  padding: 56px 48px;
+}
+
+/* ─── Hero ─── */
+.v2-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 64px;
+  padding: 132px 48px 80px;
+}
+
+/* ─── Device frame + product carousel ─── */
+.v2-devices {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 520px;
+}
+
+.v2-carousel-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+/* The frame is a button — reset UA styling, keep the frame look */
+.v2-carousel-btn {
+  display: block;
+  padding: 0;
+  cursor: pointer;
+  background: #2C2118;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.v2-carousel-btn:hover {
+  transform: translateY(-4px);
+}
+.v2-carousel-btn:active {
+  transform: translateY(-1px) scale(0.995);
+}
+
+.v2-carousel-track {
+  display: flex;
+  height: 100%;
+  will-change: transform;
+}
+
+.v2-carousel-slide {
+  position: relative;
+  flex: 0 0 100%;
+  height: 100%;
+}
+.v2-carousel-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  user-select: none;
+}
+
+/* ─── Dots / labels ─── */
+/* Capped so six labels break into two even rows under the phone rather than
+   stretching wide and orphaning the last one on a line of its own. */
+.v2-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 340px;
+}
+
+.v2-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border: 0.5px solid transparent;
+  border-radius: 100px;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.38);
+  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+.v2-dot:hover {
+  color: rgba(245, 240, 232, 0.7);
+}
+.v2-dot.is-active {
+  color: #C8902A;
+  border-color: rgba(200, 144, 42, 0.3);
+  background: rgba(200, 144, 42, 0.06);
+}
+
+.v2-dot-mark {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.55;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.v2-dot.is-active .v2-dot-mark {
+  opacity: 1;
+  transform: scale(1.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-carousel-btn:hover,
+  .v2-carousel-btn:active {
+    transform: none;
+  }
+}
+.v2-device {
+  position: relative;
+  border-radius: 40px;
+  border: 8px solid #2C2118;
+  overflow: hidden;
+  background: #2C2118;
+  box-shadow:
+    0 40px 80px -28px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(245, 240, 232, 0.07);
+}
+.v2-device img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+/* Sized to the screenshots' own 919:1998 aspect so `cover` never crops. */
+.v2-device-front {
+  width: 284px;
+  height: 617px;
+  z-index: 2;
+}
+
+/* ─── Stat band ─── */
+.v2-stats {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  padding: 22px 48px;
+  border-top: 0.5px solid rgba(245, 240, 232, 0.08);
+  border-bottom: 0.5px solid rgba(245, 240, 232, 0.08);
+}
+
+/* ─── Two-column content grid ─── */
+.v2-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+}
+
+/* ─── Mid-page product showcase ─── */
+.v2-showcase {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 64px;
+}
+
+.v2-showcase-phones {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 0;
+}
+/* Offset the pair so it reads as a composition rather than two loose images */
+.v2-showcase-phone-a { transform: translateY(-22px); }
+.v2-showcase-phone-b { transform: translateY(22px); }
+
+/* ─── Pillars ─── */
+.v2-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 0.5px solid rgba(245, 240, 232, 0.09);
+}
+
+/* Devanagari accent — now in a font that can actually render it */
+.v2-deva {
+  font-family: var(--font-devanagari), 'Noto Sans Devanagari', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: rgba(245, 240, 232, 0.42);
+}
+
+/* ─── Offer band ─── */
+.v2-offer {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 48px;
+  margin: 0 48px;
+  padding: 44px 48px;
+  background: rgba(181, 82, 42, 0.05);
+  border: 0.5px solid rgba(181, 82, 42, 0.3);
+}
+
+/* ─── Footer ─── */
+.v2-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 48px;
+  border-top: 0.5px solid rgba(245, 240, 232, 0.08);
+}
+
+/* CSS hover instead of the original's JS onMouseEnter handlers, so the
+   footer can stay a server component. */
+.v2-footer-link {
+  color: rgba(245, 240, 232, 0.35);
+  transition: color 0.2s ease;
+}
+.v2-footer-link:hover {
+  color: rgba(245, 240, 232, 0.78);
+}
+
+/* ─── Tablet — the original stylesheet jumps straight from desktop to
+       768px, so the 3-up pillar grid held its desktop shape at 800px. ─── */
+@media (max-width: 1024px) {
+  .v2-hero {
+    gap: 40px;
+    padding: 120px 32px 64px;
+  }
+  .v2-section { padding: 64px 32px; }
+  .v2-section-tight { padding: 48px 32px; }
+  .v2-stats { padding: 20px 32px; gap: 32px; }
+  .v2-offer { margin: 0 32px; padding: 36px 32px; }
+  .v2-footer { padding: 24px 32px; }
+  .v2-two-col { gap: 40px; }
+  .v2-showcase { grid-template-columns: 1fr; gap: 40px; }
+  .v2-showcase-phones { justify-content: center; }
+  /* Stacked pillars: the vertical rules between cards become horizontal ones */
+  .v2-pillars { grid-template-columns: 1fr; }
+  .v2-pillars .pillar-card-v2 {
+    border-right: none !important;
+    border-bottom: 0.5px solid rgba(245, 240, 232, 0.09);
+  }
+  .v2-pillars .pillar-card-v2:last-child {
+    border-bottom: none;
+  }
+  .v2-device-front { width: 244px; height: 530px; }
+  .v2-devices { min-height: 560px; }
+}
+
+/* ─── Hero stacks before the rest of the page does ─── */
+@media (max-width: 900px) {
+  .v2-hero {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* Dissolve the copy wrapper so its children become grid items of .v2-hero.
+     That lets the carousel sit between the paragraph and the signup form,
+     rather than being stuck below the whole text column — the product should
+     be visible before the user is asked to sign up. */
+  .v2-hero-copy {
+    display: contents;
+  }
+
+  .v2-hero-eyebrow { order: 1; }
+  .v2-hero-headline { order: 2; }
+  .v2-hero-sub { order: 3; margin-bottom: 0 !important; }
+  .v2-devices { order: 4; }
+  .v2-hero-form { order: 5; }
+  .v2-hero-progress { order: 6; }
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 768px) {
+  .v2-nav { padding: 12px 20px !important; }
+  /* The pre-launch pill is decorative — the CTA matters more on a narrow bar */
+  .v2-pill { display: none; }
+  .v2-hero { padding: 104px 24px 56px; }
+  .v2-section { padding: 56px 24px; }
+  .v2-section-tight { padding: 40px 24px; }
+  .v2-stats {
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 20px 24px;
+  }
+  .v2-offer {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin: 0 24px;
+    padding: 32px 24px;
+  }
+  .v2-two-col { grid-template-columns: 1fr; gap: 36px; }
+  /* Two 206px phones + gap overflows a 375px screen — shrink and tighten,
+     and drop the vertical offset so the pair stays level. */
+  .v2-showcase { gap: 32px; }
+  .v2-showcase-phones { gap: 10px; }
+  .v2-showcase-phones .v2-device {
+    width: 152px !important;
+    height: 330px !important;
+  }
+  .v2-showcase-phone-a,
+  .v2-showcase-phone-b { transform: none; }
+  /* Avatar + 540px quote side by side does not fit a phone — stack them.
+     (The original had this on .founder-section-wrap; the v2 class needs its own.) */
+  .v2-founder {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+
+  /* The left/right reveal offsets are 32px, which is wider than the 24px
+     gutter — so before these elements animate in they push past the viewport.
+     body{overflow-x:hidden} hides the scrollbar, but the sideways jog still
+     looks wrong on a phone. Reveal vertically instead at this size. */
+  [data-reveal-direction='left'],
+  [data-reveal-direction='right'] {
+    transform: translateY(24px);
+  }
+  .v2-footer {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px;
+  }
+  .v2-devices { min-height: 520px; }
+  .v2-device-front { width: 218px; height: 474px; }
+  .v2-dot { padding: 6px 9px; font-size: 8px; letter-spacing: 0.1em; }
+  /* Fights the inline grid-template-columns on the form row, same pattern the
+     original mobile block uses against the old inline styles. */
+  .v2-form-row {
+    grid-template-columns: 1fr !important;
+  }
+  .v2-form-row .v2-btn {
+    width: 100%;
+    min-height: 48px;
+  }
+  .v2-grid {
+    -webkit-mask-image: radial-gradient(ellipse 92% 48% at 50% 28%, #000 0%, transparent 76%);
+    mask-image: radial-gradient(ellipse 92% 48% at 50% 28%, #000 0%, transparent 76%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-btn:hover:not(:disabled),
+  .v2-btn:active:not(:disabled) {
+    transform: none !important;
+  }
 }
