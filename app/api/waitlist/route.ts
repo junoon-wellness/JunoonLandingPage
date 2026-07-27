@@ -1,6 +1,12 @@
 // Waitlist signups go to beehiiv (same platform as the newsletter).
 // Requires BEEHIIV_API_KEY and BEEHIIV_PUBLICATION_ID env vars — see .env.example.
 // API reference: https://developers.beehiiv.com/api-reference/subscriptions/create
+//
+// ⚠️ The custom fields below ("First Name", "Phone") must already exist in
+// beehiiv (Audience → Custom Fields). If they don't, beehiiv accepts the
+// subscription and silently discards those values — no error is returned.
+
+import { isValidEmail, isValidOptionalPhone, normaliseSource } from "@/lib/constants";
 
 const BEEHIIV_API_KEY = process.env.BEEHIIV_API_KEY;
 // beehiiv's API needs the "pub_" prefix; tolerate a raw UUID in the env var.
@@ -12,16 +18,34 @@ const BEEHIIV_PUBLICATION_ID = rawPubId
   : undefined;
 
 export async function POST(req: Request) {
-  let email: unknown;
+  let body: { email?: unknown; firstName?: unknown; phone?: unknown; source?: unknown };
   try {
-    ({ email } = await req.json());
+    body = await req.json();
   } catch {
     return Response.json({ ok: false, error: "Invalid request body" }, { status: 400 });
   }
 
-  if (typeof email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  const email = body.email;
+
+  if (typeof email !== "string" || !isValidEmail(email)) {
     return Response.json({ ok: false, error: "A valid email is required" }, { status: 400 });
   }
+
+  // firstName and phone are optional additions — a body with only `email`
+  // (the original contract) still works unchanged.
+  const firstName = typeof body.firstName === "string" ? body.firstName.trim().slice(0, 80) : "";
+  const phone = typeof body.phone === "string" ? body.phone.trim().slice(0, 32) : "";
+
+  if (!isValidOptionalPhone(phone)) {
+    return Response.json(
+      { ok: false, error: "Please include your country code, e.g. +1 555 123 4567." },
+      { status: 400 }
+    );
+  }
+
+  // ?ref= channel, used for utm_medium below. utm_source is deliberately left
+  // alone — the beehiiv welcome Automation filters on it.
+  const source = normaliseSource(typeof body.source === "string" ? body.source : undefined);
 
   if (!BEEHIIV_API_KEY || !BEEHIIV_PUBLICATION_ID) {
     // Fail loudly in the server logs, but don't expose config gaps to the client.
@@ -64,9 +88,20 @@ export async function POST(req: Request) {
         send_welcome_email: false,
         // beehiiv's built-in "Acquisition source" is populated from utm_source,
         // so waitlist signups show up as "Waitlist" — no custom field needed.
+        // DO NOT change utm_source: the welcome Automation filters on it.
         utm_source: "Waitlist",
-        utm_medium: "landing-page",
+        // Channel attribution from ?ref=. Falls back to the original value.
+        utm_medium: source === "direct" ? "landing-page" : source,
         utm_campaign: "junoon-waitlist",
+        // Only sent when the user actually supplied them.
+        ...(firstName || phone
+          ? {
+              custom_fields: [
+                ...(firstName ? [{ name: "First Name", value: firstName }] : []),
+                ...(phone ? [{ name: "Phone", value: phone }] : []),
+              ],
+            }
+          : {}),
       }),
     });
 
