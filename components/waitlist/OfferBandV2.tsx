@@ -44,7 +44,7 @@ export default function OfferBandV2() {
             maxWidth: '520px',
           }}
         >
-          When Junoon launches, founding members lock in a permanent discount — not a trial, not a
+          When Junoon launches, founding members lock in a permanent discount. Not a trial, not a
           first-month deal. The price you join at is the price you keep. We&apos;re doing this
           because we want the people who believed in us early to benefit from being early.
         </p>

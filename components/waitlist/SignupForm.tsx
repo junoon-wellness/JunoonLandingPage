@@ -197,7 +197,7 @@ export default function SignupForm({
         {withPhone && (
           <div style={{ marginTop: '10px' }}>
             <label htmlFor={phoneId} style={labelStyle}>
-              Phone number — optional
+              Phone number (optional)
             </label>
             <input
               id={phoneId}
@@ -247,7 +247,7 @@ export default function SignupForm({
           />
           <span style={{ fontSize: '12px', fontWeight: 300, color: STONE, lineHeight: 1.6 }}>
             {withPhone
-              ? 'First 500 founding members get permanent pricing. Launch updates by text — never shared.'
+              ? 'First 500 founding members get permanent pricing. Launch updates by text, never shared.'
               : 'No spam. Early access only.'}
           </span>
         </div>
@@ -265,7 +265,7 @@ export default function SignupForm({
           color: '#E08A62',
         }}
       >
-        {fieldError === 'email' && 'That email doesn’t look right — check for typos.'}
+        {fieldError === 'email' && 'That email doesn’t look right. Check for typos.'}
         {fieldError === 'phone' && 'Include your country code, e.g. +1 555 123 4567.'}
         {!fieldError &&
           status === 'error' &&

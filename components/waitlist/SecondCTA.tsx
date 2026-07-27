@@ -48,8 +48,8 @@ export default function SecondCTA({ source, onSignupSuccess }: SecondCTAProps) {
           }}
         >
           Joining costs nothing and commits you to nothing. It holds your founding-member
-          pricing while there are still spots left, and we&apos;ll email you once before launch
-          — not weekly.
+          pricing while there are still spots left, and we&apos;ll email you once before launch.
+          Not weekly.
         </p>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '18px' }}>
           {['No spam', 'No card', 'Unsubscribe anytime'].map(b => (

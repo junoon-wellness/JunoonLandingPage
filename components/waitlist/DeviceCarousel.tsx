@@ -140,8 +140,8 @@ export default function DeviceCarousel() {
               <Image
                 src={s.src}
                 alt={i === activeDot ? s.alt : ''}
-                width={919}
-                height={1998}
+                width={640}
+                height={1391}
                 sizes="300px"
                 loading={i === 0 ? 'eager' : 'lazy'}
                 {...(i === 0 ? { fetchPriority: 'high' as const } : {})}

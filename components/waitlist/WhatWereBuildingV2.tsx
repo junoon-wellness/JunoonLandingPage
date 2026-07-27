@@ -2,7 +2,7 @@ const features = [
   {
     num: '01',
     title: 'Live and on-demand classes',
-    body: 'Yoga, meditation, pranayama, and breathwork — taught live and available on demand. All levels, all schedules.',
+    body: 'Yoga, meditation, pranayama, and breathwork. Taught live, available on demand, at every level and around real schedules.',
   },
   {
     num: '02',
@@ -53,9 +53,9 @@ export default function WhatWereBuildingV2() {
               maxWidth: '420px',
             }}
           >
-            Junoon combines the depth of traditional South Asian wellness — yoga, pranayama,
-            Ayurveda, breathwork — with an AI Coach that makes expert guidance personal. Not a
-            library you browse through. A practice that adapts to you.
+            Junoon brings together yoga, pranayama, Ayurveda and breathwork with an AI Coach that
+            makes expert guidance personal. Not a library you browse through. A practice that
+            adapts to you.
           </p>
         </div>
 

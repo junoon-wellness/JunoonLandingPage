@@ -1,5 +1,7 @@
-// To show Arjav's photo: add arjav-photo.jpg to /public and flip this to true.
-const SHOW_PHOTO = false
+// public/arjav-photo.jpg is a 400x400 crop of the source photo, centred on the
+// face. The source was a wide seated shot, so it needed cropping rather than
+// dropping in as-is.
+const SHOW_PHOTO = true
 
 export default function FounderBlockV2() {
   return (
@@ -17,10 +19,8 @@ export default function FounderBlockV2() {
       <div
         data-reveal
         data-reveal-direction="left"
+        className="v2-founder-photo"
         style={{
-          width: '76px',
-          height: '76px',
-          borderRadius: '50%',
           background: '#2C2118',
           display: 'flex',
           alignItems: 'center',
@@ -56,6 +56,7 @@ export default function FounderBlockV2() {
         data-reveal
         data-reveal-direction="right"
         data-reveal-stagger="1"
+        className="v2-founder-text"
         style={{ maxWidth: '540px' }}
       >
         <blockquote

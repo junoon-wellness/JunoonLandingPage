@@ -11,9 +11,11 @@ const legalLinks = [
   { label: 'Contact', href: '/contact' },
 ]
 
-// Instagram is the only channel currently live. TikTok/LinkedIn were dropped
-// rather than shipped as dead "#" links — add them back once real URLs exist.
-const socials = [{ label: 'Instagram', href: 'https://www.instagram.com/junoonwellness/' }]
+const socials = [
+  { label: 'Instagram', href: 'https://www.instagram.com/junoonwellness/' },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@junoonwellness' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/company/junoon-wellness/' },
+]
 
 const linkStyle: React.CSSProperties = {
   fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',

@@ -325,24 +325,30 @@ body::before {
   box-shadow: none;
 }
 
-/* ─── Section rhythm — tighter than the editorial original (96px → 80px) ─── */
+/* ─── Section rhythm ───
+   One scale for the whole page: 72px standard, 48px tight, 48px gutter.
+   Sections previously carried hand-picked values (80 / 56 / 132 / 44), which
+   read as inconsistent spacing between bands. */
 .v2-section {
   position: relative;
   z-index: 2;
-  padding: 80px 48px;
-}
-.v2-section-tight {
   padding: 56px 48px;
 }
+.v2-section-tight {
+  padding: 40px 48px;
+}
 
-/* ─── Hero ─── */
+/* ─── Hero ───
+   `align-items: start` so the copy column's top edge lines up with the phone
+   instead of floating in the vertical centre, which left a dead gap above the
+   eyebrow and pushed the signup form too far down the fold. */
 .v2-hero {
   position: relative;
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
-  align-items: center;
+  align-items: start;
   gap: 64px;
-  padding: 132px 48px 80px;
+  padding: 104px 48px 72px;
 }
 
 /* ─── Device frame + product carousel ─── */
@@ -513,11 +519,127 @@ body::before {
 .v2-showcase-phone-a { transform: translateY(-22px); }
 .v2-showcase-phone-b { transform: translateY(22px); }
 
-/* ─── Pillars ─── */
+/* ─── Founder photo ───
+   Stretches to match the height of the quote block beside it rather than
+   sitting as a small circular avatar, so the photo is actually readable. */
+.v2-founder-photo {
+  align-self: center;
+  width: 168px;
+  height: 210px;
+  border-radius: 14px;
+}
+
+/* Quote block centres against the photo's midpoint rather than sitting flush
+   with its top edge. */
+.v2-founder-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ─── Nav wordmark ─── */
+.v2-wordmark {
+  font-family: var(--font-cormorant), serif;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #F5F0E8;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* ─── Pillars / feature tabs ─── */
 .v2-pillars {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border: 0.5px solid rgba(245, 240, 232, 0.09);
+}
+
+/* ─── Feature showcase (tabbed) ─── */
+.v2-fs {
+  display: grid;
+  gap: 56px;
+}
+
+/* All panels occupy the same grid cell so the section height is the tallest of
+   them and nothing reflows when you switch. */
+.v2-fs-stack {
+  display: grid;
+}
+.v2-fs-panel {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0s linear 0.45s;
+}
+.v2-fs-panel.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0s;
+}
+
+.v2-fs-tabs {
+  margin: 0;
+}
+
+.v2-fs-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 26px 28px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-right: 0.5px solid rgba(245, 240, 232, 0.09);
+  cursor: pointer;
+  overflow: hidden;
+  transition: background 0.35s ease;
+}
+.v2-fs-tab:last-child { border-right: none; }
+
+.v2-fs-tab-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.v2-fs-tab-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: rgba(245, 240, 232, 0.55);
+  transition: color 0.3s ease;
+}
+.v2-fs-tab-body {
+  font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.3);
+  transition: color 0.3s ease;
+}
+
+.v2-fs-tab:hover .v2-fs-tab-title { color: rgba(245, 240, 232, 0.8); }
+
+/* Active tab: full-strength title and a permanently drawn accent underline
+   (.pillar-card-v2::before normally only draws on hover) */
+.v2-fs-tab.is-active {
+  background: rgba(245, 240, 232, 0.022);
+}
+.v2-fs-tab.is-active .v2-fs-tab-title { color: #F5F0E8; }
+.v2-fs-tab.is-active .v2-fs-tab-body { color: var(--pillar-accent, #B5522A); }
+.v2-fs-tab.is-active::before { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-fs-panel,
+  .v2-fs-panel.is-active { transition: none; transform: none; }
 }
 
 /* Devanagari accent — now in a font that can actually render it */
@@ -569,23 +691,19 @@ body::before {
     gap: 40px;
     padding: 120px 32px 64px;
   }
-  .v2-section { padding: 64px 32px; }
-  .v2-section-tight { padding: 48px 32px; }
+  .v2-section { padding: 48px 32px; }
+  .v2-section-tight { padding: 36px 32px; }
   .v2-stats { padding: 20px 32px; gap: 32px; }
   .v2-offer { margin: 0 32px; padding: 36px 32px; }
   .v2-footer { padding: 24px 32px; }
   .v2-two-col { gap: 40px; }
   .v2-showcase { grid-template-columns: 1fr; gap: 40px; }
   .v2-showcase-phones { justify-content: center; }
-  /* Stacked pillars: the vertical rules between cards become horizontal ones */
-  .v2-pillars { grid-template-columns: 1fr; }
-  .v2-pillars .pillar-card-v2 {
-    border-right: none !important;
-    border-bottom: 0.5px solid rgba(245, 240, 232, 0.09);
-  }
-  .v2-pillars .pillar-card-v2:last-child {
-    border-bottom: none;
-  }
+  /* Tabs stay three-across here: they're a title plus one short line now,
+     unlike the old pillar cards which carried full paragraphs. */
+  .v2-fs { gap: 40px; }
+  .v2-fs-tab { padding: 20px 20px; }
+  .v2-fs-tab-title { font-size: 17px; }
   .v2-device-front { width: 244px; height: 530px; }
   .v2-devices { min-height: 560px; }
 }
@@ -619,8 +737,8 @@ body::before {
   /* The pre-launch pill is decorative — the CTA matters more on a narrow bar */
   .v2-pill { display: none; }
   .v2-hero { padding: 104px 24px 56px; }
-  .v2-section { padding: 56px 24px; }
-  .v2-section-tight { padding: 40px 24px; }
+  .v2-section { padding: 44px 24px; }
+  .v2-section-tight { padding: 32px 24px; }
   .v2-stats {
     flex-wrap: wrap;
     gap: 24px;
@@ -643,12 +761,30 @@ body::before {
   }
   .v2-showcase-phone-a,
   .v2-showcase-phone-b { transform: none; }
+  /* Three tabs side by side is too cramped on a phone: stack them and turn the
+     vertical rules between cards into horizontal ones. */
+  .v2-fs { gap: 32px; }
+  .v2-fs-tabs { grid-template-columns: 1fr; }
+  .v2-fs-tab {
+    border-right: none;
+    border-bottom: 0.5px solid rgba(245, 240, 232, 0.09);
+    padding: 16px 20px;
+  }
+  .v2-fs-tab:last-child { border-bottom: none; }
   /* Avatar + 540px quote side by side does not fit a phone — stack them.
      (The original had this on .founder-section-wrap; the v2 class needs its own.) */
   .v2-founder {
     flex-direction: column;
+    align-items: center;
     text-align: center;
     gap: 24px;
+  }
+  /* Stretching to the quote height makes no sense once stacked */
+  .v2-founder-photo {
+    align-self: center;
+    width: 140px;
+    height: 140px;
+    min-height: 0;
   }
 
   /* The left/right reveal offsets are 32px, which is wider than the 24px

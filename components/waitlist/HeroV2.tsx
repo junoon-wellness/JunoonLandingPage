@@ -54,7 +54,7 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           }}
         >
           A modern wellness platform built for the South Asian diaspora. Live classes, on-demand
-          content, and an AI Coach that personalises your practice — grounded in the traditions you
+          content, and an AI Coach that personalises your practice, grounded in the traditions you
           grew up around.
         </p>
 

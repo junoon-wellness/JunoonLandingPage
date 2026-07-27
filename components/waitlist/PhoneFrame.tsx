@@ -3,7 +3,7 @@ import Image from 'next/image'
 interface PhoneFrameProps {
   src: string
   alt: string
-  /** Rendered width in CSS px. Height is derived from the 1206:2622 source aspect. */
+  /** Rendered width in CSS px. Height is derived from the 640:1391 source aspect. */
   width?: number
   className?: string
   priority?: boolean
@@ -20,7 +20,7 @@ export default function PhoneFrame({
   className = '',
   priority = false,
 }: PhoneFrameProps) {
-  const height = Math.round((width * 2622) / 1206)
+  const height = Math.round((width * 1391) / 640)
 
   return (
     <div
@@ -30,8 +30,8 @@ export default function PhoneFrame({
       <Image
         src={src}
         alt={alt}
-        width={1206}
-        height={2622}
+        width={640}
+        height={1391}
         sizes={`${width}px`}
         loading={priority ? 'eager' : 'lazy'}
         {...(priority ? { fetchPriority: 'high' as const } : {})}

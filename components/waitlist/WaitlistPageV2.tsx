@@ -5,8 +5,7 @@ import NavV2 from './NavV2'
 import HeroV2 from './HeroV2'
 import StatBand from './StatBand'
 import WhatWereBuildingV2 from './WhatWereBuildingV2'
-import BreathworkShowcase from './BreathworkShowcase'
-import PillarsV2 from './PillarsV2'
+import FeatureShowcase from './FeatureShowcase'
 import OfferBandV2 from './OfferBandV2'
 import FounderBlockV2 from './FounderBlockV2'
 import SecondCTA from './SecondCTA'
@@ -65,8 +64,7 @@ export default function WaitlistPageV2({ initialClaimed, source }: WaitlistPageV
       />
       <StatBand />
       <WhatWereBuildingV2 />
-      <BreathworkShowcase />
-      <PillarsV2 />
+      <FeatureShowcase />
       <OfferBandV2 />
       <FounderBlockV2 />
       <SecondCTA source={source} onSignupSuccess={handleSignupSuccess} />

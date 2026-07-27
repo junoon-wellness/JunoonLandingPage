@@ -33,14 +33,20 @@ export default function NavV2() {
           textDecoration: 'none',
         }}
       >
+        {/* The badge carries "JUNOON" inside it, but at this size that text is
+            illegible, so it reads as a tree emblem. The wordmark beside it does
+            the naming work. */}
         <Image
           src="/logo-turmeric-text.png"
-          alt="Junoon"
-          width={112}
-          height={32}
-          style={{ height: '26px', width: 'auto' }}
+          alt=""
+          aria-hidden="true"
+          width={2000}
+          height={2000}
+          sizes="34px"
+          style={{ height: '34px', width: '34px' }}
           loading="eager"
         />
+        <span className="v2-wordmark">Junoon Wellness</span>
       </a>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
