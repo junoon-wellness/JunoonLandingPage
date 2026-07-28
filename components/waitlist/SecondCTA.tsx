@@ -23,7 +23,7 @@ export default function SecondCTA({ source, onSignupSuccess }: SecondCTAProps) {
         overflow: 'hidden',
       }}
     >
-      <div data-reveal style={{ position: 'relative', zIndex: 1 }}>
+      <div style={{ position: 'relative', zIndex: 1 }}>
         <h3
           style={{
             fontFamily: 'var(--font-cormorant), serif',
@@ -72,7 +72,7 @@ export default function SecondCTA({ source, onSignupSuccess }: SecondCTAProps) {
         </div>
       </div>
 
-      <div data-reveal data-reveal-stagger="1" style={{ position: 'relative', zIndex: 1 }}>
+      <div style={{ position: 'relative', zIndex: 1 }}>
         <SignupForm source={source} onSignupSuccess={onSignupSuccess} compact />
       </div>
     </section>

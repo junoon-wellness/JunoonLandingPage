@@ -15,7 +15,7 @@ export default function OfferBandV2() {
         }}
       />
 
-      <div data-reveal>
+      <div>
         <div className="eyebrow" style={{ marginBottom: '14px' }}>
           Founding member offer
         </div>
@@ -50,7 +50,7 @@ export default function OfferBandV2() {
         </p>
       </div>
 
-      <div data-reveal data-reveal-stagger="1" style={{ textAlign: 'center', flexShrink: 0 }}>
+      <div style={{ textAlign: 'center', flexShrink: 0 }}>
         <div
           style={{
             fontFamily: 'var(--font-cormorant), serif',

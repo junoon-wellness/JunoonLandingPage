@@ -24,12 +24,12 @@ const features = [
 export default function WhatWereBuildingV2() {
   return (
     <section className="v2-section" style={{ background: '#1C1410' }}>
-      <div data-reveal className="eyebrow" style={{ marginBottom: '40px' }}>
+      <div className="eyebrow" style={{ marginBottom: '40px' }}>
         What we&apos;re building
       </div>
 
       <div className="v2-two-col" style={{ alignItems: 'start' }}>
-        <div data-reveal>
+        <div>
           <h2
             style={{
               fontFamily: 'var(--font-cormorant), serif',
@@ -63,8 +63,6 @@ export default function WhatWereBuildingV2() {
           {features.map((f, i) => (
             <div
               key={f.num}
-              data-reveal
-              data-reveal-stagger={String(Math.min(4, i + 1))}
               style={{
                 borderTop: '0.5px solid rgba(245,240,232,0.08)',
                 borderBottom:

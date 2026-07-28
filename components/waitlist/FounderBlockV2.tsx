@@ -17,8 +17,6 @@ export default function FounderBlockV2() {
       }}
     >
       <div
-        data-reveal
-        data-reveal-direction="left"
         className="v2-founder-photo"
         style={{
           background: '#2C2118',
@@ -53,9 +51,6 @@ export default function FounderBlockV2() {
       </div>
 
       <div
-        data-reveal
-        data-reveal-direction="right"
-        data-reveal-stagger="1"
         className="v2-founder-text"
         style={{ maxWidth: '540px' }}
       >

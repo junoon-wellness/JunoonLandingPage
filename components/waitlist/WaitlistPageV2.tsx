@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import NavV2 from './NavV2'
 import HeroV2 from './HeroV2'
 import StatBand from './StatBand'
@@ -20,30 +20,6 @@ interface WaitlistPageV2Props {
 export default function WaitlistPageV2({ initialClaimed, source }: WaitlistPageV2Props) {
   const [claimed, setClaimed] = useState(initialClaimed)
   const [isFlashing, setIsFlashing] = useState(false)
-
-  // Scroll-triggered reveals.
-  //
-  // NOTE: this observes whatever [data-reveal] elements exist at mount and
-  // unobserves each as it fires. Every section below renders unconditionally,
-  // so that's safe — but a conditionally mounted section would stay stuck at
-  // opacity: 0 unless this re-runs.
-  useEffect(() => {
-    const elements = document.querySelectorAll('[data-reveal]')
-    if (elements.length === 0) return
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
-    )
-    elements.forEach(el => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
 
   // Optimistic bump. The authoritative number comes from beehiiv on the next
   // server render — there is no polling endpoint to hit.

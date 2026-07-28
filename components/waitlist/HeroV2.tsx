@@ -22,12 +22,12 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           promote to grid items and the carousel can be ordered in between the
           paragraph and the form. See .v2-hero-copy in globals.css. */}
       <div className="v2-hero-copy" style={{ position: 'relative', zIndex: 2, maxWidth: '560px' }}>
-        <div className="v2-hero-eyebrow fade-up delay-1 eyebrow" style={{ marginBottom: '26px' }}>
+        <div className="v2-hero-eyebrow eyebrow" style={{ marginBottom: '26px' }}>
           Founding member waitlist
         </div>
 
         <h1
-          className="v2-hero-headline fade-up delay-2"
+          className="v2-hero-headline"
           style={{
             fontFamily: 'var(--font-cormorant), serif',
             fontSize: 'clamp(40px, 5vw, 64px)',
@@ -43,7 +43,7 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
         </h1>
 
         <p
-          className="v2-hero-sub fade-up delay-3"
+          className="v2-hero-sub"
           style={{
             fontSize: '15px',
             fontWeight: 300,
@@ -58,12 +58,12 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           grew up around.
         </p>
 
-        <div className="v2-hero-form fade-up delay-4">
+        <div className="v2-hero-form">
           <SignupForm id="join" source={source} onSignupSuccess={onSignupSuccess} withPhone />
         </div>
 
         <div
-          className="v2-hero-progress fade-up delay-5"
+          className="v2-hero-progress"
           style={{ marginTop: '30px', maxWidth: '420px' }}
         >
           <SpotsProgress claimed={claimed} isFlashing={isFlashing} />
@@ -71,7 +71,7 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
       </div>
 
       {/* ── Right: the actual product, cycling through the real app screens ── */}
-      <div className="v2-devices fade-up delay-3">
+      <div className="v2-devices">
         <DeviceCarousel />
       </div>
     </section>

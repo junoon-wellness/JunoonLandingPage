@@ -35,10 +35,6 @@ body {
   color: #f5f0e8; /* ivory */
   font-size: 16px;
   line-height: 1.6;
-  /*
-    Load-bearing: the [data-reveal-direction] rules park elements 32px off-axis
-    before they animate in, which is wider than the mobile gutter.
-  */
   overflow-x: hidden;
 }
 
@@ -62,7 +58,7 @@ body::before {
   opacity: 0.45;
 }
 
-/* ── eyebrow, entrance + scroll-reveal primitives ── */
+/* ── eyebrow ── */
 /* Monospace eyebrow / label — Courier-style accent type for app-y feel */
 .eyebrow {
   font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -83,28 +79,6 @@ body::before {
 }
 .eyebrow.no-rule::before { display: none; }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-up {
-  opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
-}
-
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.25s; }
-.delay-3 { animation-delay: 0.4s; }
-.delay-4 { animation-delay: 0.55s; }
-.delay-5 { animation-delay: 0.7s; }
-
 .noise-bg {
   position: relative;
   overflow: hidden;
@@ -118,26 +92,6 @@ body::before {
   pointer-events: none;
   z-index: 0;
 }
-
-/* ─── SCROLL-TRIGGERED REVEALS ─── */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform;
-}
-[data-reveal].is-visible {
-  opacity: 1;
-  transform: translateY(0) translateX(0);
-}
-[data-reveal-stagger="1"] { transition-delay: 0.08s; }
-[data-reveal-stagger="2"] { transition-delay: 0.18s; }
-[data-reveal-stagger="3"] { transition-delay: 0.28s; }
-[data-reveal-stagger="4"] { transition-delay: 0.38s; }
-
-[data-reveal-direction="left"] { transform: translateX(-32px); }
-[data-reveal-direction="right"] { transform: translateX(32px); }
 
 /* ── ambient drift, nav pill, counter, pillar hover ── */
 /* ─── AMBIENT DRIFT (DARK SECTIONS) ─── */
@@ -200,11 +154,6 @@ body::before {
 
 /* ─── REDUCED MOTION ─── */
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
   .nav-pill,
   .drift-bg::after {
     animation: none !important;
@@ -787,14 +736,6 @@ body::before {
     min-height: 0;
   }
 
-  /* The left/right reveal offsets are 32px, which is wider than the 24px
-     gutter — so before these elements animate in they push past the viewport.
-     body{overflow-x:hidden} hides the scrollbar, but the sideways jog still
-     looks wrong on a phone. Reveal vertically instead at this size. */
-  [data-reveal-direction='left'],
-  [data-reveal-direction='right'] {
-    transform: translateY(24px);
-  }
   .v2-footer {
     flex-direction: column;
     text-align: center;

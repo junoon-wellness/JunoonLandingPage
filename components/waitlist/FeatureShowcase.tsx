@@ -129,11 +129,7 @@ export default function FeatureShowcase() {
           They were previously remounted via `key`, which re-requested each
           panel's images on every switch. That flooded Next's image optimizer,
           left the hero's first screenshot permanently pending, and flashed an
-          empty frame on first view of a panel.
-
-          No data-reveal in here either: the page's IntersectionObserver runs
-          once at mount and unobserves, so anything revealed later would stay
-          stuck at opacity 0. */}
+          empty frame on first view of a panel. */}
       <div className="v2-fs-stack">
         {FEATURES.map((item, i) => {
           const isActive = i === active
