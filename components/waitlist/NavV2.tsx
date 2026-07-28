@@ -54,7 +54,7 @@ export default function NavV2() {
           className="nav-pill v2-pill"
           style={{
             fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
-            fontSize: '10px',
+            fontSize: '11px',
             letterSpacing: '0.14em',
             textTransform: 'uppercase',
             color: '#C8902A',

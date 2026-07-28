@@ -19,7 +19,7 @@ const socials = [
 
 const linkStyle: React.CSSProperties = {
   fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
-  fontSize: '10px',
+  fontSize: '11px',
   letterSpacing: '0.14em',
   textTransform: 'uppercase',
   textDecoration: 'none',
@@ -50,7 +50,7 @@ export default function FooterV2() {
         <span
           style={{
             fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
-            fontSize: '10px',
+            fontSize: '11px',
             letterSpacing: '0.1em',
             color: '#93826F',
           }}

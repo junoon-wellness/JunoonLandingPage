@@ -66,7 +66,7 @@ export default function OfferBandV2() {
         <div
           style={{
             fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
-            fontSize: '10px',
+            fontSize: '11px',
             letterSpacing: '0.14em',
             textTransform: 'uppercase',
             color: '#93826F',

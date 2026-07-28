@@ -57,10 +57,10 @@ export default function SecondCTA({ source, onSignupSuccess }: SecondCTAProps) {
               key={b}
               style={{
                 fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
-                fontSize: '10px',
+                fontSize: '11px',
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',
-                padding: '5px 12px',
+                padding: '6px 12px',
                 border: '0.5px solid rgba(245,240,232,0.12)',
                 borderRadius: '2px',
                 color: 'rgba(245,240,232,0.7)',
