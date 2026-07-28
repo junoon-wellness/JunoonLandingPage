@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 // public/arjav-photo.jpg is a 400x400 crop of the source photo, centred on the
 // face. The source was a wide seated shot, so it needed cropping rather than
 // dropping in as-is.
@@ -29,10 +31,12 @@ export default function FounderBlockV2() {
         }}
       >
         {SHOW_PHOTO ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src="/arjav-photo.jpg"
             alt="Arjav, founder of Junoon Wellness"
+            width={400}
+            height={400}
+            loading="lazy"
             style={{ objectFit: 'cover', width: '100%', height: '100%' }}
           />
         ) : (
