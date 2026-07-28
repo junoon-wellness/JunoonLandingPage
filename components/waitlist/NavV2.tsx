@@ -64,7 +64,7 @@ export default function NavV2() {
             whiteSpace: 'nowrap',
           }}
         >
-          Pre-launch · 2026
+          Founding Members · 2026
         </span>
 
         <a
