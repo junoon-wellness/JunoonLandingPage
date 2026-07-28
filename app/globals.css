@@ -681,6 +681,11 @@ body::before {
 }
 
 /* ─── Mobile ─── */
+/* Only the "Join waitlist" nav CTA switches to the shorter "Join" below
+   380px (see the media query further down) — hidden by default everywhere
+   else, including desktop, so only one of the two ever renders visible. */
+.v2-nav-cta-short { display: none; }
+
 @media (max-width: 768px) {
   .v2-nav { padding: 12px 20px !important; }
   /* The pre-launch pill is decorative — the CTA matters more on a narrow bar */
@@ -762,6 +767,33 @@ body::before {
   .v2-grid {
     -webkit-mask-image: radial-gradient(ellipse 92% 48% at 50% 28%, #000 0%, transparent 76%);
     mask-image: radial-gradient(ellipse 92% 48% at 50% 28%, #000 0%, transparent 76%);
+  }
+}
+
+/* ─── Smallest phones (iPhone SE/mini, older/cheap Android — down to the
+   320px floor) ───
+   Two defects that only show up below ~380-400px, well past what the 768px
+   tier was checked against:
+   1. Nav: wordmark + CTA sizing only had ~30px of margin at 390px width;
+      below ~380px it ran out and the wordmark's tail overlapped the button
+      again. Shorten the CTA text (redundant with the page itself at this
+      size) rather than shrinking the wordmark further — it's already close
+      to illegible before tracking eats more of it.
+   2. Feature showcase: the two 152px phones + 10px gap (already shrunk once
+      for 375px per the comment above) still overflow a 320px screen's
+      272px content width by ~40px, which — since body has
+      overflow-x:hidden — doesn't scroll, it just silently pushes half the
+      page 18-20px off the right edge instead. Stack the phones instead of
+      shrinking them again; a third shrink would make the product
+      screenshots too small to actually read. */
+@media (max-width: 400px) {
+  .v2-nav { padding: 12px 16px !important; gap: 10px; }
+  .v2-nav-cta-full { display: none; }
+  .v2-nav-cta-short { display: inline; }
+  .v2-nav-cta { padding: 8px 12px !important; }
+
+  .v2-showcase-phones {
+    flex-direction: column;
   }
 }
 

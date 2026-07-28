@@ -80,7 +80,11 @@ export default function NavV2() {
             whiteSpace: 'nowrap',
           }}
         >
-          Join waitlist
+          {/* Shortened on the smallest phones (≤380px) — see the media query
+              in globals.css. "Join waitlist" is redundant with the page
+              itself once space is this tight. */}
+          <span className="v2-nav-cta-full">Join waitlist</span>
+          <span className="v2-nav-cta-short">Join</span>
         </a>
       </div>
     </nav>
