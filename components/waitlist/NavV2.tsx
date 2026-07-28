@@ -69,7 +69,7 @@ export default function NavV2() {
 
         <a
           href="#join"
-          className="v2-btn v2-link"
+          className="v2-btn v2-link v2-nav-cta"
           style={{
             textDecoration: 'none',
             display: 'inline-flex',
@@ -77,6 +77,7 @@ export default function NavV2() {
             padding: '8px 20px',
             minHeight: '44px',
             fontSize: '12px',
+            whiteSpace: 'nowrap',
           }}
         >
           Join waitlist

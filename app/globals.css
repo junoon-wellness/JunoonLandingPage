@@ -685,6 +685,12 @@ body::before {
   .v2-nav { padding: 12px 20px !important; }
   /* The pre-launch pill is decorative — the CTA matters more on a narrow bar */
   .v2-pill { display: none; }
+  /* At this width the wordmark (nowrap) and the CTA were both fighting for the
+     same ~350px track and neither could shrink below its content, so the
+     wordmark's tail overflowed under the button. Shrink the wordmark and trim
+     the CTA's padding/size so both fit without overlap. */
+  .v2-wordmark { font-size: 14px; }
+  .v2-nav-cta { padding: 8px 14px !important; font-size: 11px !important; }
   .v2-hero { padding: 104px 24px 56px; }
   .v2-section { padding: 44px 24px; }
   .v2-section-tight { padding: 32px 24px; }

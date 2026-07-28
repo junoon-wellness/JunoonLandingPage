@@ -51,7 +51,7 @@ export default function FooterV2() {
           style={{
             fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
             fontSize: '11px',
-            letterSpacing: '0.1em',
+            letterSpacing: '0.02em',
             color: '#93826F',
           }}
         >

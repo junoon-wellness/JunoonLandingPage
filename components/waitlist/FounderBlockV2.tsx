@@ -90,9 +90,11 @@ export default function FounderBlockV2() {
             textTransform: 'uppercase',
             color: '#93826F',
             marginTop: '5px',
+            lineHeight: 1.6,
           }}
         >
-          Yoga instructor · 80+ coaching clients
+          <div>Yoga instructor</div>
+          <div>80+ coaching clients</div>
         </div>
       </div>
     </section>
