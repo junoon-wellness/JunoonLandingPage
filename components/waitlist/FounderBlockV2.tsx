@@ -86,7 +86,7 @@ export default function FounderBlockV2() {
         <div
           style={{
             fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
-            fontSize: '10px',
+            fontSize: '11px',
             letterSpacing: '0.12em',
             textTransform: 'uppercase',
             color: '#8C7B6B',

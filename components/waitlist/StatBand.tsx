@@ -43,7 +43,7 @@ export default function StatBand() {
             <span
               style={{
                 fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
-                fontSize: '10px',
+                fontSize: '11px',
                 letterSpacing: '0.14em',
                 textTransform: 'uppercase',
                 color: '#8C7B6B',
