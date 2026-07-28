@@ -22,10 +22,6 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           promote to grid items and the carousel can be ordered in between the
           paragraph and the form. See .v2-hero-copy in globals.css. */}
       <div className="v2-hero-copy" style={{ position: 'relative', zIndex: 2, maxWidth: '560px' }}>
-        <div className="v2-hero-eyebrow fade-up delay-1 eyebrow" style={{ marginBottom: '26px' }}>
-          Founding member waitlist
-        </div>
-
         <h1
           className="v2-hero-headline fade-up delay-2"
           style={{
