@@ -57,7 +57,7 @@ export default function NavV2() {
             fontSize: '10px',
             letterSpacing: '0.14em',
             textTransform: 'uppercase',
-            color: '#B5522A',
+            color: '#C8902A',
             border: '0.5px solid rgba(181,82,42,0.35)',
             borderRadius: '100px',
             padding: '6px 14px',

@@ -65,7 +65,7 @@ body::before {
   font-size: 10px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #B5522A;
+  color: #C8902A;
   display: inline-flex;
   align-items: center;
   gap: 12px;
@@ -237,7 +237,7 @@ body::before {
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #F5F0E8;
+  color: #FFFFFF;
   background: #B5522A;
   border: none;
   border-radius: 4px;
@@ -584,7 +584,7 @@ body::before {
   background: rgba(245, 240, 232, 0.022);
 }
 .v2-fs-tab.is-active .v2-fs-tab-title { color: #F5F0E8; }
-.v2-fs-tab.is-active .v2-fs-tab-body { color: var(--pillar-accent, #B5522A); }
+.v2-fs-tab.is-active .v2-fs-tab-body { color: #C8902A; }
 .v2-fs-tab.is-active::before { transform: scaleX(1); }
 
 @media (prefers-reduced-motion: reduce) {

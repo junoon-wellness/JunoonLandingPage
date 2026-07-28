@@ -36,7 +36,7 @@ export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProp
             fontSize: '10px',
             letterSpacing: '0.14em',
             textTransform: 'uppercase',
-            color: '#8C7B6B',
+            color: '#93826F',
           }}
         >
           <span

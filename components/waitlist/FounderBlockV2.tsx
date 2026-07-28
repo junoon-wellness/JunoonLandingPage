@@ -88,7 +88,7 @@ export default function FounderBlockV2() {
             fontSize: '10px',
             letterSpacing: '0.12em',
             textTransform: 'uppercase',
-            color: '#8C7B6B',
+            color: '#93826F',
             marginTop: '5px',
           }}
         >

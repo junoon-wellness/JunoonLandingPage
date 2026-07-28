@@ -57,7 +57,7 @@ export default function OfferBandV2() {
             fontSize: 'clamp(56px, 7vw, 78px)',
             fontWeight: 300,
             lineHeight: 1,
-            color: '#B5522A',
+            color: '#C8902A',
             letterSpacing: '-0.02em',
           }}
         >
@@ -69,7 +69,7 @@ export default function OfferBandV2() {
             fontSize: '10px',
             letterSpacing: '0.14em',
             textTransform: 'uppercase',
-            color: '#8C7B6B',
+            color: '#93826F',
             marginTop: '8px',
           }}
         >
