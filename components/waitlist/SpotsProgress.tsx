@@ -81,9 +81,11 @@ export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProp
         <div
           style={{
             height: '100%',
-            width: `${pct}%`,
+            width: '100%',
             background: 'linear-gradient(90deg, #B5522A, #C8902A)',
-            transition: 'width 1.4s cubic-bezier(0.22, 1, 0.36, 1)',
+            transform: `scaleX(${pct / 100})`,
+            transformOrigin: 'left',
+            transition: 'transform 1.4s cubic-bezier(0.22, 1, 0.36, 1)',
           }}
         />
       </div>
