@@ -74,8 +74,8 @@ export default function NavV2() {
             textDecoration: 'none',
             display: 'inline-flex',
             alignItems: 'center',
-            padding: '10px 20px',
-            minHeight: '38px',
+            padding: '8px 20px',
+            minHeight: '44px',
             fontSize: '12px',
           }}
         >
