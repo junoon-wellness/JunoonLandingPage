@@ -80,7 +80,7 @@ export default function WhatWereBuildingV2() {
                 style={{
                   fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
                   fontSize: '11px',
-                  color: '#B5522A',
+                  color: '#C8902A',
                   paddingTop: '4px',
                 }}
               >

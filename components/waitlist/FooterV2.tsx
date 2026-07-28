@@ -52,7 +52,7 @@ export default function FooterV2() {
             fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
             fontSize: '10px',
             letterSpacing: '0.1em',
-            color: '#8C7B6B',
+            color: '#93826F',
           }}
         >
           © {new Date().getFullYear()} Junoon Wellness. All rights reserved.

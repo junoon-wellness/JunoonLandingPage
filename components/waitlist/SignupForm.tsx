@@ -19,7 +19,7 @@ interface SignupFormProps {
 const CREAM = '#F5F0E8'
 const CLAY = '#B5522A'
 const TURMERIC = '#C8902A'
-const STONE = '#8C7B6B'
+const STONE = '#93826F'
 
 export default function SignupForm({
   source,
