@@ -67,7 +67,7 @@ export default function SecondCTA({ source, onSignupSuccess }: SecondCTAProps) {
               y={10}
               className="jn-mono"
               style={{
-                fontSize: '10px',
+                fontSize: '11px',
                 letterSpacing: '0.1em',
                 padding: '5px 12px',
                 border: '0.5px solid rgba(245,240,232,0.12)',

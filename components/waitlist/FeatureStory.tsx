@@ -68,7 +68,10 @@ const CHAPTERS: StoryChapter[] = [
       'Filter by length, style, or what your body needs today.',
       'Instructors who grew up with these practices.',
     ],
-    accent: 'var(--jn-stone)',
+    // The one chapter that carries the second hue. Stone was the weakest
+    // accent of the four — a warm grey among three warm accents — so the
+    // library chapter is where sage costs the least and reads the most.
+    accent: 'var(--jn-sage)',
     glyph: 'ध्यान',
     railLabel: 'The library',
     screens: [SCREENS.library, SCREENS.liveClass],

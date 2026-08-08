@@ -23,7 +23,10 @@ const CARDS: RailCard[] = [
     title: 'It asks how it felt, and remembers.',
     body: 'A short check-in after a session is the whole input. That is what the coach reads to sharpen next week. Nothing to fill out, ever.',
     screen: SCREENS.insights,
-    accent: 'var(--jn-turmeric)',
+    // Sage is literally the app's own check-in colour (Brand.swift
+    // checkinAccent), and this is the check-in card. The only placement on
+    // the page where the second hue is not a choice but a match.
+    accent: 'var(--jn-sage)',
   },
 ]
 

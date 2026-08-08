@@ -73,7 +73,7 @@ export default function OfferBandV2() {
         <div
           className="jn-mono"
           style={{
-            fontSize: '10px',
+            fontSize: '11px',
             letterSpacing: '0.14em',
             color: 'var(--jn-mute)',
             marginTop: '8px',

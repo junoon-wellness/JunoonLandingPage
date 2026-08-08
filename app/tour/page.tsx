@@ -60,7 +60,7 @@ export default function TourPage() {
           href="/"
           className="v2-link jn-mono"
           style={{
-            fontSize: '10px',
+            fontSize: '11px',
             letterSpacing: '0.14em',
             color: 'var(--jn-mute)',
             textDecoration: 'none',

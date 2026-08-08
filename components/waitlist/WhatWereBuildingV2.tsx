@@ -113,7 +113,10 @@ export default function WhatWereBuildingV2() {
                 style={{
                   fontSize: '11px',
                   letterSpacing: '0.08em',
-                  color: 'var(--jn-clay)',
+                  // Clay measures 3.63:1 here — fine for the 52px+ display
+                  // numerals elsewhere, below AA at label size. These row
+                  // numbers are structural marks, so they follow the eyebrow.
+                  color: 'var(--jn-sage)',
                   paddingTop: '4px',
                 }}
               >

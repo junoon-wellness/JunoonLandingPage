@@ -71,7 +71,7 @@ export default function FounderBlockV2() {
         <div
           className="jn-mono"
           style={{
-            fontSize: '10px',
+            fontSize: '11px',
             letterSpacing: '0.12em',
             color: 'var(--jn-mute)',
             marginTop: '5px',

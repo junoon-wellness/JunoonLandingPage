@@ -36,8 +36,10 @@ export default function SpotsProgress({ claimed, isFlashing, slim = false }: Spo
             display: 'inline-flex',
             alignItems: 'center',
             gap: '9px',
-            fontSize: slim ? '9px' : '10px',
-            letterSpacing: '0.14em',
+            // `slim` used to drop this to 9px. The 11px floor holds in both
+            // variants; slim now tightens the letter-spacing instead.
+            fontSize: '11px',
+            letterSpacing: slim ? '0.1em' : '0.14em',
             color: 'var(--jn-mute)',
           }}
         >
@@ -47,7 +49,7 @@ export default function SpotsProgress({ claimed, isFlashing, slim = false }: Spo
               width: '5px',
               height: '5px',
               borderRadius: '50%',
-              background: 'var(--jn-clay)',
+              background: 'var(--jn-sage)',
             }}
           />
           Founding spots claimed
@@ -55,7 +57,7 @@ export default function SpotsProgress({ claimed, isFlashing, slim = false }: Spo
         <span
           className={`count-up jn-mono${isFlashing ? ' flashing' : ''}`}
           style={{
-            fontSize: slim ? '10px' : '11px',
+            fontSize: '11px',
             letterSpacing: '0.06em',
             color: 'var(--jn-turmeric)',
             display: 'inline-block',
@@ -83,7 +85,12 @@ export default function SpotsProgress({ claimed, isFlashing, slim = false }: Spo
           style={{
             height: '100%',
             width: `${pct}%`,
-            background: 'linear-gradient(90deg, var(--jn-clay), var(--jn-turmeric))',
+            // Was clay -> turmeric: two warm tones a few degrees apart, on a
+            // warm ground, so the bar barely read as filling at all. Moss ->
+            // sage runs dark to light in a hue nothing else here uses, which
+            // is what makes a progress bar legible as progress.
+            // (Moss fails AA as text — fine here, it is a fill.)
+            background: 'linear-gradient(90deg, var(--jn-moss), var(--jn-sage))',
             transition: 'width 1.4s cubic-bezier(0.22, 1, 0.36, 1)',
           }}
         />

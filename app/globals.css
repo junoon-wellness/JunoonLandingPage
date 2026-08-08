@@ -39,18 +39,47 @@
   --jn-surface-deep: #4A3728;  /* gradient end (== soil) */
   --jn-text: #F5F0E8;          /* primary text (== ivory) */
   --jn-text-dim: rgba(245, 240, 232, 0.64);
-  --jn-clay: #B5522A;          /* accent: eyebrows, rules, primary button */
+  --jn-clay: #B5522A;          /* accent: rules, primary button FILL */
   --jn-turmeric: #C8902A;      /* accent: italic emphasis, active states */
-  --jn-mute: #8C7B6B;          /* mono labels (== driftwood) */
+  --jn-mute: #93826F;          /* mono labels (== driftwood, lifted for AA) */
   --jn-stone: #B5A898;         /* tertiary accent */
   --jn-gold: #D4A96A;          /* footer wordmark */
   --jn-error: #E08A62;
 
-  /* Derived tints. Named so the same wash never gets eyeballed twice. */
-  --jn-hairline: rgba(245, 240, 232, 0.08);
-  --jn-hairline-strong: rgba(245, 240, 232, 0.14);
+  /* ════════════════════════════════════════════════════════════════
+     THE SECOND HUE (round 4)
+
+     Every token above sits in a 20-40° hue band. That is why the page
+     reads flat, and it is also why clay kept failing contrast at label
+     size: warm text on a warm ground has nowhere to go. Sage is ~150°
+     away and is already Junoon's own check-in colour in Brand.swift,
+     so this is a brand move rather than a new one.
+
+     ⚠️ SAGE IS THE TEXT COLOUR. MOSS IS NOT. Measured against --jn-bg:
+       sage  #7B9E87  6.12:1  passes AA for body text
+       moss  #5C7A65  3.83:1  FAILS AA for text
+     Moss is for fills, bars, borders and shapes only. If you ever need
+     green type on a smaller-than-heading element, it is sage.
+     ════════════════════════════════════════════════════════════════ */
+  --jn-sage: #7B9E87;          /* accent: eyebrows, labels, green type */
+  --jn-moss: #5C7A65;          /* fills and bar starts ONLY — fails AA as text */
+  --jn-sage-wash: rgba(123, 158, 135, 0.07);
+  --jn-sage-line: rgba(123, 158, 135, 0.28);
+
+  /* Text sitting ON the clay button fill. Ivory measured 4.40:1 there,
+     just under AA; pure white measures 4.99:1. Everywhere else on the
+     page ivory is correct — this token exists so the exception is named
+     rather than eyeballed. */
+  --jn-on-clay: #FFFFFF;
+
+  /* Derived tints. Named so the same wash never gets eyeballed twice.
+     The hairlines carry a sage cast rather than a neutral ivory one, so
+     the second hue reaches the page's structure and not just its accents. */
+  --jn-hairline: rgba(139, 168, 148, 0.13);
+  --jn-hairline-strong: rgba(139, 168, 148, 0.22);
   --jn-text-soft: rgba(245, 240, 232, 0.62);
-  --jn-text-faint: rgba(245, 240, 232, 0.38);
+  /* Was 0.38 — 3.30:1, below AA. 0.55 measures 5.53:1. */
+  --jn-text-faint: rgba(245, 240, 232, 0.55);
   --jn-wash: rgba(245, 240, 232, 0.06);
 
   /* One easing for the whole page, so nothing moves in a different accent. */
@@ -108,12 +137,16 @@ body::before {
 }
 
 /* ── eyebrow ── */
+/* The eyebrow opens every section, so it is where the second hue does the
+   most work — and it was the worst contrast failure on the page: clay at
+   this size measured 3.63:1, below AA. Sage measures 6.12:1. One change,
+   both problems. Chapters that pass their own `accent` still override it. */
 .eyebrow {
   font-family: var(--font-mono), "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--jn-clay);
+  color: var(--jn-sage);
   display: inline-flex;
   align-items: center;
   gap: 12px;
@@ -174,9 +207,17 @@ body::before {
   content: '';
   position: absolute;
   inset: -20%;
+  /* The two warm washes sit left-of-centre and upper-right. The sage pair
+     takes the diagonal they leave empty — placed APART from the warm ones
+     rather than blended into them, because sage over clay at low alpha
+     goes grey rather than green. Bottom-right carries the weight; the
+     top-left one is half strength so the diagonal reads as a drift and
+     not as two matching blobs. */
   background:
     radial-gradient(circle at 28% 55%, rgba(200, 144, 42, 0.07), transparent 55%),
-    radial-gradient(circle at 72% 28%, rgba(181, 82, 42, 0.06), transparent 50%);
+    radial-gradient(circle at 72% 28%, rgba(181, 82, 42, 0.06), transparent 50%),
+    radial-gradient(circle at 78% 82%, rgba(123, 158, 135, 0.08), transparent 54%),
+    radial-gradient(circle at 14% 14%, rgba(123, 158, 135, 0.04), transparent 48%);
   animation: ambientDrift 22s ease-in-out infinite;
   pointer-events: none;
   z-index: 0;
@@ -258,9 +299,14 @@ body::before {
   inset: -20% -14%;
   pointer-events: none;
   z-index: 0;
+  /* Sage enters from the opposite corner to the warm core, so the phone
+     sits in a warm-to-cool gradient instead of a single orange halo. It
+     is deliberately the weakest of the three: any more and the bezel
+     starts to read green. */
   background:
     radial-gradient(ellipse 54% 48% at 46% 44%, rgba(181, 82, 42, 0.42), transparent 70%),
-    radial-gradient(ellipse 44% 40% at 66% 64%, rgba(200, 144, 42, 0.28), transparent 68%);
+    radial-gradient(ellipse 44% 40% at 66% 64%, rgba(200, 144, 42, 0.28), transparent 68%),
+    radial-gradient(ellipse 46% 42% at 24% 76%, rgba(123, 158, 135, 0.22), transparent 66%);
   filter: blur(10px);
   animation: glowBreathe 9s ease-in-out infinite;
   will-change: transform, opacity;
@@ -316,7 +362,7 @@ body::before {
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--jn-text);
+  color: var(--jn-on-clay);
   background: var(--jn-clay);
   border: none;
   border-radius: 4px;
@@ -619,7 +665,9 @@ body::before {
 
 .jn-story-seg-label {
   font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 9px;
+  /* Was 9px on a 3.30:1 colour — failing the legibility floor and AA at
+     the same time. 11px is the floor for every label on this page. */
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--jn-text-faint);
@@ -1046,9 +1094,12 @@ body::before {
   transform: translateX(-50%);
   pointer-events: none;
   z-index: 0;
+  /* Same warm-to-cool logic as .v2-device-glow, mirrored: the warm mass
+     sits right-of-centre here, so sage takes the left. */
   background:
     radial-gradient(ellipse 50% 50% at 50% 60%, rgba(181, 82, 42, 0.42), transparent 70%),
-    radial-gradient(ellipse 38% 42% at 62% 74%, rgba(200, 144, 42, 0.3), transparent 68%);
+    radial-gradient(ellipse 38% 42% at 62% 74%, rgba(200, 144, 42, 0.3), transparent 68%),
+    radial-gradient(ellipse 42% 44% at 26% 52%, rgba(123, 158, 135, 0.24), transparent 66%);
   filter: blur(14px);
 }
 
@@ -1357,7 +1408,7 @@ body::before {
 }
 
 .jn-finale-chip {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.1em;
   padding: 6px 13px;
   border: 0.5px solid rgba(245, 240, 232, 0.12);
@@ -1515,8 +1566,10 @@ body::before {
   }
   .jn-story-seg { gap: 7px; }
   .jn-story-seg-label {
-    font-size: 8px;
-    letter-spacing: 0.1em;
+    /* Never below the 11px floor, even here. The rail tightens its gap and
+       letter-spacing to make room instead of shrinking the type. */
+    font-size: 11px;
+    letter-spacing: 0.06em;
   }
 
   /* Copy sized for a phone. */
