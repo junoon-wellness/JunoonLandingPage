@@ -75,6 +75,18 @@ export const SCREENS = {
     alt: 'The Junoon plan tab with a populated day of practice and habits',
     standIn: true,
   },
+  // ── v4 additions (spec §D). Both want their own shot; `habits.png` and
+  // `insights.png` are on Kush's list and can ride the Sunday capture.
+  habits: {
+    src: '/screenshots/screenshot-practice.png',
+    alt: 'A Junoon day with its habits listed and one of them ticked off',
+    standIn: true,
+  },
+  insights: {
+    src: '/screenshots/screenshot-coach-pick.png',
+    alt: 'A Junoon check-in asking how the session felt, feeding the coach insights',
+    standIn: true,
+  },
 } as const satisfies Record<string, Screen>
 
 export type ScreenKey = keyof typeof SCREENS
@@ -84,9 +96,30 @@ export function screen(key: ScreenKey): Screen {
 }
 
 /**
- * Hero carousel lineup (spec §C). Order is the product story: the ritual that
- * starts the week, the coach that shapes it, what it serves you, then the rest
- * of the app.
+ * WHAT THE v4 HERO PHONE SHOWS. (v4 spec §A3, §A6)
+ *
+ * This is the "one config entry" half of the video-ready seam: the other half
+ * is `components/hero/PhoneScreen.tsx`. To put Kush's screen recording in the
+ * hero later, this becomes
+ *
+ *   { kind: 'video', src: '/hero/ritual.mp4', poster: '/hero/ritual-poster.jpg',
+ *     alt: '…' }
+ *
+ * and nothing in the hero component changes.
+ */
+export type HeroScreen =
+  | { kind: 'image'; key: ScreenKey }
+  | { kind: 'video'; src: string; poster: string; alt: string }
+
+export const HERO_SCREEN: HeroScreen = { kind: 'image', key: 'ritualProposal' }
+
+/**
+ * Hero carousel lineup (v3 spec §C).
+ *
+ * ⚠️ v4 retires the carousel from the hero: the cinematic hero shows one
+ * hero-quality screen (`HERO_SCREEN`) rather than cycling six. This export and
+ * `DeviceCarousel` are kept until review confirms nothing else wants them
+ * (v4 ticket LV4-005).
  */
 export const HERO_SLIDES: { key: ScreenKey; label: string }[] = [
   { key: 'ritualProposal', label: 'Weekly Ritual' },

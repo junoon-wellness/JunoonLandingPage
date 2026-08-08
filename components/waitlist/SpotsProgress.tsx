@@ -6,13 +6,16 @@ interface SpotsProgressProps {
   /** Live active-subscriber count from beehiiv, server-rendered. */
   claimed: number
   isFlashing: boolean
+  /** v4 hero: smaller type and a hairline bar, so it reads as a caption
+      under the capture rather than a second call to action. */
+  slim?: boolean
 }
 
 /**
  * Urgency lives next to the action, not in a strip further down the page -
  * this sits directly under the hero form.
  */
-export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProps) {
+export default function SpotsProgress({ claimed, isFlashing, slim = false }: SpotsProgressProps) {
   const taken = Math.min(TOTAL_SPOTS, Math.max(0, claimed))
   const pct = Math.min(100, (taken / TOTAL_SPOTS) * 100)
 
@@ -33,7 +36,7 @@ export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProp
             display: 'inline-flex',
             alignItems: 'center',
             gap: '9px',
-            fontSize: '10px',
+            fontSize: slim ? '9px' : '10px',
             letterSpacing: '0.14em',
             color: 'var(--jn-mute)',
           }}
@@ -52,7 +55,7 @@ export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProp
         <span
           className={`count-up jn-mono${isFlashing ? ' flashing' : ''}`}
           style={{
-            fontSize: '11px',
+            fontSize: slim ? '10px' : '11px',
             letterSpacing: '0.06em',
             color: 'var(--jn-turmeric)',
             display: 'inline-block',
@@ -69,7 +72,7 @@ export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProp
         aria-valuemax={TOTAL_SPOTS}
         aria-label={`${taken} of ${TOTAL_SPOTS} founding spots claimed`}
         style={{
-          height: '3px',
+          height: slim ? '2px' : '3px',
           width: '100%',
           background: 'var(--jn-hairline)',
           borderRadius: '2px',

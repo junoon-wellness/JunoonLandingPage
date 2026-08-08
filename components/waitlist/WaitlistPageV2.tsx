@@ -2,14 +2,14 @@
 
 import { useCallback, useState } from 'react'
 import NavV2 from './NavV2'
-import HeroV2 from './HeroV2'
+import HeroV4 from './HeroV4'
 import StatBand from './StatBand'
 import WhatWereBuildingV2 from './WhatWereBuildingV2'
 import FeatureStory from './FeatureStory'
+import RestOfApp from './RestOfApp'
 import WalkthroughTeaser from './WalkthroughTeaser'
-import OfferBandV2 from './OfferBandV2'
-import FounderBlockV2 from './FounderBlockV2'
-import SecondCTA from './SecondCTA'
+import OfferFounderBand from './OfferFounderBand'
+import CTAFinale from './CTAFinale'
 import FooterV2 from './FooterV2'
 
 interface WaitlistPageV2Props {
@@ -39,7 +39,7 @@ export default function WaitlistPageV2({ initialClaimed, source }: WaitlistPageV
   return (
     <div id="top">
       <NavV2 />
-      <HeroV2
+      <HeroV4
         source={source}
         claimed={claimed}
         isFlashing={isFlashing}
@@ -48,10 +48,15 @@ export default function WaitlistPageV2({ initialClaimed, source }: WaitlistPageV
       <StatBand />
       <WhatWereBuildingV2 />
       <FeatureStory />
+      <RestOfApp />
       <WalkthroughTeaser />
-      <OfferBandV2 />
-      <FounderBlockV2 />
-      <SecondCTA source={source} onSignupSuccess={handleSignupSuccess} />
+      <OfferFounderBand />
+      <CTAFinale
+        source={source}
+        claimed={claimed}
+        isFlashing={isFlashing}
+        onSignupSuccess={handleSignupSuccess}
+      />
       <FooterV2 />
     </div>
   )

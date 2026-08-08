@@ -13,6 +13,16 @@ interface SignupFormProps {
   compact?: boolean
   /** Phone is only offered on the primary hero form. */
   withPhone?: boolean
+  /**
+   * v4 hero "compact capture": email and the button on ONE line, no first
+   * name, no phone. The full three-field form lives at #join in the finale.
+   *
+   * ⚠️ Layout only. The submit path, the payload and the success handling are
+   * byte-identical to every other variant: `firstName` simply goes up empty,
+   * which /api/waitlist already documents as supported ("a body with only
+   * `email` still works unchanged").
+   */
+  inline?: boolean
   id?: string
 }
 
@@ -28,6 +38,7 @@ export default function SignupForm({
   onSignupSuccess,
   compact = false,
   withPhone = false,
+  inline = false,
   id,
 }: SignupFormProps) {
   const [firstName, setFirstName] = useState('')
@@ -144,33 +155,44 @@ export default function SignupForm({
     <div id={id}>
       <form onSubmit={handleSubmit} noValidate>
         <div
-          className="v2-form-row"
+          className={`v2-form-row${inline ? ' v2-form-row-inline' : ''}`}
           style={{
             display: 'grid',
-            gridTemplateColumns: compact ? '1fr' : '150px 1fr auto',
+            gridTemplateColumns: inline ? '1fr auto' : compact ? '1fr' : '150px 1fr auto',
             gap: '10px',
             alignItems: 'end',
           }}
         >
-          <div>
-            <label htmlFor={nameId} style={labelStyle}>
-              First name
-            </label>
-            <input
-              id={nameId}
-              className="v2-field"
-              type="text"
-              name="firstName"
-              autoComplete="given-name"
-              placeholder="Optional"
-              value={firstName}
-              onChange={e => setFirstName(e.target.value)}
-              disabled={status === 'loading'}
-            />
-          </div>
+          {/* The inline (v4 hero) capture is email + button only. The full
+              three-field form lives at #join in the finale. */}
+          {!inline && (
+            <div>
+              {/* `.jn-mono` carries the family AND the uppercasing: labelStyle
+                  stopped setting text-transform when the class was introduced,
+                  so a label without it renders lowercase DM Sans. */}
+              <label htmlFor={nameId} className="jn-mono" style={labelStyle}>
+                First name
+              </label>
+              <input
+                id={nameId}
+                className="v2-field"
+                type="text"
+                name="firstName"
+                autoComplete="given-name"
+                placeholder="Optional"
+                value={firstName}
+                onChange={e => setFirstName(e.target.value)}
+                disabled={status === 'loading'}
+              />
+            </div>
+          )}
 
           <div>
-            <label htmlFor={emailId} className="jn-mono" style={labelStyle}>
+            <label
+              htmlFor={emailId}
+              className={`jn-mono${inline ? ' jn-visually-hidden' : ''}`}
+              style={inline ? undefined : labelStyle}
+            >
               Email address
             </label>
             <input

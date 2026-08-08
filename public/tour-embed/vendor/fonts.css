@@ -1,0 +1,54 @@
+/*
+ * Self-hosted faces for the walkthrough iframe (v4 spec §E).
+ *
+ * The artifact originally pulled Cormorant Garamond, DM Sans and DM Mono from
+ * fonts.googleapis.com. It does not need to: this site already ships all three
+ * under /fonts for next/font. The iframe is same-origin, so it can point
+ * straight at those files and the tour costs zero third-party requests.
+ *
+ * next/font's own @font-face rules are scoped to the parent document and
+ * fingerprinted at build time, so they cannot be reused from in here. These
+ * declarations are deliberately hand-written against the stable public paths.
+ *
+ * Cormorant and DM Sans are variable fonts, hence the weight RANGES.
+ */
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond[wght].ttf') format('truetype-variations');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('/fonts/CormorantGaramond-Italic[wght].ttf') format('truetype-variations');
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('/fonts/DMSans[opsz,wght].ttf') format('truetype-variations');
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Mono';
+  src: url('/fonts/DMMono-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Mono';
+  src: url('/fonts/DMMono-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
