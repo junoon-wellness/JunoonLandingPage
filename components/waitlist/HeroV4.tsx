@@ -1,7 +1,7 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { motion, transform, useMotionValueEvent, useScroll, useTransform } from 'framer-motion'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { motion, transform, useScroll, useTransform } from 'framer-motion'
 import SignupForm from './SignupForm'
 import SpotsProgress from './SpotsProgress'
 import PhoneScreen from '@/components/hero/PhoneScreen'
@@ -15,78 +15,84 @@ interface HeroV4Props {
 }
 
 const EASE = [0.22, 1, 0.36, 1] as const
+/** Below this the hero stacks and the lateral move is switched off. */
+const TWO_COLUMN_MIN = 900
+
+// useLayoutEffect warns during SSR; useEffect is the correct no-op there.
+const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 /**
- * THE CINEMATIC HERO (v4 spec §A)
+ * THE CINEMATIC HERO (v4 spec §A, restructured round 3 at Kush's request)
  *
- * Full-bleed and centred. The phone starts at the bottom edge of the fold with
- * its top third showing, tilted back; as the visitor scrolls the first
- * viewport it rises, straightens and settles into full view while the copy
- * travels up and out. Past the pin everything scrolls away with the page.
+ * The video is the first thing and it is alone: it opens centred in the fold,
+ * slightly oversized. As the visitor scrolls the first viewport it slides to
+ * the right and settles at its resting size while the copy column assembles on
+ * the left, landing in the two-column shape v3 used. Past the pin the whole
+ * thing scrolls away with the page.
+ *
+ * ⚠️ The lateral distance is MEASURED, not guessed. The phone lives in the
+ * right half of a two-column grid, so centring it means moving it left by a
+ * quarter of the stage plus half the gap. Hard-coding that in vw breaks the
+ * moment the gap or the padding changes; measuring keeps the phone genuinely
+ * centred at every width.
  *
  * ⚠️ FUNCTION-FORM useTransform ONLY, same rule as the scroll story. The
- * (value, inputRange, outputRange) form gets compiled into a native WAAPI
- * animation whose keyframe offsets must sit inside [0,1], and it produced
- * measurably wrong values. The full account is in the header of
- * components/story/ScrollStory.tsx.
- *
- * WHY THE COPY DOES NOT FADE: fading it would leave an invisible but still
- * clickable email field sitting over the phone. Instead it translates by more
- * than its own height, so it is either on screen and interactive or clipped
- * out of the pin entirely. `data-offstage` then takes it out of the tab order
- * and the hit-test the moment it has left, which is what keeps the capture
- * honest at every scroll position (gate F1).
+ * array form compiles to a native WAAPI animation and returns wrong values.
+ * See the header of components/story/ScrollStory.tsx.
  */
 export default function HeroV4({ source, claimed, isFlashing, onSignupSuccess }: HeroV4Props) {
   const sectionRef = useRef<HTMLElement>(null)
-  const [offstage, setOffstage] = useState(false)
+  const stageRef = useRef<HTMLDivElement>(null)
+  const [shift, setShift] = useState(0)
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end end'],
   })
 
-  // The rise. Settles by 0.85 so there is a beat of stillness before the pin
-  // releases, rather than the phone still moving as the next section arrives.
-  const riseY = useTransform(scrollYProgress, p => `${transform([0, 0.85], [58, 0])(p)}%`)
-  const riseTilt = useTransform(scrollYProgress, transform([0, 0.85], [15, 0]))
-  const riseScale = useTransform(scrollYProgress, transform([0, 0.85], [0.93, 1]))
-  const glow = useTransform(scrollYProgress, transform([0, 0.6], [0.35, 1]))
+  // Measured before paint so the phone is never briefly off-centre.
+  useIsoLayoutEffect(() => {
+    const el = stageRef.current
+    if (!el) return
+    const measure = () => {
+      const { width } = el.getBoundingClientRect()
+      if (window.innerWidth < TWO_COLUMN_MIN) {
+        setShift(0) // stacked: the phone is already centred
+        return
+      }
+      const gap = parseFloat(getComputedStyle(el).columnGap) || 64
+      setShift(-(width / 4 + gap / 2))
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    window.addEventListener('resize', measure)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', measure)
+    }
+  }, [])
 
-  // Copy clears itself: -118% of its own height, so nothing is left peeking.
-  const copyY = useTransform(scrollYProgress, p => `${transform([0, 0.8], [0, -118])(p)}%`)
-
-  useMotionValueEvent(scrollYProgress, 'change', p => setOffstage(p > 0.72))
+  // The phone travels first; the copy follows into the space it vacates.
+  const phoneX = useTransform(scrollYProgress, transform([0, 0.55], [shift, 0]))
+  const phoneScale = useTransform(scrollYProgress, transform([0, 0.55], [1.12, 1]))
+  const copyOpacity = useTransform(scrollYProgress, transform([0.26, 0.6], [0, 1]))
+  const copyX = useTransform(scrollYProgress, transform([0.26, 0.6], [-44, 0]))
+  const glow = useTransform(scrollYProgress, transform([0, 0.55], [1, 0.75]))
 
   return (
     <section ref={sectionRef} className="jn-hero" aria-label="Junoon founding member waitlist">
       <div className="jn-hero-pin">
         <div className="v2-grid" aria-hidden="true" />
 
-        <motion.div
-          className="jn-hero-copy jn-reveal"
-          style={{ y: copyY }}
-          data-offstage={offstage}
-        >
-          <motion.div
-            className="jn-hero-inner"
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: EASE }}
-          >
+        <div className="jn-hero-stage" ref={stageRef}>
+          {/*
+            The copy is present in the DOM from the start, so the H1 is always
+            there for crawlers and assistive tech; only its paint is deferred.
+          */}
+          <motion.div className="jn-hero-copy jn-reveal" style={{ opacity: copyOpacity, x: copyX }}>
             <div className="eyebrow jn-hero-eyebrow">Founding member waitlist</div>
 
-            {/*
-              The clause is a PLAIN <em>, not a separately animated one.
-
-              v3 gave it its own delayed fade. On this page that is a bad
-              trade: the whole headline is one 88px line, and an independent
-              animation that fails, throttles or is interrupted leaves the
-              hero reading "Wellness rooted in" with its punchline missing.
-              Measured exactly that while building. The line now arrives as
-              one unit with the rest of the copy, which cannot strand half a
-              sentence and reads better at this size anyway.
-            */}
             <h1 className="jn-hero-h1">
               Wellness rooted in <em>where you&apos;re from.</em>
             </h1>
@@ -95,28 +101,35 @@ export default function HeroV4({ source, claimed, isFlashing, onSignupSuccess }:
               Live classes, on-demand practice, and an AI Coach that learns your week.
             </p>
 
+            {/*
+              THE FULL FORM LIVES HERE NOW (round 3). The hero takes name,
+              email and phone; the close at the bottom is the short one. `#join`
+              moved with it, so the nav CTA still lands on the form that can
+              actually take a phone number.
+            */}
             <div className="jn-hero-capture">
-              <SignupForm source={source} onSignupSuccess={onSignupSuccess} inline />
+              <SignupForm
+                id="join"
+                source={source}
+                onSignupSuccess={onSignupSuccess}
+                withPhone
+              />
             </div>
 
             <div className="jn-hero-progress">
               <SpotsProgress claimed={claimed} isFlashing={isFlashing} slim />
             </div>
           </motion.div>
-        </motion.div>
 
-        <div className="jn-hero-stage">
-          <motion.div className="jn-hero-glow" aria-hidden="true" style={{ opacity: glow }} />
-          <motion.div
-            className="jn-hero-phone v2-device"
-            style={{
-              y: riseY,
-              rotateX: riseTilt,
-              scale: riseScale,
-              transformPerspective: 1400,
-            }}
-          >
-            <PhoneScreen screen={HERO_SCREEN} sizes="(max-width: 768px) 60vw, 300px" priority />
+          <motion.div className="jn-hero-phone-wrap" style={{ x: phoneX, scale: phoneScale }}>
+            <motion.div className="jn-hero-glow" aria-hidden="true" style={{ opacity: glow }} />
+            <div className="jn-hero-phone v2-device">
+              <PhoneScreen
+                screen={HERO_SCREEN}
+                sizes="(max-width: 900px) 62vw, 300px"
+                priority
+              />
+            </div>
           </motion.div>
         </div>
       </div>

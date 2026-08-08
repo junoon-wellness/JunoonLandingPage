@@ -2,9 +2,9 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-HOLD=1.8; FADE=0.45; FPS=30
+HOLD=1.85; FADE=0.28; FPS=30
 W=590; H=1280
-SEGF=68
+SEGF=65
 FRAMES=(frames/01-the-way-in.png frames/02-onboarding.png frames/03-plan-reveal.png \
         frames/04-plan-tab.png frames/05-edit-sheet.png frames/06-coach.png \
         frames/07-library.png frames/08-ritual.png)

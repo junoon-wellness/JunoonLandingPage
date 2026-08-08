@@ -933,56 +933,46 @@ body::before {
   height: 100vh;
   height: 100svh;
   overflow: hidden;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  /* Clears the fixed nav, which the hero must start flush under (spec A5). */
-  padding-top: var(--jn-nav-h);
+  display: block;
   --jn-nav-h: 58px;
+}
+
+/* Two columns: copy left, phone right. At the top of the fold the phone is
+   translated to the middle of the stage and the copy has not arrived, so the
+   visitor sees the video alone; both settle into this grid on scroll. */
+.jn-hero-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
+  height: 100%;
+  padding: var(--jn-nav-h) 48px 0;
 }
 
 /* ── the copy column ── */
 .jn-hero-copy {
-  grid-row: 1;
   position: relative;
-  /* Above the phone in the stack purely for hit-testing: the two never
-     overlap visually, but the capture must win if they ever do. */
+  /* Above the phone purely for hit-testing: they should never overlap, but
+     the form must win if they ever do. */
   z-index: 3;
-  padding: clamp(24px, 5vh, 56px) 24px 0;
-  text-align: center;
-  will-change: transform;
-}
-
-/* Set once the copy has travelled far enough to be clipped out of the pin.
-   Without this the email field would still be focusable and clickable while
-   completely invisible. */
-.jn-hero-copy[data-offstage='true'] {
-  pointer-events: none;
-  visibility: hidden;
-}
-
-/* Wide enough for the headline to break at its own clause rather than
-   mid-phrase ("Wellness rooted / in" was the 760px result). The sub and the
-   capture set their own, narrower measures below. */
-.jn-hero-inner {
-  max-width: min(1100px, 92vw);
-  margin: 0 auto;
+  text-align: left;
+  will-change: transform, opacity;
 }
 
 .jn-hero-eyebrow {
-  /* The ::before rule is a flex child, so centring needs the flex box itself
-     centred rather than text-align. */
-  justify-content: center;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .jn-hero-h1 {
   font-family: var(--font-cormorant), serif;
-  font-size: clamp(48px, 7vw, 88px);
+  /* Smaller than the centred banner version: it now shares the fold with the
+     phone instead of spanning it. */
+  font-size: clamp(40px, 4.4vw, 64px);
   font-weight: 400;
-  line-height: 1.02;
-  letter-spacing: -0.02em;
+  line-height: 1.04;
+  letter-spacing: -0.018em;
   color: var(--jn-text);
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   text-wrap: balance;
 }
 .jn-hero-h1 em {
@@ -991,34 +981,32 @@ body::before {
 }
 
 .jn-hero-sub {
-  font-size: clamp(15px, 1.5vw, 17px);
+  font-size: 15px;
   font-weight: 300;
-  line-height: 1.6;
+  line-height: 1.7;
   color: var(--jn-text-dim);
-  max-width: 520px;
-  margin: 0 auto 28px;
-  text-wrap: balance;
+  max-width: 460px;
+  margin: 0 0 26px;
 }
 
 .jn-hero-capture {
-  max-width: 460px;
-  margin: 0 auto;
+  max-width: 480px;
 }
 
 .jn-hero-progress {
-  max-width: 340px;
-  margin: 18px auto 0;
+  max-width: 420px;
+  margin: 22px 0 0;
 }
 
 /* ── the phone stage ── */
-.jn-hero-stage {
-  grid-row: 2;
+.jn-hero-phone-wrap {
   position: relative;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   min-height: 0;
   z-index: 2;
+  will-change: transform;
 }
 
 .jn-hero-phone {
@@ -1026,9 +1014,9 @@ body::before {
      and the tallest this can be while its 640:1391 width still fits the
      gutters. Same discipline as the v3 mobile pin. */
   height: min(
-    620px,
-    calc(100svh - var(--jn-nav-h) - 48px),
-    calc((100vw - 48px) * 1391 / 640)
+    600px,
+    calc(100svh - var(--jn-nav-h) - 64px),
+    calc((50vw - 80px) * 1391 / 640)
   );
   aspect-ratio: 640 / 1391;
   /* Pivot at the base so the tilt reads as the phone standing up, not
@@ -1067,25 +1055,23 @@ body::before {
 /* Reduced motion: no rise, no tilt. The phone sits where it lands and the
    copy stays put, so the whole hero is legible without a single scroll. */
 @media (prefers-reduced-motion: reduce) {
-  .jn-hero {
-    height: auto;
-  }
+  .jn-hero { height: auto; }
   .jn-hero-pin {
     position: static;
     height: auto;
     overflow: visible;
-    padding-bottom: 56px;
   }
-  .jn-hero-copy {
+  /* No travel and no fade-in: the two-column layout is simply there. */
+  .jn-hero-stage {
+    height: auto;
+    padding: calc(var(--jn-nav-h) + 40px) 48px 64px;
+  }
+  .jn-hero-copy,
+  .jn-hero-phone-wrap {
     transform: none !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
+    opacity: 1 !important;
   }
-  .jn-hero-phone {
-    transform: none !important;
-    height: min(560px, 70vh);
-    margin-top: 40px;
-  }
+  .jn-hero-phone { height: min(520px, 64vh); }
   .jn-hero-glow { opacity: 1 !important; }
 }
 
@@ -1227,7 +1213,7 @@ body::before {
   gap: 56px;
   align-items: center;
   margin: 0 48px;
-  padding: 48px;
+  padding: 40px 48px 36px;
   background: rgba(181, 82, 42, 0.05);
   border: 0.5px solid rgba(181, 82, 42, 0.3);
 }
@@ -1259,7 +1245,7 @@ body::before {
   display: flex;
   align-items: baseline;
   gap: 14px;
-  margin-top: 26px;
+  margin-top: 20px;
 }
 
 /* The founder half, separated by a hairline rather than a second band. */
@@ -1307,7 +1293,8 @@ body::before {
   overflow: hidden;
   background: var(--jn-surface);
   border-top: 0.5px solid rgba(245, 240, 232, 0.06);
-  padding: clamp(72px, 12vh, 128px) 48px;
+  /* Tightened round 3: the gap under the offer band read as a dead zone. */
+  padding: clamp(56px, 7vh, 84px) 48px clamp(64px, 8vh, 96px);
   text-align: center;
 }
 
@@ -1344,7 +1331,7 @@ body::before {
   line-height: 1.75;
   color: var(--jn-text-dim);
   max-width: 480px;
-  margin: 0 auto 34px;
+  margin: 0 auto 26px;
 }
 
 /* The form is left-aligned inside a centred column: centred labels over
@@ -1366,7 +1353,7 @@ body::before {
   gap: 8px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 24px;
 }
 
 .jn-finale-chip {
@@ -1585,6 +1572,33 @@ body::before {
   .jn-story-stage { display: none; }
   .jn-story-rail { display: none; }
   .jn-story-cards { display: block; }
+}
+
+/* ─── Hero stacks below the two-column threshold ───
+   Matches TWO_COLUMN_MIN in HeroV4.tsx, which zeroes the lateral travel at
+   the same width. If one moves, move the other. */
+@media (max-width: 899.98px) {
+  .jn-hero-stage {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 28px;
+    align-content: center;
+    padding: calc(var(--jn-nav-h) + 12px) 24px 0;
+  }
+  /* Phone first: it is still the thing you see before anything else. */
+  .jn-hero-phone-wrap { order: -1; }
+  .jn-hero-copy { text-align: center; }
+  .jn-hero-eyebrow { justify-content: center; }
+  .jn-hero-sub,
+  .jn-hero-capture,
+  .jn-hero-progress { margin-left: auto; margin-right: auto; }
+  .jn-hero-phone {
+    height: min(
+      340px,
+      calc(100svh - var(--jn-nav-h) - 400px),
+      calc((100vw - 48px) * 1391 / 640)
+    );
+  }
 }
 
 /* ─── Mobile ─── */

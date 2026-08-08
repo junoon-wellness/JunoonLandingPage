@@ -14,12 +14,11 @@ interface CTAFinaleProps {
 /**
  * THE CLOSE (v4 spec §C2). SecondCTA, grown into a statement.
  *
- * ⚠️ `#join` LIVES HERE IN v4, not in the hero. The hero's compact capture is
- * email-only; this is the full three-field form, so the nav's "Join waitlist"
- * has to land on the one that can take a phone number. `#join` is passed to
- * SignupForm, which puts it on the form AND on its success state, so the
- * anchor survives someone having already signed up (a v3 round-1 fix worth
- * not losing).
+ * ⚠️ ROUND 3 SWAPPED THE FORMS. The hero now carries the full three-field
+ * form and `#join` with it; this is the short email-only capture. The
+ * reasoning: someone at the bottom of the page has already read everything
+ * and just needs the smallest possible ask, while someone at the top is the
+ * one worth asking for a phone number.
  */
 export default function CTAFinale({
   source,
@@ -43,12 +42,7 @@ export default function CTAFinale({
         </Reveal>
 
         <Reveal delay={0.1} className="jn-finale-form">
-          <SignupForm
-            id="join"
-            source={source}
-            onSignupSuccess={onSignupSuccess}
-            withPhone
-          />
+          <SignupForm source={source} onSignupSuccess={onSignupSuccess} inline />
         </Reveal>
 
         <Reveal delay={0.16} className="jn-finale-progress">
