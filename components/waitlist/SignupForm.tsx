@@ -1,6 +1,6 @@
 'use client'
 
-import { useId, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 import { isValidEmail, isValidOptionalPhone } from '@/lib/constants'
 
 type Status = 'idle' | 'loading' | 'success' | 'already' | 'error'
@@ -36,6 +36,10 @@ export default function SignupForm({
   const [status, setStatus] = useState<Status>('idle')
   const [fieldError, setFieldError] = useState<FieldError>(null)
   const [serverError, setServerError] = useState('')
+  // React state updates aren't guaranteed to re-render (and disable the
+  // button) between two clicks fired in quick succession, so a synchronous
+  // ref — not the `status` state — is what actually blocks a double-submit.
+  const submittingRef = useRef(false)
 
   const uid = useId()
   const nameId = `${uid}-name`
@@ -45,7 +49,7 @@ export default function SignupForm({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (status === 'loading') return
+    if (submittingRef.current) return
 
     // Validate locally first so bad input gets a specific message rather than
     // the generic server-error copy.
@@ -60,9 +64,15 @@ export default function SignupForm({
       return
     }
 
+    submittingRef.current = true
     setFieldError(null)
     setServerError('')
     setStatus('loading')
+
+    // Without this, a hung beehiiv request leaves the button stuck on
+    // "Joining…" forever with no way for the user to recover.
+    const timeout = new AbortController()
+    const timeoutId = setTimeout(() => timeout.abort(), 15_000)
 
     try {
       const res = await fetch('/api/waitlist', {
@@ -74,6 +84,7 @@ export default function SignupForm({
           phone: withPhone ? phone : '',
           source,
         }),
+        signal: timeout.signal,
       })
       const data = await res.json()
 
@@ -86,8 +97,16 @@ export default function SignupForm({
         setServerError(typeof data.error === 'string' ? data.error : '')
         setStatus('error')
       }
-    } catch {
+    } catch (err) {
+      setServerError(
+        err instanceof DOMException && err.name === 'AbortError'
+          ? 'That took too long. Check your connection and try again.'
+          : ''
+      )
       setStatus('error')
+    } finally {
+      clearTimeout(timeoutId)
+      submittingRef.current = false
     }
   }
 
@@ -163,6 +182,7 @@ export default function SignupForm({
               name="firstName"
               autoComplete="given-name"
               placeholder="Optional"
+              maxLength={80}
               value={firstName}
               onChange={e => setFirstName(e.target.value)}
               disabled={status === 'loading'}
@@ -181,6 +201,7 @@ export default function SignupForm({
               autoComplete="email"
               inputMode="email"
               placeholder="you@email.com"
+              maxLength={254}
               required
               aria-invalid={fieldError === 'email'}
               aria-describedby={fieldError ? errorId : undefined}
@@ -213,6 +234,7 @@ export default function SignupForm({
               autoComplete="tel"
               inputMode="tel"
               placeholder="+1 555 123 4567"
+              maxLength={32}
               aria-invalid={fieldError === 'phone'}
               aria-describedby={fieldError ? errorId : undefined}
               value={phone}

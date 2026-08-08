@@ -17,7 +17,54 @@ const BEEHIIV_PUBLICATION_ID = rawPubId
     : `pub_${rawPubId}`
   : undefined;
 
+// Best-effort per-IP rate limit: in-memory, so it resets on cold start and
+// isn't shared across instances/regions. That's enough to blunt casual
+// scripted abuse (spam signups, or probing which emails are already
+// subscribed via the alreadySubscribed response) without provisioning a
+// shared store. If this ever needs to hold under real distributed abuse,
+// swap the Map below for a durable limiter (e.g. Upstash via Vercel
+// Marketplace) — same call sites, just a different `isRateLimited`.
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX = 5;
+const rateLimitHits = new Map<string, { count: number; resetAt: number }>();
+let rateLimitSweepCounter = 0;
+
+function isRateLimited(ip: string): boolean {
+  // Sweep expired entries periodically so a long-lived warm instance doesn't
+  // accumulate one entry per unique IP forever.
+  rateLimitSweepCounter += 1;
+  if (rateLimitSweepCounter % 500 === 0) {
+    const now = Date.now();
+    for (const [key, entry] of rateLimitHits) {
+      if (now > entry.resetAt) rateLimitHits.delete(key);
+    }
+  }
+
+  const now = Date.now();
+  const entry = rateLimitHits.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitHits.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+  entry.count += 1;
+  return entry.count > RATE_LIMIT_MAX;
+}
+
+function getClientIp(req: Request): string {
+  // Vercel (and most proxies) set x-forwarded-for as "client, proxy1, proxy2".
+  const forwarded = req.headers.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim();
+  return req.headers.get("x-real-ip") ?? "unknown";
+}
+
 export async function POST(req: Request) {
+  if (isRateLimited(getClientIp(req))) {
+    return Response.json(
+      { ok: false, error: "Too many requests. Please wait a moment and try again." },
+      { status: 429 }
+    );
+  }
+
   let body: { email?: unknown; firstName?: unknown; phone?: unknown; source?: unknown };
   try {
     body = await req.json();
@@ -27,7 +74,10 @@ export async function POST(req: Request) {
 
   const email = body.email;
 
-  if (typeof email !== "string" || !isValidEmail(email)) {
+  // RFC 5321's practical max. firstName/phone are bounded below via .slice();
+  // email can't be silently truncated without changing what address is
+  // subscribed, so an over-length value is rejected outright instead.
+  if (typeof email !== "string" || email.length > 254 || !isValidEmail(email)) {
     return Response.json({ ok: false, error: "A valid email is required" }, { status: 400 });
   }
 
