@@ -63,6 +63,15 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/*
+  The nav is fixed, so "Join waitlist" would drop the form's first label
+  underneath it. Clears the tall (unscrolled) nav plus a little air.
+*/
+#join,
+#top {
+  scroll-margin-top: 96px;
+}
+
 body {
   background-color: var(--jn-bg);
   color: var(--jn-text);
@@ -1063,8 +1072,22 @@ body::before {
   .v2-device-front { width: 244px; height: 530px; }
   .v2-devices { min-height: 560px; }
 
-  /* Scroll story: no pinning below 1024px. The stacked cards are the
-     layout here, not a degraded desktop. */
+  .jn-teaser {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 56px 32px;
+  }
+  .jn-teaser-strip { justify-content: center; }
+}
+
+/* ─── Scroll story: no pinning below 1024px ───
+   Deliberately 1023.98 and not 1024: the spec pins at ≥1024px, and
+   `max-width: 1024px` would also catch a viewport of exactly 1024. The
+   stacked cards are the layout at these widths, not a degraded desktop. */
+@media (max-width: 1023.98px) {
+  /* Padding belongs here, not in the 1024px block: while the section is
+     pinned its height must be exactly N x 100vh, and vertical padding would
+     push the sticky child out of alignment. */
   .jn-story {
     height: auto;
     padding: 48px 32px;
@@ -1078,13 +1101,6 @@ body::before {
   .jn-story-stage { display: none; }
   .jn-story-rail { display: none; }
   .jn-story-cards { display: block; }
-
-  .jn-teaser {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    padding: 56px 32px;
-  }
-  .jn-teaser-strip { justify-content: center; }
 }
 
 /* ─── Hero stacks before the rest of the page does ─── */

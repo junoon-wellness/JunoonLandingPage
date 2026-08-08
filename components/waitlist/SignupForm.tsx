@@ -93,7 +93,12 @@ export default function SignupForm({
 
   if (status === 'success' || status === 'already') {
     return (
+      // Carries `id` for the same reason the form below does: this branch
+      // replaces the form outright, and without it the #join anchor stops
+      // existing the moment someone signs up, leaving the nav's "Join
+      // waitlist" button pointing at nothing.
       <div
+        id={id}
         role="status"
         aria-live="polite"
         style={{
