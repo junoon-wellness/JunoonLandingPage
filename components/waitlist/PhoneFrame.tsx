@@ -11,8 +11,12 @@ interface PhoneFrameProps {
 }
 
 /**
- * Static version of the frame used by DeviceCarousel - same bezel, radius and
- * shadow, so product shots look identical wherever they appear on the page.
+ * The page's phone frame: bezel, radius and shadow, so product shots look
+ * identical wherever they appear.
+ *
+ * ⚠️ Still load-bearing after v4 round 2 deleted DeviceCarousel. The scroll
+ * story's mobile/reduced-motion cards and the feature rail both render through
+ * this; it is not carousel leftovers.
  */
 export default function PhoneFrame({
   src,

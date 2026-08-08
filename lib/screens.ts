@@ -111,21 +111,27 @@ export type HeroScreen =
   | { kind: 'image'; key: ScreenKey }
   | { kind: 'video'; src: string; poster: string; alt: string }
 
-export const HERO_SCREEN: HeroScreen = { kind: 'image', key: 'ritualProposal' }
-
 /**
- * Hero carousel lineup (v3 spec §C).
+ * ⚠️ MOCK. `mock-tour.mp4` is 8 screens captured from the /tour walkthrough,
+ * which is a stylised recreation of the app, NOT real app pixels. It exists so
+ * the motion concept can be judged and so this video path is exercised before
+ * Kush's real recording arrives (v4 ticket LV4-014).
  *
- * ⚠️ v4 retires the carousel from the hero: the cinematic hero shows one
- * hero-quality screen (`HERO_SCREEN`) rather than cycling six. This export and
- * `DeviceCarousel` are kept until review confirms nothing else wants them
- * (v4 ticket LV4-005).
+ * Swapping in the real recording is this one line plus the two files.
+ * Rebuild command and capture script: see the LV4-014 notes in LANDING-V4-LOG.
  */
-export const HERO_SLIDES: { key: ScreenKey; label: string }[] = [
-  { key: 'ritualProposal', label: 'Weekly Ritual' },
-  { key: 'coachChat', label: 'AI Coach' },
-  { key: 'coachPicks', label: 'Coach Picks' },
-  { key: 'library', label: 'Library' },
-  { key: 'breathworkSession', label: 'Breathwork' },
-  { key: 'planTab', label: 'Your Plan' },
-]
+export const HERO_SCREEN: HeroScreen = {
+  kind: 'video',
+  src: '/hero/mock-tour.mp4',
+  poster: '/hero/mock-tour-poster.png',
+  alt: 'A walkthrough of the Junoon app: signing in, the onboarding questions, the week the coach proposes, the plan, the coach conversation, the library, and the Sunday ritual.',
+}
+
+/** The still that shipped before the mock video, kept for an easy revert. */
+export const HERO_SCREEN_STILL: HeroScreen = { kind: 'image', key: 'ritualProposal' }
+
+/*
+ * HERO_SLIDES (the v3 carousel lineup) was deleted in v4 round 2 along with
+ * DeviceCarousel and HeroV2. The cinematic hero shows one screen through
+ * HERO_SCREEN rather than cycling six.
+ */

@@ -349,19 +349,6 @@ body::before {
   z-index: 2;
   padding: 56px 48px;
 }
-/* ─── Hero ───
-   `align-items: start` so the copy column's top edge lines up with the phone
-   instead of floating in the vertical centre, which left a dead gap above the
-   eyebrow and pushed the signup form too far down the fold. */
-.v2-hero {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  align-items: start;
-  gap: 64px;
-  padding: 104px 48px 72px;
-}
-
 /* ─── Nav ─── (spec §B1)
    Two states driven by [data-scrolled] from NavV2: airy at the top of the
    page, tighter and more opaque once you leave the hero. */
@@ -426,156 +413,6 @@ body::before {
   .v2-nav::after { transition: none !important; }
 }
 
-/* ─── Device frame + product carousel ─── */
-.v2-devices {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 520px;
-}
-
-.v2-carousel-wrap {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 22px;
-}
-
-/* The frame is a button - reset UA styling, keep the frame look */
-.v2-carousel-btn {
-  display: block;
-  padding: 0;
-  cursor: pointer;
-  background: var(--jn-surface);
-  -webkit-tap-highlight-color: transparent;
-  transition: transform 0.45s var(--jn-ease);
-}
-.v2-carousel-btn:hover {
-  transform: translateY(-4px);
-}
-.v2-carousel-btn:active {
-  transform: translateY(-1px) scale(0.995);
-}
-/* When the pointer-tilt is driving the frame, its own hover transform would
-   fight the spring. The tilt wrapper owns movement in that case. */
-.v2-tilt .v2-carousel-btn:hover,
-.v2-tilt .v2-carousel-btn:active {
-  transform: none;
-}
-
-.v2-tilt {
-  transform-style: preserve-3d;
-  will-change: transform;
-}
-
-.v2-carousel-track {
-  display: flex;
-  height: 100%;
-  will-change: transform;
-}
-
-.v2-carousel-slide {
-  position: relative;
-  flex: 0 0 100%;
-  height: 100%;
-}
-.v2-carousel-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  user-select: none;
-}
-
-/* ─── Progress pills / labels ─── (spec §B2)
-   Capped so six labels break into two even rows under the phone rather than
-   stretching wide and orphaning the last one on a line of its own. */
-.v2-dots {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 340px;
-}
-
-.v2-dot {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 12px;
-  border: 0.5px solid transparent;
-  border-radius: 100px;
-  background: transparent;
-  cursor: pointer;
-  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--jn-text-faint);
-  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-}
-.v2-dot:hover {
-  color: rgba(245, 240, 232, 0.7);
-}
-.v2-dot.is-active {
-  color: var(--jn-turmeric);
-  border-color: rgba(200, 144, 42, 0.3);
-  background: rgba(200, 144, 42, 0.06);
-}
-
-/* The dot became a progress track: the active pill fills over the carousel's
-   own 3600ms interval, so the control tells you when the next slide lands. */
-.v2-dot-mark {
-  position: relative;
-  width: 5px;
-  height: 5px;
-  border-radius: 100px;
-  background: currentColor;
-  opacity: 0.55;
-  overflow: hidden;
-  transition: width 0.42s var(--jn-ease), opacity 0.3s ease;
-}
-.v2-dot.is-active .v2-dot-mark {
-  width: 20px;
-  opacity: 0.28;
-}
-
-.v2-dot-fill {
-  display: block;
-  height: 100%;
-  width: 100%;
-  background: currentColor;
-  border-radius: inherit;
-  /* Resting state is FULL, not empty. If the animation never runs (hidden
-     tab, reduced motion) the pill reads as complete rather than blank -
-     same class of bug as animation-fill-mode: both on a fade-in. */
-  transform: scaleX(1);
-  transform-origin: left;
-}
-.v2-dot.is-active .v2-dot-fill {
-  animation: dotFill 3600ms linear;
-}
-.v2-carousel-wrap[data-paused='true'] .v2-dot-fill {
-  animation-play-state: paused;
-}
-@keyframes dotFill {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .v2-carousel-btn:hover,
-  .v2-carousel-btn:active {
-    transform: none;
-  }
-  .v2-dot-fill { animation: none !important; transform: scaleX(1) !important; }
-  .v2-dot-mark { transition: none; }
-}
-
 .v2-device {
   position: relative;
   border-radius: 40px;
@@ -594,11 +431,6 @@ body::before {
   object-position: top center;
 }
 /* Sized to the screenshots' own 919:1998 aspect so `cover` never crops. */
-.v2-device-front {
-  width: 284px;
-  height: 617px;
-  z-index: 2;
-}
 
 /* ─── Stat band ─── */
 .v2-stats {
@@ -1562,10 +1394,6 @@ body::before {
 
 /* ─── Tablet ─── */
 @media (max-width: 1024px) {
-  .v2-hero {
-    gap: 40px;
-    padding: 120px 32px 64px;
-  }
   .v2-nav { padding: 16px 32px; }
   .v2-nav[data-scrolled='true'] { padding: 10px 32px; }
   .v2-section { padding: 48px 32px; }
@@ -1573,8 +1401,6 @@ body::before {
   .v2-offer { margin: 0 32px; padding: 36px 32px; }
   .v2-footer { padding: 24px 32px; }
   .v2-two-col { gap: 40px; }
-  .v2-device-front { width: 244px; height: 530px; }
-  .v2-devices { min-height: 560px; }
 
   .jn-teaser {
     grid-template-columns: 1fr;
@@ -1761,29 +1587,6 @@ body::before {
   .jn-story-cards { display: block; }
 }
 
-/* ─── Hero stacks before the rest of the page does ─── */
-@media (max-width: 900px) {
-  .v2-hero {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  /* Dissolve the copy wrapper so its children become grid items of .v2-hero.
-     That lets the carousel sit between the paragraph and the signup form,
-     rather than being stuck below the whole text column - the product should
-     be visible before the user is asked to sign up. */
-  .v2-hero-copy {
-    display: contents;
-  }
-
-  .v2-hero-eyebrow { order: 1; }
-  .v2-hero-headline { order: 2; }
-  .v2-hero-sub { order: 3; margin-bottom: 0 !important; }
-  .v2-devices { order: 4; }
-  .v2-hero-form { order: 5; }
-  .v2-hero-progress { order: 6; }
-}
-
 /* ─── Mobile ─── */
 @media (max-width: 768px) {
   .v2-nav { padding: 12px 20px; }
@@ -1815,7 +1618,6 @@ body::before {
   .jn-hero-h1 { font-size: clamp(38px, 11vw, 54px); }
   .jn-hero-sub { font-size: 14px; margin-bottom: 22px; }
   .jn-hero-progress { margin-top: 14px; }
-  .v2-hero { padding: 104px 24px 56px; }
   .v2-section { padding: 44px 24px; }
   .v2-stats {
     flex-wrap: wrap;
@@ -1892,10 +1694,6 @@ body::before {
     text-align: center;
     padding: 24px;
   }
-  .v2-devices { min-height: 520px; }
-  .v2-device-front { width: 218px; height: 474px; }
-  .v2-dot { padding: 6px 9px; font-size: 8px; letter-spacing: 0.1em; }
-  .v2-dot.is-active .v2-dot-mark { width: 16px; }
   /* Fights the inline grid-template-columns on the form row. */
   .v2-form-row {
     grid-template-columns: 1fr !important;
