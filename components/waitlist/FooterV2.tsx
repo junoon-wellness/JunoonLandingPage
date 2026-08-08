@@ -17,11 +17,11 @@ const socials = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/company/junoon-wellness/' },
 ]
 
+// Structure is deliberately untouched in v3 (spec §B8). Only the hardcoded
+// Courier stack and hex values moved onto the type/colour tokens.
 const linkStyle: React.CSSProperties = {
-  fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
   fontSize: '10px',
   letterSpacing: '0.14em',
-  textTransform: 'uppercase',
   textDecoration: 'none',
   minHeight: '44px',
   display: 'inline-flex',
@@ -32,7 +32,7 @@ export default function FooterV2() {
   return (
     <footer
       className="v2-footer"
-      style={{ position: 'relative', zIndex: 2, background: '#1C1410' }}
+      style={{ position: 'relative', zIndex: 2, background: 'var(--jn-bg)' }}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
         <span
@@ -42,17 +42,18 @@ export default function FooterV2() {
             fontWeight: 600,
             letterSpacing: '0.2em',
             textTransform: 'uppercase',
-            color: '#D4A96A',
+            color: 'var(--jn-gold)',
           }}
         >
           Junoon Wellness
         </span>
         <span
+          className="jn-mono"
           style={{
-            fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
             fontSize: '10px',
             letterSpacing: '0.1em',
-            color: '#8C7B6B',
+            textTransform: 'none',
+            color: 'var(--jn-mute)',
           }}
         >
           © {new Date().getFullYear()} Junoon Wellness. All rights reserved.
@@ -65,7 +66,12 @@ export default function FooterV2() {
       >
         <div style={{ display: 'flex', gap: '18px', flexWrap: 'wrap' }}>
           {legalLinks.map(l => (
-            <a key={l.label} href={l.href} className="v2-link v2-footer-link" style={linkStyle}>
+            <a
+              key={l.label}
+              href={l.href}
+              className="v2-link v2-footer-link jn-mono"
+              style={linkStyle}
+            >
               {l.label}
             </a>
           ))}
@@ -75,7 +81,7 @@ export default function FooterV2() {
               href={s.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="v2-link v2-footer-link"
+              className="v2-link v2-footer-link jn-mono"
               style={linkStyle}
             >
               {s.label}

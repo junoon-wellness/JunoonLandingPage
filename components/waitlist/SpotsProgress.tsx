@@ -9,7 +9,7 @@ interface SpotsProgressProps {
 }
 
 /**
- * Urgency lives next to the action, not in a strip further down the page —
+ * Urgency lives next to the action, not in a strip further down the page -
  * this sits directly under the hero form.
  */
 export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProps) {
@@ -28,15 +28,14 @@ export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProp
         }}
       >
         <span
+          className="jn-mono"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '9px',
-            fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
             fontSize: '10px',
             letterSpacing: '0.14em',
-            textTransform: 'uppercase',
-            color: '#8C7B6B',
+            color: 'var(--jn-mute)',
           }}
         >
           <span
@@ -45,18 +44,17 @@ export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProp
               width: '5px',
               height: '5px',
               borderRadius: '50%',
-              background: '#B5522A',
+              background: 'var(--jn-clay)',
             }}
           />
           Founding spots claimed
         </span>
         <span
-          className={`count-up${isFlashing ? ' flashing' : ''}`}
+          className={`count-up jn-mono${isFlashing ? ' flashing' : ''}`}
           style={{
-            fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
             fontSize: '11px',
             letterSpacing: '0.06em',
-            color: '#C8902A',
+            color: 'var(--jn-turmeric)',
             display: 'inline-block',
           }}
         >
@@ -73,7 +71,7 @@ export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProp
         style={{
           height: '3px',
           width: '100%',
-          background: 'rgba(245,240,232,0.08)',
+          background: 'var(--jn-hairline)',
           borderRadius: '2px',
           overflow: 'hidden',
         }}
@@ -82,7 +80,7 @@ export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProp
           style={{
             height: '100%',
             width: `${pct}%`,
-            background: 'linear-gradient(90deg, #B5522A, #C8902A)',
+            background: 'linear-gradient(90deg, var(--jn-clay), var(--jn-turmeric))',
             transition: 'width 1.4s cubic-bezier(0.22, 1, 0.36, 1)',
           }}
         />

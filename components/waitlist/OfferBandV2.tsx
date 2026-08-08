@@ -1,21 +1,27 @@
+'use client'
+
 import { TOTAL_SPOTS } from '@/lib/constants'
+import CountUp from '@/components/motion/CountUp'
+import Reveal, { DrawLine } from '@/components/motion/Reveal'
 
 export default function OfferBandV2() {
   return (
     <div className="v2-offer" style={{ zIndex: 2 }}>
-      <div
-        aria-hidden="true"
+      {/* The clay edge draws down the side as the band arrives. */}
+      <DrawLine
+        vertical
+        duration={0.9}
         style={{
           position: 'absolute',
           top: 0,
           left: 0,
           width: '3px',
           height: '100%',
-          background: '#B5522A',
+          background: 'var(--jn-clay)',
         }}
       />
 
-      <div data-reveal>
+      <Reveal>
         <div className="eyebrow" style={{ marginBottom: '14px' }}>
           Founding member offer
         </div>
@@ -24,14 +30,14 @@ export default function OfferBandV2() {
             fontFamily: 'var(--font-cormorant), serif',
             fontSize: 'clamp(26px, 2.8vw, 34px)',
             fontWeight: 400,
-            color: '#F5F0E8',
+            color: 'var(--jn-text)',
             lineHeight: 1.15,
             marginBottom: '14px',
             letterSpacing: '-0.008em',
           }}
         >
           First {TOTAL_SPOTS} members.{' '}
-          <strong style={{ fontWeight: 600, color: '#C8902A', fontStyle: 'italic' }}>
+          <strong style={{ fontWeight: 600, color: 'var(--jn-turmeric)', fontStyle: 'italic' }}>
             Permanent pricing.
           </strong>
         </div>
@@ -39,7 +45,7 @@ export default function OfferBandV2() {
           style={{
             fontSize: '14px',
             fontWeight: 300,
-            color: 'rgba(245,240,232,0.62)',
+            color: 'var(--jn-text-soft)',
             lineHeight: 1.75,
             maxWidth: '520px',
           }}
@@ -48,34 +54,34 @@ export default function OfferBandV2() {
           first-month deal. The price you join at is the price you keep. We&apos;re doing this
           because we want the people who believed in us early to benefit from being early.
         </p>
-      </div>
+      </Reveal>
 
-      <div data-reveal data-reveal-stagger="1" style={{ textAlign: 'center', flexShrink: 0 }}>
-        <div
+      <Reveal delay={0.1} style={{ textAlign: 'center', flexShrink: 0 }}>
+        <CountUp
+          to={TOTAL_SPOTS}
+          duration={1400}
           style={{
+            display: 'block',
             fontFamily: 'var(--font-cormorant), serif',
             fontSize: 'clamp(56px, 7vw, 78px)',
             fontWeight: 300,
             lineHeight: 1,
-            color: '#B5522A',
+            color: 'var(--jn-clay)',
             letterSpacing: '-0.02em',
           }}
-        >
-          {TOTAL_SPOTS}
-        </div>
+        />
         <div
+          className="jn-mono"
           style={{
-            fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
             fontSize: '10px',
             letterSpacing: '0.14em',
-            textTransform: 'uppercase',
-            color: '#8C7B6B',
+            color: 'var(--jn-mute)',
             marginTop: '8px',
           }}
         >
           Founding spots total
         </div>
-      </div>
+      </Reveal>
     </div>
   )
 }

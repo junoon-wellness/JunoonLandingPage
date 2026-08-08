@@ -28,6 +28,32 @@ export const colors = {
   error:      "#C0392B",
 } as const;
 
+// ============================================================
+// DARK PAGE PALETTE  (junoonwellness.com waitlist landing)
+//
+// These deliberately DIVERGE from the Brand.swift-derived values above.
+// `colors` describes the light in-app theme; the landing page is dark
+// end-to-end and uses a deeper, more saturated clay and turmeric so the
+// accents hold up against #1C1410. The two are not meant to agree.
+//
+// The live source of truth for these is the `--jn-*` custom properties in
+// app/globals.css. This block exists so TypeScript callers (and Phase 2)
+// have the same values without re-eyeballing hexes. Keep them in sync.
+// ============================================================
+export const darkPage = {
+  bg:          "#1C1410",   // --jn-bg          page background
+  surface:     "#2C2118",   // --jn-surface     elevated surface, phone bezel
+  surfaceDeep: "#4A3728",   // --jn-surface-deep gradient end
+  text:        "#F5F0E8",   // --jn-text        primary text
+  textDim:     "rgba(245,240,232,0.64)", // --jn-text-dim
+  clay:        "#B5522A",   // --jn-clay        eyebrows, rules, primary button
+  turmeric:    "#C8902A",   // --jn-turmeric    italic emphasis, active states
+  mute:        "#8C7B6B",   // --jn-mute        mono labels
+  stone:       "#B5A898",   // --jn-stone       tertiary accent
+  gold:        "#D4A96A",   // --jn-gold        footer wordmark
+  error:       "#E08A62",   // --jn-error
+} as const;
+
 // Semantic aliases - use these in components
 export const semantic = {
   background:     colors.cream,

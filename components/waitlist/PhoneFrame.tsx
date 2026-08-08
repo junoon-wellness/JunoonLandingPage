@@ -1,16 +1,17 @@
 import Image from 'next/image'
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/lib/screens'
 
 interface PhoneFrameProps {
   src: string
   alt: string
-  /** Rendered width in CSS px. Height is derived from the 640:1391 source aspect. */
+  /** Rendered width in CSS px. Height is derived from the source aspect. */
   width?: number
   className?: string
   priority?: boolean
 }
 
 /**
- * Static version of the frame used by DeviceCarousel — same bezel, radius and
+ * Static version of the frame used by DeviceCarousel - same bezel, radius and
  * shadow, so product shots look identical wherever they appear on the page.
  */
 export default function PhoneFrame({
@@ -20,7 +21,7 @@ export default function PhoneFrame({
   className = '',
   priority = false,
 }: PhoneFrameProps) {
-  const height = Math.round((width * 1391) / 640)
+  const height = Math.round((width * SCREEN_HEIGHT) / SCREEN_WIDTH)
 
   return (
     <div
@@ -30,8 +31,8 @@ export default function PhoneFrame({
       <Image
         src={src}
         alt={alt}
-        width={640}
-        height={1391}
+        width={SCREEN_WIDTH}
+        height={SCREEN_HEIGHT}
         sizes={`${width}px`}
         loading={priority ? 'eager' : 'lazy'}
         {...(priority ? { fetchPriority: 'high' as const } : {})}

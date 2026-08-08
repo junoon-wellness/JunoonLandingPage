@@ -16,10 +16,12 @@ interface SignupFormProps {
   id?: string
 }
 
-const CREAM = '#F5F0E8'
-const CLAY = '#B5522A'
-const TURMERIC = '#C8902A'
-const STONE = '#8C7B6B'
+// Token references rather than hexes (spec §A1). Kept as constants because
+// they are used inside template strings for rgba-ish borders below.
+const CREAM = 'var(--jn-text)'
+const CLAY = 'var(--jn-clay)'
+const TURMERIC = 'var(--jn-turmeric)'
+const STONE = 'var(--jn-mute)'
 
 export default function SignupForm({
   source,
@@ -99,7 +101,7 @@ export default function SignupForm({
           alignItems: 'center',
           gap: '12px',
           padding: '18px 22px',
-          border: `0.5px solid ${CLAY}59`,
+          border: '0.5px solid rgba(181,82,42,0.35)',
           background: 'rgba(181,82,42,0.07)',
           borderRadius: '4px',
           animation: 'fadeUp 0.4s ease forwards',
@@ -124,12 +126,11 @@ export default function SignupForm({
     )
   }
 
+  // `.jn-mono` carries the family and the uppercasing; this only sizes it.
   const labelStyle: React.CSSProperties = {
     display: 'block',
-    fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
     fontSize: '10px',
     letterSpacing: '0.14em',
-    textTransform: 'uppercase',
     color: STONE,
     marginBottom: '7px',
   }
@@ -164,7 +165,7 @@ export default function SignupForm({
           </div>
 
           <div>
-            <label htmlFor={emailId} style={labelStyle}>
+            <label htmlFor={emailId} className="jn-mono" style={labelStyle}>
               Email address
             </label>
             <input
@@ -196,7 +197,7 @@ export default function SignupForm({
 
         {withPhone && (
           <div style={{ marginTop: '10px' }}>
-            <label htmlFor={phoneId} style={labelStyle}>
+            <label htmlFor={phoneId} className="jn-mono" style={labelStyle}>
               Phone number (optional)
             </label>
             <input
@@ -262,7 +263,7 @@ export default function SignupForm({
           fontWeight: 300,
           lineHeight: 1.6,
           marginTop: fieldError || status === 'error' ? '14px' : 0,
-          color: '#E08A62',
+          color: 'var(--jn-error)',
         }}
       >
         {fieldError === 'email' && 'That email doesn’t look right. Check for typos.'}

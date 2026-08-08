@@ -1,11 +1,12 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import NavV2 from './NavV2'
 import HeroV2 from './HeroV2'
 import StatBand from './StatBand'
 import WhatWereBuildingV2 from './WhatWereBuildingV2'
-import FeatureShowcase from './FeatureShowcase'
+import FeatureStory from './FeatureStory'
+import WalkthroughTeaser from './WalkthroughTeaser'
 import OfferBandV2 from './OfferBandV2'
 import FounderBlockV2 from './FounderBlockV2'
 import SecondCTA from './SecondCTA'
@@ -21,32 +22,14 @@ export default function WaitlistPageV2({ initialClaimed, source }: WaitlistPageV
   const [claimed, setClaimed] = useState(initialClaimed)
   const [isFlashing, setIsFlashing] = useState(false)
 
-  // Scroll-triggered reveals.
-  //
-  // NOTE: this observes whatever [data-reveal] elements exist at mount and
-  // unobserves each as it fires. Every section below renders unconditionally,
-  // so that's safe — but a conditionally mounted section would stay stuck at
-  // opacity: 0 unless this re-runs.
-  useEffect(() => {
-    const elements = document.querySelectorAll('[data-reveal]')
-    if (elements.length === 0) return
-    const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible')
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.15, rootMargin: '0px 0px -8% 0px' }
-    )
-    elements.forEach(el => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
+  // The page-level scroll-reveal IntersectionObserver that used to live here
+  // is gone (spec §A3). It collected whatever [data-reveal] elements existed
+  // at mount and unobserved each as it fired, so a section mounted later would
+  // sit at opacity 0 forever. Reveals are now per-component via framer's
+  // whileInView - see components/motion/Reveal.tsx.
 
   // Optimistic bump. The authoritative number comes from beehiiv on the next
-  // server render — there is no polling endpoint to hit.
+  // server render - there is no polling endpoint to hit.
   const handleSignupSuccess = useCallback(() => {
     setIsFlashing(true)
     setClaimed(c => c + 1)
@@ -64,7 +47,8 @@ export default function WaitlistPageV2({ initialClaimed, source }: WaitlistPageV
       />
       <StatBand />
       <WhatWereBuildingV2 />
-      <FeatureShowcase />
+      <FeatureStory />
+      <WalkthroughTeaser />
       <OfferBandV2 />
       <FounderBlockV2 />
       <SecondCTA source={source} onSignupSuccess={handleSignupSuccess} />

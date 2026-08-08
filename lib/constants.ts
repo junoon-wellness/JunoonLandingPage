@@ -1,5 +1,5 @@
 /**
- * Single source of truth for the founding-member offer — the "500" in
+ * Single source of truth for the founding-member offer - the "500" in
  * "First 500 members. Permanent pricing." and the denominator of the progress
  * bar. Change it here and it updates everywhere.
  */
@@ -8,7 +8,7 @@ export const TOTAL_SPOTS = 500
 /**
  * Shown only when beehiiv can't be reached (`getActiveSubscriberCount()`
  * returns null on a missing API key or a failed request). The real number is
- * the live active-subscriber count — this exists purely so the counter never
+ * the live active-subscriber count - this exists purely so the counter never
  * renders as "0 of 500 claimed" during an outage.
  */
 export const SPOTS_CLAIMED_FALLBACK = 61

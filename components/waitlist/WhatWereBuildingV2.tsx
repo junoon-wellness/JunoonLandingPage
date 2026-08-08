@@ -1,3 +1,16 @@
+'use client'
+
+import Reveal, { DrawLine } from '@/components/motion/Reveal'
+
+/**
+ * The 01-04 list, refreshed to the current product truth (spec §B4).
+ *
+ * "A community that gets it" came out and the weekly planning ritual went in:
+ * the ritual is the thing the app actually opens with, and the community line
+ * was describing an audience rather than a feature. The AI Coach row was
+ * rewritten to say what it does (learns from what you finish) instead of
+ * asserting that it personalises.
+ */
 const features = [
   {
     num: '01',
@@ -6,30 +19,38 @@ const features = [
   },
   {
     num: '02',
-    title: 'AI Coach',
-    body: 'Personalises your practice to your body, your schedule, and your habits. The kind of guidance that used to require a personal teacher.',
+    title: 'An AI Coach that learns your week',
+    body: 'Recommends what to practice next based on what you actually finished, what felt right, and the time you have. Guidance that used to require a personal teacher.',
   },
   {
     num: '03',
-    title: 'Science-backed education',
-    body: 'Weekly articles explaining the why behind South Asian wellness traditions. Plain English. No mysticism.',
+    title: 'A weekly planning ritual',
+    body: 'Every Sunday the coach lays out your week: what to practice, when it fits your schedule. You approve it, change it, or tell it what to fix.',
   },
   {
     num: '04',
-    title: 'A community that gets it',
-    body: 'Built for people who grew up between two worlds and want a practice that reflects both. No explaining required.',
+    title: 'Science-backed education',
+    body: 'Weekly articles explaining the why behind South Asian wellness traditions. Plain English. No mysticism.',
   },
 ]
 
+const RULE: React.CSSProperties = {
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  height: '0.5px',
+  background: 'var(--jn-hairline)',
+}
+
 export default function WhatWereBuildingV2() {
   return (
-    <section className="v2-section" style={{ background: '#1C1410' }}>
-      <div data-reveal className="eyebrow" style={{ marginBottom: '40px' }}>
+    <section className="v2-section" style={{ background: 'var(--jn-bg)' }}>
+      <Reveal className="eyebrow" style={{ marginBottom: '40px' }}>
         What we&apos;re building
-      </div>
+      </Reveal>
 
       <div className="v2-two-col" style={{ alignItems: 'start' }}>
-        <div data-reveal>
+        <Reveal>
           <h2
             style={{
               fontFamily: 'var(--font-cormorant), serif',
@@ -37,18 +58,18 @@ export default function WhatWereBuildingV2() {
               fontWeight: 400,
               lineHeight: 1.12,
               letterSpacing: '-0.01em',
-              color: '#F5F0E8',
+              color: 'var(--jn-text)',
               marginBottom: '20px',
             }}
           >
             A practice that{' '}
-            <em style={{ fontStyle: 'italic', color: '#C8902A' }}>knows you.</em>
+            <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>knows you.</em>
           </h2>
           <p
             style={{
               fontSize: '15px',
               fontWeight: 300,
-              color: 'rgba(245,240,232,0.65)',
+              color: 'var(--jn-text-dim)',
               lineHeight: 1.75,
               maxWidth: '420px',
             }}
@@ -57,18 +78,17 @@ export default function WhatWereBuildingV2() {
             makes expert guidance personal. Not a library you browse through. A practice that
             adapts to you.
           </p>
-        </div>
+        </Reveal>
 
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {features.map((f, i) => (
-            <div
+            <Reveal
               key={f.num}
-              data-reveal
-              data-reveal-stagger={String(Math.min(4, i + 1))}
+              delay={i * 0.09}
+              y={16}
+              amount={0.35}
               style={{
-                borderTop: '0.5px solid rgba(245,240,232,0.08)',
-                borderBottom:
-                  i === features.length - 1 ? '0.5px solid rgba(245,240,232,0.08)' : 'none',
+                position: 'relative',
                 padding: '20px 0',
                 display: 'grid',
                 gridTemplateColumns: '34px 1fr',
@@ -76,11 +96,24 @@ export default function WhatWereBuildingV2() {
                 alignItems: 'start',
               }}
             >
+              {/* Rules draw across rather than appearing. The row's own reveal
+                  carries them along, which reads as the line pulling the row
+                  into place. */}
+              <DrawLine delay={i * 0.09} duration={0.9} style={{ ...RULE, top: 0 }} />
+              {i === features.length - 1 && (
+                <DrawLine
+                  delay={i * 0.09 + 0.12}
+                  duration={0.9}
+                  style={{ ...RULE, bottom: 0 }}
+                />
+              )}
+
               <div
+                className="jn-mono"
                 style={{
-                  fontFamily: 'Courier New, ui-monospace, SFMono-Regular, Menlo, monospace',
                   fontSize: '11px',
-                  color: '#B5522A',
+                  letterSpacing: '0.08em',
+                  color: 'var(--jn-clay)',
                   paddingTop: '4px',
                 }}
               >
@@ -92,7 +125,7 @@ export default function WhatWereBuildingV2() {
                     fontFamily: 'var(--font-cormorant), serif',
                     fontSize: '19px',
                     fontWeight: 500,
-                    color: '#F5F0E8',
+                    color: 'var(--jn-text)',
                     marginBottom: '5px',
                     lineHeight: 1.25,
                   }}
@@ -103,14 +136,14 @@ export default function WhatWereBuildingV2() {
                   style={{
                     fontSize: '13px',
                     fontWeight: 300,
-                    color: 'rgba(245,240,232,0.62)',
+                    color: 'var(--jn-text-soft)',
                     lineHeight: 1.7,
                   }}
                 >
                   {f.body}
                 </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
