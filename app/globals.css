@@ -622,8 +622,13 @@ body::before {
 
    Two subtrees, one data source, forked in CSS rather than in JS:
 
-     .jn-story-stage  desktop pin  (≥1024px, motion allowed)
-     .jn-story-cards  stacked      (<1024px OR reduced motion)
+     .jn-story-stage  the pin       (ALL viewports, motion allowed)
+     .jn-story-cards  stacked       (reduced motion only, any viewport)
+
+   ⚠️ Round 2 re-pointed that fork. The stage used to be desktop-only and
+   the cards carried everything under 1024px; now the story pins on mobile
+   too (spec B5, revised) and the cards exist purely as the reduced-motion
+   fallback. The cards are NOT dead code.
 
    The fork is CSS-only on purpose. A JS media-query fork would have to
    pick a value during SSR and then correct itself, which either flashes
@@ -633,6 +638,14 @@ body::before {
    chapter layers, and only the screenshots inside them crossfade. Fading
    whole bezel-bearing layers over each other would double-composite the
    bezel mid-transition.
+
+   ⚠️ svh, not vh. On iOS Safari `100vh` is the LARGE viewport, the height
+   the page has once the toolbar has collapsed. Sizing the pin with it
+   means that while the toolbar is still expanded the pin is taller than
+   the visible area and the bottom of the phone is cut off. `100svh` is the
+   small viewport (toolbar expanded), so the phone fits in both states and
+   simply gains slack when the toolbar collapses. The plain-vh line below
+   each svh line is the fallback for browsers without svh support.
    ════════════════════════════════════════════════════════════════════ */
 .jn-story {
   position: relative;
@@ -640,12 +653,14 @@ body::before {
   background: var(--jn-bg);
   /* --jn-story-chapters is set inline from chapters.length */
   height: calc(var(--jn-story-chapters, 4) * 100vh);
+  height: calc(var(--jn-story-chapters, 4) * 100svh);
 }
 
 .jn-story-pin {
   position: sticky;
   top: 0;
   height: 100vh;
+  height: 100svh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1080,17 +1095,154 @@ body::before {
   .jn-teaser-strip { justify-content: center; }
 }
 
-/* ─── Scroll story: no pinning below 1024px ───
-   Deliberately 1023.98 and not 1024: the spec pins at ≥1024px, and
-   `max-width: 1024px` would also catch a viewport of exactly 1024. The
-   stacked cards are the layout at these widths, not a degraded desktop. */
+/* ════════════════════════════════════════════════════════════════════
+   SCROLL STORY - MOBILE PIN  (spec B5 as revised round 2, LV3-020)
+
+   Below 1024px the story pins exactly as it does on desktop, with the
+   same engine and the same crossfade. What changes is the arrangement
+   (phone above copy instead of beside it) and the sizing discipline.
+
+   THE PHONE MUST NEVER CROP. Its height is the smaller of two budgets:
+
+     --jn-phone-v   what is left of the pin after the copy block and the
+                    rail have taken their fixed share
+     --jn-phone-w   the tallest the phone can be while its width, derived
+                    from the screenshots' own 640:1391, still fits inside
+                    the gutters
+
+   Taking min() of the two means the phone shrinks before it ever clips,
+   on any aspect ratio. The copy block gets a FIXED height so it can never
+   grow and squeeze the phone: its chapter layers are absolutely
+   positioned, so they fill that box rather than pushing it.
+   ════════════════════════════════════════════════════════════════════ */
 @media (max-width: 1023.98px) {
-  /* Padding belongs here, not in the 1024px block: while the section is
-     pinned its height must be exactly N x 100vh, and vertical padding would
-     push the sticky child out of alignment. */
+  .jn-story-pin {
+    --jn-rail-h: 46px;
+    /* Measured: the tallest chapter's copy renders 193px here, so this
+       leaves ~20px of slack for font-loading variance and future wording
+       while handing everything else to the phone. */
+    --jn-copy-h: 215px;
+    --jn-stage-pad: 14px;
+    --jn-gutter: 24px;
+    /* The nav is FIXED, so the pin's top 58px are behind it. On desktop the
+       phone is centred in a tall stage and never reaches up there; on mobile
+       it starts at the top, and without this its status bar sits under the
+       nav. Measured at 58px in the scrolled state, which is the only state
+       this far down the page. */
+    --jn-nav-h: 58px;
+
+    --jn-phone-v: calc(
+      100svh - var(--jn-nav-h) - var(--jn-rail-h) - var(--jn-copy-h) -
+        var(--jn-stage-pad) * 2
+    );
+    --jn-phone-w: calc((100vw - var(--jn-gutter) * 2) * 1391 / 640);
+  }
+
+  /* Phone on top, copy under it, rail at the foot. */
+  .jn-story-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--jn-stage-pad);
+    padding: calc(var(--jn-stage-pad) + var(--jn-nav-h)) var(--jn-gutter) 0;
+  }
+
+  .jn-story-phones {
+    flex: 0 0 auto;
+    gap: 0;
+  }
+
+  .jn-story-device-a {
+    height: min(var(--jn-phone-v), var(--jn-phone-w));
+    transform: none;
+  }
+
+  /* One phone on mobile.
+     Hidden in CSS rather than dropped in JS on purpose: a JS media-query
+     fork has to guess during SSR and then correct itself. Measured cost of
+     doing it this way: the story still fetches exactly 7 screenshots at one
+     width, one per distinct file, because every URL this phone references is
+     already being requested by the visible phone, the hero carousel or the
+     tour teaser. Hiding it adds no image variants. */
+  .jn-story-device-b { display: none; }
+
+  .jn-story-copies {
+    flex: 0 0 auto;
+    width: 100%;
+    height: var(--jn-copy-h);
+    min-height: 0;
+    /* Belt and braces: a chapter that runs long is clipped rather than
+       allowed to spill over the rail. */
+    overflow: hidden;
+  }
+
+  .jn-story-copy {
+    max-width: none;
+    justify-content: flex-start;
+  }
+
+  .jn-story-glyph {
+    right: 0;
+    top: auto;
+    bottom: 8%;
+    font-size: clamp(64px, 22vw, 120px);
+    color: rgba(245, 240, 232, 0.025);
+  }
+
+  /* Rail, compressed. */
+  .jn-story-rail {
+    gap: 6px;
+    padding: 0 var(--jn-gutter) 16px;
+  }
+  .jn-story-seg { gap: 7px; }
+  .jn-story-seg-label {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+
+  /* Copy sized for a phone. */
+  .jn-ch-title {
+    font-size: clamp(25px, 6.6vw, 32px);
+    margin-bottom: 12px;
+  }
+  .jn-ch-body {
+    font-size: 14px;
+    line-height: 1.65;
+    margin-bottom: 0;
+  }
+
+  /* Bullets are the first thing to go: the spec calls them optional below
+     ~700px of height, and giving their ~100px to the phone is the better
+     trade on every handset. They come back on tall devices below. */
+  .jn-ch-points { display: none; }
+}
+
+/* Tall handsets (14 Pro Max and up) have room for the bullets. */
+@media (max-width: 1023.98px) and (min-height: 860px) {
+  .jn-story-pin { --jn-copy-h: 340px; }
+  .jn-ch-points { display: grid; }
+  .jn-ch-body { margin-bottom: 18px; }
+}
+
+/* Short handsets (SE, and anything with the keyboard-free landscape-ish
+   aspect) get a tighter copy box so the phone keeps its size. */
+@media (max-width: 1023.98px) and (max-height: 700px) {
+  .jn-story-pin {
+    --jn-rail-h: 40px;
+    --jn-copy-h: 200px;
+    --jn-stage-pad: 10px;
+  }
+  .jn-ch-title { font-size: clamp(22px, 6vw, 26px); }
+  .jn-ch-body { font-size: 13px; }
+}
+
+/* Genuinely short viewports (landscape phones) cannot show a phone AND a
+   copy block at any useful size. Fall back to the stacked cards rather
+   than pinning a 120px-tall device. */
+@media (max-width: 1023.98px) and (max-height: 500px) {
   .jn-story {
     height: auto;
-    padding: 48px 32px;
+    padding: 40px 24px;
   }
   .jn-story-pin {
     position: static;
@@ -1152,9 +1304,10 @@ body::before {
   }
   .v2-two-col { grid-template-columns: 1fr; gap: 36px; }
 
-  .jn-story { padding: 40px 24px; }
+  /* .jn-story keeps its pinned height here; only the reduced-motion and
+     short-viewport forks give it padding. .jn-ch-title is sized by the
+     mobile-pin block above, which is scoped tighter than this one. */
   .jn-story-card { padding: 36px 0; }
-  .jn-ch-title { font-size: clamp(26px, 7vw, 34px); }
 
   .jn-teaser { padding: 48px 24px; }
   .jn-teaser-strip { gap: 8px; }
@@ -1201,8 +1354,10 @@ body::before {
   .jn-tour-cta { width: 100%; justify-content: center; }
 }
 
-/* Reduced motion takes the same fork as mobile: stacked, unpinned, static.
-   Placed after the media queries so it wins at any width. */
+/* ─── Reduced motion: the stacked cards, at EVERY viewport ───
+   Round 1 shared this fork with mobile. Round 2 pinned the story on mobile
+   too, so this is now the cards' only job, and it is the reason they stay
+   in the codebase. Placed last so it wins at any width. */
 @media (prefers-reduced-motion: reduce) {
   .jn-story {
     height: auto;
@@ -1218,8 +1373,19 @@ body::before {
   .jn-story-rail { display: none; }
   .jn-story-cards { display: block; }
 
+  /* Undo the two economies the mobile pin makes. The cards are a reading
+     layout with room to spare, so the bullets come back and the body keeps
+     its spacing; without this a reduced-motion phone would silently lose
+     three lines of copy per chapter. */
+  .jn-ch-points { display: grid; }
+  .jn-ch-body { margin-bottom: 24px; }
+
   .v2-btn:hover:not(:disabled),
   .v2-btn:active:not(:disabled) {
     transform: none !important;
   }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 768px) {
+  .jn-story { padding: 40px 24px; }
 }
