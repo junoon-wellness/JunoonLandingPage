@@ -1440,12 +1440,20 @@ body::before {
   .v2-footer { padding: 24px 32px; }
   .v2-two-col { gap: 40px; }
 
+  /*
+    ⚠️ `minmax(0, 1fr)`, not `1fr`. A bare `1fr` is `minmax(auto, 1fr)`, so
+    the track refuses to go below its content's min-content width — and the
+    strip's min-content is three fixed frames plus their gaps. On a 320px
+    screen that forced a 328px track into 272px of space, and because
+    `body { overflow-x: hidden }` the page did not scroll, it silently
+    clipped. This is the same failure the v2 feature showcase had.
+  */
   .jn-teaser {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 40px;
     padding: 56px 32px;
   }
-  .jn-teaser-strip { justify-content: center; }
+  .jn-teaser-strip { justify-content: center; min-width: 0; }
 
   /* ── v4 at tablet ── */
   .jn-rail-head { padding: 0 32px 24px; }
@@ -1711,6 +1719,9 @@ body::before {
   .jn-rail-track { padding: 4px 24px 8px; scroll-padding-left: 24px; gap: 14px; }
   .jn-rail-card { width: 84vw; padding: 18px; gap: 16px; }
   .jn-rail-card-title { font-size: 20px; }
+  /* The frames shrink rather than the strip clipping. At 320px this is 80px
+     a frame: 3 x 80 + 2 x 8 = 256, inside 272px of usable width. */
+  .jn-teaser-frame { --teaser-frame-w: clamp(64px, 25vw, 104px); }
 
   .jn-offer-founder {
     grid-template-columns: 1fr;
@@ -1810,4 +1821,32 @@ body::before {
 
 @media (prefers-reduced-motion: reduce) and (max-width: 768px) {
   .jn-story { padding: 40px 24px; }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   THE 320px FLOOR  (debt item 5)
+
+   Deliberately last in the file: it must win over the 768px block above
+   it, and it does so by source order rather than by inflating specificity.
+
+   520px is arithmetic, not taste. The rail card is 84vw with 18px padding
+   and a 16px gap around a fixed 176px phone, so the copy column gets
+   `0.84vw - 210`. Asking for a readable ~200px of copy solves to a 510px
+   viewport — below that the card has to stack. Measured at 320px before
+   this rule: the copy column was 61px wide, about four characters a line.
+   ════════════════════════════════════════════════════════════════════ */
+@media (max-width: 520px) {
+  .jn-rail-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  /* Centred while stacked; the copy stays ranged left so it reads as prose. */
+  .jn-rail-card-phone {
+    justify-self: center;
+  }
+  /* Smaller than the 176px it uses side-by-side, or the stacked card grows
+     taller than the viewport it is meant to fit inside. */
+  .jn-rail-card-phone .v2-device {
+    --pf-w: 132px;
+  }
 }
