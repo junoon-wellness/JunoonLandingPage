@@ -172,7 +172,11 @@ export default function SignupForm({
           }}
         >
           <div>
-            <label htmlFor={nameId} style={labelStyle}>
+            {/* `.jn-mono` carries the family AND the uppercasing: labelStyle
+                stopped setting text-transform when the class was introduced,
+                so a label without it renders lowercase DM Sans. This one was
+                missed and shipped that way; its two siblings below have it. */}
+            <label htmlFor={nameId} className="jn-mono" style={labelStyle}>
               First name
             </label>
             <input
