@@ -5,75 +5,65 @@
  * resolves through `SCREENS` below. Nothing else references a file under
  * /screenshots directly.
  *
- * ── Swapping in Kush's v3 shots ──────────────────────────────────────────
- * When `public/screenshots/v3/` lands, change ONLY the `src` values here to
- * `/screenshots/v3/<name>.png` (the file names in the spec's table match the
- * keys below one-for-one) and refresh the `alt` text to describe the new
- * screen. Delete the old `public/screenshots/*.png` afterwards, once the swap
- * has been eyeballed in a browser.
+ * ── v3 shots, round 3 ────────────────────────────────────────────────────
+ * All eight keys now point at real app captures in `public/screenshots/v3/`,
+ * one distinct file per key. The v2 stand-ins and the `standIn` flag that
+ * tracked them are gone, and no image is used twice.
  *
- * The `standIn: true` flag marks every entry still pointing at a v2 file.
- * Grep for it to see what is left to swap.
- *
- * There are 8 semantic screens and only 7 stand-in files, so exactly one
- * duplicate is unavoidable. It is parked where it is never visible twice at
- * once: `ritualWeek` borrows the library shot, so no chapter shows the same
- * image in both its phones, the six hero slides are all distinct, and the two
- * chapters that share it (1 and 3) are not adjacent, so nothing looks frozen
- * during a crossfade.
+ * Note on `coachPicks`: the key name is historical. The picks surface no
+ * longer exists in the app, so this slide shows the coach building your week
+ * instead, and its user-visible label reads "Weekly Plan".
  */
 
 export interface Screen {
   src: string
   alt: string
-  /** True while this key still points at a v2 stand-in rather than a v3 shot. */
-  standIn?: boolean
 }
 
 /** Intrinsic size of the source PNGs. Frames are laid out against this ratio. */
-export const SCREEN_WIDTH = 640
-export const SCREEN_HEIGHT = 1391
+export const SCREEN_WIDTH = 828
+export const SCREEN_HEIGHT = 1800
 
 export const SCREENS = {
   ritualProposal: {
-    src: '/screenshots/screenshot-plan.png',
-    alt: 'The Junoon weekly ritual proposing a week of practice across the coming days',
-    standIn: true,
+    src: '/screenshots/v3/ritual-proposal.png',
+    alt:
+      'The Sunday ritual proposing the coming week, showing what changed and an Approve this week button',
   },
   ritualWeek: {
-    src: '/screenshots/screenshot-library.png',
-    alt: 'The approved Junoon week laid out day by day',
-    standIn: true,
+    src: '/screenshots/v3/ritual-week.png',
+    alt:
+      'The approved Junoon week laid out day by day, each session labelled with its time of day and type',
   },
   coachChat: {
-    src: '/screenshots/screenshot-coach.png',
-    alt: 'The Junoon coach in conversation, shaping a personalised weekly plan',
-    standIn: true,
+    src: '/screenshots/v3/coach-chat.png',
+    alt:
+      'The Junoon coach in conversation, swapping a scheduled class for a gentler practice on request',
   },
   coachPicks: {
-    src: '/screenshots/screenshot-coach-pick.png',
-    alt: 'The Junoon coach recommending a five minute Chair Yoga practice chosen for the season and your morning window',
-    standIn: true,
+    src: '/screenshots/v3/coach-picks.png',
+    alt:
+      'The coach summarising your week before it is built: your free windows, how much of each practice, and what to focus on',
   },
   library: {
-    src: '/screenshots/screenshot-library.png',
-    alt: 'The Junoon library of recorded yoga, meditation and pranayama classes',
-    standIn: true,
+    src: '/screenshots/v3/library.png',
+    alt:
+      'The Junoon library of recorded yoga, meditation and pranayama classes with their lengths and instructors',
   },
   liveClass: {
-    src: '/screenshots/screenshot-breathwork-coach.png',
-    alt: 'A Junoon class detail page showing what the session covers and how long it runs',
-    standIn: true,
+    src: '/screenshots/v3/live-class.png',
+    alt:
+      'A Junoon class detail page showing the instructor, the length, and what the session covers',
   },
   breathworkSession: {
-    src: '/screenshots/screenshot-breathwork-session.png',
-    alt: 'A guided Box Breathing session in progress, showing the inhale cue and cycle count',
-    standIn: true,
+    src: '/screenshots/v3/breathwork-session.png',
+    alt:
+      'A guided Extended Box Breathing session in progress, showing the exhale cue and the cycle count',
   },
   planTab: {
-    src: '/screenshots/screenshot-practice.png',
-    alt: 'The Junoon plan tab with a populated day of practice and habits',
-    standIn: true,
+    src: '/screenshots/v3/plan-tab.png',
+    alt:
+      'The Junoon plan tab with a populated day of practice, habits and nutrition across morning, midday and evening',
   },
 } as const satisfies Record<string, Screen>
 
@@ -91,7 +81,7 @@ export function screen(key: ScreenKey): Screen {
 export const HERO_SLIDES: { key: ScreenKey; label: string }[] = [
   { key: 'ritualProposal', label: 'Weekly Ritual' },
   { key: 'coachChat', label: 'AI Coach' },
-  { key: 'coachPicks', label: 'Coach Picks' },
+  { key: 'coachPicks', label: 'Weekly Plan' },
   { key: 'library', label: 'Library' },
   { key: 'breathworkSession', label: 'Breathwork' },
   { key: 'planTab', label: 'Your Plan' },
