@@ -288,15 +288,23 @@ body::before {
 
 /* ─── Device frame glow behind the app screenshots ───
    v3: breathes on a 9s loop. Scale + opacity only, so it stays on the
-   compositor. */
+   compositor.
+   LV5-001: toned down from the original 0.42/0.28 warm peaks (which read as
+   a bright animated wash lightening the whole top of the page) toward
+   landing-v4's subtler hero-glow levels — lower alpha, a softer breathe
+   peak, more blur to spread the energy, and a tighter inset so it does not
+   bleed as far past the device frame. Sage nudged up slightly instead of
+   down; it is doing real work now that .drift-bg sits behind the hero too
+   (see ambientDrift below) and two cool sources reading together needed to
+   stay legible rather than each being trimmed to nothing. */
 @keyframes glowBreathe {
-  0%, 100% { transform: scale(1); opacity: 0.88; }
-  50% { transform: scale(1.06); opacity: 1; }
+  0%, 100% { transform: scale(1); opacity: 0.84; }
+  50% { transform: scale(1.03); opacity: 0.94; }
 }
 
 .v2-device-glow {
   position: absolute;
-  inset: -20% -14%;
+  inset: -15% -10%;
   pointer-events: none;
   z-index: 0;
   /* Sage enters from the opposite corner to the warm core, so the phone
@@ -304,10 +312,10 @@ body::before {
      is deliberately the weakest of the three: any more and the bezel
      starts to read green. */
   background:
-    radial-gradient(ellipse 54% 48% at 46% 44%, rgba(181, 82, 42, 0.42), transparent 70%),
-    radial-gradient(ellipse 44% 40% at 66% 64%, rgba(200, 144, 42, 0.28), transparent 68%),
-    radial-gradient(ellipse 46% 42% at 24% 76%, rgba(123, 158, 135, 0.22), transparent 66%);
-  filter: blur(10px);
+    radial-gradient(ellipse 54% 48% at 46% 44%, rgba(181, 82, 42, 0.32), transparent 70%),
+    radial-gradient(ellipse 44% 40% at 66% 64%, rgba(200, 144, 42, 0.20), transparent 68%),
+    radial-gradient(ellipse 46% 42% at 24% 76%, rgba(123, 158, 135, 0.24), transparent 66%);
+  filter: blur(13px);
   animation: glowBreathe 9s ease-in-out infinite;
   will-change: transform, opacity;
 }
@@ -475,6 +483,11 @@ body::before {
 /* ─── Device frame + product carousel ─── */
 .v2-devices {
   position: relative;
+  /* LV5-001: above .drift-bg::after (z-index 0, paints last in the hero
+     since ::after is conceptually the section's final child) now that the
+     hero carries the ambient ground wash too — otherwise the wash would
+     paint over the device carousel instead of behind it. */
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;

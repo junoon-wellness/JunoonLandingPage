@@ -49,7 +49,12 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
   return (
     <section
       ref={sectionRef}
-      className="v2-hero noise-bg"
+      // LV5-001: `drift-bg` adds the same warm+sage ambient ground radials
+      // SecondCTA already carries (see .drift-bg::after in globals.css) so
+      // the hero reads richer/darker at the edges instead of flat --jn-bg
+      // behind a single bright device glow. .v2-devices is z-index 1 so the
+      // wash sits behind the carousel rather than over it.
+      className="v2-hero noise-bg drift-bg"
       style={{ background: 'var(--jn-bg)', overflow: 'hidden' }}
     >
       {/* Faint engineering grid replaces the old 720px yantra motif */}
