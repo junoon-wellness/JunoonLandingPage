@@ -739,7 +739,11 @@ body::before {
   position: relative;
   z-index: 2;
   background: var(--jn-bg);
-  padding: 56px 48px 64px;
+  /* Top was 56px, matching .v2-section's own 56px bottom padding above it -
+     stacked, that read as ~250px of dead air over the tab strip (Kush,
+     2026-08-22: "reduce padding empty space"). Cut to a third; left/right
+     and bottom are unrelated to that gap and stay as they were. */
+  padding: 18px 48px 64px;
 }
 
 .jn-story-pin {
@@ -765,7 +769,12 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 0.5px solid var(--jn-hairline);
+  /* LV5-019: was a flat --jn-hairline border for every tab. Kush: "make
+     each tab button outline be a different color, right now it's green and
+     orange" — --jn-tab-accent is set per-chapter (FeatureStory.tsx's
+     `tabAccent`, distinct from the eyebrow/title `accent` so this never
+     touches text contrast) and shown at low alpha while inactive. */
+  border: 0.5px solid color-mix(in srgb, var(--jn-tab-accent, var(--jn-clay)) 45%, transparent);
   border-radius: 4px;
   background: none;
   font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -774,13 +783,14 @@ body::before {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   white-space: nowrap;
+  /* Label text unchanged (Kush's own scoping): ivory active / mute inactive. */
   color: var(--jn-text-faint);
   cursor: pointer;
   transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
 }
 .jn-story-tab[data-active='true'] {
   color: var(--jn-text);
-  background: rgba(245, 240, 232, 0.06);
+  background: color-mix(in srgb, var(--jn-tab-accent, var(--jn-clay)) 8%, transparent);
   border-color: var(--jn-tab-accent, var(--jn-clay));
 }
 .jn-story-tab:hover:not([data-active='true']) {
@@ -1581,7 +1591,8 @@ body::before {
   }
   .v2-two-col { grid-template-columns: 1fr; gap: 36px; }
 
-  .jn-story { padding: 40px 24px; }
+  /* Same LV5-019 gap cut as the desktop rule above: top only, roughly a third. */
+  .jn-story { padding: 13px 24px 40px; }
 
   /* The frames shrink rather than the strip clipping. At 320px this is 80px
      a frame: 3 x 80 + 2 x 8 = 256, inside 272px of usable width. */

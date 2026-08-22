@@ -35,8 +35,18 @@ export interface StoryChapter {
   title: ReactNode
   body: string
   points: string[]
-  /** A `--jn-*` custom property reference, e.g. `var(--jn-turmeric)`. */
+  /** A `--jn-*` custom property reference, e.g. `var(--jn-turmeric)`.
+   *  Drives the em-title, the eyebrow text and the bullet dots - all of
+   *  which are contrast-checked against --jn-bg, so don't repoint this at
+   *  an accent that hasn't been measured for 11px text (see FeatureStory's
+   *  own comment on why coach is sage here rather than clay). */
   accent: string
+  /** LV5-019: a separate, GRAPHIC-only accent for the tab button's outline
+   *  and active-state tint. Falls back to `accent` when omitted. Kept apart
+   *  from `accent` on purpose - the tab outline only needs 3:1, so it can
+   *  use an accent (e.g. clay) that would fail 4.5:1 as the eyebrow/title
+   *  text `accent` drives elsewhere. */
+  tabAccent?: string
   /** Short label under the progress rail; also the tab's visible name. */
   railLabel: string
   /** [primary phone, secondary phone] */
@@ -78,7 +88,7 @@ function StoryTab({
       tabIndex={active ? 0 : -1}
       data-active={active}
       className="jn-story-tab"
-      style={{ ['--jn-tab-accent' as string]: chapter.accent }}
+      style={{ ['--jn-tab-accent' as string]: chapter.tabAccent ?? chapter.accent }}
       onClick={onSelect}
       onKeyDown={onKeyDown}
     >

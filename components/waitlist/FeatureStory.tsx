@@ -34,6 +34,11 @@ const CHAPTERS: StoryChapter[] = [
       'Life shifted mid-week? Re-work the remaining days in seconds.',
     ],
     accent: 'var(--jn-turmeric)',
+    // LV5-019: tab outline colours, Kush's mapping - ritual/coach/library/
+    // breathwork each get their own. Separate from `accent` above (which
+    // stays put) because that one also colours 11px eyebrow text, and only
+    // some of these pass 4.5:1 at that size - see ScrollStory's comment.
+    tabAccent: 'var(--jn-turmeric)',
     railLabel: 'The ritual',
     screens: [SCREENS.ritualProposal, SCREENS.ritualWeek],
   },
@@ -56,6 +61,12 @@ const CHAPTERS: StoryChapter[] = [
     // fixed to sage in that commit, this one didn't). Sage measures 6.12:1
     // and keeps the four chapters from reading as three-turmeric-one-sage.
     accent: 'var(--jn-sage)',
+    // Clay measures 3.63:1 on --jn-bg - clears the 3:1 graphic/border floor
+    // this tab outline needs, but is exactly the ratio that failed as this
+    // chapter's 11px eyebrow TEXT above (needs 4.5:1 - see the LV5-001
+    // comment on `accent`). Kept apart so the outline can be clay without
+    // reopening that AA failure.
+    tabAccent: 'var(--jn-clay)',
     railLabel: 'The coach',
     screens: [SCREENS.coachChat, SCREENS.coachPicks],
   },
@@ -77,6 +88,7 @@ const CHAPTERS: StoryChapter[] = [
     // accent of the four — a warm grey among three warm accents — so the
     // library chapter is where sage costs the least and reads the most.
     accent: 'var(--jn-sage)',
+    tabAccent: 'var(--jn-sage)',
     railLabel: 'The library',
     screens: [SCREENS.library, SCREENS.liveClass],
   },
@@ -95,6 +107,9 @@ const CHAPTERS: StoryChapter[] = [
       'Or start one yourself from anywhere in the app, no conversation needed.',
     ],
     accent: 'var(--jn-turmeric)',
+    // Poster gold, reusing the same --jn-gold-alt token LV5-019's hero dots
+    // introduced (7.82:1 on --jn-bg) rather than adding a second gold.
+    tabAccent: 'var(--jn-gold-alt)',
     railLabel: 'Breathwork',
     screens: [SCREENS.breathworkSession, SCREENS.planTab],
   },
