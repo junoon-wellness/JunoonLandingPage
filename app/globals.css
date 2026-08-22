@@ -405,6 +405,16 @@ body::before {
   z-index: 2;
   padding: 56px 48px;
 }
+/* Modifier for a section that opens a page directly under the fixed nav
+   (LV5-018: NewsletterJoin on /library, replacing the bespoke .lb-newsletter
+   which carried its own 88px top padding). .v2-section's standard 56px
+   isn't enough clearance for the nav bar — matches the 84-92px every other
+   page-opening section already uses (.pr-hero, .ab-hero). Double-class
+   selector so it reliably beats .v2-section's own tablet/mobile padding
+   shorthand regardless of source order. */
+.v2-section.v2-section-top {
+  padding-top: 92px;
+}
 /* ─── Hero ───
    `align-items: start` so the copy column's top edge lines up with the phone
    instead of floating in the vertical centre, which left a dead gap above the
@@ -1398,6 +1408,7 @@ body::before {
   .v2-nav { padding: 16px 32px; }
   .v2-nav[data-scrolled='true'] { padding: 10px 32px; }
   .v2-section { padding: 48px 32px; }
+  .v2-section.v2-section-top { padding-top: 84px; }
   .v2-stats { padding: 20px 32px; gap: 32px; }
   .v2-offer { margin: 0 32px; padding: 36px 32px; }
   .v2-footer { padding: 24px 32px; }
@@ -1528,6 +1539,7 @@ body::before {
   .v2-wordmark { font-size: 15px; letter-spacing: 0.13em; }
   .v2-hero { padding: 104px 24px 56px; }
   .v2-section { padding: 44px 24px; }
+  .v2-section.v2-section-top { padding-top: 76px; }
   .v2-stats {
     flex-wrap: wrap;
     gap: 24px;

@@ -7,9 +7,6 @@ import StatBand from './StatBand'
 import WhatWereBuildingV2 from './WhatWereBuildingV2'
 import FeatureStory from './FeatureStory'
 import WalkthroughTeaser from './WalkthroughTeaser'
-import OfferBandV2 from './OfferBandV2'
-import FounderBlockV2 from './FounderBlockV2'
-import SecondCTA from './SecondCTA'
 import FooterV2 from './FooterV2'
 import { SHOW_TOUR } from '@/lib/constants'
 
@@ -50,9 +47,13 @@ export default function WaitlistPageV2({ initialClaimed, source }: WaitlistPageV
       <WhatWereBuildingV2 />
       <FeatureStory />
       {SHOW_TOUR && <WalkthroughTeaser />}
-      <OfferBandV2 />
-      <FounderBlockV2 />
-      <SecondCTA source={source} onSignupSuccess={handleSignupSuccess} />
+      {/* LV5-018: OfferBandV2 + FounderBlockV2 removed from the page — both
+          folded into a condensed version inside HeroV2 (Kush's review: the
+          empty space under the hero copy should carry this, not two more
+          full-width bands lower down). SecondCTA is also gone — Home no
+          longer has a newsletter section at all; its layout lives on now as
+          NewsletterJoin, used on /library only. All three component files
+          stay on disk, just unreferenced here. */}
       <FooterV2 />
     </div>
   )
