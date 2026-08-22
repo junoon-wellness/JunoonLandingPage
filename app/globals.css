@@ -1075,6 +1075,34 @@ body::before {
   }
 }
 
+/* ─── App Store badge size variants ─── (LV5-018, Kush)
+   Base .v2-appstore-badge (44px min-height, 9px/15px type) is untouched and
+   stays the default for any caller that doesn't pass `size`. */
+.v2-appstore-badge--nav {
+  min-height: 50px;
+  padding: 7px 18px;
+}
+.v2-appstore-badge--nav .v2-appstore-badge-eyebrow {
+  font-size: 10px;
+}
+.v2-appstore-badge--nav .v2-appstore-badge-name {
+  font-size: 17px;
+}
+
+.v2-appstore-badge--lg {
+  min-width: 200px;
+  min-height: 64px;
+  padding: 10px 24px;
+  border-radius: 10px;
+  justify-content: center;
+}
+.v2-appstore-badge--lg .v2-appstore-badge-eyebrow {
+  font-size: 13px;
+}
+.v2-appstore-badge--lg .v2-appstore-badge-name {
+  font-size: 22px;
+}
+
 /* ─── Nav wordmark ─── */
 .v2-nav-brand {
   display: inline-flex;

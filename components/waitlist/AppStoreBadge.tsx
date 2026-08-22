@@ -15,16 +15,26 @@ import { APP_STORE_URL } from '@/lib/constants'
  */
 export default function AppStoreBadge({
   full = false,
+  size,
   onClick,
 }: {
   /** Full-width variant for the mobile sheet. */
   full?: boolean
+  /**
+   * LV5-018 (Kush): scale the badge up in the two spots he called out —
+   * 'nav' for NavV2 (persistent bar + mobile sheet, +~10-15% over the base
+   * size), 'lg' for the /pricing card's CTA (~1.4-1.5x, ~200px wide).
+   * Omitted keeps today's size — nothing calls it unsized any more now that
+   * HeroV2's own copy of the badge is gone, but the default stays the
+   * original look for any future caller.
+   */
+  size?: 'nav' | 'lg'
   onClick?: () => void
 }) {
   return (
     <a
       href={APP_STORE_URL}
-      className="v2-link v2-appstore-badge"
+      className={`v2-link v2-appstore-badge${size ? ` v2-appstore-badge--${size}` : ''}`}
       style={full ? { width: '100%' } : undefined}
       onClick={onClick}
     >

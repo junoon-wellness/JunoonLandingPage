@@ -95,7 +95,7 @@ export default function PricingPage() {
           </ul>
 
           <div className="pr-cta">
-            <AppStoreBadge />
+            <AppStoreBadge size="lg" />
             <span className="pr-cta-sub">Subscribe in the app</span>
             <span className="pr-cta-fine">Cancel anytime in the App Store.</span>
           </div>

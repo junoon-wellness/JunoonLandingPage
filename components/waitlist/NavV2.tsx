@@ -119,7 +119,7 @@ export default function NavV2() {
         {/* LV5-002: the App Store badge replaces the "Pre-launch · 2026"
             pill + "Join waitlist" button that used to live here. */}
         <div className="v2-nav-cta">
-          <AppStoreBadge />
+          <AppStoreBadge size="nav" />
         </div>
 
         <button
@@ -166,7 +166,7 @@ export default function NavV2() {
         </div>
 
         <div className="v2-nav-sheet-cta">
-          <AppStoreBadge full onClick={() => setMenuOpen(false)} />
+          <AppStoreBadge full size="nav" onClick={() => setMenuOpen(false)} />
         </div>
       </div>
     </nav>
