@@ -85,6 +85,24 @@
 
   /* One easing for the whole page, so nothing moves in a different accent. */
   --jn-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ════════════════════════════════════════════════════════════════
+     PER-ITEM ACCENTS (LV5-019) — a wider ring for the hero dot pills
+     (SC1) and the feature tab outlines (SC2) to draw six/four DIFFERENT
+     colours from instead of reusing just clay/turmeric/sage everywhere.
+     GRAPHIC use only (borders, fills, dots) — never body/label text,
+     so these are only required to clear 3:1 on --jn-bg, not 4.5:1.
+     ════════════════════════════════════════════════════════════════ */
+  --jn-gold-alt: #D9A03C;      /* poster accentAlt — measured 7.82:1 on --jn-bg */
+  /* Poster jade #1F5D50 measured 2.37:1 on --jn-bg — FAILS the 3:1 graphic
+     floor. Lightened (same hue) to #2F8F78, which measures 4.60:1. Fill/
+     border use only, same rule as moss above. */
+  --jn-jade-tint: #2F8F78;
+  /* Poster blush #F2DDD2 at Kush's requested 0.7 alpha, pre-blended over
+     --jn-bg so it can be dropped in anywhere currentColor/a var() is
+     expected without a color-mix() double-blend. Effective rgb(178,161,152),
+     measures 7.30:1 on --jn-bg. */
+  --jn-blush-a70: rgba(242, 221, 210, 0.7);
 }
 
 html {
@@ -561,16 +579,18 @@ body::before {
   user-select: none;
 }
 
-/* ─── Progress pills / labels ─── (spec §B2)
-   Capped so six labels break into two even rows under the phone rather than
-   stretching wide and orphaning the last one on a line of its own. */
+/* ─── Progress pills / labels ─── (spec §B2, LV5-019 round 2)
+   Explicit 3-across grid rather than a flex-wrap guess: 6 labels always land
+   as 2 even rows of 3 (Kush, 2026-08-22: "make these 3 across"), down to
+   repeat(2) under 480px so nothing crowds on the smallest phones. */
 .v2-dots {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
   justify-content: center;
+  align-items: center;
+  gap: 6px 14px;
   max-width: 340px;
+  margin: 0 auto;
 }
 
 .v2-dot {
@@ -598,8 +618,13 @@ body::before {
 }
 .v2-dot.is-active {
   color: var(--jn-turmeric);
-  border-color: rgba(200, 144, 42, 0.3);
-  background: rgba(200, 144, 42, 0.06);
+  /* LV5-019: each dot carries its own --dot-accent (set inline per index in
+     DeviceCarousel.tsx) instead of the single shared turmeric this used to
+     be — Kush: "each a different color for the line and bubble shading".
+     Label TEXT stays on --jn-turmeric above (unchanged, contrast-safe);
+     only the border/fill tint below picks up the per-dot accent. */
+  border-color: color-mix(in srgb, var(--dot-accent, var(--jn-turmeric)) 30%, transparent);
+  background: color-mix(in srgb, var(--dot-accent, var(--jn-turmeric)) 6%, transparent);
 }
 
 /* The dot became a progress track: the active pill fills over the carousel's
@@ -609,7 +634,10 @@ body::before {
   width: 5px;
   height: 5px;
   border-radius: 100px;
-  background: currentColor;
+  /* was currentColor (tied to the label's turmeric/faint text color) — now
+     the per-dot accent so the "line" reads as six different colours even
+     while a dot is inactive, same accent the active pill's tint uses. */
+  background: var(--dot-accent, currentColor);
   opacity: 0.55;
   overflow: hidden;
   transition: width 0.42s var(--jn-ease), opacity 0.3s ease;
@@ -623,7 +651,7 @@ body::before {
   display: block;
   height: 100%;
   width: 100%;
-  background: currentColor;
+  background: var(--dot-accent, currentColor);
   border-radius: inherit;
   /* Resting state is FULL, not empty. If the animation never runs (hidden
      tab, reduced motion) the pill reads as complete rather than blank -
@@ -1602,6 +1630,13 @@ body::before {
     mask-image: radial-gradient(ellipse 92% 48% at 50% 28%, #000 0%, transparent 76%);
   }
   .jn-tour-cta { width: 100%; justify-content: center; }
+}
+
+/* LV5-019: 3-across crowds on the smallest phones — fall back to 2 across
+   (3 rows of 2) under 480px. Separate block from the 768px one above since
+   this is a narrower, dot-grid-specific floor, not a general tablet rule. */
+@media (max-width: 480px) {
+  .v2-dots { grid-template-columns: repeat(2, max-content); }
 }
 
 /* ─── Reduced motion ───
