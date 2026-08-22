@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Noto_Sans_Devanagari } from "next/font/google";
 import { meta } from "@/lib/meta";
 import { clean } from "@/lib/text";
 import "./globals.css";
@@ -29,16 +28,6 @@ const dmMono = localFont({
   display: "swap",
 });
 
-// Cormorant Garamond has no Devanagari coverage, so the pillar glyphs
-// (प्राण / विज्ञान / संघ) would otherwise fall back to whatever the OS has.
-// The only font not already available locally in this repo.
-const notoDevanagari = Noto_Sans_Devanagari({
-  variable: "--font-devanagari",
-  subsets: ["devanagari"],
-  weight: ["400", "500"],
-  display: "swap",
-});
-
 // NOTE: og:image is intentionally omitted - no real OG asset exists yet.
 // Do not invent a URL (see handoff placeholder policy).
 export const metadata: Metadata = {
@@ -54,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${dmSans.variable} ${dmMono.variable} ${notoDevanagari.variable}`}
+      className={`${cormorant.variable} ${dmSans.variable} ${dmMono.variable}`}
     >
       {/*
         bg/text colours deliberately live in globals.css rather than as Tailwind

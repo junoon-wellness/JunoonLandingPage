@@ -4,16 +4,19 @@ import ScrollStory, { type StoryChapter } from '@/components/story/ScrollStory'
 import { SCREENS } from '@/lib/screens'
 
 /**
- * The four product chapters (spec §B5). Replaces the tabbed FeatureShowcase,
- * which auto-advanced on a 7s timer whether or not anyone was looking at it.
+ * The four product chapters (spec §B5). Rendered as named clickable tabs by
+ * ScrollStory (LV5-003, 2026-08-22) - replaces both the older tabbed
+ * FeatureShowcase (which auto-advanced on a 7s timer whether or not anyone
+ * was looking at it) and the scroll-jacked pin that briefly replaced it.
  *
  * Order is the product argument: the ritual that starts the week, the coach
  * that learns from it, the library it draws on, and the thing you can reach for
  * in the middle of a bad afternoon.
  *
- * ⚠️ Devanagari glyphs are watermarks, not copy. संकल्प (sankalp, the
- * intention set at the start of a practice) is a placeholder for the ritual
- * chapter - spec §B5 leaves the choice between that and रविवार to Kush.
+ * The Devanagari watermark glyphs each chapter used to carry are gone
+ * (Kush, LV5-003: "remove the Hindi text from the background of the 4
+ * tabs") - `railLabel` below is now each chapter's only short name, used for
+ * both the tab text and (previously) the progress rail.
  */
 const CHAPTERS: StoryChapter[] = [
   {
@@ -31,7 +34,6 @@ const CHAPTERS: StoryChapter[] = [
       'Life shifted mid-week? Re-work the remaining days in seconds.',
     ],
     accent: 'var(--jn-turmeric)',
-    glyph: 'संकल्प',
     railLabel: 'The ritual',
     screens: [SCREENS.ritualProposal, SCREENS.ritualWeek],
   },
@@ -54,7 +56,6 @@ const CHAPTERS: StoryChapter[] = [
     // fixed to sage in that commit, this one didn't). Sage measures 6.12:1
     // and keeps the four chapters from reading as three-turmeric-one-sage.
     accent: 'var(--jn-sage)',
-    glyph: 'दिनचर्या',
     railLabel: 'The coach',
     screens: [SCREENS.coachChat, SCREENS.coachPicks],
   },
@@ -76,7 +77,6 @@ const CHAPTERS: StoryChapter[] = [
     // accent of the four — a warm grey among three warm accents — so the
     // library chapter is where sage costs the least and reads the most.
     accent: 'var(--jn-sage)',
-    glyph: 'ध्यान',
     railLabel: 'The library',
     screens: [SCREENS.library, SCREENS.liveClass],
   },
@@ -95,7 +95,6 @@ const CHAPTERS: StoryChapter[] = [
       'Or start one yourself from anywhere in the app, no conversation needed.',
     ],
     accent: 'var(--jn-turmeric)',
-    glyph: 'प्राण',
     railLabel: 'Breathwork',
     screens: [SCREENS.breathworkSession, SCREENS.planTab],
   },
