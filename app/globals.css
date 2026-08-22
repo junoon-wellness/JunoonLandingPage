@@ -1962,3 +1962,261 @@ body::before {
   }
   .ab-contact-section { padding: 28px 24px 40px; }
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   /LIBRARY  (LV5-017) — newsletter block (full version of Home's
+   SecondCTA teaser) + the article grid + /library/[slug] reader.
+   ════════════════════════════════════════════════════════════════════ */
+.lb-newsletter {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 48px;
+  padding: 88px 48px 40px;
+  border-bottom: 0.5px solid var(--jn-hairline);
+}
+.lb-newsletter-headline {
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--jn-text);
+  margin-bottom: 14px;
+}
+.lb-newsletter-sub {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--jn-text-soft);
+  line-height: 1.75;
+  max-width: 440px;
+  margin-bottom: 18px;
+}
+.lb-topics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  max-width: 400px;
+  margin-bottom: 18px;
+  list-style: none;
+  padding: 0;
+}
+.lb-topic {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: var(--jn-text-soft);
+  line-height: 1.5;
+}
+.lb-topic::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--jn-sage);
+  flex-shrink: 0;
+}
+.lb-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+.lb-chip {
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border: 0.5px solid rgba(245, 240, 232, 0.12);
+  border-radius: 2px;
+  color: var(--jn-text-soft);
+}
+
+/* ── article grid ── */
+.lb-grid-section {
+  position: relative;
+  z-index: 2;
+  padding: 36px 48px 24px;
+}
+.lb-grid-heading { margin-bottom: 22px; }
+.lb-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.lb-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 22px;
+  background: var(--jn-surface);
+  border: 0.5px solid var(--jn-hairline-strong);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s var(--jn-ease);
+}
+.lb-card:hover {
+  border-color: rgba(200, 144, 42, 0.35);
+  transform: translateY(-2px);
+}
+.lb-card-eyebrow {
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--jn-sage);
+}
+.lb-card-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--jn-text);
+}
+.lb-card-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--jn-text-soft);
+  line-height: 1.65;
+  flex-grow: 1;
+}
+.lb-card-meta {
+  font-size: 11px;
+  color: var(--jn-text-faint);
+  margin-top: 4px;
+}
+
+.lb-app-link-row {
+  display: flex;
+  justify-content: center;
+  padding: 24px 48px 56px;
+}
+.lb-app-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--jn-turmeric);
+  text-decoration: none;
+}
+
+/* ── /library/[slug] reader ── */
+.lb-reader-hero {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 88px 24px 24px;
+}
+.lb-reader-back {
+  display: inline-flex;
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--jn-text-faint);
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+.lb-reader-eyebrow { margin-bottom: 14px; }
+.lb-reader-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--jn-text);
+  margin-bottom: 12px;
+}
+.lb-reader-meta {
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--jn-text-faint);
+  margin-bottom: 20px;
+}
+.lb-reader-desc {
+  font-size: 15px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--jn-text-soft);
+  line-height: 1.7;
+  padding-left: 16px;
+  border-left: 2px solid var(--jn-clay);
+}
+
+.lb-reader-body {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 8px 24px 56px;
+}
+.lb-reader-body p {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--jn-text-soft);
+  line-height: 1.85;
+  margin: 0 0 20px;
+}
+.lb-reader-body h1,
+.lb-reader-body h2,
+.lb-reader-body h3 {
+  font-family: var(--font-cormorant), serif;
+  font-weight: 500;
+  color: var(--jn-text);
+  margin: 32px 0 14px;
+}
+.lb-reader-body h1 { font-size: 26px; }
+.lb-reader-body h2 { font-size: 22px; }
+.lb-reader-body h3 { font-size: 19px; }
+.lb-reader-body ul {
+  margin: 0 0 20px;
+  padding-left: 20px;
+  color: var(--jn-text-soft);
+}
+.lb-reader-body li {
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.8;
+  margin-bottom: 8px;
+}
+.lb-reader-body code {
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  background: var(--jn-wash);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.lb-reader-cta {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 0.5px solid var(--jn-hairline);
+}
+
+@media (max-width: 1024px) {
+  .lb-newsletter { padding: 84px 32px 32px; gap: 32px; }
+  .lb-grid-section { padding: 32px 32px 20px; }
+  .lb-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .lb-newsletter { grid-template-columns: 1fr; padding: 80px 24px 28px; gap: 24px; }
+  .lb-grid-section { padding: 28px 24px 16px; }
+  .lb-grid { grid-template-columns: 1fr; }
+  .lb-app-link-row { padding: 20px 24px 40px; }
+  .lb-reader-hero { padding: 76px 20px 20px; }
+  .lb-reader-body { padding: 8px 20px 40px; }
+}
