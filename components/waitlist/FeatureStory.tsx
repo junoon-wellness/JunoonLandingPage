@@ -49,7 +49,11 @@ const CHAPTERS: StoryChapter[] = [
       'Said it was not for you? It stays gone.',
       'Variety first: the coach will not serve you the same class on repeat.',
     ],
-    accent: 'var(--jn-clay)',
+    // LV5-001: was clay — 3.63:1 as this chapter's 11px eyebrow text, below
+    // AA. This slipped through ba2760a itself (the library chapter got
+    // fixed to sage in that commit, this one didn't). Sage measures 6.12:1
+    // and keeps the four chapters from reading as three-turmeric-one-sage.
+    accent: 'var(--jn-sage)',
     glyph: 'दिनचर्या',
     railLabel: 'The coach',
     screens: [SCREENS.coachChat, SCREENS.coachPicks],
