@@ -1,9 +1,9 @@
 'use client'
 
 import { useRef } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion, transform, useScroll, useTransform } from 'framer-motion'
-import AppStoreBadge from './AppStoreBadge'
 import DeviceCarousel from './DeviceCarousel'
 
 interface HeroV2Props {
@@ -49,12 +49,12 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
   return (
     <section
       ref={sectionRef}
-      // LV5-001: `drift-bg` adds the same warm+sage ambient ground radials
-      // SecondCTA already carries (see .drift-bg::after in globals.css) so
-      // the hero reads richer/darker at the edges instead of flat --jn-bg
-      // behind a single bright device glow. .v2-devices is z-index 1 so the
-      // wash sits behind the carousel rather than over it.
-      className="v2-hero noise-bg drift-bg"
+      // LV5-018 (Kush ruling, reversing LV5-001): the site goes to one flat
+      // --jn-bg everywhere for consistency with /pricing, /about, /library —
+      // `noise-bg drift-bg` (the ambient ground radials) came back off the
+      // hero. `.v2-device-glow` behind the phone carousel is untouched; it's
+      // the phone's own glow, not the page ground.
+      className="v2-hero"
       style={{ background: 'var(--jn-bg)', overflow: 'hidden' }}
     >
       {/* Faint engineering grid replaces the old 720px yantra motif */}
@@ -127,30 +127,55 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           grew up around.
         </motion.p>
 
-        {/* LV5-002: the app is live, so the hero CTA is the App Store badge,
-            not the email form — the form + live-claimed-count progress bar
-            it replaced now live only in the SignupForm/SpotsProgress files,
-            unreferenced here. `#join` moved to the newsletter form at the
-            bottom of the page (SecondCTA), which is where a working anchor
-            belongs now that this isn't a signup form. */}
-        <motion.div className="v2-hero-form jn-reveal" variants={step}>
-          <AppStoreBadge />
+        {/* LV5-018: replaces the App Store badge + "500 founder spots ·
+            first month free · see pricing" line. Kush's review on the first
+            full preview: that empty space under the sub-copy should carry a
+            condensed version of the offer band + founder quote instead, so
+            the two full-width sections lower on the page (OfferBandV2,
+            FounderBlockV2) could come out entirely. Same copy, same photo,
+            same quote — just tight enough to sit in the hero. The App Store
+            CTA itself isn't lost: the nav badge and the /pricing card both
+            still carry it. */}
+        <motion.div className="v2-hero-offer jn-reveal" variants={step}>
+          <div className="eyebrow no-rule">Founding member offer</div>
+          <p className="v2-hero-offer-headline">
+            First 500 members.{' '}
+            <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>
+              Permanent pricing.
+            </em>
+          </p>
+          <p className="v2-hero-offer-body">First month free, then $8.99 a month for life.</p>
+          <Link href="/pricing" className="v2-link v2-hero-offer-link">
+            See pricing →
+          </Link>
         </motion.div>
 
-        <motion.div
-          className="v2-hero-progress jn-reveal"
-          variants={step}
-          style={{ marginTop: '18px', maxWidth: '420px' }}
-        >
-          <p
-            className="jn-mono"
-            style={{ fontSize: '11px', letterSpacing: '0.1em', color: 'var(--jn-mute)' }}
-          >
-            500 founder spots · first month free ·{' '}
-            <Link href="/pricing" className="v2-link" style={{ color: 'var(--jn-turmeric)' }}>
-              see pricing
-            </Link>
-          </p>
+        <motion.div className="v2-hero-founder jn-reveal" variants={step}>
+          <div className="v2-hero-founder-photo">
+            {/* Same crop OfferBandV2's sibling FounderBlockV2 uses. */}
+            <Image
+              src="/arjav-photo.jpg"
+              alt="Arjav, founder of Junoon Wellness"
+              width={112}
+              height={112}
+              sizes="56px"
+              style={{ width: '100%', height: '100%' }}
+            />
+          </div>
+          <div>
+            {/* Verbatim, same quote as FounderBlockV2. Whether this wraps to
+                more than 3 lines at the hero's ~420px column can only be
+                confirmed in a real browser (machine rules for this round
+                forbid a dev server / screenshots), so the full quote ships
+                as-is rather than guessing at a cut — flagged in the build
+                report for a visual check. */}
+            <p className="v2-hero-founder-quote">
+              &ldquo;I spent years watching South Asian clients try platforms that just
+              didn&apos;t speak to them. Junoon is what I wish existed when I started
+              coaching.&rdquo;
+            </p>
+            <p className="v2-hero-founder-name">Arjav · Founder, Junoon Wellness</p>
+          </div>
         </motion.div>
       </motion.div>
 
