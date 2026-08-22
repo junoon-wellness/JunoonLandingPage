@@ -27,8 +27,12 @@ export const SCREEN_HEIGHT = 1800
 export const SCREENS = {
   ritualProposal: {
     src: '/screenshots/v3/ritual-proposal.png',
+    // LV5-007 (2026-08-22): swapped for a newer capture (2026-08-17) of the
+    // same ritual-proposal screen - content changed, framing and crop did
+    // not (straight proportional resize of the same 1206x2622 capture
+    // format the rest of the batch used, no visible crop in either).
     alt:
-      'The Sunday ritual proposing the coming week, showing what changed and an Approve this week button',
+      "What's different this week: 2 slots added, 4 removed, with an Approve this week button",
   },
   ritualWeek: {
     src: '/screenshots/v3/ritual-week.png',
