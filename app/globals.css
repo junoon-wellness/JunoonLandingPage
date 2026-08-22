@@ -1695,3 +1695,270 @@ body::before {
   .pr-card { padding: 32px 22px 26px; }
   .pr-ribbon { right: -52px; top: 18px; }
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   /ABOUT  (LV5-016) — board B "Chaptered", padding removed especially at
+   the top per Kush's 2026-08-22 ruling: "I like B but remove the empty
+   padding throughout, especially at the top." The headline sits close
+   under the fixed nav; band paddings run at roughly half the mockup's.
+   ════════════════════════════════════════════════════════════════════ */
+.ab-hero {
+  position: relative;
+  z-index: 2;
+  padding: 84px 48px 8px;
+  max-width: 760px;
+}
+.ab-eyebrow { margin-bottom: 10px; }
+.ab-headline {
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(32px, 4.2vw, 52px);
+  font-weight: 400;
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+  color: var(--jn-text);
+}
+
+/* ── numbered alternating bands ── */
+.ab-band {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  padding: 32px 48px;
+}
+.ab-band-reverse .ab-band-media { order: 2; }
+.ab-band-reverse .ab-band-copy { order: 1; }
+
+.ab-band-num {
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--jn-sage);
+  margin-bottom: 12px;
+  display: block;
+}
+.ab-band-copy p {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--jn-text-soft);
+  line-height: 1.75;
+  margin: 0 0 16px;
+}
+.ab-band-copy p:last-child { margin-bottom: 0; }
+
+/* video placeholder — 16:9, dark, a play mark and caption until
+   FOUNDER_VIDEO_SRC is set (lib/constants.ts) */
+.ab-video-slot {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  overflow: hidden;
+  background: linear-gradient(155deg, var(--jn-surface) 0%, var(--jn-surface-deep) 100%);
+  border: 0.5px solid var(--jn-hairline-strong);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.ab-video-slot video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ab-play-mark {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(245, 240, 232, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--jn-text);
+}
+.ab-video-caption {
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  /* NOT --jn-text-faint (.55 alpha): the slot's diagonal gradient runs from
+     --jn-surface down to --jn-surface-deep, and .55 measures only 4.22:1
+     against the deep end (worst case) — fails AA. --jn-text-soft (.62)
+     measures 4.91:1 there and still reads correctly against the lighter end. */
+  color: var(--jn-text-soft);
+}
+
+/* tagline panel — band 02's right column */
+.ab-tagline-panel {
+  padding: 40px 32px;
+  background: var(--jn-surface);
+  border: 0.5px solid var(--jn-hairline-strong);
+  border-left: 3px solid var(--jn-clay);
+  border-radius: 4px;
+}
+.ab-tagline-text {
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--jn-turmeric);
+}
+
+/* founder card — band 03's left column, reuses the real Arjav photo */
+.ab-founder-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 32px 24px;
+  background: var(--jn-surface);
+  border: 0.5px solid var(--jn-hairline-strong);
+  border-radius: 6px;
+  text-align: center;
+}
+.ab-founder-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 0.5px solid rgba(245, 240, 232, 0.14);
+}
+.ab-founder-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--jn-text);
+  letter-spacing: 0.02em;
+}
+.ab-founder-role {
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  /* NOT --jn-mute: #93826F on --jn-surface measures 4.23:1 and fails AA
+     (same trap caught on /pricing's CTA fine print). text-faint passes. */
+  color: var(--jn-text-faint);
+}
+.ab-signature {
+  margin-top: 18px;
+  font-family: var(--font-cormorant), serif;
+  font-size: 19px;
+  font-style: italic;
+  color: var(--jn-text);
+}
+
+/* ── people grids: team + instructors, 4-up square cards ── */
+.ab-people-section {
+  position: relative;
+  z-index: 2;
+  padding: 28px 48px;
+}
+.ab-people-heading { margin-bottom: 20px; }
+.ab-people-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.ab-person-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ab-person-photo {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--jn-surface);
+  border: 0.5px solid var(--jn-hairline-strong);
+}
+/* clay-light silhouette placeholder for the four TEAM headshots, not yet
+   supplied — a generic figure on a faint clay wash, never a stock photo. */
+.ab-person-photo.ab-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(181, 82, 42, 0.14);
+}
+.ab-person-photo.ab-placeholder svg { color: rgba(245, 240, 232, 0.4); }
+.ab-person-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--jn-text);
+  line-height: 1.3;
+}
+.ab-person-role {
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--jn-sage);
+}
+.ab-person-bio {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--jn-text-soft);
+  line-height: 1.6;
+}
+
+/* ── contact ── */
+.ab-contact-section {
+  position: relative;
+  z-index: 2;
+  padding: 40px 48px 56px;
+  border-top: 0.5px solid var(--jn-hairline);
+}
+.ab-contact-inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.ab-contact-heading { text-align: center; margin-bottom: 24px; }
+/* ContactForm.tsx ships Tailwind utility classes tuned for the light-theme
+   pages (bg-warmWhite, text-bark, etc.) — this wrapper overrides just the
+   field chrome so the form reads correctly against the dark page tokens
+   without touching the shared component itself. */
+.ab-contact-inner input,
+.ab-contact-inner textarea {
+  background: var(--jn-wash) !important;
+  border-color: var(--jn-hairline-strong) !important;
+  color: var(--jn-text) !important;
+}
+.ab-contact-inner input::placeholder,
+.ab-contact-inner textarea::placeholder {
+  color: var(--jn-text-faint) !important;
+}
+.ab-contact-inner label {
+  color: var(--jn-mute) !important;
+}
+.ab-contact-inner button[type='submit'] {
+  background: var(--jn-clay) !important;
+  color: var(--jn-on-clay) !important;
+}
+
+@media (max-width: 1024px) {
+  .ab-band { gap: 32px; padding: 28px 32px; }
+  .ab-people-section { padding: 24px 32px; }
+  .ab-hero { padding: 80px 32px 8px; }
+  .ab-contact-section { padding: 32px 32px 48px; }
+}
+
+@media (max-width: 768px) {
+  .ab-hero { padding: 76px 24px 8px; }
+  .ab-band {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 24px 24px;
+  }
+  .ab-band-reverse .ab-band-media,
+  .ab-band-reverse .ab-band-copy { order: initial; }
+  .ab-people-section { padding: 20px 24px; }
+  .ab-people-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .ab-contact-section { padding: 28px 24px 40px; }
+}

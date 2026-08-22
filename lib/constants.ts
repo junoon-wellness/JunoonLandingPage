@@ -32,6 +32,17 @@ export const APP_STORE_URL = '#'
  */
 export const SPOTS_CLAIMED_FALLBACK = 61
 
+/**
+ * LV5-016: the /about founder video. Arjav filmed it 2026-08-19 but the file
+ * hasn't been supplied yet — null renders a dark poster + play mark +
+ * "Founder video" caption instead of a broken <video> tag.
+ * Self-hosted per Kush's ruling once the file arrives: if it's under ~25MB,
+ * drop it in public/ and point this at that path; if larger, upload to
+ * Vercel Blob (or Mux) and point this at that URL instead — don't commit a
+ * large binary to the repo.
+ */
+export const FOUNDER_VIDEO_SRC: string | null = null
+
 /** Traffic sources we accept from the `?ref=` query param. Anything else → 'direct'. */
 export const VALID_SOURCES = ['instagram', 'tiktok', 'linkedin', 'direct'] as const
 
