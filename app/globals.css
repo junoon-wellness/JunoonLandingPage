@@ -1135,12 +1135,20 @@ body::before {
   .v2-device-front { width: 244px; height: 530px; }
   .v2-devices { min-height: 560px; }
 
+  /*
+    ⚠️ `minmax(0, 1fr)`, not `1fr`. A bare `1fr` is `minmax(auto, 1fr)`, so
+    the track refuses to go below its content's min-content width — and the
+    strip's min-content is three fixed frames plus their gaps. On a 320px
+    screen that forced a 328px track into 272px of space, and because
+    `body { overflow-x: hidden }` the page did not scroll, it silently
+    clipped. This is the same failure the v2 feature showcase had.
+  */
   .jn-teaser {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 40px;
     padding: 56px 32px;
   }
-  .jn-teaser-strip { justify-content: center; }
+  .jn-teaser-strip { justify-content: center; min-width: 0; }
 }
 
 /* ════════════════════════════════════════════════════════════════════
@@ -1359,6 +1367,10 @@ body::before {
      mobile-pin block above, which is scoped tighter than this one. */
   .jn-story-card { padding: 36px 0; }
 
+  /* The frames shrink rather than the strip clipping. At 320px this is 80px
+     a frame: 3 x 80 + 2 x 8 = 256, inside 272px of usable width. */
+  .jn-teaser-frame { --teaser-frame-w: clamp(64px, 25vw, 104px); }
+
   .jn-teaser { padding: 48px 24px; }
   .jn-teaser-strip { gap: 8px; }
   .jn-teaser-frame:nth-child(1),
@@ -1439,3 +1451,6 @@ body::before {
 @media (prefers-reduced-motion: reduce) and (max-width: 768px) {
   .jn-story { padding: 40px 24px; }
 }
+
+/* The 520px .jn-rail-card stacking rule from LV4-016 is dropped here — that
+   class belongs to RestOfApp.tsx, which does not exist on this branch. */

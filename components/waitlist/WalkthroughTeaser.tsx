@@ -12,8 +12,8 @@ import { SCREENS, SCREEN_HEIGHT, SCREEN_WIDTH } from '@/lib/screens'
  */
 const STRIP = [SCREENS.planTab, SCREENS.coachPicks, SCREENS.breathworkSession]
 
+/** Desktop width. Below 768px the CSS overrides `--teaser-frame-w`. */
 const FRAME_W = 104
-const FRAME_H = Math.round((FRAME_W * SCREEN_HEIGHT) / SCREEN_WIDTH)
 
 export default function WalkthroughTeaser() {
   return (
@@ -70,7 +70,17 @@ export default function WalkthroughTeaser() {
           <div
             key={s.src}
             className="jn-teaser-frame"
-            style={{ width: `${FRAME_W}px`, height: `${FRAME_H}px` }}
+            /*
+              Read as a var with the desktop size as the FALLBACK — never
+              set inline. Three fixed 104px frames plus two gaps is 328px,
+              which does not fit a 320px screen; declaring the property
+              inline would make that unfixable from CSS. See the note in
+              PhoneFrame.tsx.
+            */
+            style={{
+              width: `var(--teaser-frame-w, ${FRAME_W}px)`,
+              aspectRatio: `${SCREEN_WIDTH} / ${SCREEN_HEIGHT}`,
+            }}
           >
             <Image
               src={s.src}
