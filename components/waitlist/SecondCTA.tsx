@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import SignupForm from './SignupForm'
 import Reveal, { RevealGroup, RevealItem } from '@/components/motion/Reveal'
 
@@ -12,7 +13,19 @@ interface SecondCTAProps {
  * Bottom-of-page CTA. Replaces the old newsletter strip - the toggle between
  * "waitlist" and "newsletter" was dropped, because beehiiv's welcome Automation
  * filters on a single acquisition source ("Waitlist"). One list, one action.
+ *
+ * LV5-004: reformatted from a generic "join anyway" pitch into the newsletter
+ * join — a teaser of the full newsletter home on the Library tab. Still one
+ * list under the hood (same beehiiv publication, same `utm_source`), just
+ * framed honestly now that there's no waitlist left to be a fallback for.
  */
+const TOPICS = [
+  'App updates and news',
+  'Wellness articles',
+  'Live class announcements',
+  'Recipes and more',
+]
+
 export default function SecondCTA({ source, onSignupSuccess }: SecondCTAProps) {
   return (
     <section
@@ -37,8 +50,10 @@ export default function SecondCTA({ source, onSignupSuccess }: SecondCTAProps) {
               letterSpacing: '-0.008em',
             }}
           >
-            Still thinking it over?{' '}
-            <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>Join anyway.</em>
+            Get updates by email.{' '}
+            <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>
+              Join the newsletter.
+            </em>
           </h3>
           <p
             style={{
@@ -47,17 +62,60 @@ export default function SecondCTA({ source, onSignupSuccess }: SecondCTAProps) {
               color: 'var(--jn-text-soft)',
               lineHeight: 1.75,
               maxWidth: '440px',
+              marginBottom: '18px',
             }}
           >
-            Joining costs nothing and commits you to nothing. We&apos;ll email you occasionally,
-            never weekly.
+            App updates and news, wellness articles, live class announcements, recipes and more.
           </p>
         </Reveal>
 
         <RevealGroup
+          stagger={0.05}
+          delayChildren={0.1}
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '8px 16px',
+            maxWidth: '380px',
+            marginBottom: '18px',
+          }}
+        >
+          {TOPICS.map(topic => (
+            <RevealItem
+              key={topic}
+              as="span"
+              y={10}
+              className="jn-mono"
+              style={{
+                display: 'flex',
+                alignItems: 'baseline',
+                gap: '8px',
+                fontSize: '11px',
+                letterSpacing: '0.08em',
+                textTransform: 'none',
+                color: 'var(--jn-text-soft)',
+                lineHeight: 1.5,
+              }}
+            >
+              <span
+                aria-hidden="true"
+                style={{
+                  width: '4px',
+                  height: '4px',
+                  borderRadius: '50%',
+                  background: 'var(--jn-sage)',
+                  flexShrink: 0,
+                }}
+              />
+              {topic}
+            </RevealItem>
+          ))}
+        </RevealGroup>
+
+        <RevealGroup
           stagger={0.07}
           delayChildren={0.12}
-          style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '18px' }}
+          style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}
         >
           {/* LV5-002: "No card" dropped — Kush, 08/20 call: "I can't say no
               card because we do require card" (referring to the app's free
@@ -81,6 +139,20 @@ export default function SecondCTA({ source, onSignupSuccess }: SecondCTAProps) {
               {b}
             </RevealItem>
           ))}
+          <RevealItem as="span" y={10}>
+            <Link
+              href="/library"
+              className="v2-link jn-mono"
+              style={{
+                fontSize: '11px',
+                letterSpacing: '0.1em',
+                color: 'var(--jn-turmeric)',
+                textDecoration: 'none',
+              }}
+            >
+              See the Library tab →
+            </Link>
+          </RevealItem>
         </RevealGroup>
       </div>
 

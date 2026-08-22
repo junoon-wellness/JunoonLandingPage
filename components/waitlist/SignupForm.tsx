@@ -266,12 +266,10 @@ export default function SignupForm({
             disabled={status === 'loading'}
             style={{ marginTop: '12px', width: '100%' }}
           >
-            {/* LV5-002: was "Get early access" — the app is live, "early
-                access" is no longer accurate. "Join" is a deliberately
-                short placeholder; LV5-004 (next ticket, same round) renames
-                this to "Join the newsletter" once the section itself is
-                reframed as the newsletter join. */}
-            {status === 'loading' ? 'Joining…' : 'Join'}
+            {/* LV5-002 dropped "Get early access" (no longer accurate once
+                the app is live); LV5-004 finalizes the label now that this
+                section is the newsletter join. */}
+            {status === 'loading' ? 'Joining…' : 'Join the newsletter'}
           </button>
         )}
       </form>
