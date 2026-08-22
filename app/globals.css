@@ -1494,3 +1494,204 @@ body::before {
 
 /* The 520px .jn-rail-card stacking rule from LV4-016 is dropped here — that
    class belongs to RestOfApp.tsx, which does not exist on this branch. */
+
+/* ════════════════════════════════════════════════════════════════════
+   /PRICING  (LV5-015) — board A "One card", padding cut hard per Kush's
+   2026-08-22 ruling. Section paddings run roughly half of .v2-section's
+   56px so the page reads dense rather than airy.
+   ════════════════════════════════════════════════════════════════════ */
+.pr-hero {
+  position: relative;
+  z-index: 2;
+  padding: 92px 48px 28px;
+  text-align: center;
+}
+.pr-headline {
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(30px, 3.6vw, 44px);
+  font-weight: 400;
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+  color: var(--jn-text);
+  margin: 12px auto 0;
+  max-width: 560px;
+}
+
+.pr-section {
+  position: relative;
+  z-index: 2;
+  padding: 28px 48px;
+}
+
+.pr-card {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 40px 40px 32px;
+  background: var(--jn-surface);
+  border: 0.5px solid var(--jn-hairline-strong);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pr-ribbon {
+  position: absolute;
+  top: 22px;
+  right: -46px;
+  width: 190px;
+  padding: 6px 0;
+  text-align: center;
+  transform: rotate(38deg);
+  background: var(--jn-clay);
+  color: var(--jn-on-clay);
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pr-price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.pr-price {
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(56px, 7vw, 72px);
+  font-weight: 400;
+  color: var(--jn-text);
+  line-height: 1;
+}
+.pr-price-unit {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--jn-text-soft);
+}
+
+.pr-offer-line {
+  margin: 18px auto 0;
+  max-width: 460px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--jn-text-soft);
+  line-height: 1.7;
+}
+
+.pr-checklist {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  border-top: 0.5px solid var(--jn-hairline);
+}
+.pr-check-row {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 11px 0;
+  border-bottom: 0.5px solid var(--jn-hairline);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--jn-text-soft);
+  line-height: 1.5;
+}
+.pr-check-icon {
+  color: var(--jn-sage);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.pr-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+.pr-cta-sub {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--jn-text-faint);
+}
+.pr-cta-fine {
+  /* NOT --jn-mute: #93826F on the card's --jn-surface measures 4.23:1 and
+     fails AA (it only passes on --jn-bg, 4.90:1 — see LV5-011's trap about
+     not carrying a contrast pass across grounds). text-faint passes on both. */
+  font-size: 11px;
+  color: var(--jn-text-faint);
+}
+
+.pr-next-heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.pr-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.pr-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  border-radius: 100px;
+  border: 0.5px solid var(--jn-hairline-strong);
+  background: var(--jn-wash);
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--jn-text-soft);
+  line-height: 1.4;
+}
+
+.pr-faq {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.pr-faq-item {
+  border-bottom: 0.5px solid var(--jn-hairline);
+  padding: 16px 0;
+}
+.pr-faq-item summary {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  list-style: none;
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--jn-text);
+}
+.pr-faq-item summary::-webkit-details-marker { display: none; }
+.pr-faq-item summary::after {
+  content: '+';
+  flex-shrink: 0;
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--jn-mute);
+  transition: transform 0.25s var(--jn-ease);
+}
+.pr-faq-item[open] summary::after { transform: rotate(45deg); }
+.pr-faq-item[open] summary { color: var(--jn-turmeric); }
+.pr-faq-answer {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--jn-text-soft);
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .pr-hero { padding: 84px 24px 24px; }
+  .pr-section { padding: 24px 24px; }
+  .pr-card { padding: 32px 22px 26px; }
+  .pr-ribbon { right: -52px; top: 18px; }
+}
