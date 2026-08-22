@@ -21,7 +21,7 @@ import { clean } from '@/lib/text'
 export const metadata: Metadata = {
   title: clean('About - Junoon'),
   description: clean(
-    'Reclaiming ancient Indian practices and making them fit into modern life. Meet the team and instructors behind Junoon.'
+    'Reclaiming Ancient Indian practices and making them fit into modern life. Meet the team and instructors behind Junoon.'
   ),
 }
 
