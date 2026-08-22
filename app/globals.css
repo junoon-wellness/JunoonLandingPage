@@ -1050,6 +1050,146 @@ body::before {
   line-height: 1;
 }
 
+/* ─── Primary nav links ─── (LV5-005)
+   Sits in the middle of the bar. `flex: 1` on the wrapper soaks up the
+   nav's own `justify-content: space-between`, so the brand stays pinned
+   left, the CTA group stays pinned right, and the links center themselves
+   inside whatever space is left — without a second `space-between` fighting
+   the first. Hidden below 768px in favour of the sheet. */
+.v2-nav-links {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+}
+
+.v2-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--jn-text-soft);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+.v2-nav-link:hover {
+  color: var(--jn-text);
+}
+.v2-nav-link[data-active='true'] {
+  color: var(--jn-text);
+}
+/* Sage rather than clay, per Kush's ruling that he wants to see the second
+   hue on the active-tab underline — swap this one declaration back to
+   var(--jn-clay) if he calls it too subtle against the warm ground. */
+.v2-nav-link[data-active='true']::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--jn-sage);
+}
+
+/* ─── Mobile menu toggle + sheet ─── (LV5-005) */
+.v2-nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.v2-nav-toggle-bars {
+  position: relative;
+  width: 20px;
+  height: 14px;
+}
+.v2-nav-toggle-bars span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: var(--jn-text);
+  border-radius: 1px;
+  transition: transform 0.3s var(--jn-ease), opacity 0.2s ease, top 0.3s var(--jn-ease);
+}
+.v2-nav-toggle-bars span:nth-child(1) { top: 0; }
+.v2-nav-toggle-bars span:nth-child(2) { top: 6px; }
+.v2-nav-toggle-bars span:nth-child(3) { top: 12px; }
+/* Morphs into an X when the sheet is open. */
+.v2-nav-toggle-bars[data-open='true'] span:nth-child(1) {
+  top: 6px;
+  transform: rotate(45deg);
+}
+.v2-nav-toggle-bars[data-open='true'] span:nth-child(2) {
+  opacity: 0;
+}
+.v2-nav-toggle-bars[data-open='true'] span:nth-child(3) {
+  top: 6px;
+  transform: rotate(-45deg);
+}
+
+.v2-nav-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 100px 32px 40px;
+  background: var(--jn-bg);
+  transform: translateX(100%);
+  transition: transform 0.4s var(--jn-ease);
+}
+.v2-nav-sheet[data-open='true'] {
+  transform: translateX(0);
+}
+
+.v2-nav-sheet-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.v2-nav-sheet-link {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-cormorant), serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--jn-text-soft);
+  text-decoration: none;
+  border-bottom: 0.5px solid var(--jn-hairline);
+}
+.v2-nav-sheet-link[data-active='true'] {
+  color: var(--jn-sage);
+}
+
+.v2-nav-sheet-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-nav-sheet,
+  .v2-nav-toggle-bars span {
+    transition: none !important;
+  }
+}
+
 /* ─── Offer band ─── */
 .v2-offer {
   position: relative;
@@ -1206,6 +1346,15 @@ body::before {
   .v2-nav[data-scrolled='true'] { padding: 9px 20px; }
   /* The pre-launch pill is decorative - the CTA matters more on a narrow bar */
   .v2-pill { display: none; }
+  /* Inline links AND the CTA move into the sheet — the persistent bar is
+     just the wordmark and the toggle below 768px. Was going to keep the
+     button on the bar too, but that is three competing tap targets
+     ("Junoon Wellness" + Join waitlist + the hamburger) fighting for 375px,
+     the exact overflow the wordmark-tail rule above already had to dodge
+     once. The sheet carries its own copy (.v2-nav-sheet-cta). */
+  .v2-nav-links { display: none; }
+  .v2-nav-cta { display: none; }
+  .v2-nav-toggle { display: flex; }
   /* "Junoon Wellness" + the Join button do not both fit in 375px: at that
      width the wordmark ran underneath the button. The mark beside it still
      carries the full name. */

@@ -42,7 +42,7 @@ export default function TourPage() {
           }}
         >
           <Image
-            src="/logo-turmeric-text-96.png"
+            src="/logo-clay-text-96.png"
             alt=""
             aria-hidden="true"
             width={96}
