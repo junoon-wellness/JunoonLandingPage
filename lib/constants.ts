@@ -16,6 +16,15 @@ export const SHOW_TOUR = false
 export const TOTAL_SPOTS = 500
 
 /**
+ * LV5-002: the nav badge and hero CTA link here. '#' placeholder until Kush
+ * supplies the real App Store URL — every caller treats a click as a no-op
+ * anchor jump until this is filled in, never a broken external link.
+ * TODO(Kush): swap in the real App Store listing URL once the app is live
+ * there and the link is known.
+ */
+export const APP_STORE_URL = '#'
+
+/**
  * Shown only when beehiiv can't be reached (`getActiveSubscriberCount()`
  * returns null on a missing API key or a failed request). The real number is
  * the live active-subscriber count - this exists purely so the counter never

@@ -22,7 +22,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Junoon - App Walkthrough',
-  description: 'Walk through the Junoon app before it launches.',
+  description: 'Walk through the Junoon app.',
   // Off the index until launch. This is Kush's call to lift at review time.
   robots: { index: false, follow: false },
 }

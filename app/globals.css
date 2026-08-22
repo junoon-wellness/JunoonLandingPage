@@ -341,7 +341,8 @@ body::before {
   transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.3s var(--jn-ease);
 }
 .v2-field::placeholder {
-  color: rgba(245, 240, 232, 0.34);
+  /* LV5-002 ADDED SCOPE: was 0.34 = 2.84:1, below AA. 0.55 measures 5.53:1. */
+  color: rgba(245, 240, 232, 0.55);
 }
 .v2-field:hover {
   background: rgba(245, 240, 232, 0.08);
@@ -1029,6 +1030,51 @@ body::before {
   justify-content: center;
 }
 
+/* ─── App Store badge ─── (LV5-002)
+   Neutral dark pill, not a reproduction of Apple's own badge artwork — see
+   the component's own comment for why. Black fill regardless of theme (this
+   page is dark-only anyway) with a hairline border so it still reads as a
+   distinct control against the nav's own dark, translucent background. */
+.v2-appstore-badge {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+  min-height: 44px;
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: 0.5px solid rgba(245, 240, 232, 0.22);
+  background: #000000;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s var(--jn-ease);
+}
+.v2-appstore-badge:hover {
+  border-color: rgba(245, 240, 232, 0.4);
+  transform: translateY(-1px);
+}
+.v2-appstore-badge-eyebrow {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: rgba(245, 240, 232, 0.72);
+  line-height: 1.2;
+}
+.v2-appstore-badge-name {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--jn-text);
+  line-height: 1.2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-appstore-badge:hover {
+    transform: none !important;
+  }
+}
+
 /* ─── Nav wordmark ─── */
 .v2-nav-brand {
   display: inline-flex;
@@ -1216,7 +1262,8 @@ body::before {
 /* CSS hover instead of the original's JS onMouseEnter handlers, so the
    footer can stay a server component. */
 .v2-footer-link {
-  color: rgba(245, 240, 232, 0.35);
+  /* LV5-002 ADDED SCOPE: was 0.35 = 2.98:1, below AA. 0.55 measures 5.53:1. */
+  color: rgba(245, 240, 232, 0.55);
   transition: color 0.2s ease;
 }
 .v2-footer-link:hover {

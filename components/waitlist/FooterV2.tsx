@@ -58,6 +58,32 @@ export default function FooterV2() {
         >
           © {new Date().getFullYear()} Junoon Wellness. All rights reserved.
         </span>
+        {/* LV5-002: replaces the waitlist pitch that used to live near here —
+            the ways to keep up with Junoon now that signing up isn't the
+            only route in. */}
+        <span
+          className="jn-mono"
+          style={{
+            fontSize: '11px',
+            letterSpacing: '0.1em',
+            textTransform: 'none',
+            color: 'var(--jn-mute)',
+          }}
+        >
+          Follow along on{' '}
+          <a
+            href="https://www.instagram.com/junoonwellness/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="v2-link v2-footer-link"
+          >
+            Instagram
+          </a>{' '}
+          or{' '}
+          <a href="#join" className="v2-link v2-footer-link">
+            join the newsletter
+          </a>
+        </span>
       </div>
 
       <div

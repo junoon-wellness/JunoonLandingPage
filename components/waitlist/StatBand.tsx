@@ -9,7 +9,10 @@ import Reveal, { DrawLine } from '@/components/motion/Reveal'
 // as a deliberate emphasis — and "practices included" is the substantive
 // product claim of the three, the other two being scarcity and a feature name.
 const stats = [
-  { value: TOTAL_SPOTS, label: 'Founding spots', accent: 'var(--jn-turmeric)' },
+  // LV5-002: was "Founding spots" — reworded to state the offer itself
+  // (static copy, not a live signup count) now that the site says the app
+  // is live rather than pitching a waitlist.
+  { value: TOTAL_SPOTS, label: 'Founder spots · first month free', accent: 'var(--jn-turmeric)' },
   { value: 6, label: 'Practices included', accent: 'var(--jn-sage)' },
   { value: 1, label: 'AI Coach', accent: 'var(--jn-turmeric)' },
 ]

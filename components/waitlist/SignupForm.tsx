@@ -116,8 +116,9 @@ export default function SignupForm({
     return (
       // Carries `id` for the same reason the form below does: this branch
       // replaces the form outright, and without it the #join anchor stops
-      // existing the moment someone signs up, leaving the nav's "Join
-      // waitlist" button pointing at nothing.
+      // existing the moment someone signs up. (LV5-002: #join now lives on
+      // this component's call site in SecondCTA, not the nav — the nav's
+      // CTA is the App Store badge now, not a link into this form.)
       <div
         id={id}
         role="status"
@@ -150,7 +151,7 @@ export default function SignupForm({
         <span style={{ fontSize: '14px', fontWeight: 300, color: CREAM, lineHeight: 1.6 }}>
           {status === 'already'
             ? "You're already on the list. We'll be in touch soon."
-            : "You're on the list. Founding pricing is yours when we launch."}
+            : "You're on the list. We'll be in touch soon."}
         </span>
       </div>
     )
@@ -265,7 +266,12 @@ export default function SignupForm({
             disabled={status === 'loading'}
             style={{ marginTop: '12px', width: '100%' }}
           >
-            {status === 'loading' ? 'Joining…' : 'Get early access'}
+            {/* LV5-002: was "Get early access" — the app is live, "early
+                access" is no longer accurate. "Join" is a deliberately
+                short placeholder; LV5-004 (next ticket, same round) renames
+                this to "Join the newsletter" once the section itself is
+                reframed as the newsletter join. */}
+            {status === 'loading' ? 'Joining…' : 'Join'}
           </button>
         )}
       </form>
@@ -284,9 +290,15 @@ export default function SignupForm({
             }}
           />
           <span style={{ fontSize: '12px', fontWeight: 300, color: STONE, lineHeight: 1.6 }}>
+            {/* withPhone is unused by any current caller — LV5-002 moved the
+                hero's CTA to the App Store badge, which was the only place
+                that passed withPhone. Left in place rather than deleted:
+                the prop still works correctly if a future surface needs
+                phone collection again, and no caller has been silently
+                broken by removing it. */}
             {withPhone
-              ? 'First 500 founding members get permanent pricing. Launch updates by text, never shared.'
-              : 'No spam. Early access only.'}
+              ? 'First 500 founding members get permanent pricing. Text updates, never shared.'
+              : 'No spam. Unsubscribe anytime.'}
           </span>
         </div>
       )}

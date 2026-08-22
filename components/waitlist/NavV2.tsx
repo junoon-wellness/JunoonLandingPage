@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import AppStoreBadge from './AppStoreBadge'
 
 /**
  * Scroll-aware chrome (spec §B1). Airy over the hero, tighter and more opaque
@@ -115,41 +116,11 @@ export default function NavV2() {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-        <span
-          className="nav-pill v2-pill jn-mono"
-          // Was 10px clay on the dark bar: 3.63:1, below AA, and under the
-          // 11px floor. Sage measures 6.12:1 and puts the second hue in the
-          // first thing on the page.
-          style={{
-            fontSize: '11px',
-            letterSpacing: '0.14em',
-            color: 'var(--jn-sage)',
-            border: '0.5px solid var(--jn-sage-line)',
-            borderRadius: '100px',
-            padding: '6px 14px',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          Pre-launch · 2026
-        </span>
-
-        <a
-          href="#join"
-          className="v2-btn v2-link v2-nav-cta"
-          style={{
-            textDecoration: 'none',
-            display: 'inline-flex',
-            alignItems: 'center',
-            // 44px is the minimum touch target. The padding drops by the
-            // same 2px it gains in height, so it looks identical and is
-            // simply easier to hit. (Regression from v2's 7bf16bc.)
-            padding: '8px 20px',
-            minHeight: '44px',
-            fontSize: '12px',
-          }}
-        >
-          Join waitlist
-        </a>
+        {/* LV5-002: the App Store badge replaces the "Pre-launch · 2026"
+            pill + "Join waitlist" button that used to live here. */}
+        <div className="v2-nav-cta">
+          <AppStoreBadge />
+        </div>
 
         <button
           type="button"
@@ -195,36 +166,7 @@ export default function NavV2() {
         </div>
 
         <div className="v2-nav-sheet-cta">
-          <span
-            className="nav-pill v2-pill jn-mono"
-            style={{
-              fontSize: '11px',
-              letterSpacing: '0.14em',
-              color: 'var(--jn-sage)',
-              border: '0.5px solid var(--jn-sage-line)',
-              borderRadius: '100px',
-              padding: '6px 14px',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            Pre-launch · 2026
-          </span>
-          <a
-            href="#join"
-            className="v2-btn v2-link"
-            style={{
-              textDecoration: 'none',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              minHeight: '44px',
-              fontSize: '13px',
-              width: '100%',
-            }}
-            onClick={() => setMenuOpen(false)}
-          >
-            Join waitlist
-          </a>
+          <AppStoreBadge full onClick={() => setMenuOpen(false)} />
         </div>
       </div>
     </nav>

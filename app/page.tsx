@@ -3,7 +3,9 @@ import { getActiveSubscriberCount } from "@/lib/beehiiv";
 import { SPOTS_CLAIMED_FALLBACK, normaliseSource } from "@/lib/constants";
 
 /**
- * The waitlist landing page.
+ * The junoonwellness.com marketing site (LV5-002: the app is live, so this
+ * is no longer a waitlist page — see WaitlistPageV2's component name, kept
+ * unchanged as an internal identifier only).
  *
  * The previous SplitLayout design (sticky 40% dark panel + 60% scrolling
  * column) has been replaced by the full-width product-first redesign. The

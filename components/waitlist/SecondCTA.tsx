@@ -49,9 +49,8 @@ export default function SecondCTA({ source, onSignupSuccess }: SecondCTAProps) {
               maxWidth: '440px',
             }}
           >
-            Joining costs nothing and commits you to nothing. It holds your founding-member
-            pricing while there are still spots left, and we&apos;ll email you once before launch.
-            Not weekly.
+            Joining costs nothing and commits you to nothing. We&apos;ll email you occasionally,
+            never weekly.
           </p>
         </Reveal>
 
@@ -60,7 +59,11 @@ export default function SecondCTA({ source, onSignupSuccess }: SecondCTAProps) {
           delayChildren={0.12}
           style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '18px' }}
         >
-          {['No spam', 'No card', 'Unsubscribe anytime'].map(b => (
+          {/* LV5-002: "No card" dropped — Kush, 08/20 call: "I can't say no
+              card because we do require card" (referring to the app's free
+              month). Misleading beside this section either way once it's
+              read as app-adjacent copy rather than a pure email opt-in. */}
+          {['No spam', 'Unsubscribe anytime'].map(b => (
             <RevealItem
               key={b}
               as="span"
@@ -82,7 +85,11 @@ export default function SecondCTA({ source, onSignupSuccess }: SecondCTAProps) {
       </div>
 
       <Reveal delay={0.1} style={{ position: 'relative', zIndex: 1 }}>
-        <SignupForm source={source} onSignupSuccess={onSignupSuccess} compact />
+        {/* LV5-002: `#join` moved here from the hero form, which is gone now
+            that the hero's CTA is the App Store badge. This is the only
+            signup form left on the page, so this is where the anchor
+            belongs. */}
+        <SignupForm id="join" source={source} onSignupSuccess={onSignupSuccess} compact />
       </Reveal>
     </section>
   )

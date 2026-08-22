@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { TOTAL_SPOTS } from '@/lib/constants'
 import CountUp from '@/components/motion/CountUp'
 import Reveal, { DrawLine } from '@/components/motion/Reveal'
@@ -50,9 +51,11 @@ export default function OfferBandV2() {
             maxWidth: '520px',
           }}
         >
-          When Junoon launches, founding members lock in a permanent discount. Not a trial, not a
-          first-month deal. The price you join at is the price you keep. We&apos;re doing this
-          because we want the people who believed in us early to benefit from being early.
+          The first 500 members get their first month free, and $8.99 stays their price for life.
+          Not a trial, not an intro rate that changes later.{' '}
+          <Link href="/pricing" className="v2-link" style={{ color: 'var(--jn-turmeric)' }}>
+            See full pricing.
+          </Link>
         </p>
       </Reveal>
 

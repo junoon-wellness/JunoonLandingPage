@@ -1,9 +1,9 @@
 'use client'
 
 import { useRef } from 'react'
+import Link from 'next/link'
 import { motion, transform, useScroll, useTransform } from 'framer-motion'
-import SignupForm from './SignupForm'
-import SpotsProgress from './SpotsProgress'
+import AppStoreBadge from './AppStoreBadge'
 import DeviceCarousel from './DeviceCarousel'
 
 interface HeroV2Props {
@@ -80,7 +80,7 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           style={{ marginBottom: '26px' }}
           variants={step}
         >
-          Founding member waitlist
+          Now on the App Store
         </motion.div>
 
         <motion.h1
@@ -127,16 +127,30 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           grew up around.
         </motion.p>
 
+        {/* LV5-002: the app is live, so the hero CTA is the App Store badge,
+            not the email form — the form + live-claimed-count progress bar
+            it replaced now live only in the SignupForm/SpotsProgress files,
+            unreferenced here. `#join` moved to the newsletter form at the
+            bottom of the page (SecondCTA), which is where a working anchor
+            belongs now that this isn't a signup form. */}
         <motion.div className="v2-hero-form jn-reveal" variants={step}>
-          <SignupForm id="join" source={source} onSignupSuccess={onSignupSuccess} withPhone />
+          <AppStoreBadge />
         </motion.div>
 
         <motion.div
           className="v2-hero-progress jn-reveal"
           variants={step}
-          style={{ marginTop: '30px', maxWidth: '420px' }}
+          style={{ marginTop: '18px', maxWidth: '420px' }}
         >
-          <SpotsProgress claimed={claimed} isFlashing={isFlashing} />
+          <p
+            className="jn-mono"
+            style={{ fontSize: '11px', letterSpacing: '0.1em', color: 'var(--jn-mute)' }}
+          >
+            500 founder spots · first month free ·{' '}
+            <Link href="/pricing" className="v2-link" style={{ color: 'var(--jn-turmeric)' }}>
+              see pricing
+            </Link>
+          </p>
         </motion.div>
       </motion.div>
 
