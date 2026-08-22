@@ -20,7 +20,7 @@ const socials = [
 // Structure is deliberately untouched in v3 (spec §B8). Only the hardcoded
 // Courier stack and hex values moved onto the type/colour tokens.
 const linkStyle: React.CSSProperties = {
-  fontSize: '10px',
+  fontSize: '11px',
   letterSpacing: '0.14em',
   textDecoration: 'none',
   minHeight: '44px',
@@ -50,7 +50,7 @@ export default function FooterV2() {
         <span
           className="jn-mono"
           style={{
-            fontSize: '10px',
+            fontSize: '11px',
             letterSpacing: '0.1em',
             textTransform: 'none',
             color: 'var(--jn-mute)',

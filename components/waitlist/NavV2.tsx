@@ -53,11 +53,14 @@ export default function NavV2() {
       <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
         <span
           className="nav-pill v2-pill jn-mono"
+          // Was 10px clay on the dark bar: 3.63:1, below AA, and under the
+          // 11px floor. Sage measures 6.12:1 and puts the second hue in the
+          // first thing on the page.
           style={{
-            fontSize: '10px',
+            fontSize: '11px',
             letterSpacing: '0.14em',
-            color: 'var(--jn-clay)',
-            border: '0.5px solid rgba(181,82,42,0.35)',
+            color: 'var(--jn-sage)',
+            border: '0.5px solid var(--jn-sage-line)',
             borderRadius: '100px',
             padding: '6px 14px',
             whiteSpace: 'nowrap',
@@ -73,8 +76,11 @@ export default function NavV2() {
             textDecoration: 'none',
             display: 'inline-flex',
             alignItems: 'center',
-            padding: '10px 20px',
-            minHeight: '38px',
+            // 44px is the minimum touch target. The padding drops by the
+            // same 2px it gains in height, so it looks identical and is
+            // simply easier to hit. (Regression from v2's 7bf16bc.)
+            padding: '8px 20px',
+            minHeight: '44px',
             fontSize: '12px',
           }}
         >

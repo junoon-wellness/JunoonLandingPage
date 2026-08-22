@@ -33,7 +33,8 @@ export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProp
             display: 'inline-flex',
             alignItems: 'center',
             gap: '9px',
-            fontSize: '10px',
+            // 11px floor (was 10px) — LV4-015's accessibility pass.
+            fontSize: '11px',
             letterSpacing: '0.14em',
             color: 'var(--jn-mute)',
           }}
@@ -44,7 +45,7 @@ export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProp
               width: '5px',
               height: '5px',
               borderRadius: '50%',
-              background: 'var(--jn-clay)',
+              background: 'var(--jn-sage)',
             }}
           />
           Founding spots claimed
@@ -80,7 +81,12 @@ export default function SpotsProgress({ claimed, isFlashing }: SpotsProgressProp
           style={{
             height: '100%',
             width: `${pct}%`,
-            background: 'linear-gradient(90deg, var(--jn-clay), var(--jn-turmeric))',
+            // Was clay -> turmeric: two warm tones a few degrees apart, on a
+            // warm ground, so the bar barely read as filling at all. Moss ->
+            // sage runs dark to light in a hue nothing else here uses, which
+            // is what makes a progress bar legible as progress.
+            // (Moss fails AA as text — fine here, it is a fill.)
+            background: 'linear-gradient(90deg, var(--jn-moss), var(--jn-sage))',
             transition: 'width 1.4s cubic-bezier(0.22, 1, 0.36, 1)',
           }}
         />

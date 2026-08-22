@@ -19,9 +19,11 @@ interface SignupFormProps {
 // Token references rather than hexes (spec §A1). Kept as constants because
 // they are used inside template strings for rgba-ish borders below.
 const CREAM = 'var(--jn-text)'
-const CLAY = 'var(--jn-clay)'
 const TURMERIC = 'var(--jn-turmeric)'
 const STONE = 'var(--jn-mute)'
+const SAGE = 'var(--jn-sage)'
+const SAGE_LINE = 'var(--jn-sage-line)'
+const SAGE_WASH = 'var(--jn-sage-wash)'
 
 export default function SignupForm({
   source,
@@ -125,8 +127,12 @@ export default function SignupForm({
           alignItems: 'center',
           gap: '12px',
           padding: '18px 22px',
-          border: '0.5px solid rgba(181,82,42,0.35)',
-          background: 'rgba(181,82,42,0.07)',
+          // Success is the one moment on this page that should not look like
+          // every other clay-accented panel. Sage separates "it worked" from
+          // the CTA it replaced, and green is what people already read as
+          // confirmation.
+          border: `0.5px solid ${SAGE_LINE}`,
+          background: SAGE_WASH,
           borderRadius: '4px',
           animation: 'fadeUp 0.4s ease forwards',
         }}
@@ -137,7 +143,7 @@ export default function SignupForm({
             width: '7px',
             height: '7px',
             borderRadius: '50%',
-            background: CLAY,
+            background: SAGE,
             flexShrink: 0,
           }}
         />
@@ -153,7 +159,7 @@ export default function SignupForm({
   // `.jn-mono` carries the family and the uppercasing; this only sizes it.
   const labelStyle: React.CSSProperties = {
     display: 'block',
-    fontSize: '10px',
+    fontSize: '11px',
     letterSpacing: '0.14em',
     color: STONE,
     marginBottom: '7px',
