@@ -1,4 +1,14 @@
 /**
+ * LV5-006 (Kush, 2026-08-22): "Hide the full tour walkthrough for now until
+ * the design kit is fully updated." Flips off the WalkthroughTeaser band on
+ * the homepage and every link to /tour. `app/tour/page.tsx` and
+ * `public/tour-embed/*` stay on disk and reachable by direct URL (noindex,
+ * nofollow) - flip this back to `true` to re-link it once the rebuild
+ * (junoon-v3 board project, JV3-101, BLOCKED on the design kit) ships.
+ */
+export const SHOW_TOUR = false
+
+/**
  * Single source of truth for the founding-member offer - the "500" in
  * "First 500 members. Permanent pricing." and the denominator of the progress
  * bar. Change it here and it updates everywhere.

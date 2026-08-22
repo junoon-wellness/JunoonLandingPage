@@ -11,6 +11,7 @@ import OfferBandV2 from './OfferBandV2'
 import FounderBlockV2 from './FounderBlockV2'
 import SecondCTA from './SecondCTA'
 import FooterV2 from './FooterV2'
+import { SHOW_TOUR } from '@/lib/constants'
 
 interface WaitlistPageV2Props {
   /** Active beehiiv subscribers, fetched server-side (beehiiv.ts caches 60s). */
@@ -48,7 +49,7 @@ export default function WaitlistPageV2({ initialClaimed, source }: WaitlistPageV
       <StatBand />
       <WhatWereBuildingV2 />
       <FeatureStory />
-      <WalkthroughTeaser />
+      {SHOW_TOUR && <WalkthroughTeaser />}
       <OfferBandV2 />
       <FounderBlockV2 />
       <SecondCTA source={source} onSignupSuccess={handleSignupSuccess} />
