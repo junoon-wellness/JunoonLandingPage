@@ -41,6 +41,10 @@ interface Person {
   role: string
   photo?: string
   bio?: string
+  /** LV5-019: focal point for the 4:5 `object-fit: cover` crop, as a CSS
+   *  `object-position` value. Only the four instructor photos set this -
+   *  TEAM's placeholder silhouettes have no photo to position. */
+  objectPosition?: string
 }
 
 // TEAM headshots are not supplied yet (LV5-008: "STILL NEEDED FROM HUMANS:
@@ -57,28 +61,41 @@ const TEAM: Person[] = [
 // junoon-wellness-app/Junoon-IOS/Junoon/Core/Fixtures.swift `Fixtures.teachers`.
 // Durva's bio is a placeholder in the fixture ("will be added soon"), so her
 // card shows the specialty only, per the ticket.
+//
+// objectPosition (LV5-019): the ticket's premise was that Shoam's file was
+// still a 1600x962 landscape source and Durva's a "wide shot" needing a
+// right-shifted crop. Checked both against the app repo's own
+// *InstructorAvatar.imageset sources (Assets.xcassets) - all four files
+// here are already byte-identical (md5) to those square avatar crops, so
+// no re-export was needed. Values below are still per-person: Shoam's is a
+// full-body candid with his face in one corner, so it gets the same
+// slightly-high framing as Amman/Divya's already-centred headshots.
 const INSTRUCTORS: Person[] = [
   {
     name: 'Shoam Mehta',
     role: 'Yoga Coach · Sadhaka',
     photo: '/instructors/shoam.jpg',
     bio: 'Namaste, I am Shoam Mehta, Yoga Instructor and Sadhaka.',
+    objectPosition: '50% 35%',
   },
   {
     name: 'Amman Advaita',
     role: 'Hatha · Iyengar · Meditation',
     photo: '/instructors/amman.jpg',
     bio: "At 14, a visit to Rumtek Monastery lit something that hasn't gone out since. That spark led to a Yoga Shastri certification under Dr. Hansraj Yadav, fifteen years of deepening study in Hatha and Iyengar methodologies, and formal training in the Sri Vidya tantric tradition, Tibetan Buddhism, and Tibetan Yantra Yoga.",
+    objectPosition: '50% 35%',
   },
   {
     name: 'Divya Sahasrabuddhe',
     role: 'Hatha Yoga · Pranayama',
     photo: '/instructors/divya.jpg',
     bio: "Hi, I'm Divya Sahasrabuddhe, a certified Hatha Yoga and pranayama teacher from Goa with 18 years of dedicated practice. What began as a personal journey to build strength, balance, and mental clarity gradually deepened into a lifelong commitment, leading me to train at the Sivananda Ashram and share these practices with others.",
+    objectPosition: '50% 35%',
   },
   {
     name: 'Durva Aparna',
     role: 'Intro Yoga · Pranayama · Mobility',
+    objectPosition: '70% 30%',
     photo: '/instructors/durva.jpg',
   },
 ]
@@ -115,7 +132,12 @@ function PeopleGrid({ people }: { people: Person[] }) {
                 width={400}
                 height={400}
                 sizes="(max-width: 768px) 45vw, 22vw"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: p.objectPosition ?? '50% 50%',
+                }}
               />
             </div>
           ) : (

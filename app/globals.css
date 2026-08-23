@@ -2047,7 +2047,13 @@ body::before {
 }
 .ab-person-photo {
   position: relative;
-  aspect-ratio: 1 / 1;
+  /* LV5-019 (Kush, 2026-08-22: "center and scale the images better, they
+     look awkward"): was 1/1. All four instructor sources are already
+     square, so a square box showed the WHOLE frame uncropped - including
+     Shoam's full-body candid shot with his face a small detail in one
+     corner. 4:5 + object-fit: cover (set per-image in about/page.tsx,
+     with a per-person object-position) crops in on the face instead. */
+  aspect-ratio: 4 / 5;
   border-radius: 6px;
   overflow: hidden;
   background: var(--jn-surface);
