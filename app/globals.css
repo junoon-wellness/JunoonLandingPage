@@ -430,8 +430,12 @@ body::before {
    little bit, and reduce padding at the bottom"): only the newsletter section
    that opens /library carries this — other .v2-section-top users are untouched. */
 .v2-section.v2-section-top.v2-section-newsletter {
-  padding-top: 104px;
   padding-bottom: 36px;
+}
+@media (min-width: 769px) {
+  /* The extra top air is a desktop ask; the phone/tablet 84px / 76px rules
+     below keep their own values (this 3-class selector would beat them). */
+  .v2-section.v2-section-top.v2-section-newsletter { padding-top: 104px; }
 }
 /* ─── Hero ───
    `align-items: start` so the copy column's top edge lines up with the phone
