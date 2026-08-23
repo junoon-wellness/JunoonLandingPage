@@ -47,7 +47,7 @@ export const metadata: Metadata = {
 
 const NEXT_CHIPS = [
   'Personalized recipes and meal plans',
-  'More live classes: yoga, guided meditation, breathwork',
+  'More live classes',
   'Monthly progress insights',
   'Read articles inside the app',
   'Android',

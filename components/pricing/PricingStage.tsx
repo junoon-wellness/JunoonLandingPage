@@ -46,7 +46,9 @@ import { motion, transform, useScroll, useTransform } from 'framer-motion'
 export const PRICING_STAGE_MIN = 1024
 
 /** Breathing room required between the pinned content and the viewport edge. */
-const PIN_PADDING = 24
+/* Kush, 2026-08-23 ("get everything on one page"): the pin's top/bottom padding (see .pr-stage-pin) — top clears the fixed nav. */
+const PIN_PADDING_TOP = 88
+const PIN_PADDING_BOTTOM = 20
 
 // useLayoutEffect warns during SSR; useEffect is the correct no-op there.
 const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
@@ -69,6 +71,12 @@ export default function PricingStage({
   const [shift, setShift] = useState(0)
   /** false => no pin, no transforms, plain document flow. */
   const [animated, setAnimated] = useState(false)
+  /* Kush, 2026-08-23: "reduce both paddings and get everything on one page":
+     the pin used to be 100vh tall with the content centred, which left equal
+     dead bands above the headline and below the card, and pushed the footer a
+     full screen down. The pin is now exactly as tall as its content, so at the
+     end of the slide the footer is already on screen underneath. */
+  const [pinHeight, setPinHeight] = useState(0)
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -97,7 +105,8 @@ export default function PricingStage({
             off. SC2 measures the INNER wrapper, which now includes the
             headline - measuring the grid alone would have missed it.
       */
-      const fits = inner.scrollHeight + PIN_PADDING * 2 <= window.innerHeight
+      const pinH = inner.scrollHeight + PIN_PADDING_TOP + PIN_PADDING_BOTTOM
+      const fits = pinH <= window.innerHeight
       if (!wideQuery.matches || stillQuery.matches || !fits) {
         setAnimated(false)
         setShift(0)
@@ -117,6 +126,7 @@ export default function PricingStage({
         `position: relative`, which makes it the offsetParent.
       */
       setShift(grid.clientWidth / 2 - (col.offsetLeft + col.offsetWidth / 2))
+      setPinHeight(pinH)
       setAnimated(true)
     }
 
@@ -157,8 +167,8 @@ export default function PricingStage({
       ref={sectionRef}
       className={`pr-stage${animated ? ' is-pinned' : ''}`}
       aria-label="Plan"
-      /* 100vh of pin + exactly the travel the card has to cover. */
-      style={animated ? { height: `calc(100vh + ${Math.round(shift)}px)` } : undefined}
+      /* Kush, 2026-08-23 ("get everything on one page"): the pin's own height + exactly the travel the card has to cover. */
+      style={animated ? { height: `${Math.round(pinHeight + shift)}px` } : undefined}
     >
       <div className="pr-stage-pin">
         <div className="pr-stage-inner" ref={innerRef}>

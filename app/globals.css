@@ -1785,8 +1785,9 @@ body::before {
 /* Top padding clears the FIXED nav, which is in its scrolled state (11px
    padding + a 50px badge = 72px) by the time this section is pinned. */
 .pr-stage-pin {
-  /* LV5-032 (Kush: "fit on just one page even with scroll"): 76/24 → 56/20. */
-  padding: 56px 48px 20px;
+  /* Kush, 2026-08-23 ("get everything on one page"): top 88 clears the fixed nav now that the pin is top-aligned
+     (PricingStage.tsx PIN_PADDING_TOP/BOTTOM must match these two values). */
+  padding: 88px 48px 20px;
 }
 /* 🔴 LV5-022 SC2: the stage's HEIGHT is set inline by PricingStage.tsx as
    calc(100vh + travel). It is deliberately NOT here - CSS cannot know the
@@ -1795,9 +1796,11 @@ body::before {
 .pr-stage.is-pinned .pr-stage-pin {
   position: sticky;
   top: 0;
-  height: 100vh;
+  /* Kush, 2026-08-23 ("get everything on one page"): was height: 100vh + align-items: center — content-height now,
+     top-aligned, so the footer follows straight after the slide. */
+  height: auto;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 /* Holds the headline and the grid together so the fit check can measure them
    as one block, and so the headline pins with the rest of the stage. */
@@ -1865,7 +1868,7 @@ body::before {
 .pr-scroll-cue {
   position: absolute;
   left: 50%;
-  bottom: 18px;
+  bottom: 2px; /* Kush, 2026-08-23 ("get everything on one page"): the pin is content-height now */
   transform: translateX(-50%);
   z-index: 3;
   pointer-events: none;
