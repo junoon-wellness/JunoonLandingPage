@@ -1980,6 +1980,10 @@ body::before {
 @media (max-width: 768px) {
   .pr-hero { padding: 84px 24px 24px; }
   .pr-section { padding: 24px 24px; }
+  /* Matches .pr-section's old mobile padding. Without this the stage keeps
+     the desktop 48px and a 390px screen loses 96px of its 342px card. */
+  .pr-stage-pin { padding: 24px 24px; }
+  .pr-stage-grid { gap: 32px; }
   .pr-card { padding: 32px 22px 26px; }
   /* .pr-ribbon is gone (LV5-020) - see .pr-founder-pill. The pill needs no
      per-breakpoint nudging: it is 11px type in a pill at a fixed offset, so
