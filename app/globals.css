@@ -426,6 +426,13 @@ body::before {
 .v2-section.v2-section-top {
   padding-top: 92px;
 }
+/* LV5-032 (Kush, /library: "add padding between the text and the top just a
+   little bit, and reduce padding at the bottom"): only the newsletter section
+   that opens /library carries this — other .v2-section-top users are untouched. */
+.v2-section.v2-section-top.v2-section-newsletter {
+  padding-top: 104px;
+  padding-bottom: 36px;
+}
 /* ─── Hero ───
    `align-items: start` so the copy column's top edge lines up with the phone
    instead of floating in the vertical centre, which left a dead gap above the
@@ -1591,7 +1598,8 @@ body::before {
 @media (max-width: 900px) {
   .v2-hero {
     grid-template-columns: 1fr;
-    gap: 32px;
+    /* LV5-032: 32 → 22 between the stacked hero pieces on phones. */
+    gap: 22px;
   }
 
   /* Dissolve the copy wrapper so its children become grid items of .v2-hero.
@@ -1635,7 +1643,8 @@ body::before {
      carries the full name. */
   .v2-wordmark-tail { display: none; }
   .v2-wordmark { font-size: 15px; letter-spacing: 0.13em; }
-  .v2-hero { padding: 104px 24px 56px; }
+  /* LV5-032 (Kush: "tighten it up a little more on mobile"): 104/56 → 86/44. */
+  .v2-hero { padding: 86px 24px 44px; }
   .v2-section { padding: 44px 24px; }
   .v2-section.v2-section-top { padding-top: 76px; }
   .v2-stats {

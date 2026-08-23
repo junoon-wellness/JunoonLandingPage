@@ -39,7 +39,7 @@ export default function NewsletterJoin({
 }: NewsletterJoinProps) {
   return (
     <section
-      className={`v2-section v2-two-col${firstSection ? ' v2-section-top' : ''}`}
+      className={`v2-section v2-two-col${firstSection ? ' v2-section-top v2-section-newsletter' : ''}`}
       style={{
         background: 'var(--jn-surface)',
         borderTop: '0.5px solid rgba(245,240,232,0.06)',
