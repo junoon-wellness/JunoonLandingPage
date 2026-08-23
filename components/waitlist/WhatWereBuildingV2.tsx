@@ -45,9 +45,9 @@ const RULE: React.CSSProperties = {
 export default function WhatWereBuildingV2() {
   return (
     <section className="v2-section">
-      <Reveal className="eyebrow" style={{ marginBottom: '40px' }}>
-        What we&apos;re building
-      </Reveal>
+      {/* LV5-031: the "What we're building" eyebrow + its 40px margin are gone
+          (Kush: "completely remove SC 4 ... move up the elements in that
+          space after"). The headline opens the section. */}
 
       <div className="v2-two-col" style={{ alignItems: 'start' }}>
         <Reveal>
@@ -113,10 +113,10 @@ export default function WhatWereBuildingV2() {
                 style={{
                   fontSize: '11px',
                   letterSpacing: '0.08em',
-                  // Clay measures 3.63:1 here — fine for the 52px+ display
-                  // numerals elsewhere, below AA at label size. These row
-                  // numbers are structural marks, so they follow the eyebrow.
-                  color: 'var(--jn-sage)',
+                  // LV5-031: were sage (SC4 "remove the green elements").
+                  // Turmeric measures 6.46:1 on the ground, so it passes at
+                  // label size where clay (3.63:1) would not.
+                  color: 'var(--jn-turmeric)',
                   paddingTop: '4px',
                 }}
               >
