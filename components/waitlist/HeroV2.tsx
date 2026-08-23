@@ -14,14 +14,12 @@ import DeviceCarousel from './DeviceCarousel'
  * local child element instead of the page wrapper, and its tile grid didn't
  * register with the site-wide ground. It is now a page-level, full-page copy
  * masked over roughly this area instead of a box scoped to this component.
+ *
+ * LV5-024: also dropped `source`/`claimed`/`isFlashing`/`onSignupSuccess`
+ * props. This component hasn't rendered a signup form since LV5-018 replaced
+ * it with the App Store badge, so none of the four were read anywhere in the
+ * body — proven by grep, not by memory.
  */
-
-interface HeroV2Props {
-  source: string
-  claimed: number
-  isFlashing: boolean
-  onSignupSuccess: () => void
-}
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -42,7 +40,7 @@ const step = {
   shown: { opacity: 1, y: 0, transition: { duration: 0.66, ease: EASE } },
 }
 
-export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }: HeroV2Props) {
+export default function HeroV2() {
   const sectionRef = useRef<HTMLElement>(null)
 
   // Phone parallax: it travels slower than the copy as the hero leaves. A few

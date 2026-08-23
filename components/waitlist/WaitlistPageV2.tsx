@@ -1,6 +1,5 @@
 'use client'
 
-import { useCallback, useState } from 'react'
 import NavV2 from './NavV2'
 import HeroV2 from './HeroV2'
 import StatBand from './StatBand'
@@ -35,30 +34,19 @@ const HERO_JAALI = true
  */
 const FEATURE_JAALI = true
 
-interface WaitlistPageV2Props {
-  /** Active beehiiv subscribers, fetched server-side (beehiiv.ts caches 60s). */
-  initialClaimed: number
-  source: string
-}
+/*
+  The page-level scroll-reveal IntersectionObserver that used to live here is
+  gone (spec §A3). It collected whatever [data-reveal] elements existed at
+  mount and unobserved each as it fired, so a section mounted later would sit
+  at opacity 0 forever. Reveals are now per-component via framer's
+  whileInView - see components/motion/Reveal.tsx.
 
-export default function WaitlistPageV2({ initialClaimed, source }: WaitlistPageV2Props) {
-  const [claimed, setClaimed] = useState(initialClaimed)
-  const [isFlashing, setIsFlashing] = useState(false)
-
-  // The page-level scroll-reveal IntersectionObserver that used to live here
-  // is gone (spec §A3). It collected whatever [data-reveal] elements existed
-  // at mount and unobserved each as it fired, so a section mounted later would
-  // sit at opacity 0 forever. Reveals are now per-component via framer's
-  // whileInView - see components/motion/Reveal.tsx.
-
-  // Optimistic bump. The authoritative number comes from beehiiv on the next
-  // server render - there is no polling endpoint to hit.
-  const handleSignupSuccess = useCallback(() => {
-    setIsFlashing(true)
-    setClaimed(c => c + 1)
-    setTimeout(() => setIsFlashing(false), 400)
-  }, [])
-
+  LV5-024: this component used to take `initialClaimed`/`source` props and
+  hold `claimed`/`isFlashing` state for a live subscriber counter + signup
+  attribution, threaded down into HeroV2. HeroV2 dropped its own signup form
+  under LV5-018 and never read any of it — see app/page.tsx's own note.
+*/
+export default function WaitlistPageV2() {
   return (
     <div id="top">
       {/* LV5-024: page-level jaali panels. Both are full-page `inset:0`
@@ -74,12 +62,7 @@ export default function WaitlistPageV2({ initialClaimed, source }: WaitlistPageV
         <Jaali variant="panel" zIndex={-1} maskPosition="28% 2050px" maskSize="900px 780px" />
       )}
       <NavV2 />
-      <HeroV2
-        source={source}
-        claimed={claimed}
-        isFlashing={isFlashing}
-        onSignupSuccess={handleSignupSuccess}
-      />
+      <HeroV2 />
       <StatBand />
       <WhatWereBuildingV2 />
       <FeatureStory />
@@ -89,8 +72,9 @@ export default function WaitlistPageV2({ initialClaimed, source }: WaitlistPageV
           empty space under the hero copy should carry this, not two more
           full-width bands lower down). SecondCTA is also gone — Home no
           longer has a newsletter section at all; its layout lives on now as
-          NewsletterJoin, used on /library only. All three component files
-          stay on disk, just unreferenced here. */}
+          NewsletterJoin, used on /library only. LV5-024: all three component
+          files are deleted (grep proved zero remaining imports), not just
+          unreferenced. */}
       <FooterV2 />
     </div>
   )

@@ -117,8 +117,10 @@ export default function SignupForm({
       // Carries `id` for the same reason the form below does: this branch
       // replaces the form outright, and without it the #join anchor stops
       // existing the moment someone signs up. (LV5-002: #join now lives on
-      // this component's call site in SecondCTA, not the nav — the nav's
-      // CTA is the App Store badge now, not a link into this form.)
+      // this component's call site in NewsletterJoin (/library), not the
+      // nav — the nav's CTA is the App Store badge now, not a link into
+      // this form. LV5-024: NewsletterJoin replaced SecondCTA, which this
+      // comment used to name — SecondCTA.tsx is deleted, unreferenced.)
       <div
         id={id}
         role="status"

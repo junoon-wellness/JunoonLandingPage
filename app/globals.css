@@ -251,15 +251,6 @@ body::before {
   animation: pillPulse 3.4s ease-in-out infinite;
 }
 
-/* ─── COUNTER NUMERIC ─── */
-.count-up {
-  font-variant-numeric: tabular-nums;
-  transition: transform 0.4s var(--jn-ease);
-}
-.count-up.flashing {
-  transform: scale(1.08);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .nav-pill,
   .drift-bg::after {
@@ -2326,81 +2317,12 @@ body::before {
 }
 
 /* ════════════════════════════════════════════════════════════════════
-   /LIBRARY  (LV5-017) — newsletter block (full version of Home's
-   SecondCTA teaser) + the article grid + /library/[slug] reader.
+   /LIBRARY  (LV5-017) — the article grid + /library/[slug] reader.
+   LV5-024: the bespoke `.lb-newsletter` header block (+ `.lb-topics`/
+   `.lb-topic`/`.lb-chips`/`.lb-chip`) is gone — LV5-018 replaced it with
+   NewsletterJoin (inline-styled, no `.lb-*` classes) and nothing had
+   referenced these since. Proven by grep across every .tsx file.
    ════════════════════════════════════════════════════════════════════ */
-.lb-newsletter {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  align-items: center;
-  gap: 48px;
-  padding: 88px 48px 40px;
-  border-bottom: 0.5px solid var(--jn-hairline);
-}
-.lb-newsletter-headline {
-  font-family: var(--font-cormorant), serif;
-  font-size: clamp(28px, 3.2vw, 40px);
-  font-weight: 400;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  color: var(--jn-text);
-  margin-bottom: 14px;
-}
-.lb-newsletter-sub {
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--jn-text-soft);
-  line-height: 1.75;
-  max-width: 440px;
-  margin-bottom: 18px;
-}
-.lb-topics {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px 16px;
-  max-width: 400px;
-  margin-bottom: 18px;
-  list-style: none;
-  padding: 0;
-}
-.lb-topic {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: none;
-  color: var(--jn-text-soft);
-  line-height: 1.5;
-}
-.lb-topic::before {
-  content: '';
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--jn-sage);
-  flex-shrink: 0;
-}
-.lb-chips {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  align-items: center;
-  list-style: none;
-  padding: 0;
-}
-.lb-chip {
-  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 5px 12px;
-  border: 0.5px solid rgba(245, 240, 232, 0.12);
-  border-radius: 2px;
-  color: var(--jn-text-soft);
-}
 
 /* ── article grid ── */
 .lb-grid-section {
@@ -2569,13 +2491,11 @@ body::before {
 }
 
 @media (max-width: 1024px) {
-  .lb-newsletter { padding: 84px 32px 32px; gap: 32px; }
   .lb-grid-section { padding: 32px 32px 20px; }
   .lb-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .lb-newsletter { grid-template-columns: 1fr; padding: 80px 24px 28px; gap: 24px; }
   .lb-grid-section { padding: 28px 24px 16px; }
   .lb-grid { grid-template-columns: 1fr; }
   .lb-app-link-row { padding: 20px 24px 40px; }

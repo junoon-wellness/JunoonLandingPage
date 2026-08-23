@@ -25,14 +25,6 @@ export const TOTAL_SPOTS = 500
 export const APP_STORE_URL = 'https://apps.apple.com/us/app/junoon-wellness/id6781123809'
 
 /**
- * Shown only when beehiiv can't be reached (`getActiveSubscriberCount()`
- * returns null on a missing API key or a failed request). The real number is
- * the live active-subscriber count - this exists purely so the counter never
- * renders as "0 of 500 claimed" during an outage.
- */
-export const SPOTS_CLAIMED_FALLBACK = 61
-
-/**
  * LV5-016: the /about founder video. Arjav filmed it 2026-08-19 but the file
  * hasn't been supplied yet — null renders a dark poster + play mark +
  * "Founder video" caption instead of a broken <video> tag.
