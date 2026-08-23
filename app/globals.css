@@ -1787,7 +1787,7 @@ body::before {
 .pr-stage-pin {
   /* Kush, 2026-08-23 ("get everything on one page"): top 88 clears the fixed nav now that the pin is top-aligned
      (PricingStage.tsx PIN_PADDING_TOP/BOTTOM must match these two values). */
-  padding: 88px 48px 20px;
+  padding: 108px 48px 20px;
 }
 /* 🔴 LV5-022 SC2: the stage's HEIGHT is set inline by PricingStage.tsx as
    calc(100vh + travel). It is deliberately NOT here - CSS cannot know the
