@@ -18,8 +18,13 @@ import { clean } from '@/lib/text'
 /** Instructor headshots sit inside the jharokha arch instead of a 4:5 box. */
 const INSTRUCTOR_ARCH = true
 
-/** The founder video slot is framed by the arch. */
-const VIDEO_ARCH = true
+
+/*
+ * LV5-022 SC4 - the founder video slot's arch is GONE. Kush, 2026-08-23:
+ * "I don't like the cutout for the video." It is a rounded 16:9 rectangle
+ * again, now with a gold hairline instead of the neutral one. The arch
+ * stays on the instructor photos, which he did not object to.
+ */
 
 /**
  * LV5-016 — /about, board B "Chaptered" (LV5-009, ACCEPTED), padding
@@ -214,51 +219,17 @@ export default function AboutPage() {
       {/* 01 — video left, copy right */}
       <section className="ab-band" aria-label="Where it started">
         <div className="ab-band-media">
-          {VIDEO_ARCH ? (
-            /*
-              LV5-021 (b). HOW THE 16:9 IS LETTERBOXED: it isn't — it is
-              PINNED TO THE ARCH'S FLAT BASE, and there are no bars.
-              The arch stops curving at y=318 of its 754-unit height, so a
-              full-width 16:9 box is 371.25 units tall and its top edge lands
-              at y=348.75 — 30.75 units clear of the shoulder. The video
-              therefore sits entirely inside the straight-sided part of the
-              arch and the curve never crops a pixel of it. What the arch
-              adds is the crown ABOVE the video, which carries the slot's
-              existing gradient.
-              (Verified numerically, not by eye — see ARCH_SHOULDER_Y in
-              components/brand/motifs.ts.)
-
-              ⚠️ No <Jaali> inside this slot. Measured: the caption is
-              --jn-text-soft on the gradient's deep end (#4A3728) at 4.91:1,
-              and the lattice at 0.11 effective drops that to 4.28:1, under
-              AA. The arch is free here; the lattice is not.
-            */
-            <JharokhaFrame className="ab-video-slot is-arched" strokeOpacity={0.4}>
-              <div className="ab-video-inner">
-                {FOUNDER_VIDEO_SRC ? (
-                  // eslint-disable-next-line jsx-a11y/media-has-caption
-                  <video src={FOUNDER_VIDEO_SRC} controls playsInline />
-                ) : (
-                  <>
-                    <PlayMark />
-                    <span className="ab-video-caption">Founder video</span>
-                  </>
-                )}
-              </div>
-            </JharokhaFrame>
-          ) : (
-            <div className="ab-video-slot">
-              {FOUNDER_VIDEO_SRC ? (
-                // eslint-disable-next-line jsx-a11y/media-has-caption
-                <video src={FOUNDER_VIDEO_SRC} controls playsInline />
-              ) : (
-                <>
-                  <PlayMark />
-                  <span className="ab-video-caption">Founder video</span>
-                </>
-              )}
-            </div>
-          )}
+          <div className="ab-video-slot">
+            {FOUNDER_VIDEO_SRC ? (
+              // eslint-disable-next-line jsx-a11y/media-has-caption
+              <video src={FOUNDER_VIDEO_SRC} controls playsInline />
+            ) : (
+              <>
+                <PlayMark />
+                <span className="ab-video-caption">Founder video</span>
+              </>
+            )}
+          </div>
         </div>
         <div className="ab-band-copy">
           <span className="ab-band-num jn-mono">01</span>
