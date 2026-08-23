@@ -2,7 +2,6 @@
 
 import NavV2 from './NavV2'
 import HeroV2 from './HeroV2'
-import StatBand from './StatBand'
 import WhatWereBuildingV2 from './WhatWereBuildingV2'
 import FeatureStory from './FeatureStory'
 import WalkthroughTeaser from './WalkthroughTeaser'
@@ -63,7 +62,7 @@ export default function WaitlistPageV2() {
       )}
       <NavV2 />
       <HeroV2 />
-      <StatBand />
+      {/* LV5-032: <StatBand /> (500 founder spots · 6 practices · 1 AI coach) removed — Kush, 2026-08-23: "remove this section and move up accordingly". Component stays on disk. */}
       <WhatWereBuildingV2 />
       <FeatureStory />
       {SHOW_TOUR && <WalkthroughTeaser />}

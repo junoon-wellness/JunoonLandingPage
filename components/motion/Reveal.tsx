@@ -30,6 +30,8 @@ export interface RevealProps {
   /** Starting offset in px. y is the default direction. */
   y?: number
   x?: number
+  /** Starting scale (LV5-032: the About bands settle from 0.96 → 1). */
+  scale?: number
   /** Fraction of the element that must be visible before it fires. */
   amount?: number
   /** Animate every time it scrolls into view instead of once. */
@@ -46,6 +48,7 @@ export default function Reveal({
   duration = 0.7,
   y = 18,
   x = 0,
+  scale = 1,
   amount = 0.2,
   repeat = false,
   className = '',
@@ -60,8 +63,8 @@ export default function Reveal({
       id={id}
       className={`jn-reveal ${className}`.trim()}
       style={style}
-      initial={{ opacity: 0, y, x }}
-      whileInView={{ opacity: 1, y: 0, x: 0 }}
+      initial={{ opacity: 0, y, x, scale }}
+      whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}
       viewport={{ once: !repeat, amount, margin: '0px 0px -8% 0px' }}
       transition={transition}
     >

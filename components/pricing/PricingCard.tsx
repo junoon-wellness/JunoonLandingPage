@@ -58,6 +58,10 @@ export default function PricingCard() {
         */}
         <span className="pr-founder-pill">First 500</span>
 
+        {/* LV5-032 (Kush: "make it much more obvious that the first month is
+            free"): the free month leads the card, above the price. */}
+        <p className="pr-free-line">Your first month is free.</p>
+
         <div className="pr-price-row">
           <span className="pr-price">$8.99</span>
           <span className="pr-price-unit">/month</span>

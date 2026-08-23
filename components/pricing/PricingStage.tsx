@@ -146,6 +146,11 @@ export default function PricingStage({
   const cardX = useTransform(scrollYProgress, transform([0, 0.75], [shift, 0]))
   const sideOpacity = useTransform(scrollYProgress, transform([0.35, 1], [0, 1]))
   const sideY = useTransform(scrollYProgress, transform([0.35, 1], [32, 0]))
+  /* LV5-032 (Kush: "a green small chevron that's animated like a slight
+     bouncing trying to get the user to scroll"): visible at rest, gone by the
+     time the slide is 12% in. The bounce is a CSS keyframe on the inner svg so
+     it never fights this opacity transform on the wrapper. */
+  const cueOpacity = useTransform(scrollYProgress, transform([0, 0.12], [1, 0]))
 
   return (
     <section
@@ -181,6 +186,24 @@ export default function PricingStage({
             </motion.div>
           </div>
         </div>
+
+        {animated && (
+          <motion.div className="pr-scroll-cue" style={{ opacity: cueOpacity }} aria-hidden="true">
+            <svg
+              className="pr-scroll-cue-chevron"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--jn-sage)"
+              strokeWidth={1.5}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 9 L12 16 L19 9" />
+            </svg>
+          </motion.div>
+        )}
       </div>
     </section>
   )

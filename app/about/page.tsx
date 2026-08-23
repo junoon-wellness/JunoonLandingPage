@@ -6,6 +6,11 @@ import ContactForm from '@/components/cta/ContactForm'
 import JharokhaFrame from '@/components/brand/JharokhaFrame'
 import Jaali from '@/components/brand/Jaali'
 import Reveal from '@/components/motion/Reveal'
+/* LV5-032 (Kush: "a better animation/transition as the user scrolls"): each
+   band's media slides in from ITS OWN side (x ±36, settling from scale 0.96)
+   and the copy from the opposite side 0.15s later, 0.9s each. Band 2 is the
+   reversed band, so its signs flip. Reduced motion neutralises all of it via
+   .jn-reveal in globals.css. */
 import { FOUNDER_VIDEO_SRC } from '@/lib/constants'
 import { clean } from '@/lib/text'
 
@@ -260,7 +265,7 @@ export default function AboutPage() {
 
       {/* 01 — video left, copy right */}
       <section className="ab-band" aria-label="Where it started">
-        <Reveal className="ab-band-media">
+        <Reveal className="ab-band-media" x={-36} y={0} scale={0.96} duration={0.9} amount={0.25}>
           <div className="ab-video-slot">
             {FOUNDER_VIDEO_SRC ? (
               // eslint-disable-next-line jsx-a11y/media-has-caption
@@ -273,7 +278,7 @@ export default function AboutPage() {
             )}
           </div>
         </Reveal>
-        <Reveal className="ab-band-copy" delay={0.12}>
+        <Reveal className="ab-band-copy" x={36} y={0} duration={0.9} delay={0.15} amount={0.25}>
           <p>{STORY_PARAGRAPHS[0]}</p>
           <p>{STORY_PARAGRAPHS[1]}</p>
         </Reveal>
@@ -281,11 +286,11 @@ export default function AboutPage() {
 
       {/* 02 — copy left, tagline panel right */}
       <section className="ab-band ab-band-reverse" aria-label="Looking back">
-        <Reveal className="ab-band-copy" delay={0.12}>
+        <Reveal className="ab-band-copy" x={-36} y={0} duration={0.9} delay={0.15} amount={0.25}>
           <p>{STORY_PARAGRAPHS[2]}</p>
           <p>{STORY_PARAGRAPHS[3]}</p>
         </Reveal>
-        <Reveal className="ab-band-media">
+        <Reveal className="ab-band-media" x={36} y={0} scale={0.96} duration={0.9} amount={0.25}>
           <div className="ab-tagline-panel">
             <div className="ab-tagline-text">{TAGLINE}</div>
           </div>
@@ -294,7 +299,7 @@ export default function AboutPage() {
 
       {/* 03 — founder card left, copy right */}
       <section className="ab-band" aria-label="Built with Junoon">
-        <Reveal className="ab-band-media">
+        <Reveal className="ab-band-media" x={-36} y={0} scale={0.96} duration={0.9} amount={0.25}>
           <div className="ab-founder-card">
             <div className="ab-founder-photo">
               {/* LV5-026: 120px -> 200px slot (Kush: "make Arjav's image
@@ -317,7 +322,7 @@ export default function AboutPage() {
             </div>
           </div>
         </Reveal>
-        <Reveal className="ab-band-copy" delay={0.12}>
+        <Reveal className="ab-band-copy" x={36} y={0} duration={0.9} delay={0.15} amount={0.25}>
           <p>{STORY_PARAGRAPHS[4]}</p>
           <div className="ab-signature">{SIGNATURE}</div>
         </Reveal>

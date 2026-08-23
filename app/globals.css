@@ -426,6 +426,17 @@ body::before {
 .v2-section.v2-section-top {
   padding-top: 92px;
 }
+/* LV5-032 (Kush, /library: "add padding between the text and the top just a
+   little bit, and reduce padding at the bottom"): only the newsletter section
+   that opens /library carries this — other .v2-section-top users are untouched. */
+.v2-section.v2-section-top.v2-section-newsletter {
+  padding-bottom: 36px;
+}
+@media (min-width: 769px) {
+  /* The extra top air is a desktop ask; the phone/tablet 84px / 76px rules
+     below keep their own values (this 3-class selector would beat them). */
+  .v2-section.v2-section-top.v2-section-newsletter { padding-top: 104px; }
+}
 /* ─── Hero ───
    `align-items: start` so the copy column's top edge lines up with the phone
    instead of floating in the vertical centre, which left a dead gap above the
@@ -1591,7 +1602,8 @@ body::before {
 @media (max-width: 900px) {
   .v2-hero {
     grid-template-columns: 1fr;
-    gap: 32px;
+    /* LV5-032: 32 → 22 between the stacked hero pieces on phones. */
+    gap: 22px;
   }
 
   /* Dissolve the copy wrapper so its children become grid items of .v2-hero.
@@ -1635,7 +1647,8 @@ body::before {
      carries the full name. */
   .v2-wordmark-tail { display: none; }
   .v2-wordmark { font-size: 15px; letter-spacing: 0.13em; }
-  .v2-hero { padding: 104px 24px 56px; }
+  /* LV5-032 (Kush: "tighten it up a little more on mobile"): 104/56 → 86/44. */
+  .v2-hero { padding: 86px 24px 44px; }
   .v2-section { padding: 44px 24px; }
   .v2-section.v2-section-top { padding-top: 76px; }
   .v2-stats {
@@ -1772,7 +1785,8 @@ body::before {
 /* Top padding clears the FIXED nav, which is in its scrolled state (11px
    padding + a 50px badge = 72px) by the time this section is pinned. */
 .pr-stage-pin {
-  padding: 76px 48px 24px;
+  /* LV5-032 (Kush: "fit on just one page even with scroll"): 76/24 → 56/20. */
+  padding: 56px 48px 20px;
 }
 /* 🔴 LV5-022 SC2: the stage's HEIGHT is set inline by PricingStage.tsx as
    calc(100vh + travel). It is deliberately NOT here - CSS cannot know the
@@ -1790,7 +1804,7 @@ body::before {
 .pr-stage-inner {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 24px; /* LV5-032: was 40 */
   width: 100%;
 }
 
@@ -1817,7 +1831,56 @@ body::before {
   .pr-stage-side .pr-next-heading { text-align: left; }
   .pr-stage-side .pr-chips { justify-content: flex-start; }
 }
-.pr-stage-side .pr-side-block + .pr-side-block { margin-top: 28px; }
+.pr-stage-side .pr-side-block + .pr-side-block { margin-top: 18px; } /* LV5-032: was 28 */
+/* LV5-032: the free-month callout that leads the sliding-in column. */
+.pr-free-callout-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(24px, 2.4vw, 30px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--jn-text);
+  margin: 0 0 6px;
+}
+.pr-free-callout-body {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--jn-text-soft);
+  margin: 0;
+  max-width: 440px;
+}
+.pr-stage-side .pr-free-callout { text-align: left; }
+/* LV5-032: the free month leads the card. */
+.pr-free-line {
+  font-family: var(--font-cormorant), serif;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.2;
+  color: var(--jn-turmeric);
+  text-align: center;
+  margin: 0 0 2px;
+}
+/* LV5-032: scroll cue — sits at the bottom of the pinned viewport, centred. */
+.pr-scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 3;
+  pointer-events: none;
+}
+.pr-scroll-cue-chevron {
+  display: block;
+  animation: pr-cue-bounce 1.6s ease-in-out infinite;
+}
+@keyframes pr-cue-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pr-scroll-cue-chevron { animation: none; }
+}
 
 /* Belt and braces alongside the JS check: if the pin ever gets applied under
    reduced motion, this un-applies it. Both paths mean the same thing, so they
@@ -1858,8 +1921,8 @@ body::before {
   isolation: isolate;
   max-width: 560px;
   margin: 0 auto;
-  /* SC2: was 40/40/32. */
-  padding: 28px 36px 24px;
+  /* SC2: was 40/40/32. LV5-032: 28/36/24 → 22/32/18. */
+  padding: 22px 32px 18px;
   background: var(--jn-surface);
   border: 0.5px solid var(--jn-hairline-strong);
   border-radius: 8px;
@@ -1919,7 +1982,7 @@ body::before {
 }
 
 .pr-offer-line {
-  margin: 12px auto 0;
+  margin: 8px auto 0; /* LV5-032: was 12 */
   max-width: 460px;
   text-align: center;
   font-size: 13px;
@@ -1930,7 +1993,7 @@ body::before {
 
 .pr-checklist {
   list-style: none;
-  margin: 18px 0 0;
+  margin: 14px 0 0; /* LV5-032: was 18 */
   padding: 0;
   border-top: 0.5px solid var(--jn-hairline);
 }
@@ -1945,7 +2008,7 @@ body::before {
   align-items: center;
   /* SC2: 11px -> 9px. Row height is set by the 20px icon, so this lands at
      ~38.5px including the hairline, from ~43.5px. */
-  padding: 9px 0;
+  padding: 7px 0; /* LV5-032: was 9 */
   border-bottom: 0.5px solid var(--jn-hairline);
   font-size: 13px;
   font-weight: 300;
@@ -1957,8 +2020,8 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  margin-top: 20px;
+  gap: 6px;
+  margin-top: 14px; /* LV5-032: was 20 */
 }
 .pr-cta-sub {
   font-size: 12px;
@@ -1975,7 +2038,7 @@ body::before {
 
 .pr-next-heading {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 12px; /* LV5-032: was 20 */
 }
 .pr-chips {
   display: flex;
@@ -2007,7 +2070,7 @@ body::before {
 }
 .pr-faq-item {
   border-bottom: 0.5px solid var(--jn-hairline);
-  padding: 16px 0;
+  padding: 11px 0; /* LV5-032: was 16 */
 }
 .pr-faq-item summary {
   cursor: pointer;
