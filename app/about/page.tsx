@@ -53,6 +53,10 @@ const STORY_PARAGRAPHS = [
   "Our team built this platform with Junoon (passion), purpose, and intention. Having you here means everything to us. Let's do this together.",
 ] as const
 
+/* LV5-022 SC3: the /about sub-line. Kush may edit this wording. */
+const SUBLINE =
+  'Yoga, breathwork and meditation, rooted in ancient India, built for modern life.'
+
 const TAGLINE = 'Ancient Traditions, Modern Solutions.'
 const SIGNATURE = 'Arjav, Founder and CEO'
 
@@ -209,11 +213,20 @@ export default function AboutPage() {
     <div id="top">
       <NavV2 />
 
+      {/*
+        LV5-022 SC3. Kush: "text is bland." Given the site's standard headline
+        treatment - sage mono eyebrow with its short rule, Cormorant light, the
+        accent clause in turmeric italic, one sub-line under it.
+
+        THE HEADLINE STRING IS UNCHANGED, including the capital A in "Ancient".
+        The <em> only wraps a span of it; it adds no words and removes none.
+      */}
       <header className="ab-hero">
-        <div className="eyebrow ab-eyebrow">About</div>
+        <div className="eyebrow ab-eyebrow">About Junoon</div>
         <h1 className="ab-headline">
-          Reclaiming Ancient Indian practices and making them fit into modern life
+          Reclaiming <em>Ancient Indian practices</em> and making them fit into modern life
         </h1>
+        <p className="ab-subline">{SUBLINE}</p>
       </header>
 
       {/* 01 — video left, copy right */}
