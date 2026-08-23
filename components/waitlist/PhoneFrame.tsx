@@ -21,12 +21,26 @@ export default function PhoneFrame({
   className = '',
   priority = false,
 }: PhoneFrameProps) {
-  const height = Math.round((width * SCREEN_HEIGHT) / SCREEN_WIDTH)
-
   return (
     <div
       className={`v2-device ${className}`}
-      style={{ width: `${width}px`, height: `${height}px` }}
+      /*
+        ⚠️ The prop is the FALLBACK inside var(), not an inline
+        `--pf-w: Npx`. Setting the property inline would defeat the whole
+        point: an inline custom-property declaration beats any stylesheet
+        rule on that same element, so a media query could never override
+        it. Read with a fallback instead, and any ancestor can set
+        `--pf-w` and have it inherit down — ordinary specificity, no
+        !important, which this codebase has already been bitten by.
+
+        Height comes from aspect-ratio for the same reason: override the
+        width and the frame stays in proportion on its own, instead of
+        needing a second override that can drift out of sync.
+      */
+      style={{
+        width: `var(--pf-w, ${width}px)`,
+        aspectRatio: `${SCREEN_WIDTH} / ${SCREEN_HEIGHT}`,
+      }}
     >
       <Image
         src={src}

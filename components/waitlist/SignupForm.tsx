@@ -19,9 +19,11 @@ interface SignupFormProps {
 // Token references rather than hexes (spec §A1). Kept as constants because
 // they are used inside template strings for rgba-ish borders below.
 const CREAM = 'var(--jn-text)'
-const CLAY = 'var(--jn-clay)'
 const TURMERIC = 'var(--jn-turmeric)'
 const STONE = 'var(--jn-mute)'
+const SAGE = 'var(--jn-sage)'
+const SAGE_LINE = 'var(--jn-sage-line)'
+const SAGE_WASH = 'var(--jn-sage-wash)'
 
 export default function SignupForm({
   source,
@@ -114,8 +116,11 @@ export default function SignupForm({
     return (
       // Carries `id` for the same reason the form below does: this branch
       // replaces the form outright, and without it the #join anchor stops
-      // existing the moment someone signs up, leaving the nav's "Join
-      // waitlist" button pointing at nothing.
+      // existing the moment someone signs up. (LV5-002: #join now lives on
+      // this component's call site in NewsletterJoin (/library), not the
+      // nav — the nav's CTA is the App Store badge now, not a link into
+      // this form. LV5-024: NewsletterJoin replaced SecondCTA, which this
+      // comment used to name — SecondCTA.tsx is deleted, unreferenced.)
       <div
         id={id}
         role="status"
@@ -125,8 +130,12 @@ export default function SignupForm({
           alignItems: 'center',
           gap: '12px',
           padding: '18px 22px',
-          border: '0.5px solid rgba(181,82,42,0.35)',
-          background: 'rgba(181,82,42,0.07)',
+          // Success is the one moment on this page that should not look like
+          // every other clay-accented panel. Sage separates "it worked" from
+          // the CTA it replaced, and green is what people already read as
+          // confirmation.
+          border: `0.5px solid ${SAGE_LINE}`,
+          background: SAGE_WASH,
           borderRadius: '4px',
           animation: 'fadeUp 0.4s ease forwards',
         }}
@@ -137,25 +146,29 @@ export default function SignupForm({
             width: '7px',
             height: '7px',
             borderRadius: '50%',
-            background: CLAY,
+            background: SAGE,
             flexShrink: 0,
           }}
         />
         <span style={{ fontSize: '14px', fontWeight: 300, color: CREAM, lineHeight: 1.6 }}>
           {status === 'already'
             ? "You're already on the list. We'll be in touch soon."
-            : "You're on the list. Founding pricing is yours when we launch."}
+            : "You're on the list. We'll be in touch soon."}
         </span>
       </div>
     )
   }
 
   // `.jn-mono` carries the family and the uppercasing; this only sizes it.
+  // LV5-026 [fix]: was STONE (--jn-mute, #93826F) - on this form's only
+  // caller (NewsletterJoin's --jn-surface panel, #2C2118) that measured
+  // 4.23:1 and failed AA (same trap the founder-role label caught in
+  // LV5-023's globals.css comment). --jn-text-faint measures 5.17:1 there.
   const labelStyle: React.CSSProperties = {
     display: 'block',
-    fontSize: '10px',
+    fontSize: '11px',
     letterSpacing: '0.14em',
-    color: STONE,
+    color: 'var(--jn-text-faint)',
     marginBottom: '7px',
   }
 
@@ -259,7 +272,10 @@ export default function SignupForm({
             disabled={status === 'loading'}
             style={{ marginTop: '12px', width: '100%' }}
           >
-            {status === 'loading' ? 'Joining…' : 'Get early access'}
+            {/* LV5-002 dropped "Get early access" (no longer accurate once
+                the app is live); LV5-004 finalizes the label now that this
+                section is the newsletter join. */}
+            {status === 'loading' ? 'Joining…' : 'Join the newsletter'}
           </button>
         )}
       </form>
@@ -278,9 +294,15 @@ export default function SignupForm({
             }}
           />
           <span style={{ fontSize: '12px', fontWeight: 300, color: STONE, lineHeight: 1.6 }}>
+            {/* withPhone is unused by any current caller — LV5-002 moved the
+                hero's CTA to the App Store badge, which was the only place
+                that passed withPhone. Left in place rather than deleted:
+                the prop still works correctly if a future surface needs
+                phone collection again, and no caller has been silently
+                broken by removing it. */}
             {withPhone
-              ? 'First 500 founding members get permanent pricing. Launch updates by text, never shared.'
-              : 'No spam. Early access only.'}
+              ? 'First 500 founding members get permanent pricing. Text updates, never shared.'
+              : 'No spam. Unsubscribe anytime.'}
           </span>
         </div>
       )}

@@ -4,10 +4,17 @@ import { TOTAL_SPOTS } from '@/lib/constants'
 import CountUp from '@/components/motion/CountUp'
 import Reveal, { DrawLine } from '@/components/motion/Reveal'
 
+// The middle numeral carries the second hue. Middle rather than arbitrary:
+// three identical numbers read as a list, one different in the centre reads
+// as a deliberate emphasis — and "practices included" is the substantive
+// product claim of the three, the other two being scarcity and a feature name.
 const stats = [
-  { value: TOTAL_SPOTS, label: 'Founding spots' },
-  { value: 6, label: 'Practices included' },
-  { value: 1, label: 'AI Coach' },
+  // LV5-002: was "Founding spots" — reworded to state the offer itself
+  // (static copy, not a live signup count) now that the site says the app
+  // is live rather than pitching a waitlist.
+  { value: TOTAL_SPOTS, label: 'Founder spots · first month free', accent: 'var(--jn-turmeric)' },
+  { value: 6, label: 'Practices included', accent: 'var(--jn-sage)' },
+  { value: 1, label: 'AI Coach', accent: 'var(--jn-turmeric)' },
 ]
 
 /**
@@ -19,7 +26,7 @@ const stats = [
  */
 export default function StatBand() {
   return (
-    <div className="v2-stats" style={{ position: 'relative', zIndex: 2, background: 'var(--jn-bg)' }}>
+    <div className="v2-stats" style={{ position: 'relative', zIndex: 2 }}>
       {stats.map((s, i) => (
         <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: '48px' }}>
           {i > 0 && (
@@ -48,13 +55,13 @@ export default function StatBand() {
                 fontSize: '30px',
                 fontWeight: 400,
                 lineHeight: 1,
-                color: 'var(--jn-turmeric)',
+                color: s.accent,
               }}
             />
             <span
               className="jn-mono"
               style={{
-                fontSize: '10px',
+                fontSize: '11px',
                 letterSpacing: '0.14em',
                 color: 'var(--jn-mute)',
               }}

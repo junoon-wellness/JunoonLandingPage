@@ -1,37 +1,30 @@
 'use client'
 
 import Image from 'next/image'
-import {
-  motion,
-  transform,
-  useMotionValueEvent,
-  useScroll,
-  useTransform,
-  type MotionValue,
-} from 'framer-motion'
-import { useMemo, useRef, useState, type ReactNode } from 'react'
+import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, type Screen } from '@/lib/screens'
-import Reveal from '@/components/motion/Reveal'
-import PhoneFrame from '@/components/waitlist/PhoneFrame'
 
 /**
- * THE SCROLL STORY ENGINE (spec §B5)
+ * THE FEATURE STORY TABS (spec §B5)
  *
- * Desktop: a tall section where a phone pair stays pinned while chapters of
- * copy scroll past and the screenshots crossfade. A progress rail shows where
- * you are.
- *
- * Tablet/mobile (<1024px) and reduced motion: four stacked chapter cards, no
- * pin, no crossfade. That is a layout fork, not a degraded desktop, and it is
- * decided in CSS (`.jn-story-stage` / `.jn-story-cards` in globals.css). A JS
- * media-query fork would have to guess during SSR and then correct itself,
- * which either flashes the wrong layout or trips hydration.
+ * LV5-003 (2026-08-22, Kush): replaced the scroll-jacked pin with named,
+ * clickable tabs. Four tabs above a persistent phone pair + copy column;
+ * selecting a tab (click, or arrow keys while a tab has focus) crossfades
+ * that chapter's screenshots and copy in. No more scroll hijacking, no pin,
+ * no section that eats four viewports of scroll to read four paragraphs.
  *
  * Kept generic on purpose: Phase 2's cinematic hero reuses this.
  *
- * ⚠️ Screenshots are mounted once and crossfaded by opacity. Never key them by
- * chapter: remounting re-requests the image, starves Next's image optimizer,
- * and has already sent one hero screenshot permanently blank.
+ * ⚠️ Screenshots are mounted once and crossfaded by opacity (CSS, driven by
+ * the `data-active` attribute). Never key them by chapter: remounting
+ * re-requests the image, starves Next's image optimizer, and has already
+ * sent one hero screenshot permanently blank.
+ *
+ * The crossfade for both the shots and the copy lives entirely in CSS
+ * (`.jn-story-shot` / `.jn-story-copy` + `[data-active='true']` in
+ * globals.css), same pattern as `.jn-tour-cta`'s hover crossfade elsewhere
+ * on this page - `prefers-reduced-motion` kills the transition there, not
+ * here, so there is one place that rule lives.
  */
 
 export interface StoryChapter {
@@ -42,171 +35,65 @@ export interface StoryChapter {
   title: ReactNode
   body: string
   points: string[]
-  /** A `--jn-*` custom property reference, e.g. `var(--jn-turmeric)`. */
+  /** A `--jn-*` custom property reference, e.g. `var(--jn-turmeric)`.
+   *  Drives the em-title, the eyebrow text and the bullet dots - all of
+   *  which are contrast-checked against --jn-bg, so don't repoint this at
+   *  an accent that hasn't been measured for 11px text (see FeatureStory's
+   *  own comment on why coach is sage here rather than clay). */
   accent: string
-  /** Devanagari watermark glyph. */
-  glyph: string
-  /** Short label under the progress rail. */
+  /** LV5-019: a separate, GRAPHIC-only accent for the tab button's outline
+   *  and active-state tint. Falls back to `accent` when omitted. Kept apart
+   *  from `accent` on purpose - the tab outline only needs 3:1, so it can
+   *  use an accent (e.g. clay) that would fail 4.5:1 as the eyebrow/title
+   *  text `accent` drives elsewhere. */
+  tabAccent?: string
+  /** Short label under the progress rail; also the tab's visible name. */
   railLabel: string
   /** [primary phone, secondary phone] */
   screens: [Screen, Screen]
 }
 
-/** Half-width of the copy crossfade, in units of total scroll progress. */
-const FADE = 0.05
-
 /**
- * ⚠️ USE THE FUNCTION FORM OF useTransform IN THIS FILE. Not the
- *    `useTransform(value, inputRange, outputRange)` array form.
- *
- * Given the array form, framer-motion 12 compiles the mapping into a native
- * WAAPI animation: the input range becomes the keyframes' `offset` array and
- * the browser drives it. Two things go wrong here.
- *
- *  1. Offsets must sit inside [0, 1] and never decrease, so the obvious way to
- *     say "hold past the end" (a sentinel like 2 or -1) makes Element.animate
- *     throw and the whole section fails to render.
- *  2. Even with legal offsets it produced wrong values, measured: at scroll
- *     progress 1.0 chapter 1's copy sat at opacity 1 instead of 0, so all four
- *     chapters' text stacked on top of each other.
- *
- * Passing a function instead keeps the mapping in JS, where it is exact. The
- * curve is identical; `transform()` builds the same piecewise interpolator.
+ * Auto-advance is OFF by default (Kush, LV5-003: named tabs put the reader in
+ * control; nothing here asked for the story to keep moving on its own). Flip
+ * `AUTO_ADVANCE` to `true` to re-enable a ~6s rotation that pauses whenever a
+ * tab is clicked or focused - if that's ever wanted, wire a `setInterval`
+ * keyed on `active` here and clear it on tab interaction.
  */
-function windows(i: number, n: number) {
-  const start = i / n
-  const end = (i + 1) / n
-  const first = i === 0
-  const last = i === n - 1
-  return {
-    start,
-    end,
-    first,
-    last,
-    // Copy hands the baton over cleanly: chapter i has finished fading out
-    // before chapter i+1 starts fading in, so text never sits over text.
-    copyInput: [
-      first ? 0 : start,
-      first ? 0.001 : start + FADE,
-      last ? 0.999 : end - FADE,
-      last ? 1 : end,
-    ],
-  }
-}
+const AUTO_ADVANCE = false
+void AUTO_ADVANCE // referenced so the constant isn't flagged unused while off
 
-/* ── one chapter's copy layer ─────────────────────────────────────────── */
-function StoryCopy({
+/* ── one tab ───────────────────────────────────────────────────────────── */
+function StoryTab({
   chapter,
-  index,
-  total,
-  progress,
-}: {
-  chapter: StoryChapter
-  index: number
-  total: number
-  progress: MotionValue<number>
-}) {
-  const { copyInput, first, last } = windows(index, total)
-  const mapOpacity = useMemo(
-    () => transform(copyInput, [first ? 1 : 0, 1, 1, last ? 1 : 0]),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [index, total]
-  )
-  const mapY = useMemo(
-    () => transform(copyInput, [first ? 0 : 24, 0, 0, last ? 0 : -24]),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [index, total]
-  )
-  const opacity = useTransform(progress, mapOpacity)
-  const y = useTransform(progress, mapY)
-
-  return (
-    <motion.div
-      className="jn-story-copy"
-      style={{ opacity, y, ['--jn-ch-accent' as string]: chapter.accent }}
-    >
-      <div className="eyebrow" style={{ marginBottom: '18px', color: chapter.accent }}>
-        {chapter.eyebrow}
-      </div>
-      <h3 className="jn-ch-title">{chapter.title}</h3>
-      <p className="jn-ch-body">{chapter.body}</p>
-      <ul className="jn-ch-points">
-        {chapter.points.map(p => (
-          <li key={p} className="jn-ch-point">
-            {p}
-          </li>
-        ))}
-      </ul>
-    </motion.div>
-  )
-}
-
-/* ── one screenshot layer inside a persistent frame ───────────────────── */
-function StoryShot({
-  screen,
-  index,
-  total,
-  progress,
-  sizes,
-  decorative = false,
-}: {
-  screen: Screen
-  index: number
-  total: number
-  progress: MotionValue<number>
-  sizes: string
-  /** The second phone repeats the chapter visually; it carries no new meaning. */
-  decorative?: boolean
-}) {
-  const { start } = windows(index, total)
-  // Cumulative, not a symmetric crossfade: the layer below stays fully opaque,
-  // so the bezel never bleeds through at the halfway point.
-  const map = useMemo(() => transform([start - FADE, start + FADE], [0, 1]), [start])
-  const opacity = useTransform(progress, map)
-
-  return (
-    <motion.div className="jn-story-shot" style={index === 0 ? undefined : { opacity }}>
-      <Image
-        src={screen.src}
-        alt={decorative ? '' : screen.alt}
-        width={SCREEN_WIDTH}
-        height={SCREEN_HEIGHT}
-        sizes={sizes}
-        loading="lazy"
-        draggable={false}
-      />
-    </motion.div>
-  )
-}
-
-/* ── one progress-rail segment ────────────────────────────────────────── */
-function RailSegment({
-  chapter,
-  index,
-  total,
-  progress,
   active,
+  onSelect,
+  onKeyDown,
+  tabRef,
 }: {
   chapter: StoryChapter
-  index: number
-  total: number
-  progress: MotionValue<number>
   active: boolean
+  onSelect: () => void
+  onKeyDown: (e: KeyboardEvent<HTMLButtonElement>) => void
+  tabRef: (el: HTMLButtonElement | null) => void
 }) {
-  const { start, end } = windows(index, total)
-  const map = useMemo(() => transform([start, end], [0, 1]), [start, end])
-  const scaleX = useTransform(progress, map)
-
   return (
-    <div className="jn-story-seg" data-active={active}>
-      <span className="jn-story-seg-track">
-        <motion.span
-          className="jn-story-seg-fill"
-          style={{ scaleX, background: chapter.accent }}
-        />
-      </span>
-      <span className="jn-story-seg-label">{chapter.railLabel}</span>
-    </div>
+    <button
+      ref={tabRef}
+      type="button"
+      role="tab"
+      id={`jn-story-tab-${chapter.id}`}
+      aria-selected={active}
+      aria-controls="jn-story-panel"
+      tabIndex={active ? 0 : -1}
+      data-active={active}
+      className="jn-story-tab"
+      style={{ ['--jn-tab-accent' as string]: chapter.tabAccent ?? chapter.accent }}
+      onClick={onSelect}
+      onKeyDown={onKeyDown}
+    >
+      {chapter.railLabel}
+    </button>
   )
 }
 
@@ -219,119 +106,127 @@ export default function ScrollStory({
   /** Accessible name for the section. */
   label: string
 }) {
-  const containerRef = useRef<HTMLElement>(null)
   const [active, setActive] = useState(0)
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  })
-
-  useMotionValueEvent(scrollYProgress, 'change', p => {
-    setActive(Math.max(0, Math.min(chapters.length - 1, Math.floor(p * chapters.length))))
-  })
-
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
   const n = chapters.length
+  const activeChapter = chapters[active]
+
+  const focusTab = (i: number) => {
+    setActive(i)
+    tabRefs.current[i]?.focus()
+  }
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+        e.preventDefault()
+        focusTab((index + 1) % n)
+        return
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        e.preventDefault()
+        focusTab((index - 1 + n) % n)
+        return
+      case 'Home':
+        e.preventDefault()
+        focusTab(0)
+        return
+      case 'End':
+        e.preventDefault()
+        focusTab(n - 1)
+        return
+      default:
+        return
+    }
+  }
 
   return (
-    <section
-      ref={containerRef}
-      className="jn-story"
-      aria-label={label}
-      style={{ ['--jn-story-chapters' as string]: n }}
-    >
-      <div className="jn-story-pin">
-        {/* ── desktop: the pinned stage ── */}
-        <div className="jn-story-stage">
-          <div className="jn-story-phones">
-            <div className="v2-device jn-story-device-a">
-              {chapters.map((c, i) => (
-                <StoryShot
-                  key={c.id}
-                  screen={c.screens[0]}
-                  index={i}
-                  total={n}
-                  progress={scrollYProgress}
-                  sizes="300px"
-                />
-              ))}
-            </div>
-            <div className="v2-device jn-story-device-b">
-              {chapters.map((c, i) => (
-                <StoryShot
-                  key={c.id}
-                  screen={c.screens[1]}
-                  index={i}
-                  total={n}
-                  progress={scrollYProgress}
-                  sizes="200px"
-                  decorative
-                />
-              ))}
-            </div>
-          </div>
+    <section className="jn-story" aria-label={label}>
+      <div role="tablist" aria-label={label} className="jn-story-tabs">
+        {chapters.map((c, i) => (
+          <StoryTab
+            key={c.id}
+            chapter={c}
+            active={i === active}
+            onSelect={() => setActive(i)}
+            onKeyDown={e => handleKeyDown(e, i)}
+            tabRef={el => {
+              tabRefs.current[i] = el
+            }}
+          />
+        ))}
+      </div>
 
-          <div className="jn-story-copies">
-            <span className="jn-story-glyph" aria-hidden="true">
-              {chapters[active].glyph}
-            </span>
+      <div
+        id="jn-story-panel"
+        role="tabpanel"
+        aria-labelledby={`jn-story-tab-${activeChapter.id}`}
+        className="jn-story-stage"
+      >
+        {/* ── the persistent phone pair ── */}
+        <div className="jn-story-phones">
+          {/* LV5-022 SC5 / LV5-024: the jaali panel that used to render HERE
+              (sized to this box, itself `position:relative`) is now
+              WaitlistPageV2's page-level `FEATURE_JAALI` — see the note atop
+              HeroV2.tsx and the "ONE GEOMETRY" note atop
+              components/brand/Jaali.tsx for why it had to move. */}
+          <div className="v2-device jn-story-device-a">
             {chapters.map((c, i) => (
-              <StoryCopy
-                key={c.id}
-                chapter={c}
-                index={i}
-                total={n}
-                progress={scrollYProgress}
-              />
+              <div key={c.id} className="jn-story-shot" data-active={i === active}>
+                <Image
+                  src={c.screens[0].src}
+                  alt={c.screens[0].alt}
+                  width={SCREEN_WIDTH}
+                  height={SCREEN_HEIGHT}
+                  sizes="300px"
+                  loading="lazy"
+                  draggable={false}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="v2-device jn-story-device-b">
+            {chapters.map((c, i) => (
+              <div key={c.id} className="jn-story-shot" data-active={i === active}>
+                {/* The second phone repeats the chapter visually; it carries no new meaning. */}
+                <Image
+                  src={c.screens[1].src}
+                  alt=""
+                  width={SCREEN_WIDTH}
+                  height={SCREEN_HEIGHT}
+                  sizes="200px"
+                  loading="lazy"
+                  draggable={false}
+                />
+              </div>
             ))}
           </div>
         </div>
 
-        <div className="jn-story-rail" aria-hidden="true">
+        {/* ── the crossfading copy column ── */}
+        <div className="jn-story-copies">
           {chapters.map((c, i) => (
-            <RailSegment
+            <div
               key={c.id}
-              chapter={c}
-              index={i}
-              total={n}
-              progress={scrollYProgress}
-              active={i === active}
-            />
-          ))}
-        </div>
-
-        {/*
-          ── mobile / reduced motion: the stacked fork ──
-          Exactly one of the two subtrees is ever `display: none`, and
-          `display: none` also removes a subtree from the accessibility tree.
-          So neither is aria-hidden: whichever fork is on screen is the one
-          that gets announced, and the content is never doubled up.
-        */}
-        <div className="jn-story-cards">
-          {chapters.map(c => (
-            <article
-              key={c.id}
-              className="jn-story-card"
+              className="jn-story-copy"
+              data-active={i === active}
+              aria-hidden={i !== active}
               style={{ ['--jn-ch-accent' as string]: c.accent }}
             >
-              <Reveal className="jn-story-card-phone" y={22} amount={0.15}>
-                <PhoneFrame src={c.screens[0].src} alt={c.screens[0].alt} width={232} />
-              </Reveal>
-              <Reveal delay={0.08} amount={0.15}>
-                <div className="eyebrow" style={{ marginBottom: '16px', color: c.accent }}>
-                  {c.eyebrow}
-                </div>
-                <h3 className="jn-ch-title">{c.title}</h3>
-                <p className="jn-ch-body">{c.body}</p>
-                <ul className="jn-ch-points">
-                  {c.points.map(p => (
-                    <li key={p} className="jn-ch-point">
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-              </Reveal>
-            </article>
+              <div className="eyebrow" style={{ marginBottom: '18px', color: c.accent }}>
+                {c.eyebrow}
+              </div>
+              <h3 className="jn-ch-title">{c.title}</h3>
+              <p className="jn-ch-body">{c.body}</p>
+              <ul className="jn-ch-points">
+                {c.points.map(p => (
+                  <li key={p} className="jn-ch-point">
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
         </div>
       </div>

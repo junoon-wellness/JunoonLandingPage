@@ -1,17 +1,25 @@
 'use client'
 
 import { useRef } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
 import { motion, transform, useScroll, useTransform } from 'framer-motion'
-import SignupForm from './SignupForm'
-import SpotsProgress from './SpotsProgress'
 import DeviceCarousel from './DeviceCarousel'
 
-interface HeroV2Props {
-  source: string
-  claimed: number
-  isFlashing: boolean
-  onSignupSuccess: () => void
-}
+/**
+ * LV5-021 (c) / LV5-024: the jaali PANEL behind the phone used to render
+ * HERE, sized to `.v2-devices`'s own local box. LV5-024 moved it out — see
+ * `HERO_JAALI` in WaitlistPageV2.tsx — because `.v2-devices` and `.v2-hero`
+ * are both `position: relative`, which made the panel's containing block a
+ * local child element instead of the page wrapper, and its tile grid didn't
+ * register with the site-wide ground. It is now a page-level, full-page copy
+ * masked over roughly this area instead of a box scoped to this component.
+ *
+ * LV5-024: also dropped `source`/`claimed`/`isFlashing`/`onSignupSuccess`
+ * props. This component hasn't rendered a signup form since LV5-018 replaced
+ * it with the App Store badge, so none of the four were read anywhere in the
+ * body — proven by grep, not by memory.
+ */
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -32,7 +40,7 @@ const step = {
   shown: { opacity: 1, y: 0, transition: { duration: 0.66, ease: EASE } },
 }
 
-export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }: HeroV2Props) {
+export default function HeroV2() {
   const sectionRef = useRef<HTMLElement>(null)
 
   // Phone parallax: it travels slower than the copy as the hero leaves. A few
@@ -49,8 +57,13 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
   return (
     <section
       ref={sectionRef}
-      className="v2-hero noise-bg"
-      style={{ background: 'var(--jn-bg)', overflow: 'hidden' }}
+      // LV5-018 (Kush ruling, reversing LV5-001): the site goes to one flat
+      // --jn-bg everywhere for consistency with /pricing, /about, /library —
+      // `noise-bg drift-bg` (the ambient ground radials) came back off the
+      // hero. `.v2-device-glow` behind the phone carousel is untouched; it's
+      // the phone's own glow, not the page ground.
+      className="v2-hero"
+      style={{ overflow: 'hidden' }}
     >
       {/* Faint engineering grid replaces the old 720px yantra motif */}
       <div className="v2-grid" aria-hidden="true" />
@@ -75,7 +88,7 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           style={{ marginBottom: '26px' }}
           variants={step}
         >
-          Founding member waitlist
+          Now on the App Store
         </motion.div>
 
         <motion.h1
@@ -122,16 +135,55 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           grew up around.
         </motion.p>
 
-        <motion.div className="v2-hero-form jn-reveal" variants={step}>
-          <SignupForm id="join" source={source} onSignupSuccess={onSignupSuccess} withPhone />
+        {/* LV5-018: replaces the App Store badge + "500 founder spots ·
+            first month free · see pricing" line. Kush's review on the first
+            full preview: that empty space under the sub-copy should carry a
+            condensed version of the offer band + founder quote instead, so
+            the two full-width sections lower on the page (OfferBandV2,
+            FounderBlockV2) could come out entirely. Same copy, same photo,
+            same quote — just tight enough to sit in the hero. The App Store
+            CTA itself isn't lost: the nav badge and the /pricing card both
+            still carry it. */}
+        <motion.div className="v2-hero-offer jn-reveal" variants={step}>
+          <div className="eyebrow no-rule">Founding member offer</div>
+          <p className="v2-hero-offer-headline">
+            First 500 members.{' '}
+            <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>
+              Permanent pricing.
+            </em>
+          </p>
+          <p className="v2-hero-offer-body">First month free, then $8.99 a month for life.</p>
+          <Link href="/pricing" className="v2-link v2-hero-offer-link">
+            See pricing →
+          </Link>
         </motion.div>
 
-        <motion.div
-          className="v2-hero-progress jn-reveal"
-          variants={step}
-          style={{ marginTop: '30px', maxWidth: '420px' }}
-        >
-          <SpotsProgress claimed={claimed} isFlashing={isFlashing} />
+        <motion.div className="v2-hero-founder jn-reveal" variants={step}>
+          <div className="v2-hero-founder-photo">
+            {/* Same crop OfferBandV2's sibling FounderBlockV2 uses. */}
+            <Image
+              src="/arjav-photo.jpg"
+              alt="Arjav, founder of Junoon Wellness"
+              width={112}
+              height={112}
+              sizes="56px"
+              style={{ width: '100%', height: '100%' }}
+            />
+          </div>
+          <div>
+            {/* Verbatim, same quote as FounderBlockV2. Whether this wraps to
+                more than 3 lines at the hero's ~420px column can only be
+                confirmed in a real browser (machine rules for this round
+                forbid a dev server / screenshots), so the full quote ships
+                as-is rather than guessing at a cut — flagged in the build
+                report for a visual check. */}
+            <p className="v2-hero-founder-quote">
+              &ldquo;I spent years watching South Asian clients try platforms that just
+              didn&apos;t speak to them. Junoon is what I wish existed when I started
+              coaching.&rdquo;
+            </p>
+            <p className="v2-hero-founder-name">Arjav · Founder, Junoon Wellness</p>
+          </div>
         </motion.div>
       </motion.div>
 
@@ -142,8 +194,15 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           parallax is driving, and the scroll binding would go dead after the
           entrance finished. */}
       <motion.div className="v2-devices jn-reveal" style={{ y: phoneY }}>
+        {/*
+          The jaali panel that used to render here (bleeding -5%/-7% past this
+          box) is now WaitlistPageV2's page-level `HERO_JAALI` — see the note
+          at the top of this file and LV5-024 in Jaali.tsx. This wrapper still
+          needs its own z-index for the carousel below to stack correctly.
+        */}
         <motion.div
           className="jn-reveal"
+          style={{ position: 'relative', zIndex: 1 }}
           initial={{ opacity: 0, y: 26 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.24, ease: EASE }}

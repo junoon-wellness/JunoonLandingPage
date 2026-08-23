@@ -101,7 +101,7 @@ export async function POST(req: Request) {
     // Fail loudly in the server logs, but don't expose config gaps to the client.
     console.error("Waitlist: missing BEEHIIV_API_KEY or BEEHIIV_PUBLICATION_ID env vars");
     return Response.json(
-      { ok: false, error: "Waitlist is temporarily unavailable. Please try again later." },
+      { ok: false, error: "Signup is temporarily unavailable. Please try again later." },
       { status: 503 }
     );
   }

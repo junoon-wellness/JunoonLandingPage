@@ -4,16 +4,19 @@ import ScrollStory, { type StoryChapter } from '@/components/story/ScrollStory'
 import { SCREENS } from '@/lib/screens'
 
 /**
- * The four product chapters (spec §B5). Replaces the tabbed FeatureShowcase,
- * which auto-advanced on a 7s timer whether or not anyone was looking at it.
+ * The four product chapters (spec §B5). Rendered as named clickable tabs by
+ * ScrollStory (LV5-003, 2026-08-22) - replaces both the older tabbed
+ * FeatureShowcase (which auto-advanced on a 7s timer whether or not anyone
+ * was looking at it) and the scroll-jacked pin that briefly replaced it.
  *
  * Order is the product argument: the ritual that starts the week, the coach
  * that learns from it, the library it draws on, and the thing you can reach for
  * in the middle of a bad afternoon.
  *
- * ⚠️ Devanagari glyphs are watermarks, not copy. संकल्प (sankalp, the
- * intention set at the start of a practice) is a placeholder for the ritual
- * chapter - spec §B5 leaves the choice between that and रविवार to Kush.
+ * The Devanagari watermark glyphs each chapter used to carry are gone
+ * (Kush, LV5-003: "remove the Hindi text from the background of the 4
+ * tabs") - `railLabel` below is now each chapter's only short name, used for
+ * both the tab text and (previously) the progress rail.
  */
 const CHAPTERS: StoryChapter[] = [
   {
@@ -31,7 +34,11 @@ const CHAPTERS: StoryChapter[] = [
       'Life shifted mid-week? Re-work the remaining days in seconds.',
     ],
     accent: 'var(--jn-turmeric)',
-    glyph: 'संकल्प',
+    // LV5-019: tab outline colours, Kush's mapping - ritual/coach/library/
+    // breathwork each get their own. Separate from `accent` above (which
+    // stays put) because that one also colours 11px eyebrow text, and only
+    // some of these pass 4.5:1 at that size - see ScrollStory's comment.
+    tabAccent: 'var(--jn-turmeric)',
     railLabel: 'The ritual',
     screens: [SCREENS.ritualProposal, SCREENS.ritualWeek],
   },
@@ -49,8 +56,17 @@ const CHAPTERS: StoryChapter[] = [
       'Said it was not for you? It stays gone.',
       'Variety first: the coach will not serve you the same class on repeat.',
     ],
-    accent: 'var(--jn-clay)',
-    glyph: 'दिनचर्या',
+    // LV5-001: was clay — 3.63:1 as this chapter's 11px eyebrow text, below
+    // AA. This slipped through ba2760a itself (the library chapter got
+    // fixed to sage in that commit, this one didn't). Sage measures 6.12:1
+    // and keeps the four chapters from reading as three-turmeric-one-sage.
+    accent: 'var(--jn-sage)',
+    // Clay measures 3.63:1 on --jn-bg - clears the 3:1 graphic/border floor
+    // this tab outline needs, but is exactly the ratio that failed as this
+    // chapter's 11px eyebrow TEXT above (needs 4.5:1 - see the LV5-001
+    // comment on `accent`). Kept apart so the outline can be clay without
+    // reopening that AA failure.
+    tabAccent: 'var(--jn-clay)',
     railLabel: 'The coach',
     screens: [SCREENS.coachChat, SCREENS.coachPicks],
   },
@@ -68,8 +84,11 @@ const CHAPTERS: StoryChapter[] = [
       'Filter by length, style, or what your body needs today.',
       'Instructors who grew up with these practices.',
     ],
-    accent: 'var(--jn-stone)',
-    glyph: 'ध्यान',
+    // The one chapter that carries the second hue. Stone was the weakest
+    // accent of the four — a warm grey among three warm accents — so the
+    // library chapter is where sage costs the least and reads the most.
+    accent: 'var(--jn-sage)',
+    tabAccent: 'var(--jn-sage)',
     railLabel: 'The library',
     screens: [SCREENS.library, SCREENS.liveClass],
   },
@@ -88,7 +107,9 @@ const CHAPTERS: StoryChapter[] = [
       'Or start one yourself from anywhere in the app, no conversation needed.',
     ],
     accent: 'var(--jn-turmeric)',
-    glyph: 'प्राण',
+    // Poster gold, reusing the same --jn-gold-alt token LV5-019's hero dots
+    // introduced (7.82:1 on --jn-bg) rather than adding a second gold.
+    tabAccent: 'var(--jn-gold-alt)',
     railLabel: 'Breathwork',
     screens: [SCREENS.breathworkSession, SCREENS.planTab],
   },

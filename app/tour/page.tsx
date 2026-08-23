@@ -22,7 +22,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Junoon - App Walkthrough',
-  description: 'Walk through the Junoon app before it launches.',
+  description: 'Walk through the Junoon app.',
   // Off the index until launch. This is Kush's call to lift at review time.
   robots: { index: false, follow: false },
 }
@@ -42,7 +42,7 @@ export default function TourPage() {
           }}
         >
           <Image
-            src="/logo-turmeric-text-96.png"
+            src="/logo-clay-text-96.png"
             alt=""
             aria-hidden="true"
             width={96}
@@ -60,7 +60,7 @@ export default function TourPage() {
           href="/"
           className="v2-link jn-mono"
           style={{
-            fontSize: '10px',
+            fontSize: '11px',
             letterSpacing: '0.14em',
             color: 'var(--jn-mute)',
             textDecoration: 'none',

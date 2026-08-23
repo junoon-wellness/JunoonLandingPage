@@ -1,4 +1,14 @@
 /**
+ * LV5-006 (Kush, 2026-08-22): "Hide the full tour walkthrough for now until
+ * the design kit is fully updated." Flips off the WalkthroughTeaser band on
+ * the homepage and every link to /tour. `app/tour/page.tsx` and
+ * `public/tour-embed/*` stay on disk and reachable by direct URL (noindex,
+ * nofollow) - flip this back to `true` to re-link it once the rebuild
+ * (junoon-v3 board project, JV3-101, BLOCKED on the design kit) ships.
+ */
+export const SHOW_TOUR = false
+
+/**
  * Single source of truth for the founding-member offer - the "500" in
  * "First 500 members. Permanent pricing." and the denominator of the progress
  * bar. Change it here and it updates everywhere.
@@ -6,12 +16,24 @@
 export const TOTAL_SPOTS = 500
 
 /**
- * Shown only when beehiiv can't be reached (`getActiveSubscriberCount()`
- * returns null on a missing API key or a failed request). The real number is
- * the live active-subscriber count - this exists purely so the counter never
- * renders as "0 of 500 claimed" during an outage.
+ * LV5-002: the nav badge and hero CTA link here. '#' placeholder until Kush
+ * supplies the real App Store URL — every caller treats a click as a no-op
+ * anchor jump until this is filled in, never a broken external link.
+ * TODO(Kush): swap in the real App Store listing URL once the app is live
+ * there and the link is known.
  */
-export const SPOTS_CLAIMED_FALLBACK = 61
+export const APP_STORE_URL = 'https://apps.apple.com/us/app/junoon-wellness/id6781123809'
+
+/**
+ * LV5-016: the /about founder video. Arjav filmed it 2026-08-19 but the file
+ * hasn't been supplied yet — null renders a dark poster + play mark +
+ * "Founder video" caption instead of a broken <video> tag.
+ * Self-hosted per Kush's ruling once the file arrives: if it's under ~25MB,
+ * drop it in public/ and point this at that path; if larger, upload to
+ * Vercel Blob (or Mux) and point this at that URL instead — don't commit a
+ * large binary to the repo.
+ */
+export const FOUNDER_VIDEO_SRC: string | null = null
 
 /** Traffic sources we accept from the `?ref=` query param. Anything else → 'direct'. */
 export const VALID_SOURCES = ['instagram', 'tiktok', 'linkedin', 'direct'] as const

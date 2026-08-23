@@ -27,6 +27,22 @@ const SLIDES = HERO_SLIDES.map(s => ({ ...SCREENS[s.key], label: s.label }))
 const INTERVAL_MS = 3600
 const TRANSITION_MS = 700
 
+/**
+ * LV5-019 (2026-08-22, Kush): "make these 3 across and each a different
+ * color for the line and bubble shading". One accent per dot, in slide
+ * order, applied as a `--dot-accent` custom property (see `.v2-dot` /
+ * `.v2-dot-mark` / `.v2-dot-fill` in globals.css). All six clear 3:1
+ * against --jn-bg as graphics — see the contrast table on LV5-019.
+ */
+const DOT_ACCENTS = [
+  'var(--jn-turmeric)', // Weekly Ritual
+  'var(--jn-sage)', // AI Coach
+  'var(--jn-gold-alt)', // Weekly Plan
+  'var(--jn-clay)', // Library
+  'var(--jn-blush-a70)', // Breathwork
+  'var(--jn-jade-tint)', // Your Plan
+]
+
 export default function DeviceCarousel() {
   // index can reach SLIDES.length, which is the cloned first slide
   const [index, setIndex] = useState(0)
@@ -154,6 +170,7 @@ export default function DeviceCarousel() {
             aria-selected={i === activeDot}
             aria-label={s.label}
             className={`v2-dot${i === activeDot ? ' is-active' : ''}`}
+            style={{ ['--dot-accent' as string]: DOT_ACCENTS[i] }}
             onClick={() => goTo(i)}
           >
             <span className="v2-dot-mark" aria-hidden="true">
