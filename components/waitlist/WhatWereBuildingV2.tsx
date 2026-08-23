@@ -28,9 +28,10 @@ const features = [
     body: 'Every Sunday the coach lays out your week: what to practice, when it fits your schedule. You approve it, change it, or tell it what to fix.',
   },
   {
+    // Kush, 2026-08-23: his exact replacement copy for row 04 — verbatim.
     num: '04',
-    title: 'Science-backed education',
-    body: 'Weekly articles explaining the why behind South Asian wellness traditions. Plain English. No mysticism.',
+    title: 'Ancient Indian backed philosophy',
+    body: 'Knowledge grounded in ancient India, seamlessly blended with modern science and psychology.',
   },
 ]
 
