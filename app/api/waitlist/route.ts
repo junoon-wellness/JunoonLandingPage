@@ -115,7 +115,23 @@ export async function POST(req: Request) {
       headers: authHeaders,
     });
     if (lookup.ok) {
-      return Response.json({ ok: true, alreadySubscribed: true });
+      // LV5-032 (2026-08-23, Kush: "beehiiv isn't working, it didn't land"):
+      // an address that EXISTS but is not active (unsubscribed / inactive /
+      // invalid) used to stop here as "already on the list", so it could never
+      // re-join and nothing new ever reached Beehiiv. Only an ACTIVE subscriber
+      // short-circuits now; anything else falls through to the create call,
+      // which already sends reactivate_existing: true.
+      let existingStatus: string | undefined;
+      try {
+        const json = (await lookup.json()) as { data?: { status?: string } };
+        existingStatus = json?.data?.status;
+      } catch {
+        existingStatus = undefined;
+      }
+      if (existingStatus === "active") {
+        return Response.json({ ok: true, alreadySubscribed: true });
+      }
+      console.warn("beehiiv: existing subscriber not active, reactivating:", existingStatus);
     }
     // 404 = not found (expected for new signups); anything else is unexpected.
     if (lookup.status !== 404) {
