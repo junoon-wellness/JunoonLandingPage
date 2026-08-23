@@ -2129,9 +2129,22 @@ body::before {
   .pr-stage-inner { gap: 28px; }
   .pr-stage-grid { gap: 32px; }
   .pr-card { padding: 24px 22px 20px; }
-  /* .pr-ribbon is gone (LV5-020) - see .pr-founder-pill. The pill needs no
-     per-breakpoint nudging: it is 11px type in a pill at a fixed offset, so
-     it reads the same at 1280 and 390. */
+  /* .pr-ribbon is gone (LV5-020) - see .pr-founder-pill. */
+}
+
+/* Kush, 2026-08-23 (phone screenshot): at phone widths the absolute pill
+   sat on top of the centred "Your first month is free." line and covered
+   "free." — the old note here claiming the pill "needs no per-breakpoint
+   nudging" was wrong once that line became the card's first row. Estimated
+   collision starts ≈440px wide; 540 leaves margin for font metrics. In
+   flow, the pill sits centred ABOVE the free line instead. */
+@media (max-width: 540px) {
+  .pr-founder-pill {
+    position: static;
+    display: flex;
+    width: fit-content;
+    margin: 0 auto 10px;
+  }
 }
 
 /* ════════════════════════════════════════════════════════════════════
