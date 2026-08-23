@@ -2103,6 +2103,7 @@ body::before {
 .ab-band-reverse .ab-band-media { order: 2; }
 .ab-band-reverse .ab-band-copy { order: 1; }
 
+/* LV5-031: .ab-band-num is no longer rendered (Kush: "remove the green 01-03"). Rule kept inert. */
 .ab-band-num {
   font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 12px;
@@ -2207,40 +2208,40 @@ body::before {
    column; the photo itself stays 200px, which is the ask ("larger within
    the rectangle"). */
 .ab-founder-card {
+  /* LV5-031 (Kush, 2026-08-23: "make Arjav's photo the size of the outside
+     box and make the 3 team photos the same size as well. Make instructor
+     photos smaller as well to match."): ONE width for every person on the
+     page — --ab-person-w — and the founder card is now exactly that wide
+     with the photo filling it edge to edge; only the caption carries padding. */
+  --ab-person-w: 260px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  padding: 28px 24px 24px;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  width: var(--ab-person-w);
+  max-width: 100%;
   background: var(--jn-surface);
   border: 0.5px solid var(--jn-hairline-strong);
   border-radius: 6px;
+  overflow: hidden;
   text-align: center;
-  /* The card never grows to the band column's full width. Without this the
-     centred photo sits in a 560px+ box and reads as a banner. */
-  max-width: 300px;
   margin: 0 auto;
 }
-/* 🔴 LV5-026: 120px circle -> 200px rounded-square. Kush, 2026-08-23: "make
-   Arjav's image larger within the rectangle it's in" - explicitly WITHIN
-   the card, so the card's own 300px cap above is unchanged; only the photo
-   and the row layout grow. Size is still stated three ways - width/height,
-   flex-shrink and max-width - so it cannot be stretched by a parent. Radius
-   16px reads as "rounded-square" per the ticket, not the old full circle. */
 .ab-founder-photo {
-  width: 200px;
-  height: 200px;
-  max-width: 200px;
-  flex: 0 0 200px;
-  border-radius: 16px;
+  width: 100%;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
-  border: 0.5px solid rgba(245, 240, 232, 0.14);
+  background: var(--jn-surface);
 }
 .ab-founder-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 50%;
+  display: block;
+}
+.ab-founder-caption {
+  padding: 14px 16px 16px;
 }
 .ab-founder-name {
   font-size: 13px;
@@ -2277,8 +2278,14 @@ body::before {
    unconstrained <JharokhaFrame> or a large <Image> does - pushes the track
    open and the 4-up collapses. minmax(0, ...) lets the track shrink. */
 .ab-people-grid {
+  /* LV5-031: every person card is --ab-person-w wide (the founder card's
+     width), centred; auto-fit wraps the instructor row 4 → 3+1 → 2+2 as the
+     viewport narrows instead of shrinking the photos. Mobile rules below
+     still override the template. */
+  --ab-person-w: 260px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, var(--ab-person-w));
+  justify-content: center;
   gap: 20px;
 }
 /* 🔴 LV5-026: team row drops to 3-up now that Arjav sits only in the
@@ -2298,8 +2305,10 @@ body::before {
    That keeps today's card width instead of 3 tracks stretching to fill
    the full section width. */
 .ab-team-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  max-width: calc(75% - 5px);
+  /* LV5-031: the 75%-5px algebra above is retired — fixed-width tracks make
+     the 3-up and 4-up cards identical by construction. */
+  grid-template-columns: repeat(auto-fit, var(--ab-person-w));
+  max-width: none;
   margin: 0 auto;
 }
 .ab-person-card {
