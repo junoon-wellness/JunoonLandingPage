@@ -798,23 +798,28 @@ body::before {
      orange" — --jn-tab-accent is set per-chapter (FeatureStory.tsx's
      `tabAccent`, distinct from the eyebrow/title `accent` so this never
      touches text contrast) and shown at low alpha while inactive. */
-  border: 0.5px solid color-mix(in srgb, var(--jn-tab-accent, var(--jn-clay)) 45%, transparent);
+  /* Kush, 2026-08-23: "make it easier to see the 4 buttons" — inactive
+     tabs were near-invisible (faint text, 45%-alpha hairline). Border up
+     to 75% alpha and 1px, a 5% accent fill, and text-soft labels (~6.8:1
+     on --jn-bg, clear of the 4.5:1 floor for this 11px type). The active
+     tab keeps full-alpha border + the stronger fill below, so hierarchy
+     survives the brightening. */
+  border: 1px solid color-mix(in srgb, var(--jn-tab-accent, var(--jn-clay)) 75%, transparent);
   border-radius: 4px;
-  background: none;
+  background: color-mix(in srgb, var(--jn-tab-accent, var(--jn-clay)) 5%, transparent);
   font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   /* Never below the 11px floor for a label on this page. */
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   white-space: nowrap;
-  /* Label text unchanged (Kush's own scoping): ivory active / mute inactive. */
-  color: var(--jn-text-faint);
+  color: var(--jn-text-soft);
   cursor: pointer;
   transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
 }
 .jn-story-tab[data-active='true'] {
   color: var(--jn-text);
-  background: color-mix(in srgb, var(--jn-tab-accent, var(--jn-clay)) 8%, transparent);
+  background: color-mix(in srgb, var(--jn-tab-accent, var(--jn-clay)) 14%, transparent);
   border-color: var(--jn-tab-accent, var(--jn-clay));
 }
 .jn-story-tab:hover:not([data-active='true']) {
