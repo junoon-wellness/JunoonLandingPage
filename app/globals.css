@@ -2110,32 +2110,40 @@ body::before {
 }
 
 /* founder card - band 03's left column, reuses the real Arjav photo */
+/* 🔴 LV5-026: Kush, 2026-08-23: "make Arjav's image larger within the
+   rectangle it's in" - the row layout (photo left, name/title beside it)
+   replaces LV5-023's stacked-and-centred circle so a bigger photo doesn't
+   just make the card taller. Padding trimmed 32/24 -> 24/20 to give the
+   name/title column more of the still-300px-capped interior; text-align
+   moves left to read naturally next to the photo instead of centred under
+   it. */
 .ab-founder-card {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 14px;
-  padding: 32px 24px;
+  gap: 16px;
+  padding: 24px 20px;
   background: var(--jn-surface);
   border: 0.5px solid var(--jn-hairline-strong);
   border-radius: 6px;
-  text-align: center;
+  text-align: left;
   /* The card never grows to the band column's full width. Without this the
      centred photo sits in a 560px+ box and reads as a banner. */
   max-width: 300px;
   margin: 0 auto;
 }
-/* 🔴 LV5-023: 140px -> 120px, and the size is now stated three ways -
-   width/height, flex-shrink and max-width - so it CANNOT be stretched by a
-   parent again. Kush, 2026-08-23: "make Arjav's photo way smaller." The
-   regression rendered it at ~900x1000 because this rule did not exist at
-   all; 120px is also a deliberate step down from the 140px it was before. */
+/* 🔴 LV5-026: 120px circle -> 200px rounded-square. Kush, 2026-08-23: "make
+   Arjav's image larger within the rectangle it's in" - explicitly WITHIN
+   the card, so the card's own 300px cap above is unchanged; only the photo
+   and the row layout grow. Size is still stated three ways - width/height,
+   flex-shrink and max-width - so it cannot be stretched by a parent. Radius
+   16px reads as "rounded-square" per the ticket, not the old full circle. */
 .ab-founder-photo {
-  width: 120px;
-  height: 120px;
-  max-width: 120px;
-  flex: 0 0 120px;
-  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  max-width: 200px;
+  flex: 0 0 200px;
+  border-radius: 16px;
   overflow: hidden;
   border: 0.5px solid rgba(245, 240, 232, 0.14);
 }
@@ -2143,6 +2151,7 @@ body::before {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: 50% 50%;
 }
 .ab-founder-name {
   font-size: 13px;
@@ -2182,6 +2191,27 @@ body::before {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
+}
+/* 🔴 LV5-026: team row drops to 3-up now that Arjav sits only in the
+   founder card + signature above (Kush, 2026-08-23: "Arjav's box remove
+   from the row of 4"). Applied alongside .ab-people-grid on the same div,
+   so this rule must come AFTER it in the cascade to win the tie (equal
+   specificity, later source order) - do not reorder.
+
+   The instructor grid two sections down keeps the real 4-up at the exact
+   same .ab-people-section padding, so reproducing its card width in 3
+   tracks instead of 4 is exact algebra, not eyeballing:
+     card width (4-up)  = (100% - 3 * 20px) / 4
+     3-up container     = 3 * card width (4-up) + 2 * 20px
+                         = 3 * (100% - 60px) / 4 + 40px
+                         = 75% - 45px + 40px
+                         = 75% - 5px
+   That keeps today's card width instead of 3 tracks stretching to fill
+   the full section width. */
+.ab-team-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: calc(75% - 5px);
+  margin: 0 auto;
 }
 .ab-person-card {
   display: flex;
@@ -2327,6 +2357,18 @@ body::before {
     gap: 14px;
   }
   .ab-contact-section { padding: 28px 24px 40px; }
+}
+
+/* LV5-026: team row goes 1-up under 640px. Below this width the instructor
+   grid above has already dropped to 2-up too, so the 75%-5px cap that
+   matches the two grids' card widths at desktop no longer means anything -
+   reset to 100% so the single card isn't pinched narrower than the column
+   it sits in. */
+@media (max-width: 640px) {
+  .ab-team-grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    max-width: 100%;
+  }
 }
 
 /* ════════════════════════════════════════════════════════════════════

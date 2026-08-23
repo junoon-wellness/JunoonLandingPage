@@ -79,12 +79,19 @@ interface Person {
   objectPosition?: string
 }
 
-// TEAM headshots are not supplied yet (LV5-008: "STILL NEEDED FROM HUMANS:
-// ... TEAM headshots x4") — every card renders the clay-light silhouette
-// placeholder below until Kush provides real photos.
+// LV5-026: Kush, 2026-08-23 - "Arjav's box remove from the row of 4 and
+// just have the remaining 3 of us on the about page." Arjav stays on the
+// page only as the band-03 founder card + signature above, not in this
+// row. Kush's real headshot (public/team/kush.jpg, cropped from
+// ~/Downloads/IMG_7670.jpg) is in; Arnav and Tej still render the
+// clay-light silhouette placeholder below until their files arrive.
 const TEAM: Person[] = [
-  { name: 'Arjav Chhabra', role: 'Founder & CEO' },
-  { name: 'Kush Jain', role: 'Operations' },
+  {
+    name: 'Kush Jain',
+    role: 'Operations',
+    photo: '/team/kush.jpg',
+    objectPosition: '50% 30%',
+  },
   { name: 'Arnav Jain', role: 'Engineering' },
   { name: 'Tej Chhabra', role: 'Technology' },
 ]
@@ -163,9 +170,19 @@ function PlayMark() {
  * The frame sets its own aspect-ratio inline, which is why `.ab-person-photo`'s
  * `aspect-ratio: 4/5` does not have to be removed for the arched variant.
  */
-function PeopleGrid({ people, arch = false }: { people: Person[]; arch?: boolean }) {
+function PeopleGrid({
+  people,
+  arch = false,
+  className,
+}: {
+  people: Person[]
+  arch?: boolean
+  /** LV5-026: lets the team row opt into the 3-up `.ab-team-grid` modifier
+   *  while the instructor grid below keeps the plain 4-up `.ab-people-grid`. */
+  className?: string
+}) {
   return (
-    <div className="ab-people-grid">
+    <div className={className ? `ab-people-grid ${className}` : 'ab-people-grid'}>
       {people.map(p => (
         <div key={p.name} className="ab-person-card">
           {p.photo ? (
@@ -281,15 +298,17 @@ export default function AboutPage() {
         <div className="ab-band-media">
           <div className="ab-founder-card">
             <div className="ab-founder-photo">
-              {/* LV5-023: sizes tracks .ab-founder-photo's 120px box so the
-                  srcset picks the right file. 280x280 stays as the intrinsic
-                  source (2x for a 120px slot). */}
+              {/* LV5-026: 120px -> 200px slot (Kush: "make Arjav's image
+                  larger within the rectangle it's in"). sizes and the
+                  intrinsic width/height track .ab-founder-photo's new box
+                  the same way LV5-023 sized them for 120px - 400x400 is
+                  2x for a 200px slot. */}
               <Image
                 src="/arjav-photo.jpg"
                 alt="Arjav, founder of Junoon Wellness"
-                width={280}
-                height={280}
-                sizes="120px"
+                width={400}
+                height={400}
+                sizes="200px"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </div>
@@ -308,7 +327,7 @@ export default function AboutPage() {
 
       <section className="ab-people-section" aria-label="Our team">
         <div className="eyebrow ab-people-heading">Our team</div>
-        <PeopleGrid people={TEAM} />
+        <PeopleGrid people={TEAM} className="ab-team-grid" />
       </section>
 
       <section className="ab-people-section ab-people-panel" aria-label="Meet our instructors">
