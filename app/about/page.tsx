@@ -102,7 +102,9 @@ const TEAM: Person[] = [
     name: 'Arnav Jain',
     role: 'Engineering',
     // Kush, 2026-08-23: ~/Downloads/DSC01837.JPG (4896x3672, EXIF-rotated to
-    // portrait) cropped head-and-shoulders at 4:5, flash red-eye reduced.
+    // portrait) cropped head-and-shoulders at 4:5, flash red-eye reduced, and
+    // the pink wall keyed out to the same light-grey ground as Kush's photo
+    // ("make arnav's background white and consistent with mine").
     photo: '/team/arnav.jpg',
     objectPosition: '50% 35%',
   },
