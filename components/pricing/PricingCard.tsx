@@ -43,7 +43,7 @@ const FEATURES: { label: string; icon: FeatureIconName }[] = [
   { label: 'Guided meditation and breathwork', icon: 'meditation' },
   { label: 'Yoga and movement', icon: 'yoga' },
   { label: 'Live classes', icon: 'live' },
-  { label: 'Weekly ritual', icon: 'ritual' },
+  // LV5-031 (Kush, 2026-08-23): 'Weekly ritual' row removed — five rows now.
 ]
 
 export default function PricingCard() {

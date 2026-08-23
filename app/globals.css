@@ -1990,11 +1990,14 @@ body::before {
   align-items: center;
   padding: 9px 16px;
   border-radius: 100px;
-  border: 0.5px solid var(--jn-hairline-strong);
-  background: var(--jn-wash);
-  font-size: 12px;
-  font-weight: 300;
-  color: var(--jn-text-soft);
+  /* LV5-031 (Kush: "make what we're building next easier to read"): was
+     12px/300 in --jn-text-soft on the wash with a hairline border. Now 13px,
+     regular weight, full ivory on the raised surface, visible border. */
+  border: 0.5px solid rgba(245, 240, 232, 0.2);
+  background: var(--jn-surface);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--jn-text);
   line-height: 1.4;
 }
 
