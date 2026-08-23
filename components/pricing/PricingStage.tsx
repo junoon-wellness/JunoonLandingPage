@@ -47,7 +47,7 @@ export const PRICING_STAGE_MIN = 1024
 
 /** Breathing room required between the pinned content and the viewport edge. */
 /* Kush, 2026-08-23 ("get everything on one page"): the pin's top/bottom padding (see .pr-stage-pin) — top clears the fixed nav. */
-const PIN_PADDING_TOP = 108
+const PIN_PADDING_TOP = 124
 const PIN_PADDING_BOTTOM = 20
 
 // useLayoutEffect warns during SSR; useEffect is the correct no-op there.

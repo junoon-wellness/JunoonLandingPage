@@ -180,11 +180,9 @@ body::before {
 }
 /* Kush, 2026-08-23 ("go with 1 and 3"): the lotus mark above a section label
    and the toran divider between major sections. Both decorative. */
-.jn-section-label {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+.jn-section-label { display: flex; }
+.jn-section-label--stacked { flex-direction: column; gap: 8px; }
+.jn-section-label--inline { flex-direction: row; align-items: center; gap: 10px; }
 .jn-toran {
   position: relative;
   z-index: 2;
@@ -1804,7 +1802,7 @@ body::before {
 .pr-stage-pin {
   /* Kush, 2026-08-23 ("get everything on one page"): top 88 clears the fixed nav now that the pin is top-aligned
      (PricingStage.tsx PIN_PADDING_TOP/BOTTOM must match these two values). */
-  padding: 108px 48px 20px;
+  padding: 124px 48px 20px; /* Kush, 2026-08-23: the lotus above "Pricing" clipped under the nav at 108 */
 }
 /* 🔴 LV5-022 SC2: the stage's HEIGHT is set inline by PricingStage.tsx as
    calc(100vh + travel). It is deliberately NOT here - CSS cannot know the

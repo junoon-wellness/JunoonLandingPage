@@ -1,7 +1,7 @@
 /**
  * Toran — the doorway-garland motif as a section divider: a repeating gold
- * scallop with a small hanging leaf at each junction, a top rule, and a
- * lozenge at the centre. Kush picked it from the flair canvas (2026-08-23,
+ * scallop with a small hanging leaf at each junction and a top rule. (The
+ * centre lozenge was dropped — Kush, 2026-08-23: "weird overlapping diamond".) Kush picked it from the flair canvas (2026-08-23,
  * "go with 1 and 3"). Replaces the plain hairline at MAJOR section breaks
  * only — never inside cards, never on the one-screen pricing stage.
  *
@@ -30,7 +30,6 @@ export default function Toran({ className }: { className?: string }) {
         </defs>
         <rect x="0" y="0" width="1184" height="28" fill={`url(#${pid})`} />
         <path d="M0 4 H1184" stroke="var(--jn-turmeric)" strokeWidth="1" opacity="0.5" />
-        <path d="M592 0 l7 9 -7 9 -7 -9 z" fill="var(--jn-bg)" stroke="var(--jn-turmeric)" strokeWidth="1" opacity="0.9" />
       </svg>
     </div>
   )
