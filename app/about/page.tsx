@@ -3,8 +3,23 @@ import Image from 'next/image'
 import NavV2 from '@/components/waitlist/NavV2'
 import FooterV2 from '@/components/waitlist/FooterV2'
 import ContactForm from '@/components/cta/ContactForm'
+import JharokhaFrame from '@/components/brand/JharokhaFrame'
 import { FOUNDER_VIDEO_SRC } from '@/lib/constants'
 import { clean } from '@/lib/text'
+
+/* ══════════════════════════════════════════════════════════════════
+   THE JUNOON ELEMENT — dials (LV5-021)
+
+   Both default ON. Flip either to false and that surface returns to
+   exactly what LV5-016/LV5-019 shipped; nothing else on the page reads
+   these, so they can be flipped independently.
+   ══════════════════════════════════════════════════════════════════ */
+
+/** Instructor headshots sit inside the jharokha arch instead of a 4:5 box. */
+const INSTRUCTOR_ARCH = true
+
+/** The founder video slot is framed by the arch. */
+const VIDEO_ARCH = true
 
 /**
  * LV5-016 — /about, board B "Chaptered" (LV5-009, ACCEPTED), padding
@@ -119,27 +134,57 @@ function PlayMark() {
   )
 }
 
-function PeopleGrid({ people }: { people: Person[] }) {
+/**
+ * LV5-021: `arch` puts the photo inside the jharokha instead of the 4:5 box.
+ *
+ * LV5-019's crop is CARRIED THROUGH UNCHANGED — same `object-fit: cover`, same
+ * per-person `object-position`. Only the box's aspect moves, 4:5 (0.800) to the
+ * arch's locked 660:754 (0.875), i.e. very slightly less tall. `object-position`
+ * is a percentage of the overflow, so the focal points still frame the same
+ * faces; they are not pixel offsets that would need re-deriving.
+ *
+ * The frame sets its own aspect-ratio inline, which is why `.ab-person-photo`'s
+ * `aspect-ratio: 4/5` does not have to be removed for the arched variant.
+ */
+function PeopleGrid({ people, arch = false }: { people: Person[]; arch?: boolean }) {
   return (
     <div className="ab-people-grid">
       {people.map(p => (
         <div key={p.name} className="ab-person-card">
           {p.photo ? (
-            <div className="ab-person-photo">
-              <Image
-                src={p.photo}
-                alt={p.name}
-                width={400}
-                height={400}
-                sizes="(max-width: 768px) 45vw, 22vw"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  objectPosition: p.objectPosition ?? '50% 50%',
-                }}
-              />
-            </div>
+            arch ? (
+              <JharokhaFrame className="ab-person-photo is-arched" strokeOpacity={0.45}>
+                <Image
+                  src={p.photo}
+                  alt={p.name}
+                  width={400}
+                  height={400}
+                  sizes="(max-width: 768px) 45vw, 22vw"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: p.objectPosition ?? '50% 50%',
+                  }}
+                />
+              </JharokhaFrame>
+            ) : (
+              <div className="ab-person-photo">
+                <Image
+                  src={p.photo}
+                  alt={p.name}
+                  width={400}
+                  height={400}
+                  sizes="(max-width: 768px) 45vw, 22vw"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: p.objectPosition ?? '50% 50%',
+                  }}
+                />
+              </div>
+            )
           ) : (
             <div className="ab-person-photo ab-placeholder">
               <SilhouetteIcon />
@@ -169,17 +214,51 @@ export default function AboutPage() {
       {/* 01 — video left, copy right */}
       <section className="ab-band" aria-label="Where it started">
         <div className="ab-band-media">
-          <div className="ab-video-slot">
-            {FOUNDER_VIDEO_SRC ? (
-              // eslint-disable-next-line jsx-a11y/media-has-caption
-              <video src={FOUNDER_VIDEO_SRC} controls playsInline />
-            ) : (
-              <>
-                <PlayMark />
-                <span className="ab-video-caption">Founder video</span>
-              </>
-            )}
-          </div>
+          {VIDEO_ARCH ? (
+            /*
+              LV5-021 (b). HOW THE 16:9 IS LETTERBOXED: it isn't — it is
+              PINNED TO THE ARCH'S FLAT BASE, and there are no bars.
+              The arch stops curving at y=318 of its 754-unit height, so a
+              full-width 16:9 box is 371.25 units tall and its top edge lands
+              at y=348.75 — 30.75 units clear of the shoulder. The video
+              therefore sits entirely inside the straight-sided part of the
+              arch and the curve never crops a pixel of it. What the arch
+              adds is the crown ABOVE the video, which carries the slot's
+              existing gradient.
+              (Verified numerically, not by eye — see ARCH_SHOULDER_Y in
+              components/brand/motifs.ts.)
+
+              ⚠️ No <Jaali> inside this slot. Measured: the caption is
+              --jn-text-soft on the gradient's deep end (#4A3728) at 4.91:1,
+              and the lattice at 0.11 effective drops that to 4.28:1, under
+              AA. The arch is free here; the lattice is not.
+            */
+            <JharokhaFrame className="ab-video-slot is-arched" strokeOpacity={0.4}>
+              <div className="ab-video-inner">
+                {FOUNDER_VIDEO_SRC ? (
+                  // eslint-disable-next-line jsx-a11y/media-has-caption
+                  <video src={FOUNDER_VIDEO_SRC} controls playsInline />
+                ) : (
+                  <>
+                    <PlayMark />
+                    <span className="ab-video-caption">Founder video</span>
+                  </>
+                )}
+              </div>
+            </JharokhaFrame>
+          ) : (
+            <div className="ab-video-slot">
+              {FOUNDER_VIDEO_SRC ? (
+                // eslint-disable-next-line jsx-a11y/media-has-caption
+                <video src={FOUNDER_VIDEO_SRC} controls playsInline />
+              ) : (
+                <>
+                  <PlayMark />
+                  <span className="ab-video-caption">Founder video</span>
+                </>
+              )}
+            </div>
+          )}
         </div>
         <div className="ab-band-copy">
           <span className="ab-band-num jn-mono">01</span>
@@ -236,7 +315,7 @@ export default function AboutPage() {
 
       <section className="ab-people-section" aria-label="Meet our instructors">
         <div className="eyebrow ab-people-heading">Meet our instructors</div>
-        <PeopleGrid people={INSTRUCTORS} />
+        <PeopleGrid people={INSTRUCTORS} arch={INSTRUCTOR_ARCH} />
       </section>
 
       <section className="ab-contact-section" aria-label="Contact">

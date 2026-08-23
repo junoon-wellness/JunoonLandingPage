@@ -1947,6 +1947,37 @@ body::before {
   height: 100%;
   object-fit: cover;
 }
+
+/* ── LV5-021 (b): the slot framed by the jharokha ──
+   <JharokhaFrame> carries `.ab-video-slot.is-arched`, so the gradient and
+   the 16:9 rule above still apply; the frame's own inline aspect-ratio
+   (660/754) overrides the 16/9 one, and the border/radius come off because
+   the clip-path has already removed the corners they would have drawn on.
+   Capped in width so a portrait frame doesn't tower over the two paragraphs
+   sitting beside it in the band. */
+.ab-video-slot.is-arched {
+  border: 0;
+  border-radius: 0;
+  max-width: 400px;
+  margin: 0 auto;
+}
+/* The 16:9 content, pinned to the arch's straight-sided base. `inset: 0` on
+   the <video> above resolves against THIS box, not the frame, so the video
+   fills a 16:9 opening exactly — no crop, no bars. See the comment in
+   app/about/page.tsx for the geometry. */
+.ab-video-inner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
 .ab-play-mark {
   width: 52px;
   height: 52px;
@@ -2061,6 +2092,17 @@ body::before {
 }
 /* clay-light silhouette placeholder for the four TEAM headshots, not yet
    supplied — a generic figure on a faint clay wash, never a stock photo. */
+/* ── LV5-021 (a): the instructor headshot inside the jharokha ──
+   The frame supplies the shape and its locked 660/754 aspect inline, which
+   beats the 4/5 above. Border and radius come off for the same reason as the
+   video slot: clip-path has already cut the corners they would draw on, so
+   they would render as a sliced hairline. LV5-019's cover + per-person
+   object-position are untouched (see PeopleGrid in app/about/page.tsx). */
+.ab-person-photo.is-arched {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
 .ab-person-photo.ab-placeholder {
   display: flex;
   align-items: center;
