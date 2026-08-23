@@ -180,7 +180,19 @@ export async function POST(req: Request) {
       );
     }
 
-    return Response.json({ ok: true });
+    // LV5-028 (2026-08-23): surface Beehiiv's own subscriber status so a
+    // "created but not visible in the Subscribers list" case can be diagnosed
+    // from the response (pending = double opt-in waiting on the confirmation
+    // email; invalid = Beehiiv rejected the address). Nothing sensitive.
+    let status: string | undefined;
+    try {
+      const json = (await res.json()) as { data?: { status?: string } };
+      status = json?.data?.status;
+    } catch {
+      status = undefined;
+    }
+    if (status && status !== "active") console.warn("beehiiv: subscriber created with status", status);
+    return Response.json({ ok: true, status });
   } catch (err) {
     console.error("beehiiv request error:", err);
     return Response.json(
