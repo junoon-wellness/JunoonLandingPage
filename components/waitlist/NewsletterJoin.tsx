@@ -84,7 +84,10 @@ export default function NewsletterJoin({
               marginBottom: '18px',
             }}
           >
-            App updates and news, wellness articles, live class announcements, recipes and more.
+            {/* Kush, 2026-08-23: his exact replacement line — verbatim. The
+                TOPICS chips below stay unchanged, his ruling the same day. */}
+            Deepen your understanding of ancient Indian wellness practices and discover how they
+            connect with modern science and everyday life.
           </p>
         </Reveal>
 
