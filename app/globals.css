@@ -430,7 +430,7 @@ body::before {
    little bit, and reduce padding at the bottom"): only the newsletter section
    that opens /library carries this — other .v2-section-top users are untouched. */
 .v2-section.v2-section-top.v2-section-newsletter {
-  padding-bottom: 36px;
+  padding-bottom: 28px; /* Kush, 2026-08-23: fine print removed, "reduce spacing below accordingly" */
 }
 @media (min-width: 769px) {
   /* The extra top air is a desktop ask; the phone/tablet 84px / 76px rules
@@ -2128,19 +2128,24 @@ body::before {
 .ab-hero {
   position: relative;
   z-index: 2;
-  padding: 84px 48px 16px;
-  max-width: 760px;
+  /* Kush, 2026-08-23 ("span across the screen more like a proper hero
+     header"): was max-width 760px. Full content width; the headline itself
+     is capped so the line length stays readable at 1440+. */
+  padding: 84px 48px 8px;
+  max-width: none;
 }
 .ab-eyebrow { margin-bottom: 10px; }
 /* LV5-022 SC3: Cormorant LIGHT and a tighter line-height, matching the hero
    and /pricing headlines rather than sitting at body weight. */
 .ab-headline {
   font-family: var(--font-cormorant), serif;
-  font-size: clamp(32px, 4.2vw, 52px);
+  /* Kush, 2026-08-23: hero-scale, was clamp(32px, 4.2vw, 52px) in a 760px box. */
+  font-size: clamp(38px, 5.4vw, 74px);
   font-weight: 300;
-  line-height: 1.06;
-  letter-spacing: -0.012em;
+  line-height: 1.04;
+  letter-spacing: -0.014em;
   color: var(--jn-text);
+  max-width: 1120px;
 }
 /* The site's accent convention: the clause that carries the idea goes
    turmeric italic. Measured 6.46:1 on --jn-bg and 6.02:1 once the SC5 ground
@@ -2150,8 +2155,8 @@ body::before {
   color: var(--jn-turmeric);
 }
 .ab-subline {
-  margin: 14px 0 0;
-  max-width: 520px;
+  margin: 18px 0 0;
+  max-width: 600px;
   font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
   font-size: 15px;
   font-weight: 300;
@@ -2195,6 +2200,26 @@ body::before {
 /* LV5-022 SC4: back to a rounded rectangle. Radius 20px and a GOLD hairline
    rather than the neutral one, so the slot still carries a little of the
    brand the arch was carrying before Kush rejected the cutout. */
+/* Kush, 2026-08-23: the founder video as a full-width cinematic band right
+   under the hero headline. 21:9 on desktop (a letterboxed, film-like frame),
+   16:9 again on phones where 21:9 would be a thin strip. */
+.ab-hero-video {
+  position: relative;
+  z-index: 2;
+  padding: 28px 48px 0;
+}
+.ab-video-slot.ab-video-cinema {
+  aspect-ratio: 21 / 9;
+  width: 100%;
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.8);
+}
+/* The opening story paragraphs: one centred measure under the video, not a
+   two-column band. */
+.ab-band.ab-band-intro {
+  grid-template-columns: minmax(0, 760px);
+  justify-content: center;
+  padding-top: 36px;
+}
 .ab-video-slot {
   position: relative;
   aspect-ratio: 16 / 9;
@@ -2520,6 +2545,8 @@ body::before {
 
 @media (max-width: 768px) {
   .ab-hero { padding: 76px 24px 8px; }
+  .ab-hero-video { padding: 16px 24px 0; }
+  .ab-video-slot.ab-video-cinema { aspect-ratio: 16 / 9; }
   .ab-band {
     grid-template-columns: 1fr;
     gap: 20px;
