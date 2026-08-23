@@ -2085,6 +2085,159 @@ body::before {
   object-fit: cover;
 }
 
+/* ══════════════════════════════════════════════════════════════════════
+   🔴 RESTORED BY LV5-023. These 14 rules were destroyed by LV5-022 SC4.
+
+   That edit removed the two arched-video-slot rules by slicing the file
+   between two comment markers - from "LV5-021 (b)" to "LV5-021 (a)" - on
+   the assumption the two blocks were adjacent. They were not: 4.4KB of
+   unrelated /about layout sat between them, and the slice took all of it.
+   The 2 intended rules went; so did 14 others, including the two grids and
+   the founder photo's size.
+
+   LESSON, and the reason this banner exists: NEVER delete CSS by slicing
+   between two markers. Match and remove each rule by name. A marker pair
+   describes the file's order at one moment, not the scope of a change.
+   ══════════════════════════════════════════════════════════════════════ */
+.ab-play-mark {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(245, 240, 232, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--jn-text);
+}
+.ab-video-caption {
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  /* NOT --jn-text-faint (.55 alpha): the slot's diagonal gradient runs from
+     --jn-surface down to --jn-surface-deep, and .55 measures only 4.22:1
+     against the deep end (worst case) - fails AA. --jn-text-soft (.62)
+     measures 4.91:1 there and still reads correctly against the lighter end. */
+  color: var(--jn-text-soft);
+}
+
+/* tagline panel - band 02's right column */
+.ab-tagline-panel {
+  padding: 40px 32px;
+  background: var(--jn-surface);
+  border: 0.5px solid var(--jn-hairline-strong);
+  border-left: 3px solid var(--jn-clay);
+  border-radius: 4px;
+}
+.ab-tagline-text {
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--jn-turmeric);
+}
+
+/* founder card - band 03's left column, reuses the real Arjav photo */
+.ab-founder-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 32px 24px;
+  background: var(--jn-surface);
+  border: 0.5px solid var(--jn-hairline-strong);
+  border-radius: 6px;
+  text-align: center;
+  /* The card never grows to the band column's full width. Without this the
+     centred photo sits in a 560px+ box and reads as a banner. */
+  max-width: 300px;
+  margin: 0 auto;
+}
+/* 🔴 LV5-023: 140px -> 120px, and the size is now stated three ways -
+   width/height, flex-shrink and max-width - so it CANNOT be stretched by a
+   parent again. Kush, 2026-08-23: "make Arjav's photo way smaller." The
+   regression rendered it at ~900x1000 because this rule did not exist at
+   all; 120px is also a deliberate step down from the 140px it was before. */
+.ab-founder-photo {
+  width: 120px;
+  height: 120px;
+  max-width: 120px;
+  flex: 0 0 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 0.5px solid rgba(245, 240, 232, 0.14);
+}
+.ab-founder-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ab-founder-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--jn-text);
+  letter-spacing: 0.02em;
+}
+.ab-founder-role {
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  /* NOT --jn-mute: #93826F on --jn-surface measures 4.23:1 and fails AA
+     (same trap caught on /pricing's CTA fine print). text-faint passes. */
+  color: var(--jn-text-faint);
+}
+.ab-signature {
+  margin-top: 18px;
+  font-family: var(--font-cormorant), serif;
+  font-size: 19px;
+  font-style: italic;
+  color: var(--jn-text);
+}
+
+/* ── people grids: team + instructors, 4-up cards ── */
+.ab-people-section {
+  position: relative;
+  z-index: 2;
+  padding: 28px 48px;
+}
+.ab-people-heading { margin-bottom: 20px; }
+/* 🔴 minmax(0, 1fr), NOT 1fr. A bare `1fr` track has an auto MINIMUM, so a
+   child that wants to be wider than its share - which is exactly what an
+   unconstrained <JharokhaFrame> or a large <Image> does - pushes the track
+   open and the 4-up collapses. minmax(0, ...) lets the track shrink. */
+.ab-people-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+.ab-person-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* The flex-item counterpart of the same rule: default `min-width: auto`
+     lets a card outgrow its cell. */
+  min-width: 0;
+}
+.ab-person-photo {
+  position: relative;
+  /* LV5-019 (Kush, 2026-08-22: "center and scale the images better, they
+     look awkward"): was 1/1. All four instructor sources are already
+     square, so a square box showed the WHOLE frame uncropped - including
+     Shoam's full-body candid shot with his face a small detail in one
+     corner. 4:5 + object-fit: cover (set per-image in about/page.tsx,
+     with a per-person object-position) crops in on the face instead. */
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--jn-surface);
+  border: 0.5px solid var(--jn-hairline-strong);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
 /* ── LV5-022 SC5: the instructor grid is a lattice PANEL moment ──
    The section needs its own positioning context for the absolutely
    positioned <Jaali>, and the heading and grid have to sit above it: the
@@ -2107,10 +2260,18 @@ body::before {
    video slot: clip-path has already cut the corners they would draw on, so
    they would render as a sliced hairline. LV5-019's cover + per-person
    object-position are untouched (see PeopleGrid in app/about/page.tsx). */
+/* 🔴 LV5-023: <JharokhaFrame> sets its own aspect-ratio inline but NO width.
+   As a block it therefore fills whatever box it is given - which, once
+   .ab-person-photo and the grid were gone, was the viewport. Shoam's arch
+   rendered ~2000px wide. The width/max-width below pin it to its grid cell
+   regardless of what the grid above is doing. */
 .ab-person-photo.is-arched {
   border: 0;
   border-radius: 0;
   background: transparent;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 .ab-person-photo.ab-placeholder {
   display: flex;
@@ -2191,7 +2352,7 @@ body::before {
   .ab-band-reverse .ab-band-copy { order: initial; }
   .ab-people-section { padding: 20px 24px; }
   .ab-people-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
   }
   .ab-contact-section { padding: 28px 24px 40px; }

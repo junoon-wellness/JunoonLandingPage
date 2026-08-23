@@ -271,12 +271,15 @@ export default function AboutPage() {
         <div className="ab-band-media">
           <div className="ab-founder-card">
             <div className="ab-founder-photo">
+              {/* LV5-023: sizes tracks .ab-founder-photo's 120px box so the
+                  srcset picks the right file. 280x280 stays as the intrinsic
+                  source (2x for a 120px slot). */}
               <Image
                 src="/arjav-photo.jpg"
                 alt="Arjav, founder of Junoon Wellness"
                 width={280}
                 height={280}
-                sizes="140px"
+                sizes="120px"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </div>
