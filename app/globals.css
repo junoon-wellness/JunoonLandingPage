@@ -445,7 +445,13 @@ body::before {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  /* LV5-030: raised from 100 to sit ABOVE .v2-nav-sheet (z-index: 150) now
+     that the sheet renders as .v2-nav's sibling (NavV2.tsx) instead of its
+     child — the hamburger button that closes the sheet lives in here, and
+     needs to stay clickable while the sheet is open. No other z-index in
+     the app is >= 100 (grep confirmed: everything else is -1, 0, 1 or 2),
+     so this doesn't collide with anything else on the page. */
+  z-index: 160;
   display: flex;
   align-items: center;
   justify-content: space-between;

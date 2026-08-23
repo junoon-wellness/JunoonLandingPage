@@ -72,6 +72,7 @@ export default function NavV2() {
   const isActive = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href))
 
   return (
+    <>
     <nav className="v2-nav" data-scrolled={scrolled}>
       <a href="#top" className="v2-link v2-nav-brand">
         {/* The badge carries "JUNOON" inside it, but at this size that text is
@@ -137,38 +138,48 @@ export default function NavV2() {
           </span>
         </button>
       </div>
-
-      <div
-        id="v2-nav-sheet"
-        className="v2-nav-sheet"
-        data-open={menuOpen}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Site menu"
-        // Kept mounted (not conditionally rendered) so the slide/fade
-        // transition can play in both directions; inert when closed so its
-        // links aren't tab-reachable behind the page.
-        inert={!menuOpen}
-      >
-        <div className="v2-nav-sheet-links">
-          {NAV_LINKS.map(link => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="v2-link v2-nav-sheet-link"
-              data-active={isActive(link.href)}
-              aria-current={isActive(link.href) ? 'page' : undefined}
-              onClick={() => setMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </div>
-
-        <div className="v2-nav-sheet-cta">
-          <AppStoreBadge full size="nav" onClick={() => setMenuOpen(false)} />
-        </div>
-      </div>
     </nav>
+
+    {/* LV5-030: was rendered INSIDE <nav>, which carries backdrop-filter
+        (globals.css .v2-nav). A backdrop-filter ancestor becomes the
+        containing block for fixed descendants, so this sheet's
+        `position: fixed; inset: 0` resolved against the ~64px nav bar
+        instead of the viewport - its dark background only ever painted
+        that strip, and the links/badge overflowed uncovered down the page.
+        Rendered as a sibling of <nav> now, so its containing block is the
+        viewport again. State/props are unchanged; only its position in the
+        tree moved. */}
+    <div
+      id="v2-nav-sheet"
+      className="v2-nav-sheet"
+      data-open={menuOpen}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Site menu"
+      // Kept mounted (not conditionally rendered) so the slide/fade
+      // transition can play in both directions; inert when closed so its
+      // links aren't tab-reachable behind the page.
+      inert={!menuOpen}
+    >
+      <div className="v2-nav-sheet-links">
+        {NAV_LINKS.map(link => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="v2-link v2-nav-sheet-link"
+            data-active={isActive(link.href)}
+            aria-current={isActive(link.href) ? 'page' : undefined}
+            onClick={() => setMenuOpen(false)}
+          >
+            {link.label}
+          </Link>
+        ))}
+      </div>
+
+      <div className="v2-nav-sheet-cta">
+        <AppStoreBadge full size="nav" onClick={() => setMenuOpen(false)} />
+      </div>
+    </div>
+    </>
   )
 }
