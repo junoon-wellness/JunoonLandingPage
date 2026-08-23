@@ -1694,6 +1694,70 @@ body::before {
   max-width: 560px;
 }
 
+/* ── LV5-020: THE SCROLL-LINKED STAGE ──
+   `.is-pinned` is added by PricingStage.tsx only when it has MEASURED that
+   pinning is safe: wide enough, motion allowed, and the content actually fits
+   the viewport. Without it every rule below is inert and the page is a plain
+   stacked document, which is also what a visitor with JS off gets. */
+.pr-stage {
+  position: relative;
+  z-index: 2;
+}
+.pr-stage-pin {
+  padding: 28px 48px;
+}
+.pr-stage.is-pinned {
+  /* ~1.6x viewport: 100vh of that is the pin itself, the remaining 60vh is
+     the scroll runway the transforms are mapped onto. */
+  height: 160vh;
+}
+.pr-stage.is-pinned .pr-stage-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.pr-stage-grid {
+  /* offsetParent for the card column's measurement — see PricingStage.tsx. */
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  width: 100%;
+}
+/* 🔴 1024 HERE MUST EQUAL PRICING_STAGE_MIN in components/pricing/PricingStage.tsx.
+   That constant gates the pin and the lateral travel; this query gates the
+   two columns they animate INTO. If they ever disagree, the card slides
+   sideways out of a single column. */
+@media (min-width: 1024px) {
+  .pr-stage-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  /* Left-aligned in the side column; the old centred treatment belonged to a
+     full-width section. */
+  .pr-stage-side .pr-next-heading { text-align: left; }
+  .pr-stage-side .pr-chips { justify-content: flex-start; }
+}
+.pr-stage-side .pr-side-block + .pr-side-block { margin-top: 28px; }
+
+/* Belt and braces alongside the JS check: if the pin ever gets applied under
+   reduced motion, this un-applies it. Both paths mean the same thing, so they
+   cannot disagree the way two competing breakpoints could. */
+@media (prefers-reduced-motion: reduce) {
+  .pr-stage.is-pinned { height: auto; }
+  .pr-stage.is-pinned .pr-stage-pin {
+    position: static;
+    height: auto;
+    display: block;
+  }
+}
+
+/* Kept for the page-level rhythm the hero and any future full-width band
+   still reference. The three sections that used it became stage columns. */
 .pr-section {
   position: relative;
   z-index: 2;
@@ -1784,11 +1848,16 @@ body::before {
   color: var(--jn-text);
   line-height: 1;
 }
+/* LV5-020 spruce (3): the unit picks up the page's italic-Cormorant accent
+   instead of reading as small sans label text. Turmeric measures 6.46:1 on
+   --jn-bg and 5.59:1 on --jn-surface, and 4.58:1 on surface + the LV5-021
+   lattice at its crown - AA at all three. */
 .pr-price-unit {
-  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
-  font-size: 15px;
-  font-weight: 300;
-  color: var(--jn-text-soft);
+  font-family: var(--font-cormorant), serif;
+  font-style: italic;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--jn-turmeric);
 }
 
 .pr-offer-line {
@@ -1807,21 +1876,20 @@ body::before {
   padding: 0;
   border-top: 0.5px solid var(--jn-hairline);
 }
+/* LV5-020 spruce (1)+(2): was [20px ✓][label]. Now the app's own line icon
+   leads the row and the tick moves to the right edge, where it reads as
+   "included" rather than as a bullet. `align-items: center` because a 20px
+   glyph and a 14px line box do not share a baseline. */
 .pr-check-row {
   display: grid;
-  grid-template-columns: 20px 1fr;
+  grid-template-columns: 20px 1fr 16px;
   gap: 12px;
-  align-items: start;
+  align-items: center;
   padding: 11px 0;
   border-bottom: 0.5px solid var(--jn-hairline);
   font-size: 14px;
   font-weight: 300;
   color: var(--jn-text-soft);
-  line-height: 1.5;
-}
-.pr-check-icon {
-  color: var(--jn-sage);
-  font-size: 14px;
   line-height: 1.5;
 }
 
