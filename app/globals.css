@@ -2476,7 +2476,10 @@ body::before {
    it sits in. */
 @media (max-width: 640px) {
   .ab-team-grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+    /* LV5-031: 1-up at the same 260px as the founder card (was a full-width
+       track, which made the three team photos wider than Arjav's on phones). */
+    grid-template-columns: repeat(1, var(--ab-person-w));
+    justify-content: center;
     max-width: 100%;
   }
 }
