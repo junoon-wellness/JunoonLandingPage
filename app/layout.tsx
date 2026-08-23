@@ -29,11 +29,33 @@ const dmMono = localFont({
   display: "swap",
 });
 
-// NOTE: og:image is intentionally omitted - no real OG asset exists yet.
-// Do not invent a URL (see handoff placeholder policy).
+// OG / link-preview image (Kush, 2026-08-23): without one, iMessage/WhatsApp
+// picked the first large photo on the page (Arjav's). public/og-image.png is
+// a 1200x630 logo card generated from logo-clay-text.png on --jn-bg; regenerate
+// with the PIL snippet recorded on the board (LV5-029). openGraph carries ONLY
+// images/siteName/type here so each page's own title/description still flow
+// into og:title / og:description - setting openGraph.title in the layout
+// would override every page with the Home title.
 export const metadata: Metadata = {
+  metadataBase: new URL("https://junoonwellness.com"),
   title: clean(meta.title),
   description: clean(meta.description),
+  openGraph: {
+    type: "website",
+    siteName: "Junoon",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Junoon - Ancient Traditions, Modern Solutions.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({

@@ -3,8 +3,8 @@
  * because `meta` was the only export of that file still reachable from the
  * rendered site.
  *
- * No og:image key: there is no real OG asset yet and inventing a URL is
- * explicitly out of bounds (see app/layout.tsx).
+ * The og:image lives in app/layout.tsx (public/og-image.png, added 2026-08-23),
+ * not here - it is site-wide, not per-page.
  *
  * The title is written with a plain hyphen on purpose. `clean()` would convert
  * an em dash anyway, but the source is what gets grepped for brand-voice
