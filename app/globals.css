@@ -1772,9 +1772,15 @@ body::before {
   margin: 0 auto;
 }
 
+/* 🔴 LV5-022 SC1: THE CARD IS OPAQUE. `--jn-surface` is a solid hex and
+   `isolation: isolate` gives it its own stacking context, so nothing on the
+   page ground - lattice included - can paint into it, and no descendant can
+   escape upward the way the round-1 arch crown did. The lattice belongs
+   BEHIND this card (see .pr-card-stage), never inside it. */
 .pr-card {
   position: relative;
   z-index: 1;
+  isolation: isolate;
   max-width: 560px;
   margin: 0 auto;
   padding: 40px 40px 32px;
@@ -1782,32 +1788,6 @@ body::before {
   border: 0.5px solid var(--jn-hairline-strong);
   border-radius: 8px;
   overflow: hidden;
-}
-
-/* ── LV5-021 (d): the arched header ──
-   A full jharokha at true 660:754, pulled up so its crown sits just under
-   the card's top edge and the price reads inside the opening. It is an
-   ornament, not a container: nothing lays out against it, so the price and
-   the offer line cannot be pushed around by it at any type size.
-   The card's `overflow: hidden` trims whatever runs past the bottom, and
-   the arch's own vignette has already faded it out by then. */
-.pr-card-head {
-  position: relative;
-}
-.pr-crown {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(300px, 86%);
-  pointer-events: none;
-  z-index: 0;
-}
-/* Everything in the header paints above the ornament. */
-.pr-card-head > .pr-price-row,
-.pr-card-head > .pr-offer-line {
-  position: relative;
-  z-index: 1;
 }
 
 /* ── LV5-020/LV5-021: replaces .pr-ribbon ──
