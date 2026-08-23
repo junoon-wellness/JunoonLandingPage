@@ -31,16 +31,17 @@ const TRANSITION_MS = 700
  * LV5-019 (2026-08-22, Kush): "make these 3 across and each a different
  * color for the line and bubble shading". One accent per dot, in slide
  * order, applied as a `--dot-accent` custom property (see `.v2-dot` /
- * `.v2-dot-mark` / `.v2-dot-fill` in globals.css). All six clear 3:1
- * against --jn-bg as graphics — see the contrast table on LV5-019.
+ * `.v2-dot-mark` / `.v2-dot-fill` in globals.css). Trimmed to five when the
+ * lineup went to five slides (Kush, 2026-08-23) — blush dropped with the
+ * Breathwork slide; the five kept all clear 3:1 against --jn-bg as graphics
+ * per the contrast table on LV5-019.
  */
 const DOT_ACCENTS = [
-  'var(--jn-turmeric)', // Weekly Ritual
   'var(--jn-sage)', // AI Coach
-  'var(--jn-gold-alt)', // Weekly Plan
-  'var(--jn-clay)', // Library
-  'var(--jn-blush-a70)', // Breathwork
+  'var(--jn-clay)', // Live Classes
+  'var(--jn-gold-alt)', // Recorded Classes
   'var(--jn-jade-tint)', // Your Plan
+  'var(--jn-turmeric)', // Weekly Ritual
 ]
 
 export default function DeviceCarousel() {

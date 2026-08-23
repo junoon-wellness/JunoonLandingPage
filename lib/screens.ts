@@ -78,15 +78,16 @@ export function screen(key: ScreenKey): Screen {
 }
 
 /**
- * Hero carousel lineup (spec §C). Order is the product story: the ritual that
- * starts the week, the coach that shapes it, what it serves you, then the rest
- * of the app.
+ * Hero carousel lineup (spec §C). Five slides in the order Kush ruled
+ * (2026-08-23): "1. Coach 2. Live classes 3. Classes recorded 4. Your plan
+ * 5. Ritual" — classes up front, the ritual as the closer. The Weekly Plan
+ * (coachPicks) and Breathwork slides came out in the same ruling, and the
+ * third label's wording was ruled "Recorded Classes".
  */
 export const HERO_SLIDES: { key: ScreenKey; label: string }[] = [
-  { key: 'ritualProposal', label: 'Weekly Ritual' },
   { key: 'coachChat', label: 'AI Coach' },
-  { key: 'coachPicks', label: 'Weekly Plan' },
-  { key: 'library', label: 'Library' },
-  { key: 'breathworkSession', label: 'Breathwork' },
+  { key: 'liveClass', label: 'Live Classes' },
+  { key: 'library', label: 'Recorded Classes' },
   { key: 'planTab', label: 'Your Plan' },
+  { key: 'ritualProposal', label: 'Weekly Ritual' },
 ]
