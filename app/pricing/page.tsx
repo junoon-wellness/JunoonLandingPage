@@ -3,7 +3,20 @@ import NavV2 from '@/components/waitlist/NavV2'
 import FooterV2 from '@/components/waitlist/FooterV2'
 import PricingCard from '@/components/pricing/PricingCard'
 import PricingStage from '@/components/pricing/PricingStage'
+import Jaali from '@/components/brand/Jaali'
 import { clean } from '@/lib/text'
+
+/**
+ * LV5-024: the lattice panel that lights the page ground behind the pricing
+ * card. Moved here from inside PricingCard.tsx — `.pr-card-stage` is
+ * `position: relative`, which scoped the old call to that local box instead
+ * of the page wrapper. See the "ONE GEOMETRY" note atop
+ * components/brand/Jaali.tsx. The card opens centred and travels left as the
+ * stage pins (see PricingStage.tsx), but that travel is a CSS transform, not
+ * a document-flow change, so the card's actual document position — and this
+ * mask's target — stays put near the top of the page throughout the scroll.
+ */
+const PRICING_JAALI = true
 
 /**
  * LV5-015 — /pricing, board A "One card" (LV5-011, ACCEPTED), padding cut
@@ -58,6 +71,9 @@ const FAQ = [
 export default function PricingPage() {
   return (
     <div id="top">
+      {PRICING_JAALI && (
+        <Jaali variant="panel" zIndex={-1} maskPosition="50% 460px" maskSize="760px 900px" />
+      )}
       <NavV2 />
 
       <PricingStage

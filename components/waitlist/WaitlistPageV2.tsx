@@ -8,7 +8,32 @@ import WhatWereBuildingV2 from './WhatWereBuildingV2'
 import FeatureStory from './FeatureStory'
 import WalkthroughTeaser from './WalkthroughTeaser'
 import FooterV2 from './FooterV2'
+import Jaali from '@/components/brand/Jaali'
 import { SHOW_TOUR } from '@/lib/constants'
+
+/**
+ * LV5-021 (c) / LV5-024: a jaali PANEL behind the hero phone, never a page
+ * texture. Kush chose solid dark pages (LV5-018 took the ambient ground
+ * radials back off this hero), so the lattice reads as a local moment behind
+ * the device column, not a page-wide wash.
+ *
+ * LV5-024 moved this from inside HeroV2 (where it was sized to `.v2-devices`,
+ * a local `position:relative` box) to here, as a page-level full-page copy —
+ * see the "ONE GEOMETRY" note atop components/brand/Jaali.tsx for why. Mask
+ * coordinates are a best-effort estimate (top-right, roughly where the phone
+ * carousel sits in the hero) — no live browser pass this round.
+ *
+ * Set to false and the hero is exactly what LV5-018 shipped.
+ */
+const HERO_JAALI = true
+
+/**
+ * LV5-022 SC5 / LV5-024: the same panel treatment behind the feature-story
+ * phone pair, moved out of ScrollStory for the same "page wrapper" reason.
+ * Mask is centred lower on the page than the hero panel, roughly where
+ * FeatureStory's phone column sits after StatBand + WhatWereBuildingV2.
+ */
+const FEATURE_JAALI = true
 
 interface WaitlistPageV2Props {
   /** Active beehiiv subscribers, fetched server-side (beehiiv.ts caches 60s). */
@@ -36,6 +61,18 @@ export default function WaitlistPageV2({ initialClaimed, source }: WaitlistPageV
 
   return (
     <div id="top">
+      {/* LV5-024: page-level jaali panels. Both are full-page `inset:0`
+          copies of the same tile grid the site-wide ground (mounted in
+          app/layout.tsx) uses — see the "ONE GEOMETRY" note atop
+          components/brand/Jaali.tsx. zIndex={-1} matches ground so both stay
+          behind all real content regardless of local stacking contexts, and
+          paint above ground because they come later in DOM tree order. */}
+      {HERO_JAALI && (
+        <Jaali variant="panel" zIndex={-1} maskPosition="82% 380px" maskSize="820px 820px" />
+      )}
+      {FEATURE_JAALI && (
+        <Jaali variant="panel" zIndex={-1} maskPosition="28% 2050px" maskSize="900px 780px" />
+      )}
       <NavV2 />
       <HeroV2
         source={source}

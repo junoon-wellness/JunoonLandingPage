@@ -1,7 +1,7 @@
 import Jaali from './Jaali'
 
 /**
- * THE SITE-WIDE LATTICE GROUND (LV5-022 SC5)
+ * THE SITE-WIDE LATTICE GROUND (LV5-022 SC5, re-plumbed LV5-024)
  *
  * Kush, 2026-08-23: "utilize the pattern throughout the page more and broadly
  * throughout the website." Mounted ONCE in app/layout.tsx, so every route gets
@@ -9,18 +9,27 @@ import Jaali from './Jaali'
  * if he changes his mind. This supersedes the "solid dark pages" ruling of
  * LV5-018.
  *
- * FIXED, not absolute. The lattice stays put while the page scrolls over it,
- * which keeps it reading as the ground the site sits on rather than as a
- * texture glued to a section. It also means one element covers a document of
- * any length. If Kush wants it to scroll with the page instead, change
- * `position` to absolute here and give it a height — that is the only edit.
+ * 🔴 ABSOLUTE, not fixed (LV5-024). Kush, 2026-08-23, on the same preview:
+ * "there's 2 layers of this so they're slightly off — either make it all one
+ * or line them up perfectly." The site-wide ground was `position:fixed`
+ * (viewport-anchored, never scrolls) while every panel was `position:absolute`
+ * inside document-flow ancestors (scrolls with the page) — two DIFFERENT
+ * scroll behaviours, so even with identical tile geometry the two patterns
+ * would slide out of phase the moment the page scrolled at all. `absolute`
+ * here, sized by `inset:0` against `<body>` (see `position:relative` on body
+ * in app/layout.tsx — that is THE PAGE WRAPPER every Jaali instance now
+ * shares as its containing block), makes ground scroll WITH the document,
+ * exactly like every panel, so the two registers stay in the same coordinate
+ * space at every scroll position, not just at the top of the page.
  *
  * 🔴 z-index: -1 IS LOAD-BEARING. Page content is a mix of positioned and
  * non-positioned elements; anything at z-index 0 or above would paint over
  * the non-positioned half of it. A negative index puts the layer below every
  * descendant of the root but still ABOVE the canvas background, because the
  * body's background-color propagates to the canvas and paints first. That
- * ordering is why `body { background-color: var(--jn-bg) }` must stay.
+ * ordering is why `body { background-color: var(--jn-bg) }` must stay. Panel
+ * instances also use zIndex={-1} for the same reason, and paint above ground
+ * because they are later in DOM tree order at equal z-index.
  *
  * ⚠️ AN OPAQUE SECTION BACKGROUND HIDES THIS. LV5-022 removed the redundant
  * `background: var(--jn-bg)` fills from the home page's sections and from
@@ -35,7 +44,7 @@ export default function JaaliGround() {
     <Jaali
       variant="ground"
       zIndex={-1}
-      style={{ position: 'fixed' }}
+      style={{ position: 'absolute' }}
       /* The vignette is what stops a full-viewport lattice reading as
          wallpaper: it pulls the pattern back to nothing at the margins, so
          the eye finds it in the middle of the page and loses it at the edges,

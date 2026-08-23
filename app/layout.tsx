@@ -51,10 +51,16 @@ export default function RootLayout({
         utilities here - utility classes would out-specify the `body` rule and
         keep the page cream.
       */}
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased relative">
+        {/* LV5-024: position:relative — THE PAGE WRAPPER. Every Jaali
+            instance (this ground layer, and every per-page panel) is
+            `position:absolute; inset:0` against this box, so they all share
+            one containing block and one tile origin. See the "ONE GEOMETRY"
+            note atop components/brand/Jaali.tsx. */}
         {/* LV5-022 SC5: the site-wide jaali ground. One mount, every route.
-            Fixed and at z-index -1, so it sits under all page content and
-            over the canvas background. See components/brand/JaaliGround.tsx. */}
+            Absolute and at z-index -1, so it sits under all page content and
+            over the canvas background, and scrolls with the page like every
+            panel. See components/brand/JaaliGround.tsx. */}
         <JaaliGround />
         {children}
       </body>

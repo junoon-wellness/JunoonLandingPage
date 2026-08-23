@@ -2,7 +2,6 @@
 
 import SignupForm from './SignupForm'
 import Reveal, { RevealGroup, RevealItem } from '@/components/motion/Reveal'
-import Jaali from '@/components/brand/Jaali'
 
 interface NewsletterJoinProps {
   source: string
@@ -48,10 +47,11 @@ export default function NewsletterJoin({
         overflow: 'hidden',
       }}
     >
-      {/* LV5-022 SC5: /library's header is one of the named panel moments.
-          Only there - `firstSection` is what /library passes and what makes
-          this block the page's header rather than a mid-page band. */}
-      {firstSection && <Jaali variant="panel" vignetteColor="#2C2118" zIndex={0} />}
+      {/* LV5-022 SC5 / LV5-024: /library's header panel used to render HERE.
+          This `<section>` is `.v2-section`, which is `position: relative`, so
+          the old call scoped to this local box instead of the page wrapper.
+          It now renders at app/library/page.tsx as `LIBRARY_JAALI` — see the
+          "ONE GEOMETRY" note atop components/brand/Jaali.tsx. */}
       <div style={{ position: 'relative', zIndex: 1 }}>
         <Reveal>
           <h3

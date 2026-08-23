@@ -1,5 +1,4 @@
 import AppStoreBadge from '@/components/waitlist/AppStoreBadge'
-import Jaali from '@/components/brand/Jaali'
 import CheckMark from './CheckMark'
 import FeatureIcon, { type FeatureIconName } from './FeatureIcon'
 
@@ -25,10 +24,13 @@ import FeatureIcon, { type FeatureIconName } from './FeatureIcon'
  *
  * The card surface is opaque `--jn-surface` and nothing lattice-textured
  * lives inside it. The lattice stays on the page ground BEHIND the card.
+ *
+ * LV5-024: the panel that lights the page ground behind this card now
+ * renders at app/pricing/page.tsx (as `PRICING_JAALI`), not here —
+ * `.pr-card-stage` is `position: relative`, which made this component's own
+ * Jaali call scope to that local box instead of the page wrapper. See the
+ * "ONE GEOMETRY" note atop components/brand/Jaali.tsx.
  */
-
-/** The lattice panel on the page ground behind the card. Not inside it. */
-const PRICING_JAALI = true
 
 /**
  * The six feature rows. Copy is LOCKED from LV5-010 — do not rephrase. The
@@ -47,12 +49,6 @@ const FEATURES: { label: string; icon: FeatureIconName }[] = [
 export default function PricingCard() {
   return (
     <div className="pr-card-stage">
-      {/* BEHIND the card, on the page ground. The card is opaque, so nothing
-          on it is ever read through the lattice; what this lights is the
-          margin around the card, and the vignette fades that back into the
-          page before the panel's own edge. */}
-      {PRICING_JAALI && <Jaali variant="panel" inset="-6% -8%" radius={14} zIndex={0} />}
-
       <div className="pr-card">
         {/*
           Replaces the corner ribbon that clipped to "00 FOUNDER SPOTS"

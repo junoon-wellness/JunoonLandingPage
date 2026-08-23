@@ -19,6 +19,13 @@ import { clean } from '@/lib/text'
 /** Instructor headshots sit inside the jharokha arch instead of a 4:5 box. */
 const INSTRUCTOR_ARCH = true
 
+/**
+ * LV5-022 SC5 / LV5-024: the panel behind the instructor grid. Moved here
+ * from inside the "Meet our instructors" section — see the note there and
+ * the "ONE GEOMETRY" note atop components/brand/Jaali.tsx.
+ */
+const ABOUT_JAALI = true
+
 
 /*
  * LV5-022 SC4 - the founder video slot's arch is GONE. Kush, 2026-08-23:
@@ -212,6 +219,9 @@ function PeopleGrid({ people, arch = false }: { people: Person[]; arch?: boolean
 export default function AboutPage() {
   return (
     <div id="top">
+      {ABOUT_JAALI && (
+        <Jaali variant="panel" zIndex={-1} maskPosition="50% 1900px" maskSize="1100px 720px" />
+      )}
       <NavV2 />
 
       {/*
@@ -302,10 +312,13 @@ export default function AboutPage() {
       </section>
 
       <section className="ab-people-section ab-people-panel" aria-label="Meet our instructors">
-        {/* LV5-022 SC5: the instructor grid is one of the named panel
-            moments. The arched photos sit on it, which is the pairing the
-            poster uses. */}
-        <Jaali variant="panel" inset="0 -4%" radius={16} zIndex={0} />
+        {/* LV5-022 SC5 / LV5-024: the instructor-grid panel used to render
+            HERE. `.ab-people-section` and `.ab-people-panel` are both
+            `position: relative`, which scoped the old call to this local box
+            instead of the page wrapper. It now renders as `ABOUT_JAALI` at
+            the top of this page's own `<div id="top">` — see the
+            "ONE GEOMETRY" note atop components/brand/Jaali.tsx. The arched
+            photos still sit on it, which is the pairing the poster uses. */}
         <div className="eyebrow ab-people-heading">Meet our instructors</div>
         <PeopleGrid people={INSTRUCTORS} arch={INSTRUCTOR_ARCH} />
       </section>

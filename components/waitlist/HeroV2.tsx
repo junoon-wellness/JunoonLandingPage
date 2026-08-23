@@ -5,20 +5,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, transform, useScroll, useTransform } from 'framer-motion'
 import DeviceCarousel from './DeviceCarousel'
-import Jaali from '@/components/brand/Jaali'
 
 /**
- * LV5-021 (c). A jaali PANEL behind the phone, never a page texture.
- *
- * Kush chose solid dark pages (LV5-018 took the ambient ground radials back
- * off this hero), so the lattice is scoped to the device column and bleeds
- * only a little past it. Its vignette dissolves the panel's rectangular edges
- * into --jn-bg, which is why the lattice and the vignette are one decision
- * rather than two (poster spec D3).
- *
- * Set to false and the hero is exactly what LV5-018 shipped.
+ * LV5-021 (c) / LV5-024: the jaali PANEL behind the phone used to render
+ * HERE, sized to `.v2-devices`'s own local box. LV5-024 moved it out — see
+ * `HERO_JAALI` in WaitlistPageV2.tsx — because `.v2-devices` and `.v2-hero`
+ * are both `position: relative`, which made the panel's containing block a
+ * local child element instead of the page wrapper, and its tile grid didn't
+ * register with the site-wide ground. It is now a page-level, full-page copy
+ * masked over roughly this area instead of a box scoped to this component.
  */
-const HERO_JAALI = true
 
 interface HeroV2Props {
   source: string
@@ -201,17 +197,11 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           entrance finished. */}
       <motion.div className="v2-devices jn-reveal" style={{ y: phoneY }}>
         {/*
-          Bleeds past the column so the vignette has room to fade before the
-          panel's own edge. It rides the same parallax as the phone on
-          purpose - panel and device read as one object rather than as a
-          backdrop the phone slides across.
-
-          The explicit z-indexes are not decoration. A `position: absolute`
-          layer with `z-index: 0` establishes a stacking context and would
-          otherwise paint over the in-flow carousel beside it, putting the
-          lattice in FRONT of the phone.
+          The jaali panel that used to render here (bleeding -5%/-7% past this
+          box) is now WaitlistPageV2's page-level `HERO_JAALI` — see the note
+          at the top of this file and LV5-024 in Jaali.tsx. This wrapper still
+          needs its own z-index for the carousel below to stack correctly.
         */}
-        {HERO_JAALI && <Jaali variant="panel" inset="-5% -7%" radius={12} zIndex={0} />}
         <motion.div
           className="jn-reveal"
           style={{ position: 'relative', zIndex: 1 }}

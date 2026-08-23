@@ -3,9 +3,18 @@ import Link from 'next/link'
 import NavV2 from '@/components/waitlist/NavV2'
 import FooterV2 from '@/components/waitlist/FooterV2'
 import NewsletterJoin from '@/components/waitlist/NewsletterJoin'
+import Jaali from '@/components/brand/Jaali'
 import { getAllArticles } from '@/lib/library'
 import { normaliseSource } from '@/lib/constants'
 import { clean } from '@/lib/text'
+
+/**
+ * LV5-022 SC5 / LV5-024: the panel behind /library's header. Moved here from
+ * inside NewsletterJoin.tsx — `.v2-section` is `position: relative`, which
+ * scoped the old call to that local box instead of the page wrapper. See the
+ * "ONE GEOMETRY" note atop components/brand/Jaali.tsx.
+ */
+const LIBRARY_JAALI = true
 
 /**
  * LV5-017 — /library. Newsletter block at top, then the 20 real articles
@@ -35,6 +44,15 @@ export default function LibraryPage() {
 
   return (
     <div id="top">
+      {LIBRARY_JAALI && (
+        <Jaali
+          variant="panel"
+          vignetteColor="#2C2118"
+          zIndex={-1}
+          maskPosition="50% 260px"
+          maskSize="1100px 620px"
+        />
+      )}
       <NavV2 />
 
       <NewsletterJoin source={source} firstSection />
