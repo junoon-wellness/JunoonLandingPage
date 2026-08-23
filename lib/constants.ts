@@ -22,7 +22,7 @@ export const TOTAL_SPOTS = 500
  * TODO(Kush): swap in the real App Store listing URL once the app is live
  * there and the link is known.
  */
-export const APP_STORE_URL = '#'
+export const APP_STORE_URL = 'https://apps.apple.com/us/app/junoon-wellness/id6781123809'
 
 /**
  * Shown only when beehiiv can't be reached (`getActiveSubscriberCount()`
