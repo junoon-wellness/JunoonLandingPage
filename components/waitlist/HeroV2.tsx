@@ -5,6 +5,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, transform, useScroll, useTransform } from 'framer-motion'
 import DeviceCarousel from './DeviceCarousel'
+import Jaali from '@/components/brand/Jaali'
+
+/**
+ * LV5-021 (c). A jaali PANEL behind the phone, never a page texture.
+ *
+ * Kush chose solid dark pages (LV5-018 took the ambient ground radials back
+ * off this hero), so the lattice is scoped to the device column and bleeds
+ * only a little past it. Its vignette dissolves the panel's rectangular edges
+ * into --jn-bg, which is why the lattice and the vignette are one decision
+ * rather than two (poster spec D3).
+ *
+ * Set to false and the hero is exactly what LV5-018 shipped.
+ */
+const HERO_JAALI = true
 
 interface HeroV2Props {
   source: string
@@ -186,8 +200,21 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           parallax is driving, and the scroll binding would go dead after the
           entrance finished. */}
       <motion.div className="v2-devices jn-reveal" style={{ y: phoneY }}>
+        {/*
+          Bleeds past the column so the vignette has room to fade before the
+          panel's own edge. It rides the same parallax as the phone on
+          purpose - panel and device read as one object rather than as a
+          backdrop the phone slides across.
+
+          The explicit z-indexes are not decoration. A `position: absolute`
+          layer with `z-index: 0` establishes a stacking context and would
+          otherwise paint over the in-flow carousel beside it, putting the
+          lattice in FRONT of the phone.
+        */}
+        {HERO_JAALI && <Jaali inset="-5% -7%" radius={12} zIndex={0} />}
         <motion.div
           className="jn-reveal"
+          style={{ position: 'relative', zIndex: 1 }}
           initial={{ opacity: 0, y: 26 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.24, ease: EASE }}
