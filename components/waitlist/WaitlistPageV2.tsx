@@ -1,6 +1,7 @@
 'use client'
 
 import NavV2 from './NavV2'
+import Toran from '@/components/brand/Toran'
 import HeroV2 from './HeroV2'
 import WhatWereBuildingV2 from './WhatWereBuildingV2'
 import FeatureStory from './FeatureStory'
@@ -64,6 +65,8 @@ export default function WaitlistPageV2() {
       <HeroV2 />
       {/* LV5-032: <StatBand /> (500 founder spots · 6 practices · 1 AI coach) removed — Kush, 2026-08-23: "remove this section and move up accordingly". Component stays on disk. */}
       <WhatWereBuildingV2 />
+      {/* Kush, 2026-08-23: toran divider at the major break before the feature tabs */}
+      <Toran />
       <FeatureStory />
       {SHOW_TOUR && <WalkthroughTeaser />}
       {/* LV5-018: OfferBandV2 + FounderBlockV2 removed from the page — both

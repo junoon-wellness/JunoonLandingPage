@@ -6,6 +6,9 @@ import ContactForm from '@/components/cta/ContactForm'
 import JharokhaFrame from '@/components/brand/JharokhaFrame'
 import Jaali from '@/components/brand/Jaali'
 import Reveal from '@/components/motion/Reveal'
+import Toran from '@/components/brand/Toran'
+import Lotus from '@/components/brand/Lotus'
+import SectionLabel from '@/components/brand/SectionLabel'
 /* LV5-032 (Kush: "a better animation/transition as the user scrolls"): each
    band's media slides in from ITS OWN side (x ±36, settling from scale 0.96)
    and the copy from the opposite side 0.15s later, 0.9s each. Band 2 is the
@@ -105,7 +108,7 @@ const TEAM: Person[] = [
     // portrait) cropped head-and-shoulders at 4:5, flash red-eye reduced, and
     // the pink wall keyed out to the same light-grey ground as Kush's photo
     // ("make arnav's background white and consistent with mine").
-    photo: '/team/arnav.jpg',
+    photo: '/team/arnav-grey.jpg',
     objectPosition: '50% 35%',
   },
   {
@@ -348,12 +351,17 @@ export default function AboutPage() {
         </Reveal>
         <Reveal className="ab-band-copy" x={36} y={0} duration={0.9} delay={0.15} amount={0.25}>
           <p>{STORY_PARAGRAPHS[4]}</p>
-          <div className="ab-signature">{SIGNATURE}</div>
+          <div className="ab-signature">
+            <Lotus size={14} />
+            {SIGNATURE}
+          </div>
         </Reveal>
       </section>
 
+      {/* Kush, 2026-08-23: toran divider between the story and the people */}
+      <Toran />
       <section className="ab-people-section" aria-label="Our team">
-        <div className="eyebrow ab-people-heading">Our team</div>
+        <SectionLabel align="center" className="ab-people-heading">Our team</SectionLabel>
         <PeopleGrid people={TEAM} className="ab-team-grid" />
       </section>
 
@@ -365,16 +373,18 @@ export default function AboutPage() {
             the top of this page's own `<div id="top">` — see the
             "ONE GEOMETRY" note atop components/brand/Jaali.tsx. The arched
             photos still sit on it, which is the pairing the poster uses. */}
-        <div className="eyebrow ab-people-heading">Meet our instructors</div>
+        <SectionLabel align="center" className="ab-people-heading">Meet our instructors</SectionLabel>
         <PeopleGrid people={INSTRUCTORS} arch={INSTRUCTOR_ARCH} />
       </section>
 
+      {/* Kush, 2026-08-23: toran divider between the instructors and the contact form */}
+      <Toran />
       <section className="ab-contact-section" aria-label="Contact">
         <div className="ab-contact-inner">
           <div className="ab-contact-heading">
-            <div className="eyebrow" style={{ justifyContent: 'center', marginBottom: '10px' }}>
+            <SectionLabel align="center" style={{ marginBottom: '10px' }}>
               Get in touch
-            </div>
+            </SectionLabel>
           </div>
           <ContactForm />
         </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import SectionLabel from '@/components/brand/SectionLabel'
 import NavV2 from '@/components/waitlist/NavV2'
 import FooterV2 from '@/components/waitlist/FooterV2'
 import PricingCard from '@/components/pricing/PricingCard'
@@ -83,9 +84,7 @@ export default function PricingPage() {
              time the slide finished, so "everything fits on one screen at the
              end state" could not be true by construction. */
           <header className="pr-head">
-            <div className="eyebrow" style={{ justifyContent: 'center' }}>
-              Pricing
-            </div>
+            <SectionLabel align="center">Pricing</SectionLabel>
             <h1 className="pr-headline">One membership. Everything included.</h1>
           </header>
         }
@@ -109,7 +108,7 @@ export default function PricingPage() {
 
             <section className="pr-side-block" aria-label="What we're building next">
               <div className="pr-next-heading">
-                <div className="eyebrow">What we&apos;re building next</div>
+                <SectionLabel>What we&apos;re building next</SectionLabel>
               </div>
               <ul className="pr-chips" style={{ listStyle: 'none', padding: 0 }}>
                 {NEXT_CHIPS.map(c => (

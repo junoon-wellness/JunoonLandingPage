@@ -5,6 +5,9 @@
  * compliance, and /contact is registered as the app's App Store support URL.
  * The previous version of this page carried all three; do not drop them.
  */
+import Toran from '@/components/brand/Toran'
+import Lotus from '@/components/brand/Lotus'
+
 const legalLinks = [
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Terms of Service', href: '/terms' },
@@ -30,13 +33,20 @@ const linkStyle: React.CSSProperties = {
 
 export default function FooterV2() {
   return (
+    <>
+    {/* Kush, 2026-08-23: the toran divider sits above every footer, replacing
+        the plain hairline; the sage lotus leads the wordmark. */}
+    <Toran />
     <footer
-      className="v2-footer"
+      className="v2-footer has-toran"
       style={{ position: 'relative', zIndex: 2 }}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
         <span
           style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '10px',
             fontFamily: 'var(--font-cormorant), serif',
             fontSize: '15px',
             fontWeight: 600,
@@ -45,6 +55,7 @@ export default function FooterV2() {
             color: 'var(--jn-gold)',
           }}
         >
+          <Lotus size={16} />
           Junoon Wellness
         </span>
         <span
@@ -116,5 +127,6 @@ export default function FooterV2() {
         </div>
       </div>
     </footer>
+    </>
   )
 }

@@ -178,6 +178,23 @@ body::before {
   align-items: center;
   gap: 0;
 }
+/* Kush, 2026-08-23 ("go with 1 and 3"): the lotus mark above a section label
+   and the toran divider between major sections. Both decorative. */
+.jn-section-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.jn-toran {
+  position: relative;
+  z-index: 2;
+  padding: 0 48px;
+}
+.jn-toran-svg { display: block; }
+@media (max-width: 1023.98px) { .jn-toran { padding: 0 32px; } }
+@media (max-width: 768px) { .jn-toran { padding: 0 24px; } }
+/* The footer carries a toran instead of its plain hairline. */
+.v2-footer.has-toran { border-top: 0; }
 /* The rule is gone; `.no-rule` stays as a no-op so existing markup is valid. */
 .eyebrow::before { content: none; }
 .eyebrow.no-rule::before { content: none; }
@@ -2353,6 +2370,9 @@ body::before {
   color: var(--jn-text-faint);
 }
 .ab-signature {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   margin-top: 18px;
   font-family: var(--font-cormorant), serif;
   font-size: 19px;

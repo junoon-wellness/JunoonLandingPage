@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import Toran from '@/components/brand/Toran'
+import SectionLabel from '@/components/brand/SectionLabel'
 import Link from 'next/link'
 import NavV2 from '@/components/waitlist/NavV2'
 import FooterV2 from '@/components/waitlist/FooterV2'
@@ -57,8 +59,10 @@ export default function LibraryPage() {
 
       <NewsletterJoin source={source} firstSection />
 
+      {/* Kush, 2026-08-23: toran divider between the newsletter and the articles */}
+      <Toran />
       <section className="lb-grid-section" aria-label="Articles">
-        <div className="eyebrow lb-grid-heading">Articles</div>
+        <SectionLabel className="lb-grid-heading">Articles</SectionLabel>
         <div className="lb-grid">
           {articles.map(a => (
             <Link key={a.slug} href={`/library/${a.slug}`} className="v2-link lb-card">
