@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, transform, useScroll, useTransform } from 'framer-motion'
 import DeviceCarousel from './DeviceCarousel'
+import AppStoreBadge from './AppStoreBadge'
 
 /**
  * LV5-021 (c) / LV5-024: the jaali PANEL behind the phone used to render
@@ -145,17 +146,49 @@ export default function HeroV2() {
             CTA itself isn't lost: the nav badge and the /pricing card both
             still carry it. */}
         <motion.div className="v2-hero-offer jn-reveal" variants={step}>
-          <div className="eyebrow no-rule">Founding member offer</div>
-          <p className="v2-hero-offer-headline">
-            First 500 members.{' '}
-            <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>
-              Permanent pricing.
-            </em>
-          </p>
-          <p className="v2-hero-offer-body">First month free, then $8.99 a month for life.</p>
-          <Link href="/pricing" className="v2-link v2-hero-offer-link">
-            See pricing →
-          </Link>
+          {/* Desktop / tablet card — unchanged since LV5-018. Hidden ≤768px
+              (globals.css), replaced there by .v2-hero-offer-mobile below. */}
+          <div className="v2-hero-offer-desktop">
+            <div className="eyebrow no-rule">Founding member offer</div>
+            <p className="v2-hero-offer-headline">
+              First 500 members.{' '}
+              <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>
+                Permanent pricing.
+              </em>
+            </p>
+            <p className="v2-hero-offer-body">First month free, then $8.99 a month for life.</p>
+            <Link href="/pricing" className="v2-link v2-hero-offer-link">
+              See pricing →
+            </Link>
+          </div>
+
+          {/* LV5-030: slim mobile banner (Kush: "way smaller and at the top
+              only" + "download icon in the top with the founder pricing
+              banner if possible"). The copy block itself is the link to
+              /pricing — it stands in for the desktop "See pricing →" link
+              rather than repeating a second small link beside the badge.
+              The badge is its own link (Apple's own artwork, App Store
+              URL); it is a SIBLING of the copy link, not nested inside it —
+              an <a> can't legally contain another <a>. Hidden above 768px. */}
+          <div className="v2-hero-offer-mobile">
+            <Link href="/pricing" className="v2-hero-offer-mobile-copy">
+              {/* LV5-030 review (Fable, measured at 375px): the copy column
+                  beside the 155px badge is 135px wide. "Founding member
+                  offer" is 150px at 11px and wrapped; the full sentence was
+                  293px and wrapped to three lines, making the banner 112px
+                  tall. Shorter label + a deliberate two-line copy (121px /
+                  122px at 12px) keeps the text block level with the badge. */}
+              <span className="eyebrow no-rule v2-hero-offer-mobile-eyebrow">
+                Founder offer
+              </span>
+              <span className="v2-hero-offer-mobile-line">
+                First 500: free month,
+                <br />
+                then $8.99/mo for life.
+              </span>
+            </Link>
+            <AppStoreBadge size="nav" />
+          </div>
         </motion.div>
 
         <motion.div className="v2-hero-founder jn-reveal" variants={step}>
