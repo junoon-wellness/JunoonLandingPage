@@ -1078,6 +1078,10 @@ body::before {
 .v2-appstore-badge {
   display: inline-flex;
   align-items: center;
+  /* Only matters when `full` gives the link extra width to sit in (the
+     mobile sheet CTA) — the badge itself stays fixed-size (never stretched)
+     and centres in that row rather than hugging the left edge. */
+  justify-content: center;
   min-height: 44px;
   padding: 2px 0;
   text-decoration: none;
