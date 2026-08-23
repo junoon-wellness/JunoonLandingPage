@@ -1700,8 +1700,17 @@ body::before {
   padding: 28px 48px;
 }
 
+/* LV5-021 (d): holds the lattice panel behind the card. Sized by the card
+   itself, so the panel tracks the card at every width. */
+.pr-card-stage {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
 .pr-card {
   position: relative;
+  z-index: 1;
   max-width: 560px;
   margin: 0 auto;
   padding: 40px 40px 32px;
@@ -1711,20 +1720,54 @@ body::before {
   overflow: hidden;
 }
 
-.pr-ribbon {
+/* ── LV5-021 (d): the arched header ──
+   A full jharokha at true 660:754, pulled up so its crown sits just under
+   the card's top edge and the price reads inside the opening. It is an
+   ornament, not a container: nothing lays out against it, so the price and
+   the offer line cannot be pushed around by it at any type size.
+   The card's `overflow: hidden` trims whatever runs past the bottom, and
+   the arch's own vignette has already faded it out by then. */
+.pr-card-head {
+  position: relative;
+}
+.pr-crown {
   position: absolute;
-  top: 22px;
-  right: -46px;
-  width: 190px;
-  padding: 6px 0;
-  text-align: center;
-  transform: rotate(38deg);
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(300px, 86%);
+  pointer-events: none;
+  z-index: 0;
+}
+/* Everything in the header paints above the ornament. */
+.pr-card-head > .pr-price-row,
+.pr-card-head > .pr-offer-line {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── LV5-020/LV5-021: replaces .pr-ribbon ──
+   The old corner ribbon was clipped to "00 FOUNDER SPOTS": at rotate(38deg)
+   its left end rose 58.5px from a centre 34px down, i.e. 24px above the
+   card, and `overflow: hidden` cut it. A pill has no rotation to clip, holds
+   the 11px type floor at 390px, and leaves the card's top corner free for
+   the arch crown. Kept as a static label - LV5-020 forbids a live counter. */
+.pr-founder-pill {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 100px;
   background: var(--jn-clay);
   color: var(--jn-on-clay);
   font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .pr-price-row {
@@ -1870,7 +1913,9 @@ body::before {
   .pr-hero { padding: 84px 24px 24px; }
   .pr-section { padding: 24px 24px; }
   .pr-card { padding: 32px 22px 26px; }
-  .pr-ribbon { right: -52px; top: 18px; }
+  /* .pr-ribbon is gone (LV5-020) - see .pr-founder-pill. The pill needs no
+     per-breakpoint nudging: it is 11px type in a pill at a fixed offset, so
+     it reads the same at 1280 and 390. */
 }
 
 /* ════════════════════════════════════════════════════════════════════

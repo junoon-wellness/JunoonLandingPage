@@ -2,7 +2,22 @@ import type { Metadata } from 'next'
 import NavV2 from '@/components/waitlist/NavV2'
 import FooterV2 from '@/components/waitlist/FooterV2'
 import AppStoreBadge from '@/components/waitlist/AppStoreBadge'
+import Jaali from '@/components/brand/Jaali'
+import JharokhaFrame from '@/components/brand/JharokhaFrame'
 import { clean } from '@/lib/text'
+
+/* ══════════════════════════════════════════════════════════════════
+   THE JUNOON ELEMENT — dials (LV5-021 (d))
+
+   PRICING_JAALI  a lattice panel behind the card
+   PRICING_ARCH   the card's header sits inside a jharokha crown
+
+   Independent. Flip both to false and the card is exactly what LV5-015
+   shipped, except for the ribbon, which does not come back (see
+   .pr-founder-pill below).
+   ══════════════════════════════════════════════════════════════════ */
+const PRICING_JAALI = true
+const PRICING_ARCH = true
 
 /**
  * LV5-015 — /pricing, board A "One card" (LV5-011, ACCEPTED), padding cut
@@ -68,36 +83,72 @@ export default function PricingPage() {
       </header>
 
       <section className="pr-section" aria-label="Plan">
-        <div className="pr-card">
-          <div className="pr-ribbon" aria-hidden="true">
-            500 founder spots
-          </div>
+        <div className="pr-card-stage">
+          {/* LV5-021 (d): the lattice sits BEHIND the card, which is opaque
+              --jn-surface, so no text on the card is read through it. What it
+              lights is the margin around the card, and the vignette fades that
+              back into the page before the panel's own edge. */}
+          {PRICING_JAALI && <Jaali inset="-6% -8%" radius={14} zIndex={0} />}
 
-          <div className="pr-price-row">
-            <span className="pr-price">$8.99</span>
-            <span className="pr-price-unit">/month</span>
-          </div>
+          <div className="pr-card">
+            {/*
+              WAS a rotated corner ribbon reading "00 FOUNDER SPOTS" (LV5-020).
+              The clip was structural, not a width problem: at rotate(38deg) a
+              190px band's left end rises 95 x sin(38) = 58.5px, which from a
+              centre at y~34 puts it 24px ABOVE the card, where `overflow:
+              hidden` cut the "5" off.
 
-          <p className="pr-offer-line">
-            The first 500 members get their first month free, and $8.99 stays their price for
-            life.
-          </p>
+              Replaced rather than repaired, for two reasons: at 390px the card
+              is ~342px wide and "500 FOUNDER SPOTS" needs ~134px of chord that
+              a corner band cannot give without shrinking under the 11px type
+              floor; and the arch crown below now owns the top of the card, so
+              a diagonal band across that corner fights it. The pill reads at
+              every width and keeps the fact.
+            */}
+            <span className="pr-founder-pill">First 500</span>
 
-          <ul className="pr-checklist">
-            {FEATURES.map(f => (
-              <li key={f} className="pr-check-row">
-                <span className="pr-check-icon" aria-hidden="true">
-                  ✓
-                </span>
-                <span>{f}</span>
-              </li>
-            ))}
-          </ul>
+            <div className="pr-card-head">
+              {PRICING_ARCH && (
+                <div className="pr-crown" aria-hidden="true">
+                  <JharokhaFrame strokeOpacity={0.45}>
+                    {/* Its own vignette is pushed hard so the arch dissolves
+                        into the card instead of ending on a hard edge. */}
+                    <Jaali
+                      layerOpacity={0.3}
+                      vignetteColor="#2C2118"
+                      vignetteStrength={0.94}
+                    />
+                  </JharokhaFrame>
+                </div>
+              )}
 
-          <div className="pr-cta">
-            <AppStoreBadge size="lg" />
-            <span className="pr-cta-sub">Subscribe in the app</span>
-            <span className="pr-cta-fine">Cancel anytime in the App Store.</span>
+              <div className="pr-price-row">
+                <span className="pr-price">$8.99</span>
+                <span className="pr-price-unit">/month</span>
+              </div>
+
+              <p className="pr-offer-line">
+                The first 500 members get their first month free, and $8.99 stays their price
+                for life.
+              </p>
+            </div>
+
+            <ul className="pr-checklist">
+              {FEATURES.map(f => (
+                <li key={f} className="pr-check-row">
+                  <span className="pr-check-icon" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="pr-cta">
+              <AppStoreBadge size="lg" />
+              <span className="pr-cta-sub">Subscribe in the app</span>
+              <span className="pr-cta-fine">Cancel anytime in the App Store.</span>
+            </div>
           </div>
         </div>
       </section>
