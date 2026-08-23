@@ -98,7 +98,14 @@ const TEAM: Person[] = [
     photo: '/team/kush.jpg',
     objectPosition: '50% 30%',
   },
-  { name: 'Arnav Jain', role: 'Engineering' },
+  {
+    name: 'Arnav Jain',
+    role: 'Engineering',
+    // Kush, 2026-08-23: ~/Downloads/DSC01837.JPG (4896x3672, EXIF-rotated to
+    // portrait) cropped head-and-shoulders at 4:5, flash red-eye reduced.
+    photo: '/team/arnav.jpg',
+    objectPosition: '50% 35%',
+  },
   { name: 'Tej Chhabra', role: 'Technology' },
 ]
 
