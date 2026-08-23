@@ -844,16 +844,23 @@ body::before {
 }
 
 /* ── the crossfading copy column ──
-   No in-flow children (every .jn-story-copy is position: absolute so the
-   inactive chapters don't push layout), so min-height is what actually
-   gives this column its height - not a floor on top of content height. */
+   LV5-030: was `position: absolute` panels stacked in a `min-height: 340px`
+   box — a tab's title + body + three bullets can run taller than that floor
+   (240px on mobile, see the ≤1023.98px block below), and the overflow spilt
+   under FooterV2 uncaught, since an absolutely-positioned box never grows
+   for its content. Grid stacking is the same crossfade (every panel still
+   occupies the same cell, still swapped by opacity/transform), except the
+   grid track auto-sizes to the TALLEST panel's real content height, so
+   `min-height` below is now a floor under that, not the box's only size. */
 .jn-story-copies {
   position: relative;
+  display: grid;
   min-height: 340px;
 }
 .jn-story-copy {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
+  position: relative;
+  inset: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
