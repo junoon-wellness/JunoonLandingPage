@@ -825,6 +825,26 @@ body::before {
   outline-offset: 2px;
 }
 
+/* Kush, 2026-08-23 (phone screenshot, after the Live-classes tab landed):
+   .jn-story-tab's flex:1 (basis 0, shrink 1) + nowrap CRUSHES the pills
+   below their text width on phones, so the longer labels bled across
+   neighbouring pills — the row never actually overflows into its scroll,
+   it shrinks instead. On phones the four tabs become a 2x2 grid: each cell
+   is ~167px at 390 and the widest label (LIVE CLASSES, ~118px with
+   padding) fits with room. One row still fits comfortably above 640. */
+@media (max-width: 640px) {
+  .jn-story-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    overflow-x: visible;
+  }
+  .jn-story-tab {
+    flex: none;
+    padding: 12px 8px;
+  }
+}
+
 .jn-story-stage {
   position: relative;
   display: grid;
@@ -1562,8 +1582,10 @@ body::before {
    stay visible on every viewport for the same reason: there is no fixed
    vertical budget forcing them out.
 
-   The tab row itself (`.jn-story-tabs`) needs no mobile override - it is
-   already a horizontally-scrollable flex row at every width.
+   The tab row (`.jn-story-tabs`) DOES need a mobile override — the old
+   note here claiming otherwise was wrong: flex:1 with basis 0 means the
+   row crushes rather than scrolls. Under 640px it is a 2x2 grid now (see
+   the block by the tab rules; Kush's phone screenshot, 2026-08-23).
    ════════════════════════════════════════════════════════════════════ */
 @media (max-width: 1023.98px) {
   .jn-story-stage {
@@ -1732,10 +1754,17 @@ body::before {
 }
 
 /* LV5-019: 3-across crowds on the smallest phones — fall back to 2 across
-   (3 rows of 2) under 480px. Separate block from the 768px one above since
-   this is a narrower, dot-grid-specific floor, not a general tablet rule. */
+   under 480px. Separate block from the 768px one above since this is a
+   narrower, dot-grid-specific floor, not a general tablet rule.
+   Kush, 2026-08-23 ("too close together"): gaps were tuned for the old
+   short labels; RECORDED CLASSES (~156px as a pill) left the two columns
+   nearly touching, so the grid gets real breathing room — two columns
+   total ≈298px, still clear of a 342px container at 390. */
 @media (max-width: 480px) {
-  .v2-dots { grid-template-columns: repeat(2, max-content); }
+  .v2-dots {
+    grid-template-columns: repeat(2, max-content);
+    gap: 10px 22px;
+  }
 }
 
 /* ─── Reduced motion ───
