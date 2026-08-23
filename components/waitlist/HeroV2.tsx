@@ -69,7 +69,7 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
       // hero. `.v2-device-glow` behind the phone carousel is untouched; it's
       // the phone's own glow, not the page ground.
       className="v2-hero"
-      style={{ background: 'var(--jn-bg)', overflow: 'hidden' }}
+      style={{ overflow: 'hidden' }}
     >
       {/* Faint engineering grid replaces the old 720px yantra motif */}
       <div className="v2-grid" aria-hidden="true" />
@@ -211,7 +211,7 @@ export default function HeroV2({ source, claimed, isFlashing, onSignupSuccess }:
           otherwise paint over the in-flow carousel beside it, putting the
           lattice in FRONT of the phone.
         */}
-        {HERO_JAALI && <Jaali inset="-5% -7%" radius={12} zIndex={0} />}
+        {HERO_JAALI && <Jaali variant="panel" inset="-5% -7%" radius={12} zIndex={0} />}
         <motion.div
           className="jn-reveal"
           style={{ position: 'relative', zIndex: 1 }}

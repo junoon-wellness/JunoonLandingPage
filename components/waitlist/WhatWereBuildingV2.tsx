@@ -44,7 +44,7 @@ const RULE: React.CSSProperties = {
 
 export default function WhatWereBuildingV2() {
   return (
-    <section className="v2-section" style={{ background: 'var(--jn-bg)' }}>
+    <section className="v2-section">
       <Reveal className="eyebrow" style={{ marginBottom: '40px' }}>
         What we&apos;re building
       </Reveal>

@@ -26,7 +26,7 @@ const stats = [
  */
 export default function StatBand() {
   return (
-    <div className="v2-stats" style={{ position: 'relative', zIndex: 2, background: 'var(--jn-bg)' }}>
+    <div className="v2-stats" style={{ position: 'relative', zIndex: 2 }}>
       {stats.map((s, i) => (
         <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: '48px' }}>
           {i > 0 && (

@@ -12,7 +12,6 @@ export default function FounderBlockV2() {
     <section
       className="v2-section v2-founder"
       style={{
-        background: 'var(--jn-bg)',
         borderTop: '0.5px solid rgba(245,240,232,0.06)',
         display: 'flex',
         alignItems: 'center',

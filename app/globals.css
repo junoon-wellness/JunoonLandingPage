@@ -738,7 +738,6 @@ body::before {
 .jn-story {
   position: relative;
   z-index: 2;
-  background: var(--jn-bg);
   /* Top was 56px, matching .v2-section's own 56px bottom padding above it -
      stacked, that read as ~250px of dead air over the tab strip (Kush,
      2026-08-22: "reduce padding empty space"). Cut to a third; left/right
@@ -2084,6 +2083,22 @@ body::before {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* ── LV5-022 SC5: the instructor grid is a lattice PANEL moment ──
+   The section needs its own positioning context for the absolutely
+   positioned <Jaali>, and the heading and grid have to sit above it: the
+   panel is a z-index-0 positioned element, which would otherwise paint over
+   its non-positioned siblings. This is the same stacking mistake the round-1
+   pricing crown made (see PricingCard.tsx) - fixed here up front rather than
+   discovered in a screenshot. */
+.ab-people-panel {
+  position: relative;
+}
+.ab-people-panel > .ab-people-heading,
+.ab-people-panel > .ab-people-grid {
+  position: relative;
+  z-index: 1;
 }
 
 /* ── LV5-021 (a): the instructor headshot inside the jharokha ──

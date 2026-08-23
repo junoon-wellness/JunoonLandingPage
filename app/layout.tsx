@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { meta } from "@/lib/meta";
 import { clean } from "@/lib/text";
+import JaaliGround from "@/components/brand/JaaliGround";
 import "./globals.css";
 
 const cormorant = localFont({
@@ -50,7 +51,13 @@ export default function RootLayout({
         utilities here - utility classes would out-specify the `body` rule and
         keep the page cream.
       */}
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        {/* LV5-022 SC5: the site-wide jaali ground. One mount, every route.
+            Fixed and at z-index -1, so it sits under all page content and
+            over the canvas background. See components/brand/JaaliGround.tsx. */}
+        <JaaliGround />
+        {children}
+      </body>
     </html>
   );
 }

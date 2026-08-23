@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import { SCREEN_HEIGHT, SCREEN_WIDTH, type Screen } from '@/lib/screens'
+import Jaali from '@/components/brand/Jaali'
 
 /**
  * THE FEATURE STORY TABS (spec §B5)
@@ -166,6 +167,10 @@ export default function ScrollStory({
       >
         {/* ── the persistent phone pair ── */}
         <div className="jn-story-phones">
+          {/* LV5-022 SC5: the same panel treatment as the home hero phone.
+              First child so the two devices, which come after it in tree
+              order, paint on top of it. */}
+          <Jaali variant="panel" inset="-12% -10%" radius={14} zIndex={0} />
           <div className="v2-device jn-story-device-a">
             {chapters.map((c, i) => (
               <div key={c.id} className="jn-story-shot" data-active={i === active}>

@@ -76,12 +76,42 @@ export const JAALI_RENDER_SIZE = 132
 /**
  * 🔴 THE SITE CEILING. The poster runs tile 0.44 x layer 0.64 ≈ 0.28 effective,
  * but a poster is looked at, not read through. LV5-021 caps the site at ~0.12
- * so no text pair loses its AA margin over the lattice. `<Jaali>`'s defaults
- * (0.44 x 0.25 = 0.11) sit under it deliberately — the TILE opacity is kept at
- * the poster's 0.44 and only the LAYER is dialled down, so the pattern keeps
- * the poster's internal weighting instead of turning into a flat grey wash.
+ * so no text pair loses its AA margin over the lattice. In every case below the
+ * TILE opacity is kept at the poster's 0.44 and only the LAYER is dialled down,
+ * so the pattern keeps the poster's internal weighting instead of turning into
+ * a flat grey wash.
  */
 export const JAALI_EFFECTIVE_MAX = 0.12
+
+/* ══════════════════════════════════════════════════════════════════════
+   🔴 THE TWO DIALS (LV5-022 SC5)
+
+   Kush, 2026-08-23: "utilize the pattern throughout the page more and
+   broadly throughout the website." He likes the panel behind the hero
+   phone; this supersedes the earlier "solid dark pages" ruling.
+
+   CHANGE THESE TWO NUMBERS AND THE WHOLE SITE MOVES. They are effective
+   opacities (tile x layer); <Jaali> derives the layer opacity from them,
+   so the arithmetic only lives in one place.
+
+   GROUND  every page, always on, fixed behind all content. Faint enough to
+           read as tone rather than as pattern.
+   PANEL   the deliberate local moments listed in <Jaali>'s header. Twice
+           the ground, and the level Kush already approved behind the phone.
+
+   🔴 GROUND'S CEILING IS 0.055, AND IT IS SET BY --jn-mute, NOT BY EYE.
+   Mute (#93826F) is the site's weakest text token; on the ground it measures
+   4.545:1 at 0.050 and 4.508:1 at 0.055, and it goes UNDER AA at 0.060. It is
+   live text in exactly two places - the /pricing FAQ's "+" affordance and the
+   /about contact form's labels. 0.050 is chosen over the 0.055 the ticket
+   floated purely for that margin. To go higher, retire mute as a text colour
+   in those two rules first.
+
+   PANEL has more room: the weakest pair under a panel is --jn-text-faint at
+   4.78:1, which holds AA up to about 0.15.
+   ══════════════════════════════════════════════════════════════════════ */
+export const JAALI_GROUND_OPACITY = 0.05
+export const JAALI_PANEL_OPACITY = 0.11
 
 /**
  * The jharokha arch, verbatim from v5()'s `archPath`.

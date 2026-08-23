@@ -51,7 +51,7 @@ export default function PricingCard() {
           on it is ever read through the lattice; what this lights is the
           margin around the card, and the vignette fades that back into the
           page before the panel's own edge. */}
-      {PRICING_JAALI && <Jaali inset="-6% -8%" radius={14} zIndex={0} />}
+      {PRICING_JAALI && <Jaali variant="panel" inset="-6% -8%" radius={14} zIndex={0} />}
 
       <div className="pr-card">
         {/*

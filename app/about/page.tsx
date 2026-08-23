@@ -4,6 +4,7 @@ import NavV2 from '@/components/waitlist/NavV2'
 import FooterV2 from '@/components/waitlist/FooterV2'
 import ContactForm from '@/components/cta/ContactForm'
 import JharokhaFrame from '@/components/brand/JharokhaFrame'
+import Jaali from '@/components/brand/Jaali'
 import { FOUNDER_VIDEO_SRC } from '@/lib/constants'
 import { clean } from '@/lib/text'
 
@@ -297,7 +298,11 @@ export default function AboutPage() {
         <PeopleGrid people={TEAM} />
       </section>
 
-      <section className="ab-people-section" aria-label="Meet our instructors">
+      <section className="ab-people-section ab-people-panel" aria-label="Meet our instructors">
+        {/* LV5-022 SC5: the instructor grid is one of the named panel
+            moments. The arched photos sit on it, which is the pairing the
+            poster uses. */}
+        <Jaali variant="panel" inset="0 -4%" radius={16} zIndex={0} />
         <div className="eyebrow ab-people-heading">Meet our instructors</div>
         <PeopleGrid people={INSTRUCTORS} arch={INSTRUCTOR_ARCH} />
       </section>

@@ -32,7 +32,7 @@ export default function FooterV2() {
   return (
     <footer
       className="v2-footer"
-      style={{ position: 'relative', zIndex: 2, background: 'var(--jn-bg)' }}
+      style={{ position: 'relative', zIndex: 2 }}
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
         <span

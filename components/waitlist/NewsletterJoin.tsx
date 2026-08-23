@@ -2,6 +2,7 @@
 
 import SignupForm from './SignupForm'
 import Reveal, { RevealGroup, RevealItem } from '@/components/motion/Reveal'
+import Jaali from '@/components/brand/Jaali'
 
 interface NewsletterJoinProps {
   source: string
@@ -47,7 +48,11 @@ export default function NewsletterJoin({
         overflow: 'hidden',
       }}
     >
-      <div>
+      {/* LV5-022 SC5: /library's header is one of the named panel moments.
+          Only there - `firstSection` is what /library passes and what makes
+          this block the page's header rather than a mid-page band. */}
+      {firstSection && <Jaali variant="panel" vignetteColor="#2C2118" zIndex={0} />}
+      <div style={{ position: 'relative', zIndex: 1 }}>
         <Reveal>
           <h3
             style={{
@@ -148,7 +153,7 @@ export default function NewsletterJoin({
         </RevealGroup>
       </div>
 
-      <Reveal delay={0.1}>
+      <Reveal delay={0.1} style={{ position: 'relative', zIndex: 1 }}>
         <SignupForm id="join" source={source} onSignupSuccess={onSignupSuccess} compact />
       </Reveal>
     </section>

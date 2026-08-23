@@ -1,5 +1,11 @@
 import type { CSSProperties } from 'react'
-import { hexA, jaaliTile, JAALI_RENDER_SIZE } from './motifs'
+import {
+  hexA,
+  jaaliTile,
+  JAALI_GROUND_OPACITY,
+  JAALI_PANEL_OPACITY,
+  JAALI_RENDER_SIZE,
+} from './motifs'
 
 /**
  * THE JAALI LATTICE as a background layer (LV5-021).
@@ -8,10 +14,18 @@ import { hexA, jaaliTile, JAALI_RENDER_SIZE } from './motifs'
  * the poster's jaali and lays the poster's vignette over it. Drop it as the
  * first child of any `position: relative` box.
  *
- * Deliberately NOT a page-wide texture: Kush ruled the pages solid dark
- * (LV5-018, which took the ambient ground radials back off the hero). This is
- * for panels — behind the phone, behind a card — where it reads as one
- * considered surface rather than as wallpaper.
+ * TWO REGISTERS, one component (LV5-022 SC5):
+ *   variant="ground"  the faint site-wide layer. Use <JaaliGround> rather
+ *                     than calling this directly — it is mounted once in
+ *                     app/layout.tsx and covers every page.
+ *   variant="panel"   the stronger local moments. Currently: the home hero
+ *                     phone, the feature-tab phone pair, the /about
+ *                     instructor grid, the /library header, and the ground
+ *                     behind the /pricing card.
+ *
+ * Both draw their opacity from the two constants in motifs.ts, so the whole
+ * site re-tunes from one place. An explicit `layerOpacity` still wins if a
+ * single instance needs to differ.
  *
  * No 'use client': it renders a div with inline styles and holds no state, so
  * it stays a server component and costs the bundle nothing.
@@ -26,9 +40,15 @@ import { hexA, jaaliTile, JAALI_RENDER_SIZE } from './motifs'
 export interface JaaliProps {
   /** Literal colour only — see the warning above. */
   stroke?: string
+  /** Which of the two site registers this layer belongs to. */
+  variant?: 'ground' | 'panel'
   /** Opacity baked into the tile's SVG group. Poster value is 0.44. */
   tileOpacity?: number
-  /** Opacity of the whole layer. Effective = tileOpacity x layerOpacity. */
+  /**
+   * Escape hatch. Normally leave this alone and let `variant` set it from the
+   * constants in motifs.ts — that is what keeps the site tunable from one
+   * place. Effective opacity = tileOpacity x layerOpacity.
+   */
   layerOpacity?: number
   /** The vignette is not optional styling — see trap 1 in motifs.ts. */
   vignette?: boolean
@@ -48,8 +68,9 @@ export interface JaaliProps {
 
 export default function Jaali({
   stroke = '#D9A03C',
+  variant = 'panel',
   tileOpacity = 0.44,
-  layerOpacity = 0.25,
+  layerOpacity,
   vignette = true,
   vignetteColor = '#1C1410',
   vignetteStrength = 0.76,
@@ -61,6 +82,15 @@ export default function Jaali({
   style,
 }: JaaliProps) {
   const tile = jaaliTile(stroke, tileOpacity)
+
+  /*
+    The layer opacity is DERIVED so the constants can be stated as the thing
+    that actually matters — what a stroke pixel ends up at over the ground.
+    Hand-writing a layer figure at each call site is how the two registers
+    would quietly drift apart.
+  */
+  const effective = variant === 'ground' ? JAALI_GROUND_OPACITY : JAALI_PANEL_OPACITY
+  const resolvedLayerOpacity = layerOpacity ?? effective / tileOpacity
 
   return (
     <div
@@ -83,7 +113,7 @@ export default function Jaali({
           backgroundImage: `url("${tile}")`,
           backgroundSize: `${size}px ${size}px`,
           backgroundRepeat: 'repeat',
-          opacity: layerOpacity,
+          opacity: resolvedLayerOpacity,
         }}
       />
       {vignette && (
