@@ -59,7 +59,17 @@ export default function FeatureIcon({
       )}
 
       {name === 'meditation' && (
-        <path d="M20.2 14.6 C17.1072 15.9538 13.5008 15.2737 11.1136 12.8864 C8.7263 10.4992 8.0462 6.8928 9.4 3.8 C5.7641 5.1512 3.5262 8.8162 3.9851 12.6678 C4.4441 16.5194 7.4806 19.5559 11.3322 20.0149 C15.1838 20.4738 18.8488 18.2359 20.2 14.6 Z" />
+        /* LV5-031 (Kush: "replace the meditation icon with a simple lotus
+           flow in that design style"): was a crescent moon. A five-petal line
+           lotus — centre petal, two side petals, two outer petals curving
+           out from the base, and a shallow base line — same 1.5px stroke. */
+        <>
+          <path d="M12 5 C10.2 7.2 9.6 9.6 9.6 12.6 C9.6 15.6 10.6 17.6 12 18.4 C13.4 17.6 14.4 15.6 14.4 12.6 C14.4 9.6 13.8 7.2 12 5 Z" />
+          <path d="M7.2 8.4 C7.6 11 8.4 13.6 10 15.6 C10.6 16.4 11.2 17 12 18.4" />
+          <path d="M16.8 8.4 C16.4 11 15.6 13.6 14 15.6 C13.4 16.4 12.8 17 12 18.4" />
+          <path d="M3.6 12.2 C4.6 14.8 6.4 17 9 18.2 C10 18.6 11 18.8 12 18.8 C13 18.8 14 18.6 15 18.2 C17.6 17 19.4 14.8 20.4 12.2" />
+          <path d="M8 20.4 C9.3 20.9 10.6 21.1 12 21.1 C13.4 21.1 14.7 20.9 16 20.4" />
+        </>
       )}
 
       {name === 'yoga' && (

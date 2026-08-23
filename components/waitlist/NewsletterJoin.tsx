@@ -43,7 +43,11 @@ export default function NewsletterJoin({
       style={{
         background: 'var(--jn-surface)',
         borderTop: '0.5px solid rgba(245,240,232,0.06)',
-        alignItems: 'center',
+        // LV5-031 (Kush: "first name is clipping, move it down to be aligned
+        // with the text to the left"): was 'center', which let the taller
+        // form column start ABOVE the headline. 'start' pins both columns'
+        // tops together; the form's first label now lines up with the headline.
+        alignItems: 'start',
         overflow: 'hidden',
       }}
     >

@@ -5,6 +5,7 @@ import FooterV2 from '@/components/waitlist/FooterV2'
 import ContactForm from '@/components/cta/ContactForm'
 import JharokhaFrame from '@/components/brand/JharokhaFrame'
 import Jaali from '@/components/brand/Jaali'
+import Reveal from '@/components/motion/Reveal'
 import { FOUNDER_VIDEO_SRC } from '@/lib/constants'
 import { clean } from '@/lib/text'
 
@@ -259,7 +260,7 @@ export default function AboutPage() {
 
       {/* 01 — video left, copy right */}
       <section className="ab-band" aria-label="Where it started">
-        <div className="ab-band-media">
+        <Reveal className="ab-band-media">
           <div className="ab-video-slot">
             {FOUNDER_VIDEO_SRC ? (
               // eslint-disable-next-line jsx-a11y/media-has-caption
@@ -271,31 +272,29 @@ export default function AboutPage() {
               </>
             )}
           </div>
-        </div>
-        <div className="ab-band-copy">
-          <span className="ab-band-num jn-mono">01</span>
+        </Reveal>
+        <Reveal className="ab-band-copy" delay={0.12}>
           <p>{STORY_PARAGRAPHS[0]}</p>
           <p>{STORY_PARAGRAPHS[1]}</p>
-        </div>
+        </Reveal>
       </section>
 
       {/* 02 — copy left, tagline panel right */}
       <section className="ab-band ab-band-reverse" aria-label="Looking back">
-        <div className="ab-band-copy">
-          <span className="ab-band-num jn-mono">02</span>
+        <Reveal className="ab-band-copy" delay={0.12}>
           <p>{STORY_PARAGRAPHS[2]}</p>
           <p>{STORY_PARAGRAPHS[3]}</p>
-        </div>
-        <div className="ab-band-media">
+        </Reveal>
+        <Reveal className="ab-band-media">
           <div className="ab-tagline-panel">
             <div className="ab-tagline-text">{TAGLINE}</div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* 03 — founder card left, copy right */}
       <section className="ab-band" aria-label="Built with Junoon">
-        <div className="ab-band-media">
+        <Reveal className="ab-band-media">
           <div className="ab-founder-card">
             <div className="ab-founder-photo">
               {/* LV5-026: 120px -> 200px slot (Kush: "make Arjav's image
@@ -306,23 +305,22 @@ export default function AboutPage() {
               <Image
                 src="/arjav-photo.jpg"
                 alt="Arjav, founder of Junoon Wellness"
-                width={400}
-                height={400}
-                sizes="200px"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                width={520}
+                height={650}
+                sizes="260px"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%' }}
               />
             </div>
-            <div>
+            <div className="ab-founder-caption">
               <div className="ab-founder-name">Arjav Chhabra</div>
               <div className="ab-founder-role">Founder &amp; CEO</div>
             </div>
           </div>
-        </div>
-        <div className="ab-band-copy">
-          <span className="ab-band-num jn-mono">03</span>
+        </Reveal>
+        <Reveal className="ab-band-copy" delay={0.12}>
           <p>{STORY_PARAGRAPHS[4]}</p>
           <div className="ab-signature">{SIGNATURE}</div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="ab-people-section" aria-label="Our team">

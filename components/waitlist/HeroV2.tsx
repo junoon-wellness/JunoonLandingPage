@@ -84,13 +84,7 @@ export default function HeroV2() {
         initial="hidden"
         animate="shown"
       >
-        <motion.div
-          className="v2-hero-eyebrow eyebrow jn-reveal"
-          style={{ marginBottom: '26px' }}
-          variants={step}
-        >
-          Now on the App Store
-        </motion.div>
+        {/* LV5-031: the "Now on the App Store" eyebrow is gone (Kush: "completely remove SC 3"); the headline now opens the copy column level with the phone. */}
 
         <motion.h1
           className="v2-hero-headline jn-reveal"
