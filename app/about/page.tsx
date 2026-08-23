@@ -9,6 +9,7 @@ import Reveal from '@/components/motion/Reveal'
 import Toran from '@/components/brand/Toran'
 import Lotus from '@/components/brand/Lotus'
 import SectionLabel from '@/components/brand/SectionLabel'
+import BioDisclosure from '@/components/about/BioDisclosure'
 /* LV5-032 (Kush: "a better animation/transition as the user scrolls"): each
    band's media slides in from ITS OWN side (x ±36, settling from scale 0.96)
    and the copy from the opposite side 0.15s later, 0.9s each. Band 2 is the
@@ -251,7 +252,8 @@ function PeopleGrid({
           )}
           <div className="ab-person-name">{p.name}</div>
           <div className="ab-person-role">{p.role}</div>
-          {p.bio && <p className="ab-person-bio">{p.bio}</p>}
+          {/* Kush, 2026-08-23: bios hide behind a sage chevron toggle. */}
+          {p.bio && <BioDisclosure bio={p.bio} />}
         </div>
       ))}
     </div>
