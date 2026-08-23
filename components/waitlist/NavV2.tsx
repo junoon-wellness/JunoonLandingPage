@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Lotus from '@/components/brand/Lotus'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -177,6 +178,10 @@ export default function NavV2() {
       </div>
 
       <div className="v2-nav-sheet-cta">
+        {/* Kush, 2026-08-23: a sage lotus closes the phone menu above the badge */}
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '18px' }}>
+          <Lotus size={22} />
+        </div>
         <AppStoreBadge full size="nav" onClick={() => setMenuOpen(false)} />
       </div>
     </div>

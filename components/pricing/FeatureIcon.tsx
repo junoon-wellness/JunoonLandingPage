@@ -1,3 +1,4 @@
+import Lotus from '@/components/brand/Lotus'
 /**
  * LV5-020 spruce (1): a line icon per feature row.
  *
@@ -30,6 +31,7 @@ export default function FeatureIcon({
   name: FeatureIconName
   size?: number
 }) {
+  if (name === 'meditation') return <Lotus size={size} />
   return (
     <svg
       width={size}
@@ -58,20 +60,7 @@ export default function FeatureIcon({
         <path d="M7.2 4.4 L16.8 4.4 C19.0091 4.4 20.8 6.1909 20.8 8.4 L20.8 12.4 C20.8 14.6091 19.0091 16.4 16.8 16.4 L10.4 16.4 L7.2 19.6 L7.2 16.4 C4.9909 16.4 3.2 14.6091 3.2 12.4 L3.2 8.4 C3.2 6.1909 4.9909 4.4 7.2 4.4 Z" />
       )}
 
-      {name === 'meditation' && (
-        /* LV5-031 (Kush: "replace the meditation icon with a simple lotus
-           flow in that design style"): was a crescent moon. A five-petal line
-           lotus — centre petal, two side petals, two outer petals curving
-           out from the base, and a shallow base line — same 1.5px stroke. */
-        <>
-          <path d="M12 5 C10.2 7.2 9.6 9.6 9.6 12.6 C9.6 15.6 10.6 17.6 12 18.4 C13.4 17.6 14.4 15.6 14.4 12.6 C14.4 9.6 13.8 7.2 12 5 Z" />
-          <path d="M7.2 8.4 C7.6 11 8.4 13.6 10 15.6 C10.6 16.4 11.2 17 12 18.4" />
-          <path d="M16.8 8.4 C16.4 11 15.6 13.6 14 15.6 C13.4 16.4 12.8 17 12 18.4" />
-          <path d="M3.6 12.2 C4.6 14.8 6.4 17 9 18.2 C10 18.6 11 18.8 12 18.8 C13 18.8 14 18.6 15 18.2 C17.6 17 19.4 14.8 20.4 12.2" />
-          <path d="M8 20.4 C9.3 20.9 10.6 21.1 12 21.1 C13.4 21.1 14.7 20.9 16 20.4" />
-        </>
-      )}
-
+      {/* 'meditation' is rendered by the shared <Lotus> (components/brand/Lotus.tsx) — see the early return above. */}
       {name === 'yoga' && (
         <>
           <circle cx="12" cy="4.8" r="2.2" />
