@@ -106,7 +106,14 @@ const TEAM: Person[] = [
     photo: '/team/arnav.jpg',
     objectPosition: '50% 35%',
   },
-  { name: 'Tej Chhabra', role: 'Technology' },
+  {
+    name: 'Tej Chhabra',
+    role: 'Technology',
+    // Kush, 2026-08-23: ~/Downloads/upscalemedia-transformed.jpeg (1600x1600
+    // studio headshot) cropped 4:5 centred on the face.
+    photo: '/team/tej.jpg',
+    objectPosition: '50% 40%',
+  },
 ]
 
 // Specialty + first bio paragraph quoted verbatim from
