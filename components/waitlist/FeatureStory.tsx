@@ -9,9 +9,10 @@ import { SCREENS } from '@/lib/screens'
  * FeatureShowcase (which auto-advanced on a 7s timer whether or not anyone
  * was looking at it) and the scroll-jacked pin that briefly replaced it.
  *
- * Order is the product argument: the ritual that starts the week, the coach
- * that learns from it, the library it draws on, and the thing you can reach for
- * in the middle of a bad afternoon.
+ * Order (Kush, 2026-08-23): coach first, then live classes, the library,
+ * and the ritual as the closer — matching the hero carousel's slide order.
+ * The Breathwork chapter came out in the same ruling and Live classes took
+ * its slot.
  *
  * The Devanagari watermark glyphs each chapter used to carry are gone
  * (Kush, LV5-003: "remove the Hindi text from the background of the 4
@@ -19,29 +20,6 @@ import { SCREENS } from '@/lib/screens'
  * both the tab text and (previously) the progress rail.
  */
 const CHAPTERS: StoryChapter[] = [
-  {
-    id: 'ritual',
-    eyebrow: 'The Sunday ritual',
-    title: (
-      <>
-        Your week, planned <em>before it starts.</em>
-      </>
-    ),
-    body: 'Every Sunday the coach proposes your week: which classes, which days, sized to the schedule you actually have. You approve it in one tap or tell it what to change.',
-    points: [
-      'See what changed since last week, and why.',
-      'Move, swap or remove anything. The plan is yours.',
-      'Life shifted mid-week? Re-work the remaining days in seconds.',
-    ],
-    accent: 'var(--jn-turmeric)',
-    // LV5-019: tab outline colours, Kush's mapping - ritual/coach/library/
-    // breathwork each get their own. Separate from `accent` above (which
-    // stays put) because that one also colours 11px eyebrow text, and only
-    // some of these pass 4.5:1 at that size - see ScrollStory's comment.
-    tabAccent: 'var(--jn-turmeric)',
-    railLabel: 'The ritual',
-    screens: [SCREENS.ritualProposal, SCREENS.ritualWeek],
-  },
   {
     id: 'coach',
     eyebrow: 'Recommendations that learn',
@@ -71,6 +49,33 @@ const CHAPTERS: StoryChapter[] = [
     screens: [SCREENS.coachChat, SCREENS.coachPicks],
   },
   {
+    // New chapter (Kush, 2026-08-23: "Remove breathwork tab in these,
+    // replace with live classes"). Copy drafted at build for Kush's review.
+    id: 'live',
+    eyebrow: 'Live classes',
+    title: (
+      <>
+        Real instructors, <em>in real time.</em>
+      </>
+    ),
+    body: 'Practice with real instructors in real time: live yoga, meditation and breathwork sessions you join straight from the app, at every level.',
+    points: [
+      'Yoga, meditation and breathwork, taught live through the week.',
+      'Every level welcome — follow along in real time.',
+      "Can't join live? The recorded library is always open.",
+    ],
+    accent: 'var(--jn-turmeric)',
+    // Poster gold, inherited from the retired Breathwork chapter's slot
+    // (--jn-gold-alt, 7.82:1 on --jn-bg per LV5-019) so the four tab
+    // outlines stay clay/gold/sage/turmeric — one each.
+    tabAccent: 'var(--jn-gold-alt)',
+    railLabel: 'Live classes',
+    // liveClass is the class-detail capture; breathworkSession stands in as
+    // "a session in progress" — the body copy names breathwork, so the
+    // screen matches the words.
+    screens: [SCREENS.liveClass, SCREENS.breathworkSession],
+  },
+  {
     id: 'library',
     eyebrow: 'A growing library',
     title: (
@@ -78,7 +83,9 @@ const CHAPTERS: StoryChapter[] = [
         Taught by people who <em>know the tradition.</em>
       </>
     ),
-    body: 'Live sessions and a growing on-demand library: yoga, meditation and pranayama at every level, each class explained in plain terms so you know what it does and why.',
+    // "Live sessions and" came off the front when Live classes became its
+    // own chapter (Kush, 2026-08-23) — this one is the on-demand shelf now.
+    body: 'A growing on-demand library: yoga, meditation and pranayama at every level, each class explained in plain terms so you know what it does and why.',
     points: [
       'New classes added regularly, live and recorded.',
       'Filter by length, style, or what your body needs today.',
@@ -90,28 +97,33 @@ const CHAPTERS: StoryChapter[] = [
     accent: 'var(--jn-sage)',
     tabAccent: 'var(--jn-sage)',
     railLabel: 'The library',
-    screens: [SCREENS.library, SCREENS.liveClass],
+    // liveClass moved to the Live classes chapter; planTab (where a class
+    // lands in your day) fills the second frame so no screen repeats
+    // across chapters.
+    screens: [SCREENS.library, SCREENS.planTab],
   },
   {
-    id: 'breath',
-    eyebrow: 'Breathwork on demand',
+    id: 'ritual',
+    eyebrow: 'The Sunday ritual',
     title: (
       <>
-        Need to reset? <em>Just ask.</em>
+        Your week, planned <em>before it starts.</em>
       </>
     ),
-    body: "Tell the coach you're stretched thin between meetings and it starts a guided breathing session built around the time you actually have, not a generic timer.",
+    body: 'Every Sunday the coach proposes your week: which classes, which days, sized to the schedule you actually have. You approve it in one tap or tell it what to change.',
     points: [
-      'Ask in plain language. The coach reads the situation, not a keyword.',
-      'Pick a length that fits the gap you actually have: 2, 3 or 5 minutes.',
-      'Or start one yourself from anywhere in the app, no conversation needed.',
+      'See what changed since last week, and why.',
+      'Move, swap or remove anything. The plan is yours.',
+      'Life shifted mid-week? Re-work the remaining days in seconds.',
     ],
     accent: 'var(--jn-turmeric)',
-    // Poster gold, reusing the same --jn-gold-alt token LV5-019's hero dots
-    // introduced (7.82:1 on --jn-bg) rather than adding a second gold.
-    tabAccent: 'var(--jn-gold-alt)',
-    railLabel: 'Breathwork',
-    screens: [SCREENS.breathworkSession, SCREENS.planTab],
+    // LV5-019: tab outline colours - each chapter gets its own. Separate
+    // from `accent` above (which stays put) because that one also colours
+    // 11px eyebrow text, and only some of these pass 4.5:1 at that size -
+    // see ScrollStory's comment.
+    tabAccent: 'var(--jn-turmeric)',
+    railLabel: 'The ritual',
+    screens: [SCREENS.ritualProposal, SCREENS.ritualWeek],
   },
 ]
 
