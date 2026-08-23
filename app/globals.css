@@ -2247,6 +2247,23 @@ body::before {
   grid-template-columns: minmax(0, 760px);
   justify-content: center;
   padding-top: 36px;
+  /* Kush, 2026-08-23: "gap between we knew something needed to change and
+     next sentence is big" — was the default 32px, and band 02's 32px top
+     stacked on it. 10 + 8 below ≈ 18px between the sections. */
+  padding-bottom: 10px;
+}
+/* Kush, 2026-08-23: sign the opening note. Cormorant italic in turmeric so
+   it reads as a hand-off, not another body paragraph. The .ab-band-copy
+   descendant wins specificity over `.ab-band-copy p`. */
+.ab-band-copy .ab-intro-signoff {
+  margin-top: 2px;
+  font-family: var(--font-cormorant), serif;
+  font-size: 19px;
+  font-style: italic;
+  color: var(--jn-turmeric);
+}
+.ab-band.ab-band-after-intro {
+  padding-top: 8px;
 }
 .ab-video-slot {
   position: relative;

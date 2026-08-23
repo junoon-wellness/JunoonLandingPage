@@ -308,11 +308,14 @@ export default function AboutPage() {
         <Reveal className="ab-band-copy" y={20} duration={0.9} amount={0.25}>
           <p>{STORY_PARAGRAPHS[0]}</p>
           <p>{STORY_PARAGRAPHS[1]}</p>
+          {/* Kush, 2026-08-23: sign the opening note "to make it seem more
+              personal". The closing signature further down stays. */}
+          <p className="ab-intro-signoff">— Arjav (founder)</p>
         </Reveal>
       </section>
 
       {/* 02 — copy left, tagline panel right */}
-      <section className="ab-band ab-band-reverse" aria-label="Looking back">
+      <section className="ab-band ab-band-reverse ab-band-after-intro" aria-label="Looking back">
         <Reveal className="ab-band-copy" x={-36} y={0} duration={0.9} delay={0.15} amount={0.25}>
           <p>{STORY_PARAGRAPHS[2]}</p>
           <p>{STORY_PARAGRAPHS[3]}</p>
