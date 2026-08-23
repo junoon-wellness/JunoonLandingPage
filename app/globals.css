@@ -2330,6 +2330,15 @@ body::before {
 .ab-contact-inner label {
   color: var(--jn-mute) !important;
 }
+/* LV5-026 [fix]: the "(optional)" span inside the Subject label kept its
+   own Tailwind class (`text-driftwood/60`) from ContactForm.tsx, which
+   isn't touched by the `label` override above (that only matches the
+   <label> element, not its child <span> - inheritance loses to any rule
+   that matches the element itself). Measured 2.4:1 on --jn-bg (#1C1410),
+   below AA. --jn-text-faint measures 5.53:1 there. */
+.ab-contact-inner label span {
+  color: var(--jn-text-faint) !important;
+}
 .ab-contact-inner button[type='submit'] {
   background: var(--jn-clay) !important;
   color: var(--jn-on-clay) !important;

@@ -160,11 +160,15 @@ export default function SignupForm({
   }
 
   // `.jn-mono` carries the family and the uppercasing; this only sizes it.
+  // LV5-026 [fix]: was STONE (--jn-mute, #93826F) - on this form's only
+  // caller (NewsletterJoin's --jn-surface panel, #2C2118) that measured
+  // 4.23:1 and failed AA (same trap the founder-role label caught in
+  // LV5-023's globals.css comment). --jn-text-faint measures 5.17:1 there.
   const labelStyle: React.CSSProperties = {
     display: 'block',
     fontSize: '11px',
     letterSpacing: '0.14em',
-    color: STONE,
+    color: 'var(--jn-text-faint)',
     marginBottom: '7px',
   }
 
