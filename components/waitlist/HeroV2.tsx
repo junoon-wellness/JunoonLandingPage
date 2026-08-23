@@ -172,11 +172,19 @@ export default function HeroV2() {
               an <a> can't legally contain another <a>. Hidden above 768px. */}
           <div className="v2-hero-offer-mobile">
             <Link href="/pricing" className="v2-hero-offer-mobile-copy">
+              {/* LV5-030 review (Fable, measured at 375px): the copy column
+                  beside the 155px badge is 135px wide. "Founding member
+                  offer" is 150px at 11px and wrapped; the full sentence was
+                  293px and wrapped to three lines, making the banner 112px
+                  tall. Shorter label + a deliberate two-line copy (121px /
+                  122px at 12px) keeps the text block level with the badge. */}
               <span className="eyebrow no-rule v2-hero-offer-mobile-eyebrow">
-                Founding member offer
+                Founder offer
               </span>
               <span className="v2-hero-offer-mobile-line">
-                First 500: first month free, then $8.99/mo for life.
+                First 500: free month,
+                <br />
+                then $8.99/mo for life.
               </span>
             </Link>
             <AppStoreBadge size="nav" />
