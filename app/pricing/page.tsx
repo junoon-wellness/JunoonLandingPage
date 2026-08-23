@@ -92,6 +92,21 @@ export default function PricingPage() {
         card={<PricingCard />}
         side={
           <>
+            {/* LV5-032 (Kush: "much more obvious that the first month is free
+                ... especially when the user scrolls and gets the other info"):
+                the first thing the sliding-in column says. No card/auto-renew
+                wording, no future price (LV4-016 rulings). */}
+            <section className="pr-side-block pr-free-callout" aria-label="Free month">
+              <h2 className="pr-free-callout-title">
+                Start with a{' '}
+                <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>free month.</em>
+              </h2>
+              <p className="pr-free-callout-body">
+                The first 500 members pay nothing for their first month, then $8.99 a month,
+                locked for life.
+              </p>
+            </section>
+
             <section className="pr-side-block" aria-label="What we're building next">
               <div className="pr-next-heading">
                 <div className="eyebrow">What we&apos;re building next</div>
