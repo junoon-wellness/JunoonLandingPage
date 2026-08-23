@@ -60,14 +60,19 @@ export default function PricingPage() {
     <div id="top">
       <NavV2 />
 
-      <header className="pr-hero">
-        <div className="eyebrow" style={{ justifyContent: 'center' }}>
-          Pricing
-        </div>
-        <h1 className="pr-headline">One membership. Everything included.</h1>
-      </header>
-
       <PricingStage
+        head={
+          /* LV5-022 SC2: the headline is a STAGE SLOT now, not a <header>
+             above the section. Above it, it had scrolled off the top by the
+             time the slide finished, so "everything fits on one screen at the
+             end state" could not be true by construction. */
+          <header className="pr-head">
+            <div className="eyebrow" style={{ justifyContent: 'center' }}>
+              Pricing
+            </div>
+            <h1 className="pr-headline">One membership. Everything included.</h1>
+          </header>
+        }
         card={<PricingCard />}
         side={
           <>

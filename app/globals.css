@@ -1677,21 +1677,27 @@ body::before {
    2026-08-22 ruling. Section paddings run roughly half of .v2-section's
    56px so the page reads dense rather than airy.
    ════════════════════════════════════════════════════════════════════ */
-.pr-hero {
+/* LV5-022 SC2: was .pr-hero, a <header> with 92px of top padding sitting
+   ABOVE the stage. It is inside the pin now, so the nav clearance moved to
+   .pr-stage-pin and this block carries no padding of its own. The ~170px
+   headline-to-card gap Kush flagged is now the 40px .pr-stage-inner gap. */
+.pr-head {
   position: relative;
   z-index: 2;
-  padding: 92px 48px 28px;
   text-align: center;
 }
+/* max-width raised 560 -> 780 and the size capped at 40px so the line sets in
+   ONE line at 1280 instead of two. That single change buys back ~44px of the
+   800px budget, which is more than any padding cut in this block. */
 .pr-headline {
   font-family: var(--font-cormorant), serif;
-  font-size: clamp(30px, 3.6vw, 44px);
-  font-weight: 400;
-  line-height: 1.14;
-  letter-spacing: -0.01em;
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
   color: var(--jn-text);
   margin: 12px auto 0;
-  max-width: 560px;
+  max-width: 780px;
 }
 
 /* ── LV5-020: THE SCROLL-LINKED STAGE ──
@@ -1703,20 +1709,29 @@ body::before {
   position: relative;
   z-index: 2;
 }
+/* Top padding clears the FIXED nav, which is in its scrolled state (11px
+   padding + a 50px badge = 72px) by the time this section is pinned. */
 .pr-stage-pin {
-  padding: 28px 48px;
+  padding: 76px 48px 24px;
 }
-.pr-stage.is-pinned {
-  /* ~1.6x viewport: 100vh of that is the pin itself, the remaining 60vh is
-     the scroll runway the transforms are mapped onto. */
-  height: 160vh;
-}
+/* 🔴 LV5-022 SC2: the stage's HEIGHT is set inline by PricingStage.tsx as
+   calc(100vh + travel). It is deliberately NOT here - CSS cannot know the
+   measured travel, and the old flat 160vh spent 60vh of scroll moving the
+   card ~310px. */
 .pr-stage.is-pinned .pr-stage-pin {
   position: sticky;
   top: 0;
   height: 100vh;
   display: flex;
   align-items: center;
+}
+/* Holds the headline and the grid together so the fit check can measure them
+   as one block, and so the headline pins with the rest of the stage. */
+.pr-stage-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
 }
 
 .pr-stage-grid {
@@ -1783,7 +1798,8 @@ body::before {
   isolation: isolate;
   max-width: 560px;
   margin: 0 auto;
-  padding: 40px 40px 32px;
+  /* SC2: was 40/40/32. */
+  padding: 28px 36px 24px;
   background: var(--jn-surface);
   border: 0.5px solid var(--jn-hairline-strong);
   border-radius: 8px;
@@ -1819,11 +1835,13 @@ body::before {
   align-items: baseline;
   justify-content: center;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 4px;
 }
+/* SC2: was clamp(56px, 7vw, 72px) - i.e. 72px at 1280. The ticket's fallback
+   if the card would not fit, and it did not. 16px back. */
 .pr-price {
   font-family: var(--font-cormorant), serif;
-  font-size: clamp(56px, 7vw, 72px);
+  font-size: clamp(40px, 4.4vw, 56px);
   font-weight: 400;
   color: var(--jn-text);
   line-height: 1;
@@ -1841,18 +1859,18 @@ body::before {
 }
 
 .pr-offer-line {
-  margin: 18px auto 0;
+  margin: 12px auto 0;
   max-width: 460px;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 300;
   color: var(--jn-text-soft);
-  line-height: 1.7;
+  line-height: 1.6;
 }
 
 .pr-checklist {
   list-style: none;
-  margin: 28px 0 0;
+  margin: 18px 0 0;
   padding: 0;
   border-top: 0.5px solid var(--jn-hairline);
 }
@@ -1865,9 +1883,11 @@ body::before {
   grid-template-columns: 20px 1fr 16px;
   gap: 12px;
   align-items: center;
-  padding: 11px 0;
+  /* SC2: 11px -> 9px. Row height is set by the 20px icon, so this lands at
+     ~38.5px including the hairline, from ~43.5px. */
+  padding: 9px 0;
   border-bottom: 0.5px solid var(--jn-hairline);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 300;
   color: var(--jn-text-soft);
   line-height: 1.5;
@@ -1877,11 +1897,11 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-top: 28px;
+  gap: 8px;
+  margin-top: 20px;
 }
 .pr-cta-sub {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 300;
   color: var(--jn-text-faint);
 }
@@ -1958,13 +1978,13 @@ body::before {
 }
 
 @media (max-width: 768px) {
-  .pr-hero { padding: 84px 24px 24px; }
   .pr-section { padding: 24px 24px; }
-  /* Matches .pr-section's old mobile padding. Without this the stage keeps
-     the desktop 48px and a 390px screen loses 96px of its 342px card. */
-  .pr-stage-pin { padding: 24px 24px; }
+  /* Mobile is never pinned, so this padding is pure page rhythm. Top clears
+     the UNSCROLLED nav, since the stage now starts at the top of the page. */
+  .pr-stage-pin { padding: 84px 24px 24px; }
+  .pr-stage-inner { gap: 28px; }
   .pr-stage-grid { gap: 32px; }
-  .pr-card { padding: 32px 22px 26px; }
+  .pr-card { padding: 24px 22px 20px; }
   /* .pr-ribbon is gone (LV5-020) - see .pr-founder-pill. The pill needs no
      per-breakpoint nudging: it is 11px type in a pill at a fixed offset, so
      it reads the same at 1280 and 390. */

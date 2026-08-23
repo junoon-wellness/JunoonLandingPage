@@ -85,7 +85,10 @@ export default function PricingCard() {
         </ul>
 
         <div className="pr-cta">
-          <AppStoreBadge size="lg" />
+          {/* SC2: was size="lg" (64px min-height, 200px min-width). The
+              ticket's stated fallback for fitting the card in 800px, and it
+              was needed - 14px back. */}
+          <AppStoreBadge size="nav" />
           <span className="pr-cta-sub">Subscribe in the app</span>
           <span className="pr-cta-fine">Cancel anytime in the App Store.</span>
         </div>
