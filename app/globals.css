@@ -1234,7 +1234,16 @@ body::before {
   transform: translateX(100%);
   transition: transform 0.4s var(--jn-ease);
 }
+/* LV5-024: `display: none` above was never overridden here — only
+   `transform` was — so the sheet could never actually render: NavV2's state
+   (`data-open`), the body-scroll lock and the hamburger icon animation all
+   worked, but the panel itself stayed invisible at `display: none` no matter
+   what. Found by the round's in-browser gate (DOM .click() the hamburger,
+   read the sheet's own getBoundingClientRect() — it was 0x0 at
+   `data-open="true"`), not by a visual pass. `flex` matches the base rule's
+   own `flex-direction`/`justify-content`, which sat inert under `none`. */
 .v2-nav-sheet[data-open='true'] {
+  display: flex;
   transform: translateX(0);
 }
 
