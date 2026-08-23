@@ -263,17 +263,21 @@ export default function AboutPage() {
         The <em> only wraps a span of it; it adds no words and removes none.
       */}
       <header className="ab-hero">
-        <div className="eyebrow ab-eyebrow">About Junoon</div>
+        {/* Kush, 2026-08-23: "remove about junoon smaller golden text at the top" */}
         <h1 className="ab-headline">
           Reclaiming <em>Ancient Indian practices</em> and making them fit into modern life
         </h1>
         <p className="ab-subline">{SUBLINE}</p>
       </header>
 
-      {/* 01 — video left, copy right */}
-      <section className="ab-band" aria-label="Where it started">
-        <Reveal className="ab-band-media" x={-36} y={0} scale={0.96} duration={0.9} amount={0.25}>
-          <div className="ab-video-slot">
+      {/* Kush, 2026-08-23: "make the text span across the screen more like a
+          proper hero header that leads into the video right under it more
+          cinematically". The founder video is now a full-width cinematic band
+          directly under the headline; the first two story paragraphs follow
+          it as a single centred measure. */}
+      <section className="ab-hero-video" aria-label="Founder video">
+        <Reveal y={24} scale={0.98} duration={1} amount={0.2}>
+          <div className="ab-video-slot ab-video-cinema">
             {FOUNDER_VIDEO_SRC ? (
               // eslint-disable-next-line jsx-a11y/media-has-caption
               <video src={FOUNDER_VIDEO_SRC} controls playsInline />
@@ -285,7 +289,11 @@ export default function AboutPage() {
             )}
           </div>
         </Reveal>
-        <Reveal className="ab-band-copy" x={36} y={0} duration={0.9} delay={0.15} amount={0.25}>
+      </section>
+
+      {/* 01 — the story opens under the video */}
+      <section className="ab-band ab-band-intro" aria-label="Where it started">
+        <Reveal className="ab-band-copy" y={20} duration={0.9} amount={0.25}>
           <p>{STORY_PARAGRAPHS[0]}</p>
           <p>{STORY_PARAGRAPHS[1]}</p>
         </Reveal>

@@ -280,7 +280,10 @@ export default function SignupForm({
         )}
       </form>
 
-      {!fieldError && status !== 'error' && (
+      {/* Kush, 2026-08-23: "remove this from library, it's redundant" — the
+          compact (newsletter) form already shows NO SPAM · UNSUBSCRIBE ANYTIME
+          as chips beside it, so the fine print only renders on the full form. */}
+      {!compact && !fieldError && status !== 'error' && (
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '9px', marginTop: '14px' }}>
           <span
             aria-hidden="true"
