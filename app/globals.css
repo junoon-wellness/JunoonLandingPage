@@ -2110,23 +2110,22 @@ body::before {
 }
 
 /* founder card - band 03's left column, reuses the real Arjav photo */
-/* 🔴 LV5-026: Kush, 2026-08-23: "make Arjav's image larger within the
-   rectangle it's in" - the row layout (photo left, name/title beside it)
-   replaces LV5-023's stacked-and-centred circle so a bigger photo doesn't
-   just make the card taller. Padding trimmed 32/24 -> 24/20 to give the
-   name/title column more of the still-300px-capped interior; text-align
-   moves left to read naturally next to the photo instead of centred under
-   it. */
+/* 🔴 LV5-026 (orchestrator fix at review, 2026-08-23): the builder's row
+   layout left 44px for the name beside a 200px photo inside a 300px card
+   (300 - 40 padding - 16 gap - 200) and "Arjav Chhabra" / "Founder & CEO"
+   would have wrapped word-by-word. Back to LV5-023's stacked, centred
+   column; the photo itself stays 200px, which is the ask ("larger within
+   the rectangle"). */
 .ab-founder-card {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  gap: 16px;
-  padding: 24px 20px;
+  gap: 14px;
+  padding: 28px 24px 24px;
   background: var(--jn-surface);
   border: 0.5px solid var(--jn-hairline-strong);
   border-radius: 6px;
-  text-align: left;
+  text-align: center;
   /* The card never grows to the band column's full width. Without this the
      centred photo sits in a 560px+ box and reads as a banner. */
   max-width: 300px;
