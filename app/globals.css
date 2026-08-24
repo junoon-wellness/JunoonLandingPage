@@ -2528,6 +2528,12 @@ body::before {
   max-width: none;
   margin: 0 auto;
 }
+/* Kush, 2026-08-24: "make instructor photo section smaller" — instructor
+   cards only; the team row and founder portrait keep their widths. Same
+   same-element-later-source cascade note as .ab-team-grid above. */
+.ab-instructor-grid {
+  --ab-person-w: 208px;
+}
 .ab-person-card {
   display: flex;
   flex-direction: column;

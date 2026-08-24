@@ -139,16 +139,19 @@ const INSTRUCTORS: Person[] = [
   {
     name: 'Shoam Mehta',
     role: 'Yoga Coach · Sadhaka',
-    photo: '/instructors/shoam.jpg',
-    bio: 'Namaste, I am Shoam Mehta, Yoga Instructor and Sadhaka.',
-    objectPosition: '50% 35%',
+    // Kush, 2026-08-24: head-and-shoulders re-crop (new filename — same-name
+    // replacement serves stale bytes) + his full bio, VERBATIM from the
+    // app's Fixtures.swift (Kush: "theres a better one in the app").
+    photo: '/instructors/shoam-head.jpg',
+    bio: "Namaste, I am Shoam Mehta, Yoga Instructor and Sadhaka.\n\nYoga has been a game-changer for me. It helped me acknowledge my flaws, work on them, and become a better and more complete version of myself. It has given me the strength and patience to face the different challenges life has thrown my way, and helped me see those challenges as opportunities rather than problems - opportunities to learn something and grow.\n\nMy motto in life is that nothing is permanent. I live by that belief, knowing that things and people can change for the better or for the good. This has helped me become extremely grateful for what I have and patient for things to change in my favor. This is what made me a passionate yoga coach and trainer.",
+    objectPosition: '50% 50%',
   },
   {
     name: 'Amman Advaita',
     role: 'Hatha · Iyengar · Meditation',
-    photo: '/instructors/amman.jpg',
+    photo: '/instructors/amman-head.jpg',
     bio: "At 14, a visit to Rumtek Monastery lit something that hasn't gone out since. That spark led to a Yoga Shastri certification under Dr. Hansraj Yadav, fifteen years of deepening study in Hatha and Iyengar methodologies, and formal training in the Sri Vidya tantric tradition, Tibetan Buddhism, and Tibetan Yantra Yoga.",
-    objectPosition: '50% 35%',
+    objectPosition: '50% 50%',
   },
   {
     name: 'Divya Sahasrabuddhe',
@@ -160,8 +163,10 @@ const INSTRUCTORS: Person[] = [
   {
     name: 'Durva Aparna',
     role: 'Intro Yoga · Pranayama · Mobility',
-    objectPosition: '70% 30%',
-    photo: '/instructors/durva.jpg',
+    // Kush, 2026-08-24: re-crop centred on her profile (the old 70% window
+    // pushed her face to the frame's edge). New filename per the cache trap.
+    objectPosition: '50% 50%',
+    photo: '/instructors/durva-head.jpg',
   },
 ]
 
@@ -385,7 +390,7 @@ export default function AboutPage() {
             "ONE GEOMETRY" note atop components/brand/Jaali.tsx. The arched
             photos still sit on it, which is the pairing the poster uses. */}
         <SectionLabel align="center" className="ab-people-heading">Meet our instructors</SectionLabel>
-        <PeopleGrid people={INSTRUCTORS} arch={INSTRUCTOR_ARCH} />
+        <PeopleGrid people={INSTRUCTORS} arch={INSTRUCTOR_ARCH} className="ab-instructor-grid" />
       </section>
 
       {/* Kush, 2026-08-23: toran divider between the instructors and the contact form */}
