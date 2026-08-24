@@ -145,7 +145,14 @@ export default function DeviceCarousel() {
               <div className="v2-carousel-slide" key={`${s.src}-${i}`}>
                 <Image
                   src={s.src}
-                  alt={i === activeDot ? s.alt : ''}
+                  // Each real slide carries its own written alt (lib/screens.ts)
+                  // regardless of which one is currently active, so a screen
+                  // reader reaches every screen's description. The one
+                  // exception is the trailing clone of slide 0 (the
+                  // seamless-wrap copy, i === SLIDES.length — see the note
+                  // atop this component) — it gets alt="" so the first
+                  // screen isn't announced twice.
+                  alt={i === SLIDES.length ? '' : s.alt}
                   width={SCREEN_WIDTH}
                   height={SCREEN_HEIGHT}
                   sizes="300px"
