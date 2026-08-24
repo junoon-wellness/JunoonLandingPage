@@ -91,7 +91,7 @@ export default function FooterV2() {
             Instagram
           </a>{' '}
           or{' '}
-          <a href="#join" className="v2-link v2-footer-link">
+          <a href="/library#join" className="v2-link v2-footer-link">
             join the newsletter
           </a>
         </span>
