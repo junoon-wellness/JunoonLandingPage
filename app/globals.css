@@ -2941,3 +2941,23 @@ body::before {
   .lb-reader-hero { padding: 76px 20px 20px; }
   .lb-reader-body { padding: 8px 20px 40px; }
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   WIDE DESKTOP (Kush, 2026-08-24): "things are kind of spaced out and
+   smaller… scale things up… nothing too large or gaudy." One real scale
+   knob on the HOME page root (WaitlistPageV2's .jn-home-scale): standards
+   zoom scales type AND layout together, so the page simply reads at the
+   size it was designed at, proportionally larger. Home only — /pricing's
+   scroll-pin does its own height math from unzoomed scrollHeight and is
+   deliberately left alone. Below 1600px nothing changes.
+   ════════════════════════════════════════════════════════════════════ */
+@media (min-width: 1600px) {
+  .jn-home-scale {
+    zoom: 1.12;
+  }
+}
+@media (min-width: 1920px) {
+  .jn-home-scale {
+    zoom: 1.22;
+  }
+}

@@ -48,7 +48,7 @@ const FEATURE_JAALI = true
 */
 export default function WaitlistPageV2() {
   return (
-    <div id="top">
+    <div id="top" className="jn-home-scale">
       {/* LV5-024: page-level jaali panels. Both are full-page `inset:0`
           copies of the same tile grid the site-wide ground (mounted in
           app/layout.tsx) uses — see the "ONE GEOMETRY" note atop
