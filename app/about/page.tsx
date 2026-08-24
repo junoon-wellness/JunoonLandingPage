@@ -59,7 +59,7 @@ const ABOUT_JAALI = true
 export const metadata: Metadata = {
   title: clean('About - Junoon'),
   description: clean(
-    'Reclaiming Ancient Indian practices and making them fit into modern life. Meet the team and instructors behind Junoon.'
+    'Reclaiming Ancient Indian practices for the Modern Life. Meet the team and instructors behind Junoon.'
   ),
 }
 
@@ -278,8 +278,10 @@ export default function AboutPage() {
       */}
       <header className="ab-hero">
         {/* Kush, 2026-08-23: "remove about junoon smaller golden text at the top" */}
+        {/* Kush, 2026-08-24: new headline wording, both phrases in the
+            accent, sized to sit as ONE line across the top on desktop. */}
         <h1 className="ab-headline">
-          Reclaiming <em>Ancient Indian practices</em> and making them fit into modern life
+          Reclaiming <em>Ancient Indian practices</em> for the <em>Modern Life</em>.
         </h1>
         <p className="ab-subline">{SUBLINE}</p>
       </header>
@@ -305,46 +307,32 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
-      {/* 01 — the story opens under the video */}
-      <section className="ab-band ab-band-intro" aria-label="Where it started">
-        <Reveal className="ab-band-copy" y={20} duration={0.9} amount={0.25}>
-          <p>{STORY_PARAGRAPHS[0]}</p>
-          <p>{STORY_PARAGRAPHS[1]}</p>
-          {/* Kush, 2026-08-23: sign the opening note "to make it seem more
-              personal". The closing signature further down stays. */}
-          <p className="ab-intro-signoff">— Arjav (founder)</p>
-        </Reveal>
-      </section>
-
-      {/* 02 — copy left, tagline panel right */}
-      <section className="ab-band ab-band-reverse ab-band-after-intro" aria-label="Looking back">
-        <Reveal className="ab-band-copy" x={-36} y={0} duration={0.9} delay={0.15} amount={0.25}>
-          <p>{STORY_PARAGRAPHS[2]}</p>
-          <p>{STORY_PARAGRAPHS[3]}</p>
-        </Reveal>
-        <Reveal className="ab-band-media" x={36} y={0} scale={0.96} duration={0.9} amount={0.25}>
+      {/* Kush, 2026-08-24: "put the ancient traditions banner below the
+          video" — a full-width band directly under the cinematic slot. */}
+      <section className="ab-tagline-band" aria-label="Ancient Traditions, Modern Solutions">
+        <Reveal y={18} duration={0.9} amount={0.3}>
           <div className="ab-tagline-panel">
             <div className="ab-tagline-text">{TAGLINE}</div>
           </div>
         </Reveal>
       </section>
 
-      {/* 03 — founder card left, copy right */}
-      <section className="ab-band" aria-label="Built with Junoon">
-        <Reveal className="ab-band-media" x={-36} y={0} scale={0.96} duration={0.9} amount={0.25}>
-          <div className="ab-founder-card">
+      {/* Kush, 2026-08-24: "all 4 of those paragraphs are one quote so we
+          need one sign off so keep the bottom one… arjavs picture on one
+          side and the quote around it". One founder-letter band replaces
+          the old three story bands, and the 2026-08-23 mid-story sign-off
+          is gone by the same ruling. Story wording stays VERBATIM — the
+          accent <em> wraps below add and remove no words. */}
+      <section className="ab-band ab-founder-letter" aria-label="A letter from our founder">
+        <Reveal className="ab-letter-media" x={-36} y={0} scale={0.96} duration={0.9} amount={0.15}>
+          <div className="ab-founder-card ab-founder-card-lg">
             <div className="ab-founder-photo">
-              {/* LV5-026: 120px -> 200px slot (Kush: "make Arjav's image
-                  larger within the rectangle it's in"). sizes and the
-                  intrinsic width/height track .ab-founder-photo's new box
-                  the same way LV5-023 sized them for 120px - 400x400 is
-                  2x for a 200px slot. */}
               <Image
                 src="/arjav-photo.jpg"
                 alt="Arjav, founder of Junoon Wellness"
-                width={520}
-                height={650}
-                sizes="260px"
+                width={720}
+                height={900}
+                sizes="(max-width: 768px) 78vw, 360px"
                 style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%' }}
               />
             </div>
@@ -354,8 +342,26 @@ export default function AboutPage() {
             </div>
           </div>
         </Reveal>
-        <Reveal className="ab-band-copy" x={36} y={0} duration={0.9} delay={0.15} amount={0.25}>
-          <p>{STORY_PARAGRAPHS[4]}</p>
+        <Reveal className="ab-band-copy ab-letter-copy" x={36} y={0} duration={0.9} delay={0.15} amount={0.15}>
+          <span className="ab-letter-quotemark" aria-hidden="true">&ldquo;</span>
+          <p>{STORY_PARAGRAPHS[0]}</p>
+          <p className="ab-letter-pivot">{STORY_PARAGRAPHS[1]}</p>
+          <p>{STORY_PARAGRAPHS[2]}</p>
+          {/* Paragraphs 4-5 rendered inline so two phrases can carry the
+              turmeric accent — words identical to STORY_PARAGRAPHS[3]/[4],
+              which stay the canonical wording. */}
+          <p>
+            We created Junoon because we believe deeply in this approach. Junoon is a space and a
+            community dedicated to helping you{' '}
+            <em className="ab-letter-accent">return to your roots</em>. We draw directly from
+            ancient texts on yoga, meditation, and breathwork, personalizing these timeless
+            practices to fit your daily life.
+          </p>
+          <p>
+            Our team built this platform with Junoon (passion), purpose, and intention. Having you
+            here means everything to us.{' '}
+            <em className="ab-letter-accent">Let&apos;s do this together.</em>
+          </p>
           <div className="ab-signature">
             <Lotus size={14} />
             {SIGNATURE}

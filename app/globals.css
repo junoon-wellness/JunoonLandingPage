@@ -2203,13 +2203,16 @@ body::before {
    and /pricing headlines rather than sitting at body weight. */
 .ab-headline {
   font-family: var(--font-cormorant), serif;
-  /* Kush, 2026-08-23: hero-scale, was clamp(32px, 4.2vw, 52px) in a 760px box. */
-  font-size: clamp(38px, 5.4vw, 74px);
+  /* Kush, 2026-08-24: "try to have it fit across the top as one" — sized so
+     the new 56-char headline holds ONE line from ~1024px up (≈0.42em/char
+     in Cormorant light; 3.7vw at 1280 ≈ 47px ≈ 1105px vs 1184 available).
+     Wraps naturally on phones. Was clamp(38px, 5.4vw, 74px) / 1120px box. */
+  font-size: clamp(30px, 3.7vw, 56px);
   font-weight: 300;
-  line-height: 1.04;
+  line-height: 1.08;
   letter-spacing: -0.014em;
   color: var(--jn-text);
-  max-width: 1120px;
+  max-width: none;
 }
 /* The site's accent convention: the clause that carries the idea goes
    turmeric italic. Measured 6.46:1 on --jn-bg and 6.02:1 once the SC5 ground
@@ -2277,29 +2280,65 @@ body::before {
   width: 100%;
   box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.8);
 }
-/* The opening story paragraphs: one centred measure under the video, not a
-   two-column band. */
-.ab-band.ab-band-intro {
-  grid-template-columns: minmax(0, 760px);
-  justify-content: center;
-  padding-top: 36px;
-  /* Kush, 2026-08-23: "gap between we knew something needed to change and
-     next sentence is big" — was the default 32px, and band 02's 32px top
-     stacked on it. 10 + 8 below ≈ 18px between the sections. */
-  padding-bottom: 10px;
+/* ── Kush, 2026-08-24: the story is ONE founder letter ──
+   The old three-band layout (intro measure / copy+tagline / founder card)
+   and its intro sign-off rules are gone with it; the tagline is a
+   full-width banner under the video, and the letter runs beside a larger,
+   gently sticky portrait. */
+.ab-tagline-band {
+  position: relative;
+  z-index: 2;
+  padding: 26px 48px 0;
 }
-/* Kush, 2026-08-23: sign the opening note. Cormorant italic in turmeric so
-   it reads as a hand-off, not another body paragraph. The .ab-band-copy
-   descendant wins specificity over `.ab-band-copy p`. */
-.ab-band-copy .ab-intro-signoff {
-  margin-top: 2px;
+.ab-tagline-band .ab-tagline-panel {
+  max-width: 1120px;
+  margin: 0 auto;
+  text-align: center;
+}
+.ab-founder-letter {
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  gap: 56px;
+  align-items: start;
+  padding-top: 30px;
+}
+.ab-founder-card.ab-founder-card-lg {
+  /* Kush: "you can make arjavs picture larger" — 260 → 360. Compound
+     selector: the base .ab-founder-card sets the same var LATER in the
+     file, so a single class here loses the source-order tie. */
+  --ab-person-w: 360px;
+}
+.ab-letter-media {
+  /* The portrait keeps the reader company while the letter scrolls. */
+  position: sticky;
+  top: 96px;
+}
+.ab-letter-copy {
+  max-width: 680px;
+  position: relative;
+}
+.ab-letter-copy p {
+  font-size: 16px;
+  line-height: 1.85;
+}
+.ab-letter-quotemark {
+  display: block;
   font-family: var(--font-cormorant), serif;
-  font-size: 19px;
+  font-size: 72px;
+  line-height: 0.55;
+  color: var(--jn-turmeric);
+  margin: 6px 0 18px;
+}
+.ab-letter-copy .ab-letter-pivot {
+  font-family: var(--font-cormorant), serif;
+  font-style: italic;
+  font-size: 24px;
+  line-height: 1.35;
+  color: var(--jn-text);
+  margin: 4px 0 20px;
+}
+.ab-letter-accent {
   font-style: italic;
   color: var(--jn-turmeric);
-}
-.ab-band.ab-band-after-intro {
-  padding-top: 8px;
 }
 .ab-video-slot {
   position: relative;
@@ -2575,6 +2614,9 @@ body::before {
   font-weight: 300;
   color: var(--jn-text-soft);
   line-height: 1.6;
+  /* Kush, 2026-08-24: Shoam's full app bio is multi-paragraph — render the
+     \n\n breaks instead of collapsing them. */
+  white-space: pre-line;
 }
 /* Kush, 2026-08-23: "hide their bios under green chevrons" — the toggle
    speaks the card's existing sage-mono vocabulary (same recipe as
@@ -2660,6 +2702,9 @@ body::before {
   .ab-people-section { padding: 24px 32px; }
   .ab-hero { padding: 80px 32px 8px; }
   .ab-contact-section { padding: 32px 32px 48px; }
+  .ab-tagline-band { padding: 22px 32px 0; }
+  .ab-founder-letter { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 36px; }
+  .ab-founder-card.ab-founder-card-lg { --ab-person-w: 300px; }
 }
 
 @media (max-width: 768px) {
@@ -2671,6 +2716,14 @@ body::before {
     gap: 20px;
     padding: 24px 24px;
   }
+  /* Kush, 2026-08-24: founder letter stacks — portrait first, centred,
+     letter full-width; sticky off so the photo doesn't shadow the text. */
+  .ab-tagline-band { padding: 18px 24px 0; }
+  .ab-founder-letter { grid-template-columns: 1fr; gap: 24px; }
+  .ab-letter-media { position: static; }
+  .ab-founder-card.ab-founder-card-lg { --ab-person-w: min(78vw, 320px); }
+  .ab-letter-quotemark { font-size: 56px; margin-bottom: 14px; }
+  .ab-letter-copy .ab-letter-pivot { font-size: 21px; }
   .ab-band-reverse .ab-band-media,
   .ab-band-reverse .ab-band-copy { order: initial; }
   .ab-people-section { padding: 20px 24px; }
