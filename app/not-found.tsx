@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import NavV2 from '@/components/waitlist/NavV2'
 import FooterV2 from '@/components/waitlist/FooterV2'
-import Lotus from '@/components/brand/Lotus'
 
 /**
  * LV5-048 — branded 404. Next renders this for any route that resolves to
@@ -35,8 +34,6 @@ export default function NotFound() {
           gap: '20px',
         }}
       >
-        <Lotus size={28} />
-
         <div
           className="jn-mono"
           style={{

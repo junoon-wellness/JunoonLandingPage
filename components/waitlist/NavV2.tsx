@@ -178,8 +178,15 @@ export default function NavV2() {
       </div>
 
       <div className="v2-nav-sheet-cta">
-        {/* Kush, 2026-08-23: a sage lotus closes the phone menu above the badge */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '18px' }}>
+        {/* Kush, 2026-08-23: a lotus closes the phone menu above the badge.
+            2026-08-24: it is now the filled two-tone brand mark, and this plus
+            the footer are the only two places the lotus appears at all. */}
+        {/* `width: '100%'` is load-bearing: .v2-nav-sheet-cta is a column flex
+            with align-items:flex-start, so without it this wrapper shrink-wraps
+            to the mark's own 22px and justifyContent has nothing to centre. The
+            mark sat hard left for as long as it has existed; the old faint sage
+            outline just did not show it. */}
+        <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '18px' }}>
           <Lotus size={22} />
         </div>
         <AppStoreBadge full size="nav" onClick={() => setMenuOpen(false)} />

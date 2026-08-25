@@ -7,7 +7,6 @@ import JharokhaFrame from '@/components/brand/JharokhaFrame'
 import Jaali from '@/components/brand/Jaali'
 import Reveal from '@/components/motion/Reveal'
 import Toran from '@/components/brand/Toran'
-import Lotus from '@/components/brand/Lotus'
 import SectionLabel from '@/components/brand/SectionLabel'
 import BioDisclosure from '@/components/about/BioDisclosure'
 /* LV5-032 (Kush: "a better animation/transition as the user scrolls"): each
@@ -15,7 +14,6 @@ import BioDisclosure from '@/components/about/BioDisclosure'
    and the copy from the opposite side 0.15s later, 0.9s each. Band 2 is the
    reversed band, so its signs flip. Reduced motion neutralises all of it via
    .jn-reveal in globals.css. */
-import { FOUNDER_VIDEO_SRC } from '@/lib/constants'
 import { clean } from '@/lib/text'
 
 /* ══════════════════════════════════════════════════════════════════
@@ -179,16 +177,6 @@ function SilhouetteIcon() {
   )
 }
 
-function PlayMark() {
-  return (
-    <span className="ab-play-mark" aria-hidden="true">
-      <svg width="18" height="20" viewBox="0 0 18 20" fill="none">
-        <path d="M17 10 L1 19.5 L1 0.5 Z" fill="currentColor" />
-      </svg>
-    </span>
-  )
-}
-
 /**
  * LV5-021: `arch` puts the photo inside the jharokha instead of the 4:5 box.
  *
@@ -291,26 +279,13 @@ export default function AboutPage() {
         <p className="ab-subline">{SUBLINE}</p>
       </header>
 
-      {/* Kush, 2026-08-23: "make the text span across the screen more like a
-          proper hero header that leads into the video right under it more
-          cinematically". The founder video is now a full-width cinematic band
-          directly under the headline; the first two story paragraphs follow
-          it as a single centred measure. */}
-      <section className="ab-hero-video" aria-label="Founder video">
-        <Reveal y={24} scale={0.98} duration={1} amount={0.2}>
-          <div className="ab-video-slot ab-video-cinema">
-            {FOUNDER_VIDEO_SRC ? (
-              // eslint-disable-next-line jsx-a11y/media-has-caption
-              <video src={FOUNDER_VIDEO_SRC} controls playsInline />
-            ) : (
-              <>
-                <PlayMark />
-                <span className="ab-video-caption">Founder video</span>
-              </>
-            )}
-          </div>
-        </Reveal>
-      </section>
+      {/* Kush, 2026-08-24: "also remove founder video for now until we have it
+          ready please". Arjav's file never arrived, so this band was rendering
+          an empty 16:9 slot with a play mark and the caption "Founder video".
+          The section is REMOVED, not the plumbing: `FOUNDER_VIDEO_SRC` in
+          lib/constants.ts and the `.ab-hero-video` / `.ab-video-cinema` CSS are
+          untouched, so restoring this is pasting the section back and setting
+          the constant. Keep the rounded frame, no arch, when it returns. */}
 
       {/* Kush, 2026-08-24: "put the ancient traditions banner below the
           video" — a full-width band directly under the cinematic slot. */}
@@ -368,7 +343,6 @@ export default function AboutPage() {
             <em className="ab-letter-accent">Let&apos;s do this together.</em>
           </p>
           <div className="ab-signature">
-            <Lotus size={14} />
             {SIGNATURE}
           </div>
         </Reveal>

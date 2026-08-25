@@ -1,6 +1,5 @@
 'use client'
 
-import Lotus from '@/components/brand/Lotus'
 import { useId, useRef, useState } from 'react'
 import { isValidEmail, isValidOptionalPhone } from '@/lib/constants'
 
@@ -141,9 +140,6 @@ export default function SignupForm({
           animation: 'fadeUp 0.4s ease forwards',
         }}
       >
-        {/* Kush, 2026-08-23: the sage lotus replaces the plain dot on the
-            "you're in" state. */}
-        <Lotus size={20} />
         <span style={{ fontSize: '14px', fontWeight: 300, color: CREAM, lineHeight: 1.6 }}>
           {status === 'already'
             ? "You're already on the list. We'll be in touch soon."

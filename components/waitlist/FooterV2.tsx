@@ -55,7 +55,7 @@ export default function FooterV2() {
             color: 'var(--jn-gold)',
           }}
         >
-          <Lotus size={16} />
+          <Lotus size={20} />
           Junoon Wellness
         </span>
         <span

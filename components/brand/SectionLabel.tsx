@@ -1,10 +1,15 @@
 import type { ReactNode } from 'react'
-import Lotus from './Lotus'
 
 /**
- * A section label with the lotus mark above it — the "3 · Lotus section
- * marks" board Kush picked (2026-08-23). Wraps the existing gold `.eyebrow`
- * text; `align` mirrors the label's own alignment.
+ * A section label. Wraps the existing gold `.eyebrow` text; `align` mirrors
+ * the label's own alignment.
+ *
+ * Kush, 2026-08-24: "i also want to reduce the amount of times it appears...
+ * keep it in nav and footer only." This component was the single biggest
+ * source of lotus marks on the site — six call sites across Library, About and
+ * Pricing — so the mark is gone from here. The wrapper and both alignment
+ * classes stay: they still control how the eyebrow sits, and `--stacked`'s
+ * 8px gap is now inert with one child rather than wrong.
  */
 export default function SectionLabel({
   children,
@@ -26,7 +31,6 @@ export default function SectionLabel({
         className={`jn-section-label jn-section-label--stacked${className ? ` ${className}` : ''}`}
         style={{ alignItems: 'center', ...style }}
       >
-        <Lotus size={18} />
         <div className="eyebrow" style={{ justifyContent: 'center' }}>
           {children}
         </div>
@@ -38,7 +42,6 @@ export default function SectionLabel({
       className={`jn-section-label jn-section-label--inline${className ? ` ${className}` : ''}`}
       style={style}
     >
-      <Lotus size={16} />
       <div className="eyebrow">{children}</div>
     </div>
   )
