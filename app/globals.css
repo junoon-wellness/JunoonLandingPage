@@ -745,6 +745,28 @@ body::before {
   gap: 56px;
 }
 
+/* Kush, 2026-08-24: "how can we reduce the empty space on desktop in these
+   areas". MODIFIER for WhatWereBuildingV2's intro-beside-a-list layout. NOT a
+   change to `.v2-two-col` itself — that class is shared with NewsletterJoin on
+   /library (LV5-032), which must not move.
+
+   Two effects, both aimed at the SAME 314px hole measured at 1999px:
+   1. 0.72fr/1fr narrows the left track. The intro paragraph is capped at 420px
+      anyway, so the left column was never using its half; handing the width to
+      the list makes the list wrap less, which SHORTENS the tall column rather
+      than only re-siting the short one.
+   2. `center` floats the intro against the list's height instead of parking it
+      at the top and leaving every leftover pixel in one lump at the bottom.
+
+   Above 1024px only: below that the grid is a single column (see the
+   max-width: 768px rule further down) and centring would do nothing. */
+@media (min-width: 1025px) {
+  .v2-two-col--intro {
+    grid-template-columns: 0.72fr 1fr;
+    align-items: center;
+  }
+}
+
 /* ════════════════════════════════════════════════════════════════════
    FEATURE STORY TABS  (spec §B5) - replaces the tabbed FeatureShowcase,
    then the scroll-jacked pin that replaced IT (LV5-003, 2026-08-22)
@@ -2969,6 +2991,27 @@ body::before {
 @media (min-width: 1600px) {
   .jn-home-scale {
     zoom: 1.12;
+  }
+}
+/* Kush, 2026-08-24: "how can we reduce the empty space on desktop in these
+   areas" (screenshot 1, the hero). MEASURED at 1999px: the copy column ended
+   at y=829 while the phone column ran to y=993, so 164px of blank sat under
+   the copy in one lump at the bottom.
+
+   `center` splits that into ~82px above and below, which reads as deliberate
+   framing rather than a hole. The bottom padding comes down with it so the
+   section does not simply get taller.
+
+   🔴 This REVERSES the `align-items: start` chosen on `.v2-hero` above, whose
+   comment cites "pushed the signup form too far down the fold". That signup
+   form no longer exists in the hero — it is the offer card + founder quote now
+   (LV5-018/030) — so the stated reason no longer applies. Scoped to >=1600px,
+   which is the only place the imbalance is large enough to be worth the cost
+   of starting the headline lower. */
+@media (min-width: 1600px) {
+  .v2-hero {
+    align-items: center;
+    padding-bottom: 48px;
   }
 }
 @media (min-width: 1920px) {

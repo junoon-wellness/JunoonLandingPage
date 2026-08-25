@@ -50,7 +50,22 @@ export default function WhatWereBuildingV2() {
           (Kush: "completely remove SC 4 ... move up the elements in that
           space after"). The headline opens the section. */}
 
-      <div className="v2-two-col" style={{ alignItems: 'start' }}>
+      {/* Kush, 2026-08-24: "how can we reduce the empty space on desktop in
+          these areas". MEASURED at 1999px before the change: this grid's left
+          column was 210px tall next to a 524px right column, so 314px — about
+          60% of the section — sat blank underneath it, and the intro paragraph
+          is capped at 420px inside a 913px column so another ~490px sat blank
+          beside it.
+
+          `v2-two-col--intro` (globals.css) narrows the left track and centres
+          it against the list ABOVE 1024px only. It is a MODIFIER, not an edit
+          to `.v2-two-col`: that class is shared with NewsletterJoin on
+          /library, which Kush tuned separately in LV5-032 and must not move.
+
+          The inline alignItems is gone rather than overridden — it beat the
+          stylesheet, so the modifier could not have worked while it was here.
+          Below 1024px the grid is still a single column and unaffected. */}
+      <div className="v2-two-col v2-two-col--intro">
         <Reveal>
           <h2
             style={{
