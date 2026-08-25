@@ -41,8 +41,16 @@ export default function FooterV2() {
       className="v2-footer has-toran"
       style={{ position: 'relative', zIndex: 2 }}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+      {/* Kush, 2026-08-25 (mobile): "remove the lotus from the bottom text in
+          each page and move the Junoon wellness to the middle so it's lined w
+          the text below". The footer already centres its TEXT at <=768 via
+          `text-align: center`, but this wordmark is an inline-flex box inside a
+          column flex, so it sat hard left while the copyright line under it was
+          centred. Classes added so the phone rules can reach both. Desktop is
+          unchanged — the lotus stays there. */}
+      <div className="v2-footer-brand" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
         <span
+          className="v2-footer-wordmark"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -55,7 +63,7 @@ export default function FooterV2() {
             color: 'var(--jn-gold)',
           }}
         >
-          <Lotus size={20} />
+          <Lotus size={20} className="v2-footer-lotus" />
           Junoon Wellness
         </span>
         <span

@@ -1860,6 +1860,20 @@ body::before {
     text-align: center;
     padding: 24px;
   }
+  /* Kush, 2026-08-25: "remove the lotus from the bottom text in each page and
+     move the Junoon wellness to the middle so it's lined w the text below."
+     PHONE ONLY — the desktop footer keeps its lotus, which is one of the two
+     places the brand mark is allowed to appear at all.
+     `text-align: center` above already centred the copyright and newsletter
+     lines, but the wordmark is an inline-flex box inside a column flex, so it
+     ignored that and sat hard left. These two rules centre the box itself.
+     🔴 `!important` on the lotus is REQUIRED, not lazy: components/brand/
+     Lotus.tsx emits `display: block` as an INLINE style, which no selector at
+     any specificity can outrank. Same trap as `.wb-rule-end` and the reduced-
+     motion `.jn-reveal` block. */
+  .v2-footer-brand { align-items: center; }
+  .v2-footer-wordmark { justify-content: center; gap: 0; }
+  .v2-footer-lotus { display: none !important; }
   .v2-devices { min-height: 520px; }
   .v2-device-front { width: 218px; height: 474px; }
   .v2-dot { padding: 6px 8px; font-size: 11px; letter-spacing: 0.06em; }

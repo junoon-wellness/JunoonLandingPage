@@ -133,6 +133,27 @@ const TEAM: Person[] = [
 // no re-export was needed. Values below are still per-person: Shoam's is a
 // full-body candid with his face in one corner, so it gets the same
 // slightly-high framing as Amman/Divya's already-centred headshots.
+/*
+ * 🔴 FRAMING FOR AMMAN / DIVYA / DURVA LIVES IN THE IMAGE FILES, NOT IN
+ * `objectPosition`. Kush, 2026-08-25: "yes go ahead and recrop the instructor
+ * photos".
+ *
+ * The previous round tried to satisfy "move Amman lower and right" etc. by
+ * tuning `objectPosition`, and it did NOTHING — Kush caught it. `object-fit:
+ * cover` only leaves slack on the axis where the source's aspect ratio differs
+ * from the box's, and these sources were already cropped to almost exactly the
+ * box (AR 0.875). MEASURED: Amman had 0px of horizontal travel, Divya had 0px
+ * of VERTICAL travel, so her Y value moved her exactly 0 pixels.
+ *
+ * These three are now cropped from the iOS app's originals — which are far
+ * larger than what was here (Divya's is 4480x6720) — to 560x640, AR 0.875,
+ * with Kush's framing baked in. `objectPosition: '50% 50%'` is therefore
+ * correct AND inert; changing it will do nothing. To re-frame, RE-CROP.
+ * ⚠️ And use a NEW FILENAME when you do: a same-name replacement serves stale
+ * bytes. That is why these are -v2.
+ *
+ * Shoam is deliberately untouched — Kush did not ask, and his crop is fine.
+ */
 const INSTRUCTORS: Person[] = [
   {
     name: 'Shoam Mehta',
@@ -147,32 +168,22 @@ const INSTRUCTORS: Person[] = [
   {
     name: 'Amman Advaita',
     role: 'Hatha · Iyengar · Meditation',
-    photo: '/instructors/amman-head.jpg',
+    photo: '/instructors/amman-head-v2.jpg',
     bio: "At 14, a visit to Rumtek Monastery lit something that hasn't gone out since. That spark led to a Yoga Shastri certification under Dr. Hansraj Yadav, fifteen years of deepening study in Hatha and Iyengar methodologies, and formal training in the Sri Vidya tantric tradition, Tibetan Buddhism, and Tibetan Yantra Yoga.",
-    // Kush, 2026-08-24: "move ammans picture lower and to the right". With
-    // object-fit: cover the percentages position the IMAGE, not the subject —
-    // so BOTH numbers go DOWN to move him down-and-right. 50/50 -> 38/38.
-    objectPosition: '38% 38%',
+    objectPosition: '50% 50%',
   },
   {
     name: 'Divya Sahasrabuddhe',
     role: 'Hatha Yoga · Pranayama',
-    photo: '/instructors/divya.jpg',
+    photo: '/instructors/divya-head.jpg',
     bio: "Hi, I'm Divya Sahasrabuddhe, a certified Hatha Yoga and pranayama teacher from Goa with 18 years of dedicated practice. What began as a personal journey to build strength, balance, and mental clarity gradually deepened into a lifelong commitment, leading me to train at the Sivananda Ashram and share these practices with others.",
-    // Kush, 2026-08-24: "divyas just slightly up" — Y only, and only a little.
-    objectPosition: '50% 43%',
+    objectPosition: '50% 50%',
   },
   {
     name: 'Durva Aparna',
     role: 'Intro Yoga · Pranayama · Mobility',
-    // Kush, 2026-08-24: re-crop centred on her profile (the old 70% window
-    // pushed her face to the frame's edge). New filename per the cache trap.
-    // Same day, later: "durva slightly down and to the left" — Y down, X up.
-    // ⚠️ Kept modest (58/42) precisely BECAUSE of the note above: hers is a
-    // profile shot, so it runs out of room at the frame's edge sooner than the
-    // head-on portraits do.
-    objectPosition: '58% 42%',
-    photo: '/instructors/durva-head.jpg',
+    objectPosition: '50% 50%',
+    photo: '/instructors/durva-head-v2.jpg',
   },
 ]
 
