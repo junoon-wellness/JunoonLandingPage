@@ -745,25 +745,108 @@ body::before {
   gap: 56px;
 }
 
-/* Kush, 2026-08-24: "how can we reduce the empty space on desktop in these
-   areas". MODIFIER for WhatWereBuildingV2's intro-beside-a-list layout. NOT a
-   change to `.v2-two-col` itself — that class is shared with NewsletterJoin on
-   /library (LV5-032), which must not move.
+/* ─── WhatWereBuildingV2: "A practice that knows you" ───
+   Kush, 2026-08-24: "theres too much gap between the left and right columns
+   still is there anyway to add more info horizontally in those sections rather
+   than have it all be vertical".
 
-   Two effects, both aimed at the SAME 314px hole measured at 1999px:
-   1. 0.72fr/1fr narrows the left track. The intro paragraph is capped at 420px
-      anyway, so the left column was never using its half; handing the width to
-      the list makes the list wrap less, which SHORTENS the tall column rather
-      than only re-siting the short one.
-   2. `center` floats the intro against the list's height instead of parking it
-      at the top and leaving every leftover pixel in one lump at the bottom.
+   Replaces the earlier `.v2-two-col--intro` modifier from the same day, which
+   narrowed and centred the left column. That reduced the hole but kept the
+   two-column shape, and the gutter down the middle was the thing he objected
+   to. This drops the side-by-side entirely on desktop: the heading and intro
+   run across the top, the four points run across underneath.
 
-   Above 1024px only: below that the grid is a single column (see the
-   max-width: 768px rule further down) and centring would do nothing. */
+   🔴 `.v2-two-col` itself is deliberately untouched — it is shared with
+   NewsletterJoin on /library (LV5-032). This section no longer uses it. */
+.wb-head {
+  display: grid;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+.wb-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--jn-text);
+}
+.wb-intro {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--jn-text-dim);
+  line-height: 1.75;
+  max-width: 560px;
+}
+.wb-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.wb-card {
+  position: relative;
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.wb-num {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  /* LV5-031: were sage (SC4 "remove the green elements"). Turmeric measures
+     6.46:1 on the ground, so it passes at label size where clay (3.63:1)
+     would not. */
+  color: var(--jn-turmeric);
+  padding-top: 4px;
+}
+.wb-card-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--jn-text);
+  margin-bottom: 5px;
+  line-height: 1.25;
+}
+.wb-card-copy {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--jn-text-soft);
+  line-height: 1.7;
+}
+
+/* Desktop: heading beside intro, points in a 2x2. */
 @media (min-width: 1025px) {
-  .v2-two-col--intro {
-    grid-template-columns: 0.72fr 1fr;
-    align-items: center;
+  .wb-head {
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: end;
+    margin-bottom: 24px;
+  }
+  .wb-intro { max-width: 620px; }
+  .wb-grid {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 56px;
+  }
+  /* The closing rule only reads as a closing rule on a stacked list. In a grid
+     it underlines a single cell, so it goes above 1025px.
+
+     🔴 `!important` is REQUIRED and is not laziness: DrawLine (components/
+     motion/Reveal.tsx) emits `display:block` as an INLINE style, so no
+     stylesheet selector at any specificity can beat it. This is the same
+     reason the reduced-motion `.jn-reveal` block above uses !important, and
+     that block documents the rule. VERIFIED 2026-08-24: without it the
+     computed display stayed `block` at 1440 and the last card kept a stray
+     underline. */
+  .wb-rule-end { display: none !important; }
+}
+
+/* Wide desktop: all four across. This is the layout the ask was actually
+   about — at 1999px a 2x2 still leaves the section taller than it needs to be
+   and the cards wider than the copy needs. */
+@media (min-width: 1600px) {
+  .wb-grid {
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 44px;
   }
 }
 
@@ -3013,6 +3096,25 @@ body::before {
     align-items: center;
     padding-bottom: 48px;
   }
+
+  /* Kush, 2026-08-24: "theres too much gap between the left and right columns".
+     MEASURED at 1999px: 768px of empty between the offer card's right edge and
+     the phone's left edge — 38% of the screen. It decomposes into two separate
+     slacks, and both are closed here rather than only the obvious one:
+
+     1. The phone is 346px inside an 857px track and was CENTRED, so ~255px of
+        that track sat empty on the copy side. `flex-start` spends it on the
+        right-hand margin instead, where there is nothing to crowd.
+     2. The offer card and founder quote were 512px inside a 683px column,
+        because their max-width was tuned for a narrower layout. Letting them
+        fill the column moves their right edge ~171px closer.
+
+     Together roughly halves the gutter. The remaining gap is the grid's own
+     gap plus the copy column's natural measure, which is a real gutter rather
+     than dead space. */
+  .v2-devices { justify-content: flex-start; }
+  .v2-hero-offer,
+  .v2-hero-founder { max-width: none; }
 }
 @media (min-width: 1920px) {
   .jn-home-scale {
