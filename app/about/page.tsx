@@ -149,21 +149,29 @@ const INSTRUCTORS: Person[] = [
     role: 'Hatha · Iyengar · Meditation',
     photo: '/instructors/amman-head.jpg',
     bio: "At 14, a visit to Rumtek Monastery lit something that hasn't gone out since. That spark led to a Yoga Shastri certification under Dr. Hansraj Yadav, fifteen years of deepening study in Hatha and Iyengar methodologies, and formal training in the Sri Vidya tantric tradition, Tibetan Buddhism, and Tibetan Yantra Yoga.",
-    objectPosition: '50% 50%',
+    // Kush, 2026-08-24: "move ammans picture lower and to the right". With
+    // object-fit: cover the percentages position the IMAGE, not the subject —
+    // so BOTH numbers go DOWN to move him down-and-right. 50/50 -> 38/38.
+    objectPosition: '38% 38%',
   },
   {
     name: 'Divya Sahasrabuddhe',
     role: 'Hatha Yoga · Pranayama',
     photo: '/instructors/divya.jpg',
     bio: "Hi, I'm Divya Sahasrabuddhe, a certified Hatha Yoga and pranayama teacher from Goa with 18 years of dedicated practice. What began as a personal journey to build strength, balance, and mental clarity gradually deepened into a lifelong commitment, leading me to train at the Sivananda Ashram and share these practices with others.",
-    objectPosition: '50% 35%',
+    // Kush, 2026-08-24: "divyas just slightly up" — Y only, and only a little.
+    objectPosition: '50% 43%',
   },
   {
     name: 'Durva Aparna',
     role: 'Intro Yoga · Pranayama · Mobility',
     // Kush, 2026-08-24: re-crop centred on her profile (the old 70% window
     // pushed her face to the frame's edge). New filename per the cache trap.
-    objectPosition: '50% 50%',
+    // Same day, later: "durva slightly down and to the left" — Y down, X up.
+    // ⚠️ Kept modest (58/42) precisely BECAUSE of the note above: hers is a
+    // profile shot, so it runs out of room at the frame's edge sooner than the
+    // head-on portraits do.
+    objectPosition: '58% 42%',
     photo: '/instructors/durva-head.jpg',
   },
 ]

@@ -765,7 +765,12 @@ body::before {
 }
 .wb-title {
   font-family: var(--font-cormorant), serif;
-  font-size: clamp(28px, 3.2vw, 42px);
+  /* Kush, 2026-08-24: "make it slightly larger". Cap 42 -> 50 and the vw term
+     3.2 -> 3.6 so it actually reaches the new cap before the widest screens.
+     The 28px FLOOR is untouched on purpose — it is what keeps this readable on
+     a phone, and raising it is how a "slightly larger" desktop ask turns into
+     a wrapped mobile headline. */
+  font-size: clamp(28px, 3.6vw, 50px);
   font-weight: 400;
   line-height: 1.12;
   letter-spacing: -0.01em;
@@ -819,7 +824,11 @@ body::before {
   .wb-head {
     grid-template-columns: 1fr 1fr;
     gap: 56px;
-    align-items: end;
+    /* Kush, 2026-08-24: "center the text on the left with the right". Was
+       `end`, which bottom-aligned the heading against the intro paragraph and
+       left them visibly out of line — that is the misalignment in his
+       screenshot. */
+    align-items: center;
     margin-bottom: 24px;
   }
   .wb-intro { max-width: 620px; }

@@ -64,9 +64,17 @@ export default function WaitlistPageV2() {
       <NavV2 />
       <HeroV2 />
       {/* LV5-032: <StatBand /> (500 founder spots · 6 practices · 1 AI coach) removed — Kush, 2026-08-23: "remove this section and move up accordingly". Component stays on disk. */}
-      <WhatWereBuildingV2 />
-      {/* Kush, 2026-08-23: toran divider at the major break before the feature tabs */}
+      {/* Kush, 2026-08-24: "move the element ... to between hero and the second
+          section". Confirmed with him that "the element" meant the TORAN
+          DIVIDER ONLY — FeatureStory and the phone stay put. It used to sit
+          between WhatWereBuildingV2 and FeatureStory (Kush, 2026-08-23: "toran
+          divider at the major break before the feature tabs"); the major break
+          is now read as hero-to-body instead.
+
+          Consequence, stated rather than hidden: WhatWereBuildingV2 now runs
+          straight into FeatureStory with no divider between them. */}
       <Toran />
+      <WhatWereBuildingV2 />
       <FeatureStory />
       {SHOW_TOUR && <WalkthroughTeaser />}
       {/* LV5-018: OfferBandV2 + FounderBlockV2 removed from the page — both
