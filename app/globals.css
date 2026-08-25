@@ -822,7 +822,12 @@ body::before {
 /* Desktop: heading beside intro, points in a 2x2. */
 @media (min-width: 1025px) {
   .wb-head {
-    grid-template-columns: 1fr 1fr;
+    /* minmax(0, …) NOT a bare 1fr. A bare `1fr` is `minmax(auto, 1fr)`, so the
+       track refuses to go below its content's min-content width and the grid
+       can push itself wider than its container — which `body{overflow-x:hidden}`
+       then CLIPS SILENTLY rather than scrolling. This repo has already been
+       bitten by exactly that (see the .jn-teaser comment). */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 56px;
     /* Kush, 2026-08-24: "center the text on the left with the right". Was
        `end`, which bottom-aligned the heading against the intro paragraph and
@@ -833,7 +838,7 @@ body::before {
   }
   .wb-intro { max-width: 620px; }
   .wb-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 56px;
   }
   /* The closing rule only reads as a closing rule on a stacked list. In a grid
@@ -854,7 +859,7 @@ body::before {
    and the cards wider than the copy needs. */
 @media (min-width: 1600px) {
   .wb-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: 44px;
   }
 }
