@@ -2000,6 +2000,48 @@ body::before {
   .pr-stage-side .pr-chips { justify-content: flex-start; }
 }
 .pr-stage-side .pr-side-block + .pr-side-block { margin-top: 18px; } /* LV5-032: was 28 */
+
+/* ─── LV5-059 — Kush, 2026-08-24 ─── */
+
+/* "spacing on pricing page is also weird on the right side especially with the
+   questions".
+
+   MEASURED at 1999px, inside the 924px side column, BEFORE this block: the
+   three right-hand blocks started at THREE DIFFERENT left edges —
+       free-month callout   left 0
+       "building next" chips left 102
+       FAQ                   left 142   <- "especially with the questions"
+   `.pr-chips` (max-width 720) and `.pr-faq` (max-width 640) both still carried
+   `margin: 0 auto` from when this content lived in a FULL-WIDTH CENTRED
+   section. The rule at ~1998 already fixed their TEXT alignment for the side
+   column and the heading's, but not their own centring, so the blocks kept
+   indenting themselves by different amounts. That ragged left edge is the
+   "weird spacing", and the FAQ was worst because its max-width is smallest.
+
+   Only inside `.pr-stage-side`, and only where the two-column layout exists,
+   so the single-column phone layout keeps its centred treatment. */
+@media (min-width: 1024px) {
+  .pr-stage-side .pr-chips,
+  .pr-stage-side .pr-faq {
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* One flat 18px sat between a 81px callout, a 120px chip cloud and a 154px
+     <details> list — three blocks of very different density reading as one
+     undifferentiated run. The FAQ is a distinct interaction, so it gets more
+     air than the gap between the two static blocks above it.
+     This costs NO page height: the side column measured 391px against the
+     card's 473px, so the grid row is set by the CARD and the column has slack.
+     🔴 If that ever stops being true, this trades directly against Kush's
+     2026-08-23 "get everything on one page" ruling — re-measure both columns
+     before adding more. */
+  .pr-stage-side .pr-side-block + .pr-side-block { margin-top: 26px; }
+  .pr-stage-side .pr-side-block + .pr-side-block:last-child { margin-top: 38px; }
+}
+
+
 /* LV5-032: the free-month callout that leads the sliding-in column. */
 .pr-free-callout-title {
   font-family: var(--font-cormorant), serif;
@@ -2147,6 +2189,54 @@ body::before {
   font-size: 20px;
   font-weight: 400;
   color: var(--jn-turmeric);
+}
+
+/* 🔴 THIS BLOCK MUST STAY BELOW `.pr-card` / `.pr-price` / `.pr-price-unit`.
+   A media query adds NO specificity, so when it sat higher in the file the
+   later plain `.pr-card { max-width: 560px }` beat it and the card silently
+   did not resize — build green, zero warnings, nothing visibly wrong until the
+   computed width was read back. Do not "tidy" it upwards. */
+/* "the pricing cutout itself seems to have shrunk can we make that slightly
+   larger but and add some oomph to it".
+
+   🔴 IT DID NOT SHRINK — VERIFIED 2026-08-24, do not re-derive. `.pr-card` is
+   a FIXED `max-width: 560px` and measured 560x473 at BOTH 1440 and 1999. What
+   changed is everything around it: `.jn-home-scale` zoom (1.12/1.22) went onto
+   the HOME page earlier the same day and pricing was deliberately excluded,
+   because the scroll-pin does its own height math. So the card reads small by
+   comparison, and at 1999 it filled only 61% of its own 924px column.
+   The fix is therefore to size the card up DELIBERATELY here. Do NOT extend
+   `zoom` to /pricing — that is the thing the exclusion exists to prevent.
+
+   ⚠️ Card height feeds the pin: PricingStage.tsx computes
+   `inner.scrollHeight + PIN_PADDING_TOP + PIN_PADDING_BOTTOM` at runtime, so
+   it self-adjusts — but the SCROLL must be re-tested, not assumed. The two
+   hard couplings are unchanged by this block: PIN_PADDING_TOP/BOTTOM (124/20)
+   still equal `.pr-stage-pin`'s padding, and PRICING_STAGE_MIN (1024) still
+   equals the `.pr-stage-grid` breakpoint. */
+@media (min-width: 1600px) {
+  .pr-card-stage,
+  .pr-card {
+    max-width: 680px;
+  }
+  .pr-card {
+    /* Was 22/32/18, tuned when the card was 560 wide. */
+    padding: 30px 44px 26px;
+    /* The "oomph": a turmeric-tinted edge instead of a neutral hairline, and
+       a warm lift off the ground. Kush's standing note on this page's scale
+       work is "nothing too large or gaudy", so this is a deeper shadow and a
+       warmer edge rather than a glow or a gradient. */
+    border-color: rgba(232, 184, 112, 0.3);
+    box-shadow:
+      0 24px 70px rgba(0, 0, 0, 0.5),
+      0 2px 44px rgba(181, 82, 42, 0.12);
+  }
+  .pr-price {
+    font-size: clamp(40px, 4.4vw, 68px);
+  }
+  .pr-price-unit {
+    font-size: 24px;
+  }
 }
 
 .pr-offer-line {
