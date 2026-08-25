@@ -6,7 +6,6 @@
  * The previous version of this page carried all three; do not drop them.
  */
 import Toran from '@/components/brand/Toran'
-import Lotus from '@/components/brand/Lotus'
 
 const legalLinks = [
   { label: 'Privacy Policy', href: '/privacy' },
@@ -35,7 +34,12 @@ export default function FooterV2() {
   return (
     <>
     {/* Kush, 2026-08-23: the toran divider sits above every footer, replacing
-        the plain hairline; the sage lotus leads the wordmark. */}
+        the plain hairline. The lotus that used to lead the wordmark is GONE —
+        Kush, 2026-08-25: "remove lotus in footer in desktop as well as mobile".
+        🔴 CONSEQUENCE: the brand mark now renders in exactly ONE place on the
+        whole site, the phone menu sheet (NavV2). It is therefore invisible to
+        desktop visitors entirely. That is what was asked for; it supersedes the
+        2026-08-24 "keep it in nav and footer only". */}
     <Toran />
     <footer
       className="v2-footer has-toran"
@@ -63,7 +67,6 @@ export default function FooterV2() {
             color: 'var(--jn-gold)',
           }}
         >
-          <Lotus size={20} className="v2-footer-lotus" />
           Junoon Wellness
         </span>
         <span

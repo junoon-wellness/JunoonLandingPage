@@ -1873,7 +1873,6 @@ body::before {
      motion `.jn-reveal` block. */
   .v2-footer-brand { align-items: center; }
   .v2-footer-wordmark { justify-content: center; gap: 0; }
-  .v2-footer-lotus { display: none !important; }
   .v2-devices { min-height: 520px; }
   .v2-device-front { width: 218px; height: 474px; }
   .v2-dot { padding: 6px 8px; font-size: 11px; letter-spacing: 0.06em; }
