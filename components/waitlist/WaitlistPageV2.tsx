@@ -55,6 +55,15 @@ export default function WaitlistPageV2() {
           components/brand/Jaali.tsx. zIndex={-1} matches ground so both stay
           behind all real content regardless of local stacking contexts, and
           paint above ground because they come later in DOM tree order. */}
+      {/* Kush, 2026-08-25: a scroll-driven drift was built for these panels and
+          REVERTED the same day — "background looks a little weird in places
+          like its duplicated weirdly can we just have the background normal
+          like it was before and we keep the animated toran".
+          🔴 WHY IT LOOKED DUPLICATED, so nobody rebuilds it: the SAME tile is
+          painted by THREE layers — the site-wide <JaaliGround> plus these two
+          panels. Drifting only the panels desynchronised them from the ground,
+          and one lattice offset against an identical lattice reads as ghosting.
+          Any future parallax here has to move ALL THREE together, or move none. */}
       {HERO_JAALI && (
         <Jaali variant="panel" zIndex={-1} maskPosition="82% 380px" maskSize="820px 820px" />
       )}

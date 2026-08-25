@@ -8,19 +8,46 @@
  * The pattern id is suffixed per instance so several torans on one page do
  * not share (and clobber) one <pattern>.
  */
-import { useId } from 'react'
+'use client'
 
+import { useId } from 'react'
+import { motion } from 'framer-motion'
+
+/**
+ * Kush, 2026-08-25: "is there any scroll animation we can add as the user
+ * scrolls between the 3 sections of the main home landing page". The toran now
+ * DRAWS ITSELF left-to-right as it enters view, turning a static rule into a
+ * chapter break you feel on the way past.
+ *
+ * Deliberately the same gesture as `DrawLine` in components/motion/Reveal.tsx —
+ * scaleX 0→1 from a left origin, `once: true`, the shared EASE — because the
+ * hairlines above the WhatWereBuilding cards already move that way and two
+ * different "line arrives" motions on one page would read as a mistake.
+ *
+ * 🔴 SHARED COMPONENT: six instances across four pages (home, /about x2,
+ * /library, and every footer). They all animate now. That is intended — one
+ * consistent chapter break — but it is not a home-page-only change.
+ *
+ * Reduced motion: the wrapper carries `jn-reveal`, which globals.css already
+ * neutralises with !important inside its `prefers-reduced-motion` block. No
+ * separate guard needed, and none should be added.
+ */
 export default function Toran({ className }: { className?: string }) {
   const id = useId().replace(/:/g, '')
   const pid = `toran-${id}`
   return (
     <div className={`jn-toran${className ? ` ${className}` : ''}`} aria-hidden="true">
-      <svg
-        className="jn-toran-svg"
+      <motion.svg
+        className="jn-toran-svg jn-reveal"
         viewBox="0 0 1184 28"
         preserveAspectRatio="none"
         width="100%"
         height="28"
+        style={{ transformOrigin: 'left' }}
+        initial={{ scaleX: 0, opacity: 0.4 }}
+        whileInView={{ scaleX: 1, opacity: 1 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
       >
         <defs>
           <pattern id={pid} x="0" y="0" width="48" height="28" patternUnits="userSpaceOnUse">
@@ -30,7 +57,7 @@ export default function Toran({ className }: { className?: string }) {
         </defs>
         <rect x="0" y="0" width="1184" height="28" fill={`url(#${pid})`} />
         <path d="M0 4 H1184" stroke="var(--jn-turmeric)" strokeWidth="1" opacity="0.5" />
-      </svg>
+      </motion.svg>
     </div>
   )
 }
