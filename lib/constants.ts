@@ -25,15 +25,27 @@ export const TOTAL_SPOTS = 500
 export const APP_STORE_URL = 'https://apps.apple.com/us/app/junoon-wellness/id6781123809'
 
 /**
- * LV5-016: the /about founder video. Arjav filmed it 2026-08-19 but the file
- * hasn't been supplied yet — null renders a dark poster + play mark +
- * "Founder video" caption instead of a broken <video> tag.
- * Self-hosted per Kush's ruling once the file arrives: if it's under ~25MB,
- * drop it in public/ and point this at that path; if larger, upload to
- * Vercel Blob (or Mux) and point this at that URL instead — don't commit a
- * large binary to the repo.
+ * LV5-016: the /about founder video. Arjav's finished edit landed 2026-08-28
+ * and is self-hosted per Kush's ruling — 18MB sits well under the ~25MB bar
+ * that would have sent it to Vercel Blob instead.
+ *
+ * Source was 2880x2160 (4:3) HEVC @120fps, 208MB. Re-encoded to 1600x1200
+ * H.264 @30fps CRF 23 with +faststart (so playback starts before the whole
+ * file downloads).
+ *
+ * NOT CROPPED — the full 4:3 frame ships, and .ab-video-cinema is 4/3 to match
+ * (Kush, 2026-08-28: change the bar, not the video). An earlier 16:9 encode was
+ * replaced after real frames showed it beheaded the bench B-roll and clipped the
+ * in-app phone screens. If anyone widens that slot again, they are cropping
+ * Arjav's composition — re-encode from the original instead.
+ *
+ * null is still handled: the whole section unmounts rather than rendering an
+ * empty slot, which is what Kush asked to remove on 2026-08-24.
  */
-export const FOUNDER_VIDEO_SRC: string | null = null
+export const FOUNDER_VIDEO_SRC: string | null = '/junoon-founder.mp4'
+
+/** Poster frame (t=0.6s) so the slot isn't black while the video loads. */
+export const FOUNDER_VIDEO_POSTER = '/junoon-founder-poster.jpg'
 
 /** Traffic sources we accept from the `?ref=` query param. Anything else → 'direct'. */
 export const VALID_SOURCES = ['instagram', 'tiktok', 'linkedin', 'direct'] as const

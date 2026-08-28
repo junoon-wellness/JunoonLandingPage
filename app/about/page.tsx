@@ -14,6 +14,7 @@ import BioDisclosure from '@/components/about/BioDisclosure'
    and the copy from the opposite side 0.15s later, 0.9s each. Band 2 is the
    reversed band, so its signs flip. Reduced motion neutralises all of it via
    .jn-reveal in globals.css. */
+import { FOUNDER_VIDEO_SRC, FOUNDER_VIDEO_POSTER } from '@/lib/constants'
 import { clean } from '@/lib/text'
 
 /* ══════════════════════════════════════════════════════════════════
@@ -298,13 +299,32 @@ export default function AboutPage() {
         <p className="ab-subline">{SUBLINE}</p>
       </header>
 
-      {/* Kush, 2026-08-24: "also remove founder video for now until we have it
-          ready please". Arjav's file never arrived, so this band was rendering
-          an empty 16:9 slot with a play mark and the caption "Founder video".
-          The section is REMOVED, not the plumbing: `FOUNDER_VIDEO_SRC` in
-          lib/constants.ts and the `.ab-hero-video` / `.ab-video-cinema` CSS are
-          untouched, so restoring this is pasting the section back and setting
-          the constant. Keep the rounded frame, no arch, when it returns. */}
+      {/* Kush, 2026-08-23: "make the text span across the screen more like a
+          proper hero header that leads into the video right under it more
+          cinematically". Restored 2026-08-28 now Arjav's edit exists.
+
+          The whole section unmounts when FOUNDER_VIDEO_SRC is null — the old
+          version rendered an empty slot with a play mark, which is exactly
+          what Kush asked to remove on 2026-08-24. No empty state, no PlayMark.
+
+          preload="metadata" matters: without it browsers pull all 18MB on page
+          load for a video most visitors never press play on. */}
+      {FOUNDER_VIDEO_SRC && (
+        <section className="ab-hero-video" aria-label="Founder video">
+          <Reveal y={24} scale={0.98} duration={1} amount={0.2}>
+            <div className="ab-video-slot ab-video-cinema">
+              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+              <video
+                src={FOUNDER_VIDEO_SRC}
+                poster={FOUNDER_VIDEO_POSTER}
+                preload="metadata"
+                controls
+                playsInline
+              />
+            </div>
+          </Reveal>
+        </section>
+      )}
 
       {/* Kush, 2026-08-24: "put the ancient traditions banner below the
           video" — a full-width band directly under the cinematic slot. */}

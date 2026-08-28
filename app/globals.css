@@ -2504,11 +2504,23 @@ body::before {
      much larger then everything else" — capped and centred; 21:9 height at
      1280 drops ~507px → ~446px. Still the widest thing on the page, by a
      smaller margin. */
-  max-width: calc(1040px + 96px);
+  max-width: calc(780px + 96px);
   margin: 0 auto;
 }
+/* Kush, 2026-08-28: was 21 / 9, briefly 16 / 9, now 4 / 3 — the SHAPE OF THE
+   SOURCE. Arjav delivered a finished 4:3 edit, so any wider window is a crop
+   of his composition, not a framing choice of ours. VERIFIED against real
+   frames: 21:9 cut the top of his head off and sliced the "Modern solutions"
+   end card; 16:9 survived the talking head but still beheaded the bench B-roll
+   and clipped the bottom off the in-app phone screens. 4:3 crops nothing.
+   Kush's call: "change the format of the video bar versus changing the video
+   to fit the dimensions."
+
+   The band is narrowed to 780px (see .ab-hero-video) so the taller shape lands
+   at 585px — the same height the 16:9 version had at 1040px, i.e. no bigger on
+   the page than what was already reviewed. */
 .ab-video-slot.ab-video-cinema {
-  aspect-ratio: 21 / 9;
+  aspect-ratio: 4 / 3;
   width: 100%;
   box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.8);
 }
@@ -2953,7 +2965,7 @@ body::before {
 @media (max-width: 768px) {
   .ab-hero { padding: 76px 24px 8px; }
   .ab-hero-video { padding: 16px 24px 0; }
-  .ab-video-slot.ab-video-cinema { aspect-ratio: 16 / 9; }
+  .ab-video-slot.ab-video-cinema { aspect-ratio: 4 / 3; }
   .ab-band {
     grid-template-columns: 1fr;
     gap: 20px;
