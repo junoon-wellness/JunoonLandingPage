@@ -41,8 +41,18 @@ export const SCREENS = {
   },
   coachChat: {
     src: '/screenshots/v3/coach-chat.png',
+    // 2026-08-30: swapped for a current capture (Kush's ruling — refresh only
+    // the screens we have new shots of, leave the rest). The 2026-08-09 batch
+    // was full-screen 1206x2622 including the iOS status bar; this one starts
+    // at the app header, so it is proportionally resized to 828 wide and the
+    // remaining 110px is the capture's own first row repeated upward, which
+    // continues the header's horizontal gradient with no seam. Do NOT drop a
+    // raw capture in here: .v2-device img is object-fit:cover, so anything
+    // that is not 828x1800 gets its SIDES cropped and loses the header
+    // buttons. Alt rewritten — the old one described the retired
+    // swap-a-class conversation and no longer matched the image.
     alt:
-      'The Junoon coach in conversation, swapping a scheduled class for a gentler practice on request',
+      'The Junoon coach introducing itself, offering to build a routine around yoga, meditation and the habits around them',
   },
   coachPicks: {
     src: '/screenshots/v3/coach-picks.png',
@@ -51,6 +61,11 @@ export const SCREENS = {
   },
   library: {
     src: '/screenshots/v3/library.png',
+    // 2026-08-30: current capture, same treatment as coachChat above. The
+    // file name stays `library` because KEEPER-SPEC, POSTER-SPEC and
+    // SEED-LIBRARY all bind cards to these filenames — the app's own tab is
+    // now labelled "Classes", which is why this shot shows a Classes tab bar.
+    // Alt still accurate: it is the recorded shelf either way.
     alt:
       'The Junoon library of recorded yoga, meditation and pranayama classes with their lengths and instructors',
   },
@@ -66,8 +81,11 @@ export const SCREENS = {
   },
   planTab: {
     src: '/screenshots/v3/plan-tab.png',
+    // 2026-08-30: current capture, same treatment as coachChat above. Alt
+    // rewritten — the old one promised habits and nutrition items that this
+    // day does not contain.
     alt:
-      'The Junoon plan tab with a populated day of practice, habits and nutrition across morning, midday and evening',
+      'The Junoon plan tab with the day laid out across morning, midday and evening: a midday yoga sequence and an evening guided meditation',
   },
 } as const satisfies Record<string, Screen>
 
