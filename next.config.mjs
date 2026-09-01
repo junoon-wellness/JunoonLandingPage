@@ -2,18 +2,18 @@ import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
 
 /**
- * Content Security Policy — SHIPPED IN REPORT-ONLY FIRST, DELIBERATELY.
+ * Content Security Policy — ENFORCING.
  *
- * A wrong CSP does not degrade a page, it breaks it: blocked scripts, unstyled
- * layout, dead forms. Shipping one enforcing on the day promotion starts is
- * exactly the change that is fine 95 times out of 100. Report-only makes the
- * browser send violation reports and change nothing, so the real traffic tells
- * us whether the policy is right before it can cost anything.
+ * Shipped report-only first, deliberately: a wrong CSP does not degrade a
+ * page, it breaks it — blocked scripts, unstyled layout, dead forms — and
+ * that is not a thing to discover on the day promotion starts.
  *
- * ⚠️ TO FINISH THIS: watch the browser console on the live site for
- * "Content Security Policy" report entries, and when there are none, rename
- * the header below to `Content-Security-Policy`. That flip is the whole
- * remaining task — the policy itself does not change.
+ * FLIPPED TO ENFORCING after measuring ZERO violations on production across
+ * every page shape the site has: the home page (framer-motion, the hero
+ * carousel, lazy images), /about (the self-hosted founder video reached
+ * readyState 4 with no error), /pricing (scroll-linked animation), a
+ * /library/[slug] article (the one place dangerouslySetInnerHTML is used),
+ * /contact and /terms. Fonts reported `loaded` on each.
  *
  * ⚠️ `'unsafe-inline'` in script-src is NOT an oversight. Next.js injects
  * inline bootstrap scripts on every page, and the alternative (per-request
@@ -81,7 +81,7 @@ const SECURITY_HEADERS = [
    * subdomain to HTTPS forever, including ones nobody has created yet.
    */
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
-  { key: "Content-Security-Policy-Report-Only", value: CSP },
+  { key: "Content-Security-Policy", value: CSP },
 ];
 
 /** @type {import('next').NextConfig} */
