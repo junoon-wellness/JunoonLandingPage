@@ -6,13 +6,27 @@
  * /screenshots directly.
  *
  * ── v3 shots, round 3 ────────────────────────────────────────────────────
- * All eight keys now point at real app captures in `public/screenshots/v3/`,
+ * All nine keys point at real app captures in `public/screenshots/v3/`,
  * one distinct file per key. The v2 stand-ins and the `standIn` flag that
  * tracked them are gone, and no image is used twice.
  *
  * Note on `coachPicks`: the key name is historical. The picks surface no
- * longer exists in the app, so this slide shows the coach building your week
- * instead, and its user-visible label reads "Weekly Plan".
+ * longer exists in the app; this slot now shows a class with the coach's
+ * "Why this" reason expanded, which is the same idea in the shape the app
+ * actually ships.
+ *
+ * ── 2026-09-01, Kush's captures ──────────────────────────────────────────
+ * Four slots re-shot from full-screen 1206x2622 simulator captures. EVERY
+ * app screenshot used publicly gets the iOS status bar (top 186px) AND the
+ * in-app BETA badge removed first — Kush's standing rule, applies to the
+ * site, Instagram, the App Store listing, everything. The BETA pill sits at
+ * roughly x569-680 / y237-295 in an uncropped capture; erase it by per-row
+ * interpolation across the header's horizontal gradient, never a flat fill.
+ * `live-tab` was the only one of the four that carried the badge.
+ *
+ * DELIBERATELY NOT RE-SHOT (Kush, 2026-09-01): `ritualProposal` and
+ * `breathworkSession`. The ritual proposal can only be captured during the
+ * Sunday ritual window, and neither screen's UI has meaningfully changed.
  */
 
 export interface Screen {
@@ -36,8 +50,12 @@ export const SCREENS = {
   },
   ritualWeek: {
     src: '/screenshots/v3/ritual-week.png',
+    // 2026-09-01: re-shot. The old capture printed MONDAY 10 AUG - SUNDAY
+    // 16 AUG on screen, three weeks stale on a page we promote from today.
+    // This one is the ritual tab itself, dated the current week, with the
+    // Adjust plan control at the top.
     alt:
-      'The approved Junoon week laid out day by day, each session labelled with its time of day and type',
+      'The Junoon week ahead laid out day by day, each session labelled with its type, above an Adjust plan button',
   },
   coachChat: {
     src: '/screenshots/v3/coach-chat.png',
@@ -56,8 +74,13 @@ export const SCREENS = {
   },
   coachPicks: {
     src: '/screenshots/v3/coach-picks.png',
+    // 2026-09-01: re-shot. The old capture was headed "Kush's week", made a
+    // claim about a specific person ("practised Sat midday 8 weeks running")
+    // and showed an EMPTY focus panel reading "Nothing set yet" - an empty
+    // state doing marketing work. This one is a real class with the coach's
+    // "Why this" reason expanded, which is what the chapter copy promises.
     alt:
-      'The coach summarising your week before it is built: your free windows, how much of each practice, and what to focus on',
+      "A recorded class with the coach's reason for choosing it expanded: it is pitched at where you are starting from",
   },
   library: {
     src: '/screenshots/v3/library.png',
@@ -71,8 +94,22 @@ export const SCREENS = {
   },
   liveClass: {
     src: '/screenshots/v3/live-class.png',
+    // 2026-09-01: the old capture was a RECORDED class detail page sitting
+    // under a hero slide labelled "Live Classes" - the picture and the
+    // promise disagreed. This one is a genuine scheduled live session:
+    // LIVE CLASS chip, a real date, a named instructor, and the note about
+    // stream access that proves it is not a video.
     alt:
-      'A Junoon class detail page showing the instructor, the length, and what the session covers',
+      'A scheduled Junoon live class with its date, its instructor and what the session covers',
+  },
+  liveTab: {
+    src: '/screenshots/v3/live-tab.png',
+    // 2026-09-01, new key. Shows the Live classes / Recorded toggle, which
+    // the class-detail capture cannot - so the Live chapter's two frames are
+    // "here is the structure" and "here is one session", instead of leaning
+    // on the breathwork player it used to borrow.
+    alt:
+      'The Junoon classes tab switched to Live classes, showing an upcoming session with its date and instructor',
   },
   breathworkSession: {
     src: '/screenshots/v3/breathwork-session.png',

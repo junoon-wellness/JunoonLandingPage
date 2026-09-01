@@ -70,10 +70,11 @@ const CHAPTERS: StoryChapter[] = [
     // outlines stay clay/gold/sage/turmeric — one each.
     tabAccent: 'var(--jn-gold-alt)',
     railLabel: 'Live classes',
-    // liveClass is the class-detail capture; breathworkSession stands in as
-    // "a session in progress" — the body copy names breathwork, so the
-    // screen matches the words.
-    screens: [SCREENS.liveClass, SCREENS.breathworkSession],
+    // 2026-09-01: both frames are now genuinely live-class screens. Frame 1
+    // is one scheduled session, frame 2 is the Live classes / Recorded
+    // toggle. breathworkSession used to stand in here and no longer needs
+    // to — a breathing timer was never "real instructors in real time".
+    screens: [SCREENS.liveClass, SCREENS.liveTab],
   },
   {
     id: 'library',
