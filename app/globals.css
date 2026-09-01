@@ -1900,9 +1900,28 @@ body::before {
    nearly touching, so the grid gets real breathing room — two columns
    total ≈298px, still clear of a 342px container at 390. */
 @media (max-width: 480px) {
+  /* JV3 (2026-09-01, Kush: "better align the 5 buttons below"). `max-content`
+     sized each column to its own widest label, so column 1 was as wide as
+     RECORDED CLASSES while column 2 only had to fit YOUR PLAN — the two
+     columns had different widths, nothing lined up down the page, and the
+     fifth label sat alone under the wide column with a hole beside it.
+     Equal columns fix the ragged edges; spanning the orphan across both
+     centres it under the pair above instead of leaving it hanging left. */
   .v2-dots {
-    grid-template-columns: repeat(2, max-content);
-    gap: 10px 22px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 10px;
+    max-width: 330px;
+  }
+  /* The pill is inline-flex, so without this its content hugs the left of a
+     now-wider cell and the labels stop being centred under each other. */
+  .v2-dot {
+    justify-content: center;
+    width: 100%;
+  }
+  .v2-dots > .v2-dot:last-child {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: max-content;
   }
 }
 
