@@ -132,13 +132,28 @@ export async function POST(req: Request) {
         return Response.json({ ok: true, alreadySubscribed: true });
       }
       console.warn("beehiiv: existing subscriber not active, reactivating:", existingStatus);
-    }
-    // 404 = not found (expected for new signups); anything else is unexpected.
-    if (lookup.status !== 404) {
+    } else if (lookup.status !== 404) {
+      // 404 = not on the list yet, the normal path for a new signup.
+      // Anything else that is ALSO not ok is a real beehiiv failure.
+      //
+      // JV3-220 (2026-09-01): this used to be a second, independent `if`,
+      // so a 200 lookup fell straight into it and returned 502 — undoing
+      // the reactivation the branch above had just decided to do. Every
+      // brand-new subscriber sits at status "validating" for a short window
+      // (VERIFIED on production: a first signup returns
+      // {ok:true,status:"validating"}), so a double-tap or a retry hit this
+      // and showed "Something went wrong" on a signup that had in fact
+      // worked. Unsubscribed addresses could never re-join at all.
+      //
+      // It also called `lookup.text()` after the branch above had already
+      // called `lookup.json()`. The body can only be read once, so that
+      // threw "Body is unusable" into the outer catch — which is why the
+      // runtime logs recorded a TypeError instead of beehiiv's response,
+      // and why two attempts to diagnose this from logs found nothing.
       const detail = await lookup.text();
       console.error("beehiiv lookup failed:", lookup.status, detail);
       return Response.json(
-        { ok: false, error: "Something went wrong. Please try again." },
+        { ok: false, error: "Something went wrong. Please try again.", code: "lookup" },
         { status: 502 }
       );
     }
@@ -175,7 +190,7 @@ export async function POST(req: Request) {
       const detail = await res.text();
       console.error("beehiiv subscription failed:", res.status, detail);
       return Response.json(
-        { ok: false, error: "Something went wrong. Please try again." },
+        { ok: false, error: "Something went wrong. Please try again.", code: "create" },
         { status: 502 }
       );
     }
@@ -195,8 +210,12 @@ export async function POST(req: Request) {
     return Response.json({ ok: true, status });
   } catch (err) {
     console.error("beehiiv request error:", err);
+    // JV3-220: the three 502s used to be indistinguishable from the client,
+    // which is what forced a hunt through runtime logs. `code` names the
+    // branch and carries nothing sensitive — the form only ever renders
+    // `error`, so this is invisible to members.
     return Response.json(
-      { ok: false, error: "Something went wrong. Please try again." },
+      { ok: false, error: "Something went wrong. Please try again.", code: "network" },
       { status: 502 }
     );
   }
