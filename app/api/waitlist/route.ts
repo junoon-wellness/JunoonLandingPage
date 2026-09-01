@@ -207,6 +207,35 @@ export async function POST(req: Request) {
       status = undefined;
     }
     if (status && status !== "active") console.warn("beehiiv: subscriber created with status", status);
+
+    // JV3-269 (2026-09-01): beehiiv accepts the call and reports the address
+    // as unreachable. This used to return ok:true, so SignupForm — which
+    // branches on `ok` — showed the success state to someone who had typo'd
+    // their domain. They believed they had subscribed, never received
+    // anything, and nothing surfaced it on either side.
+    //
+    // ⚠️ ONLY "invalid" is a dead end. "validating" is the normal transient
+    // state of EVERY new signup (a first-time signup returns it, VERIFIED on
+    // production), and "pending" is a legitimate double opt-in waiting on a
+    // confirmation email. Treating either as a failure would reject good
+    // signups — the mirror of the bug this fixes.
+    //
+    // The beehiiv record is deliberately left in place; only what the member
+    // is told changes. 422 rather than 502: nothing went wrong on our side or
+    // beehiiv's, the address itself is the problem, and it is worth keeping
+    // that distinct from the three 502s above.
+    if (status === "invalid") {
+      return Response.json(
+        {
+          ok: false,
+          error: "We couldn't reach that address. Check the spelling, or try another one.",
+          code: "invalid-email",
+          status,
+        },
+        { status: 422 }
+      );
+    }
+
     return Response.json({ ok: true, status });
   } catch (err) {
     console.error("beehiiv request error:", err);
