@@ -15,6 +15,30 @@
  * "Why this" reason expanded, which is the same idea in the shape the app
  * actually ships.
  *
+ * 🔴 STRIP OS CHROME FROM **BOTH ENDS**, NOT JUST THE TOP.
+ * The iOS status bar is the obvious one and it is only half the job. When a
+ * screen is a presented SHEET, the capture also contains the sheet's rounded
+ * bottom corners with the grey backdrop showing through at the sides — which
+ * lands in the phone frame as an ugly grey bar across the bottom. Kush caught
+ * it on the hero twice ("not sure why this keeps happening"), and the same
+ * defect was sitting unnoticed in coachPicks and ritualWeek.
+ *
+ * HOW TO FIND IT WITHOUT EYEBALLING: a real app row runs edge to edge in one
+ * background, so scan up from the bottom for the first row whose LEFT and
+ * RIGHT edge pixels stop matching its CENTRE. That is where the chrome
+ * begins. Cut ~8px above it and fill the shortfall (see below).
+ * ⚠️ Do NOT apply this blindly — a full-screen tab view ends in the app's own
+ * tab bar, which is real content. `liveTab` is exactly that case and is
+ * deliberately uncropped. The detector returns "clean" for it; trust that.
+ *
+ * FILLING THE SHORTFALL: every capture is shorter than 828x1800 once the
+ * chrome is off, so the remainder must be filled. Fill at the BOTTOM, never
+ * the top — at the top it is a pale strip above a dark photo and reads as a
+ * blank band; at the bottom it continues the screen's own background and
+ * disappears. Pick the fill row by MEASURING the flattest row in the last
+ * 300px, never by taking the last row: on IMG_5380 the last row carries a
+ * shadow (stddev 28) and stretching it produced a visible streak.
+ *
  * ── 2026-09-01, Kush's captures ──────────────────────────────────────────
  * Four slots re-shot from full-screen 1206x2622 simulator captures. EVERY
  * app screenshot used publicly gets the iOS status bar (top 186px) AND the
