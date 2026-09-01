@@ -2,6 +2,7 @@
 
 import { useId, useRef, useState } from 'react'
 import { isValidEmail, isValidOptionalPhone } from '@/lib/constants'
+import { trackSignup } from '@/lib/analytics'
 
 type Status = 'idle' | 'loading' | 'success' | 'already' | 'error'
 type FieldError = 'email' | 'phone' | null
@@ -94,7 +95,18 @@ export default function SignupForm({
       // subscriber comes back as a 200, not an error.
       if (res.ok && data.ok) {
         setStatus(data.alreadySubscribed ? 'already' : 'success')
-        if (!data.alreadySubscribed) onSignupSuccess?.()
+        if (!data.alreadySubscribed) {
+          // Fire the ad-conversion event here rather than through
+          // onSignupSuccess: that prop is only threaded through
+          // NewsletterJoin and nothing currently passes it in, so it never
+          // fires. This is the one place every instance of the form agrees a
+          // NEW signup happened. `alreadySubscribed` is excluded on purpose —
+          // it is not a new conversion and would inflate the count.
+          // trackSignup is a no-op when no pixel is loaded and never throws,
+          // so it cannot affect a signup that has already succeeded.
+          trackSignup(source)
+          onSignupSuccess?.()
+        }
       } else {
         setServerError(typeof data.error === 'string' ? data.error : '')
         setStatus('error')

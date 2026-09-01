@@ -7,6 +7,7 @@
 // subscription and silently discards those values — no error is returned.
 
 import { isValidEmail, isValidOptionalPhone, normaliseSource } from "@/lib/constants";
+import { createRateLimiter, getClientIp } from "@/lib/rateLimit";
 
 const BEEHIIV_API_KEY = process.env.BEEHIIV_API_KEY;
 // beehiiv's API needs the "pub_" prefix; tolerate a raw UUID in the env var.
@@ -17,45 +18,11 @@ const BEEHIIV_PUBLICATION_ID = rawPubId
     : `pub_${rawPubId}`
   : undefined;
 
-// Best-effort per-IP rate limit: in-memory, so it resets on cold start and
-// isn't shared across instances/regions. That's enough to blunt casual
-// scripted abuse (spam signups, or probing which emails are already
-// subscribed via the alreadySubscribed response) without provisioning a
-// shared store. If this ever needs to hold under real distributed abuse,
-// swap the Map below for a durable limiter (e.g. Upstash via Vercel
-// Marketplace) — same call sites, just a different `isRateLimited`.
-const RATE_LIMIT_WINDOW_MS = 60_000;
-const RATE_LIMIT_MAX = 5;
-const rateLimitHits = new Map<string, { count: number; resetAt: number }>();
-let rateLimitSweepCounter = 0;
-
-function isRateLimited(ip: string): boolean {
-  // Sweep expired entries periodically so a long-lived warm instance doesn't
-  // accumulate one entry per unique IP forever.
-  rateLimitSweepCounter += 1;
-  if (rateLimitSweepCounter % 500 === 0) {
-    const now = Date.now();
-    for (const [key, entry] of rateLimitHits) {
-      if (now > entry.resetAt) rateLimitHits.delete(key);
-    }
-  }
-
-  const now = Date.now();
-  const entry = rateLimitHits.get(ip);
-  if (!entry || now > entry.resetAt) {
-    rateLimitHits.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
-    return false;
-  }
-  entry.count += 1;
-  return entry.count > RATE_LIMIT_MAX;
-}
-
-function getClientIp(req: Request): string {
-  // Vercel (and most proxies) set x-forwarded-for as "client, proxy1, proxy2".
-  const forwarded = req.headers.get("x-forwarded-for");
-  if (forwarded) return forwarded.split(",")[0].trim();
-  return req.headers.get("x-real-ip") ?? "unknown";
-}
+// Per-IP rate limit. The implementation moved to lib/rateLimit.ts so
+// /api/contact could share it rather than carry a drifting second copy —
+// that route shipped with no limiter at all. Behaviour here is unchanged:
+// 5 requests per minute per IP, in-memory, resets on cold start.
+const isRateLimited = createRateLimiter({ windowMs: 60_000, max: 5 });
 
 export async function POST(req: Request) {
   if (isRateLimited(getClientIp(req))) {

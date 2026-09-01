@@ -3,27 +3,51 @@ import localFont from "next/font/local";
 import { meta } from "@/lib/meta";
 import { clean } from "@/lib/text";
 import JaaliGround from "@/components/brand/JaaliGround";
+import MetaPixel from "@/components/analytics/MetaPixel";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
+/*
+ * Fonts are WOFF2, subset to Latin (2026-09-01).
+ *
+ * They used to be raw .ttf carrying every alphabet the typefaces support —
+ * Cyrillic, Greek, Vietnamese — on an entirely Latin site, and all five are
+ * <link rel="preload">'d on every page, so they land on the critical path
+ * before first paint. Measured on production: 638 KB per page load, with
+ * compression already negotiated. The optimised hero screenshot is 29 KB.
+ *
+ * Subsetting + WOFF2 takes that to ~339 KB with no visual change. Coverage
+ * was VERIFIED, not assumed: every character rendered across all seven live
+ * pages was checked against each subset. (DM Mono is missing "→" both before
+ * and after — the original never had it, so that arrow has always fallen
+ * back to DM Sans. Not a regression.)
+ *
+ * ⚠️ The .ttf originals are gone from the repo. To re-cut a subset — say a
+ * future page needs Devanagari — pull the originals from Google Fonts and
+ * re-run with wider ranges; the ranges used are recorded in the commit that
+ * introduced this. The subsets deliberately keep the full weight AXIS and
+ * all OpenType features (kerning, ligatures), so nothing about how the type
+ * renders has changed.
+ */
 const cormorant = localFont({
   src: [
-    { path: "../public/fonts/CormorantGaramond[wght].ttf", style: "normal" },
-    { path: "../public/fonts/CormorantGaramond-Italic[wght].ttf", style: "italic" },
+    { path: "../public/fonts/CormorantGaramond[wght].woff2", style: "normal" },
+    { path: "../public/fonts/CormorantGaramond-Italic[wght].woff2", style: "italic" },
   ],
   variable: "--font-serif",
   display: "swap",
 });
 
 const dmSans = localFont({
-  src: [{ path: "../public/fonts/DMSans[opsz,wght].ttf" }],
+  src: [{ path: "../public/fonts/DMSans[opsz,wght].woff2" }],
   variable: "--font-sans",
   display: "swap",
 });
 
 const dmMono = localFont({
   src: [
-    { path: "../public/fonts/DMMono-Regular.ttf", weight: "400" },
-    { path: "../public/fonts/DMMono-Medium.ttf", weight: "500" },
+    { path: "../public/fonts/DMMono-Regular.woff2", weight: "400" },
+    { path: "../public/fonts/DMMono-Medium.woff2", weight: "500" },
   ],
   variable: "--font-mono",
   display: "swap",
@@ -85,6 +109,16 @@ export default function RootLayout({
             panel. See components/brand/JaaliGround.tsx. */}
         <JaaliGround />
         {children}
+        {/*
+          Added 2026-09-01 — the site had NO analytics at all while a Meta
+          Ads campaign was starting, so ad spend could not be attributed.
+          Vercel's is cookieless and collects no personal data, so it needs
+          no consent banner. MetaPixel renders NOTHING until
+          NEXT_PUBLIC_META_PIXEL_ID is set — and /privacy must disclose the
+          tracking before that happens. See components/analytics/MetaPixel.tsx.
+        */}
+        <Analytics />
+        <MetaPixel />
       </body>
     </html>
   );
