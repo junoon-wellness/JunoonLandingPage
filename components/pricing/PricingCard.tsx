@@ -56,11 +56,15 @@ export default function PricingCard() {
           left end rose 95 x sin(38) = 58.5px, which from a centre ~34px down
           put it 24px ABOVE the card, where `overflow: hidden` cut the "5".
         */}
-        <span className="pr-founder-pill">First 500</span>
-
         {/* LV5-032 (Kush: "make it much more obvious that the first month is
             free"): the free month leads the card, above the price. */}
         <p className="pr-free-line">Your first month is free.</p>
+
+        {/* JV3-307: the pill labels the PRICE, not the free month (the free
+            month is for everyone; only the first 500 keep $8.99). Desktop
+            position is unchanged - the pill is absolute in the card corner
+            there; at <=540px it is in flow and now sits above the price row. */}
+        <span className="pr-founder-pill">First 500</span>
 
         <div className="pr-price-row">
           <span className="pr-price">$8.99</span>
@@ -68,8 +72,7 @@ export default function PricingCard() {
         </div>
 
         <p className="pr-offer-line">
-          The first 500 members get their first month free, and $8.99 stays their price for
-          life.
+          Your first month is free. The first 500 members keep $8.99 a month for life.
         </p>
 
         <ul className="pr-checklist">

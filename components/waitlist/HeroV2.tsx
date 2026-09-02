@@ -150,7 +150,10 @@ export default function HeroV2() {
                 Permanent pricing.
               </em>
             </p>
-            <p className="v2-hero-offer-body">First month free, then $8.99 a month for life.</p>
+            <p className="v2-hero-offer-body">
+              Your first month is free, for everyone. The first 500 members then keep $8.99 a
+              month for life.
+            </p>
             <Link href="/pricing" className="v2-link v2-hero-offer-link">
               See pricing →
             </Link>
@@ -176,9 +179,9 @@ export default function HeroV2() {
                 Founder offer
               </span>
               <span className="v2-hero-offer-mobile-line">
-                First 500: free month,
+                Free month for everyone.
                 <br />
-                then $8.99/mo for life.
+                First 500: $8.99 for life.
               </span>
             </Link>
             <AppStoreBadge size="nav" />
