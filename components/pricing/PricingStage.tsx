@@ -75,8 +75,22 @@ export default function PricingStage({
      the pin used to be 100vh tall with the content centred, which left equal
      dead bands above the headline and below the card, and pushed the footer a
      full screen down. The pin is now exactly as tall as its content, so at the
-     end of the slide the footer is already on screen underneath. */
-  const [pinHeight, setPinHeight] = useState(0)
+     end of the slide the footer is already on screen underneath.
+
+     🔴 JV3-282: this is the VIEWPORT height, not the pin's own height, and the
+     difference is the whole bug. The stage's scroll runway is
+     `stageHeight - innerHeight`; the header comment above promises that runway
+     equals the card's travel, which only holds if the base term IS the
+     viewport. When SC2 made the pin content-height it kept feeding the pin's
+     height into this formula, so every pixel by which the content is SHORTER
+     than the screen was silently subtracted from the runway. MEASURED on
+     production at 1512x900 before the fix: pin 704, stage 1068, runway 168px
+     for a 364px travel - the slide finished inside 126px of scroll, which one
+     trackpad flick skips entirely. Nothing here changes what is PAINTED: the
+     extra height is scroll tail underneath a sticky, content-height pin.
+     `animated` already guarantees pinH <= innerHeight, so this is never the
+     smaller of the two. */
+  const [stageBase, setStageBase] = useState(0)
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -126,7 +140,7 @@ export default function PricingStage({
         `position: relative`, which makes it the offsetParent.
       */
       setShift(grid.clientWidth / 2 - (col.offsetLeft + col.offsetWidth / 2))
-      setPinHeight(pinH)
+      setStageBase(window.innerHeight)
       setAnimated(true)
     }
 
@@ -167,8 +181,9 @@ export default function PricingStage({
       ref={sectionRef}
       className={`pr-stage${animated ? ' is-pinned' : ''}`}
       aria-label="Plan"
-      /* Kush, 2026-08-23 ("get everything on one page"): the pin's own height + exactly the travel the card has to cover. */
-      style={animated ? { height: `${Math.round(pinHeight + shift)}px` } : undefined}
+      /* Kush, 2026-08-23 ("get everything on one page"): one screen + exactly the travel the card has to cover.
+         JV3-282: was `pinHeight + shift`, which ate the runway on any screen taller than the pinned content. */
+      style={animated ? { height: `${Math.round(stageBase + shift)}px` } : undefined}
     >
       <div className="pr-stage-pin">
         <div className="pr-stage-inner" ref={innerRef}>
