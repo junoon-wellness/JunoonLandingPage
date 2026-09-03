@@ -29,6 +29,29 @@ export const APP_STORE_URL = 'https://apps.apple.com/us/app/junoon-wellness/id67
  * and is self-hosted per Kush's ruling — 18MB sits well under the ~25MB bar
  * that would have sent it to Vercel Blob instead.
  *
+ * 🔴 LV5-062 — THE LARGE-FILE RULE FOR junoonwellness.com. Kush ruled this on
+ * 2026-09-02, verbatim: "A then B". In order, and note that the first option is
+ * the DEFAULT, not the fallback:
+ *
+ *   1. COMPRESS OR SPLIT it under 25MB and keep it in public/, like everything
+ *      else on this site. This is what the founder video above did — 208MB down
+ *      to 18MB — and it is what should happen almost every time.
+ *
+ *   2. Vercel Blob, on the Vercel project `junoon-landing-page` (NOT
+ *      `junoon-website-ji7r`, which is the app) — the EXCEPTION, and only when a
+ *      genuine >25MB download is actually required. For a one-off, upload it
+ *      through the Vercel dashboard and paste the public URL. Do NOT add the
+ *      @vercel/blob dependency or write upload code until a real >25MB file
+ *      exists; nothing here is wired for it today, deliberately.
+ *
+ *   3. VIDEO over 25MB goes to Mux instead (ruled 2026-08-28) — not to public/
+ *      and not to Blob.
+ *
+ * 🔴 NEVER Supabase Storage. Its egress caused the August billing overage, and
+ *    that is exactly why the video library was moved off it. This is not a
+ *    judgement call to be re-litigated per file.
+ * 🔴 NEVER a Google Drive or Dropbox link for anything served from this site.
+ *
  * Source was 2880x2160 (4:3) HEVC @120fps, 208MB. Re-encoded to 1600x1200
  * H.264 @30fps CRF 23 with +faststart (so playback starts before the whole
  * file downloads).
