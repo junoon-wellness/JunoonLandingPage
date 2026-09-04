@@ -50,6 +50,35 @@ export const PRICING_STAGE_MIN = 1024
 const PIN_PADDING_TOP = 124
 const PIN_PADDING_BOTTOM = 20
 
+/**
+ * 🔴 JV3-282 r2 — WHY THE STAGE IS FLAT, WRITTEN ON THE DOM.
+ *
+ * When `animated` is false this section renders as a perfectly ordinary
+ * two-column block: both cards side by side, no pin, a page you can barely
+ * scroll. That is the CORRECT end state, which is exactly the problem — it is
+ * pixel-for-pixel indistinguishable from a stage whose animation is broken, and
+ * there is nothing in the DOM, the console or the network tab that says which
+ * one you are looking at.
+ *
+ * That ambiguity cost this ticket two rounds. Round 1 measured the runway and
+ * fixed a real defect. Kush then reported it STILL static and the honest answer
+ * was three more hypotheses, because the page cannot say why it is flat. It was
+ * `prefers-reduced-motion` — macOS Accessibility > Reduce Motion was on on his
+ * Mac, the code silently dropped the whole stage, and he saw "everything in one
+ * static page". Two rounds of diagnosis for a state the page already knew.
+ *
+ * So the reason is now an attribute. Open dev tools on the live site, look at
+ * `<section class="pr-stage" data-pr-static="...">`, and it tells you. Absent
+ * means the stage IS animating.
+ */
+type StaticReason =
+  /** Below PRICING_STAGE_MIN: the grid is one column, nowhere to travel to. */
+  | 'narrow'
+  /** The visitor asked for reduced motion, so there is no pin and no slide. */
+  | 'reduced-motion'
+  /** A 100vh pin would crop the headline, the card or the FAQ. */
+  | 'content-taller-than-viewport'
+
 // useLayoutEffect warns during SSR; useEffect is the correct no-op there.
 const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
@@ -71,6 +100,10 @@ export default function PricingStage({
   const [shift, setShift] = useState(0)
   /** false => no pin, no transforms, plain document flow. */
   const [animated, setAnimated] = useState(false)
+  /* JV3-282 r2: which of the three conditions turned the stage off. Rendered as
+     `data-pr-static` — see the StaticReason doc comment for why this exists.
+     null only until the first measure() runs, which is before paint. */
+  const [staticReason, setStaticReason] = useState<StaticReason | null>(null)
   /* Kush, 2026-08-23: "reduce both paddings and get everything on one page":
      the pin used to be 100vh tall with the content centred, which left equal
      dead bands above the headline and below the card, and pushed the footer a
@@ -118,14 +151,21 @@ export default function PricingStage({
             guess that "desktop is tall enough" is what would cut someone's FAQ
             off. SC2 measures the INNER wrapper, which now includes the
             headline - measuring the grid alone would have missed it.
+
+        🔴 JV3-282 r2: SAME THREE CONDITIONS, SAME ORDER, SAME RESULT - the only
+        change is that each one now NAMES ITSELF on the way out. Nothing here
+        decides differently than it did before; see the StaticReason comment for
+        why that name is worth a state variable.
       */
       const pinH = inner.scrollHeight + PIN_PADDING_TOP + PIN_PADDING_BOTTOM
-      const fits = pinH <= window.innerHeight
-      if (!wideQuery.matches || stillQuery.matches || !fits) {
+      const off = (reason: StaticReason) => {
+        setStaticReason(reason)
         setAnimated(false)
         setShift(0)
-        return
       }
+      if (!wideQuery.matches) return off('narrow')
+      if (stillQuery.matches) return off('reduced-motion')
+      if (pinH > window.innerHeight) return off('content-taller-than-viewport')
 
       /*
         THE TRAVEL. The card rests in the left column; centring it means moving
@@ -141,6 +181,7 @@ export default function PricingStage({
       */
       setShift(grid.clientWidth / 2 - (col.offsetLeft + col.offsetWidth / 2))
       setStageBase(window.innerHeight)
+      setStaticReason(null)
       setAnimated(true)
     }
 
@@ -181,6 +222,10 @@ export default function PricingStage({
       ref={sectionRef}
       className={`pr-stage${animated ? ' is-pinned' : ''}`}
       aria-label="Plan"
+      /* JV3-282 r2: present ONLY when the stage is flat, and it says which of the
+         three conditions did it. Absent = the stage is animating. `not-measured`
+         is the pre-hydration server render and should never be observable. */
+      data-pr-static={animated ? undefined : (staticReason ?? 'not-measured')}
       /* Kush, 2026-08-23 ("get everything on one page"): one screen + exactly the travel the card has to cover.
          JV3-282: was `pinHeight + shift`, which ate the runway on any screen taller than the pinned content. */
       style={animated ? { height: `${Math.round(stageBase + shift)}px` } : undefined}
