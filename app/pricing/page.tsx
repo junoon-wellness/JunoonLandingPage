@@ -101,7 +101,7 @@ export default function PricingPage() {
                 <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>free month.</em>
               </h2>
               <p className="pr-free-callout-body">
-                Everyone's first month is free. The first 500 members then pay $8.99 a month,
+                Everyone&apos;s first month is free. The first 500 members then pay $8.99 a month,
                 locked for life.
               </p>
             </section>

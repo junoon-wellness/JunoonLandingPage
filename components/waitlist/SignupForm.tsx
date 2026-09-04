@@ -22,7 +22,6 @@ interface SignupFormProps {
 const CREAM = 'var(--jn-text)'
 const TURMERIC = 'var(--jn-turmeric)'
 const STONE = 'var(--jn-mute)'
-const SAGE = 'var(--jn-sage)'
 const SAGE_LINE = 'var(--jn-sage-line)'
 const SAGE_WASH = 'var(--jn-sage-wash)'
 

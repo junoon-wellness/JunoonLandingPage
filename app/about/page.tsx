@@ -313,7 +313,6 @@ export default function AboutPage() {
         <section className="ab-hero-video" aria-label="Founder video">
           <Reveal y={24} scale={0.98} duration={1} amount={0.2}>
             <div className="ab-video-slot ab-video-cinema">
-              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
               <video
                 src={FOUNDER_VIDEO_SRC}
                 poster={FOUNDER_VIDEO_POSTER}

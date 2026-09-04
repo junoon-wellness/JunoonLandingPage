@@ -5,6 +5,7 @@
  * compliance, and /contact is registered as the app's App Store support URL.
  * The previous version of this page carried all three; do not drop them.
  */
+import Link from 'next/link'
 import Toran from '@/components/brand/Toran'
 
 const legalLinks = [
@@ -102,9 +103,9 @@ export default function FooterV2() {
             Instagram
           </a>{' '}
           or{' '}
-          <a href="/library#join" className="v2-link v2-footer-link">
+          <Link href="/library#join" className="v2-link v2-footer-link">
             join the newsletter
-          </a>
+          </Link>
         </span>
       </div>
 

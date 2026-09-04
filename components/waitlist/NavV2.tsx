@@ -46,6 +46,11 @@ export default function NavV2() {
   // (#join) since pathname alone doesn't change for a hash jump, but the
   // click handler on each link closes the sheet directly for that case.
   useEffect(() => {
+    // Resetting UI state (closing the mobile sheet) on route change is the
+    // intended use here, not the "derive state from props" anti-pattern the
+    // rule targets; refactoring to render-time derivation is out of scope
+    // for this lint-gate restoration.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMenuOpen(false)
   }, [pathname])
 

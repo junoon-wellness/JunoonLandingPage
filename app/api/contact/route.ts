@@ -33,7 +33,6 @@ const MAX_MESSAGE = 5000;
 // HEADER. Nodemailer guards its own headers, but `name` is interpolated into
 // the reply-to address and there is no reason to hand it unvalidated input.
 function headerSafe(value: string): string {
-  // eslint-disable-next-line no-control-regex
   return value.replace(/[\r\n\u0000-\u001f\u007f]/g, " ").replace(/"/g, "'").trim();
 }
 
