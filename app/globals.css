@@ -3269,3 +3269,148 @@ body::before {
     zoom: 1.22;
   }
 }
+
+/* ─── Consent card (JV3-271) ───
+   The Meta Pixel consent prompt, shown to EU/UK visitors only. See
+   components/analytics/ConsentGate.tsx for why dismissing it means declining.
+
+   🔒 Kush's brief was "small and unobtrusive", so the shape is a corner card
+   and NOT a full-width bar across the bottom: a bar reads as a barrier and
+   pushes the fold, a corner card is genuinely ignorable. Radius, button
+   family and tokens are the page's existing ones — nothing new was invented
+   for this, so it cannot drift away from the rest of the site. */
+.jn-consent {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 60;
+  width: min(340px, calc(100vw - 32px));
+  padding: 15px 18px 17px;
+  border-radius: 4px;
+  background: var(--jn-surface);
+  border: 0.5px solid var(--jn-hairline-strong);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.7);
+  animation: jnConsentIn 0.26s var(--jn-ease) both;
+}
+@keyframes jnConsentIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* The card must be READABLE at rest, not animating into existence, for
+   anyone who has asked the OS to stop moving things. */
+@media (prefers-reduced-motion: reduce) {
+  .jn-consent { animation: none; }
+}
+
+.jn-consent-eyebrow {
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  /* ⚠️ --jn-stone, NOT --jn-mute, and the reason is the surface. --jn-mute is
+     the mono-label colour everywhere else on the site and its own token
+     comment says it was "lifted for AA" — but that was measured against
+     --jn-bg (#1C1410). This card sits on --jn-surface (#2C2118), which is
+     lighter, and the same colour measures only 4.23:1 there: below AA for
+     10px text. --jn-stone measures 6.74:1 on this surface. A token that
+     passes on one ground does not pass on every ground. */
+  color: var(--jn-stone);
+  margin: 0 0 7px;
+}
+.jn-consent-body {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--jn-text-soft);
+  margin: 0;
+  /* Room for the X so a long first line cannot run under it. */
+  padding-right: 14px;
+}
+.jn-consent-link {
+  color: var(--jn-turmeric);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+.jn-consent-link:hover { color: var(--jn-gold); }
+
+.jn-consent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+/* Small modifier on the EXISTING button rather than a second button class —
+   .v2-btn's 46px height and 26px padding are sized for a hero CTA and would
+   dominate a card this size. */
+.v2-btn--sm {
+  font-size: 11.5px;
+  letter-spacing: 0.07em;
+  padding: 9px 17px;
+  min-height: 36px;
+}
+
+/* 🔴 Refusing is the same size and the same one click as allowing. It reads
+   quieter because it is the neutral option, not because it is discouraged —
+   a consent prompt where "no" is harder than "yes" is not consent. */
+.jn-consent-decline {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--jn-text-soft);
+  background: transparent;
+  border: 0.5px solid var(--jn-hairline-strong);
+  border-radius: 4px;
+  padding: 9px 17px;
+  min-height: 36px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.jn-consent-decline:hover {
+  background: var(--jn-wash);
+  color: var(--jn-text);
+}
+
+.jn-consent-x {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  color: var(--jn-mute);
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.jn-consent-x:hover {
+  color: var(--jn-text);
+  background: var(--jn-wash);
+}
+
+/* Same visible focus ring the rest of the site uses. */
+.jn-consent-x:focus-visible,
+.jn-consent-decline:focus-visible,
+.jn-consent-link:focus-visible {
+  outline: 2px solid var(--jn-turmeric);
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  .jn-consent {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    width: auto;
+  }
+}

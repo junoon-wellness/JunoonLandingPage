@@ -1,4 +1,4 @@
-import Script from "next/script";
+import ConsentGate from "./ConsentGate";
 
 /**
  * Meta (Facebook) Pixel — needed so the Meta Ads campaign can attribute
@@ -6,15 +6,32 @@ import Script from "next/script";
  * toward people who actually sign up rather than people who merely click.
  *
  * 🔴 SHIPS INERT. With no NEXT_PUBLIC_META_PIXEL_ID set, this renders
- * nothing at all: no script, no cookie, no request to Meta. That is
- * deliberate — the plumbing could go live before the id existed, and before
- * the privacy policy was updated, without either being a problem.
+ * nothing at all: no script, no cookie, no request to Meta, and no consent
+ * card either. That is deliberate — the plumbing could go live before the id
+ * existed, and before the privacy policy was updated, without either being a
+ * problem.
  *
- * ⚠️ BEFORE SETTING THE ENV VAR, UPDATE /privacy. The policy currently says
- * nothing about cookies, analytics or third-party tracking (checked
- * 2026-09-01), and this pixel sets cookies and sends visit data to Meta.
- * Turning it on without that disclosure is the compliance problem, not the
- * code.
+ * 🟢 /privacy NOW DISCLOSES THE TRACKING (JV3-271, 2026-09-10). This comment
+ * previously carried a "BEFORE SETTING THE ENV VAR, UPDATE /privacy" warning
+ * because the policy said nothing about cookies, analytics or third-party
+ * sharing. Section 3.4 now describes this pixel, exactly what it sends, and
+ * what a visitor can do about it. That blocker is cleared.
+ *
+ * 🔴 CONSENT IS NOW GATED, AND THIS FILE NO LONGER LOADS THE SCRIPT ITSELF.
+ * The script, and the decision about whether it may run, both live in
+ * ConsentGate — a client component, because the answer depends on the
+ * visitor. EU/UK visitors are asked first; everyone else is unaffected. This
+ * file stays a server component so the env var is still read at module scope
+ * and inlined at build time, which is the one thing that has to happen here.
+ *
+ * ⚠️ THE <noscript> BEACON WAS REMOVED, and it was a real trade rather than
+ * a tidy-up. Meta's own install snippet ships a 1x1 <img> beacon so that a
+ * visitor with JavaScript disabled still registers as a visit. But with
+ * JavaScript disabled we cannot ask anyone anything — the beacon would fire
+ * for an EU visitor with no possible way to seek consent first, which is the
+ * exact thing this gate exists to prevent. The cost is losing visit data for
+ * JS-disabled visitors, which is a negligible slice of traffic; the
+ * alternative was an ungated request to Meta on every such visit.
  *
  * The var must be NEXT_PUBLIC_ to reach the browser, and must be read at
  * module scope so Next can inline it at build time. A pixel id is not a
@@ -25,35 +42,5 @@ const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 export default function MetaPixel() {
   if (!PIXEL_ID) return null;
 
-  return (
-    <>
-      <Script id="meta-pixel" strategy="afterInteractive">
-        {`
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', ${JSON.stringify(PIXEL_ID)});
-fbq('track', 'PageView');
-        `}
-      </Script>
-      {/*
-        The <noscript> beacon is what Meta's own install snippet ships. It is
-        the only way a visitor with JavaScript disabled registers as a visit.
-        next/image is deliberately NOT used — this is a 1x1 tracking beacon on
-        Meta's domain, not an image to optimise.
-      */}
-      <noscript>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          height="1"
-          width="1"
-          style={{ display: "none" }}
-          alt=""
-          src={`https://www.facebook.com/tr?id=${encodeURIComponent(PIXEL_ID)}&ev=PageView&noscript=1`}
-        />
-      </noscript>
-    </>
-  );
+  return <ConsentGate pixelId={PIXEL_ID} />;
 }
