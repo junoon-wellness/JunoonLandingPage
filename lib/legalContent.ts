@@ -641,7 +641,7 @@ export const termsOfService: LegalDoc = {
 export const privacyPolicy: LegalDoc = {
   "title": "Privacy Policy",
   "subtitle": "Junoon Wellness, Inc.",
-  "updated": "Last updated: June 2, 2026",
+  "updated": "Last updated: September 10, 2026",
   "blocks": [
     {
       "type": "h2",
@@ -649,7 +649,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "Junoon Wellness, Inc. (\"Junoon,\" \"we,\" \"us,\" or \"our\") operates the Junoon mobile application (the \"App\") and related services (collectively, the \"Services\"). We are the data controller for personal information collected through the App."
+      "text": "Junoon Wellness, Inc. (\"Junoon,\" \"we,\" \"us,\" or \"our\") operates the Junoon mobile application (the \"App\"), our website at junoonwellness.com, and related services (collectively, the \"Services\"). We are the data controller for personal information collected through the App and our website."
     },
     {
       "type": "p",
@@ -666,6 +666,10 @@ export const privacyPolicy: LegalDoc = {
     {
       "type": "p",
       "text": "This Privacy Policy applies to all users of the Junoon App, including users who access the App without creating an account (\"Guest Mode\"). By using the App, you agree to the collection and use of information in accordance with this Policy."
+    },
+    {
+      "type": "p",
+      "text": "This Policy also applies to visitors to our website at junoonwellness.com, including people who join our waitlist, subscribe to our newsletter, or contact us through the website, whether or not they use the App."
     },
     {
       "type": "p",
@@ -808,6 +812,30 @@ export const privacyPolicy: LegalDoc = {
       ]
     },
     {
+      "type": "h3",
+      "text": "3.4 Cookies, Analytics and Tracking on Our Website"
+    },
+    {
+      "type": "p",
+      "text": "We use Vercel Web Analytics to understand how many people visit our website. This tool is cookieless: it does not set any cookie on your device, does not collect personal information, and does not track you across other websites. No consent is required for this because nothing is stored on your device and no individual is identified."
+    },
+    {
+      "type": "p",
+      "text": "When you visit our website, we may use the Meta Pixel, a tool from Meta Platforms, Inc. (\"Meta\"), to help us understand how our website is used and to measure the results of our advertising on Facebook and Instagram. The Meta Pixel sets a cookie in your browser and sends Meta the fact that you visited our page. If you join our waitlist or newsletter, it also sends Meta the fact that a signup happened - never your email address or any other personal information. We use this information to measure how our ads perform and to show our ads to people who may be interested in Junoon on Meta's platforms."
+    },
+    {
+      "type": "p",
+      "text": "If you join our waitlist or newsletter, we collect your email address (and, if you provide them, your first name and phone number) and send them to beehiiv, Inc., our email and waitlist provider, to manage your subscription and send you updates. You can unsubscribe at any time using the link in any email you receive from us."
+    },
+    {
+      "type": "p",
+      "text": "If you send us a message through our contact form, your name, email address, and message are sent as an email to admin@junoonwellness.com through our email-sending service. We use this only to respond to you."
+    },
+    {
+      "type": "p",
+      "text": "Your choices: You can control or delete cookies at any time through your browser settings. If the Meta Pixel is active, you can also manage how Meta uses information about you for ads through Meta's Ad Preferences settings. Every email we send you includes an unsubscribe link."
+    },
+    {
       "type": "h2",
       "text": "4. How We Use Your Information"
     },
@@ -862,7 +890,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "We do not currently sell or share your personal information, use it for targeted advertising, or provide it to data brokers. If this ever changes, we will update this Policy and notify you in advance, will never include Apple Health or other health data, and will provide the opt-out or consent choices required by law (including a \"Do Not Sell or Share My Personal Information\" option) before any such use begins."
+      "text": "We do not sell your personal information for money, and we never use your health information - including Apple Health data and the content of your coach conversations - for advertising or share it with advertising partners. We do use the Meta Pixel on our website to measure our advertising and to reach people who may be interested in Junoon, as described in Section 3.4. Where the law gives you an opt-out or consent choice over that use, we will provide it."
     },
     {
       "type": "h2",
@@ -920,7 +948,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "We do not currently sell your personal information or share it with third parties for their own marketing purposes. If this ever changes, we will update this Policy, notify you in advance, exclude all health data, and offer the opt-out or consent choices required by law before doing so."
+      "text": "We do not sell your personal information for money. We do share limited website-visit information with Meta Platforms, Inc. for advertising purposes, as described in Section 3.4 - this never includes your health data or the content of your coach conversations. If our sharing practices change in any other way, we will update this Policy and notify you in advance."
     },
     {
       "type": "h2",
