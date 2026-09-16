@@ -72,7 +72,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Junoon - Ancient Traditions, Modern Solutions.",
+        alt: "Junoon - Ancient Indian Practices, Modern Solutions.",
       },
     ],
   },
