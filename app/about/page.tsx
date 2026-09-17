@@ -74,7 +74,7 @@ const STORY_PARAGRAPHS = [
 const SUBLINE =
   'Yoga, breathwork and meditation, rooted in ancient India, built for modern life.'
 
-const TAGLINE = 'Ancient Indian Practices, Modern Solutions.'
+const TAGLINE = 'Ancient Indian Wisdom, Modern Solutions.'
 const SIGNATURE = 'Arjav, Founder and CEO'
 
 interface Person {
@@ -327,7 +327,7 @@ export default function AboutPage() {
 
       {/* Kush, 2026-08-24: "put the ancient traditions banner below the
           video" — a full-width band directly under the cinematic slot. */}
-      <section className="ab-tagline-band" aria-label="Ancient Indian Practices, Modern Solutions">
+      <section className="ab-tagline-band" aria-label="Ancient Indian Wisdom, Modern Solutions">
         <Reveal y={18} duration={0.9} amount={0.3}>
           <div className="ab-tagline-panel">
             <div className="ab-tagline-text">{TAGLINE}</div>
