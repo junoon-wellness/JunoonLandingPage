@@ -23,7 +23,7 @@ import Reveal, { DrawLine } from '@/components/motion/Reveal'
 const features = [
   {
     num: '01',
-    title: 'Dark by default',
+    title: 'A new dark look',
     body: 'Junoon now opens in a new dark look, with a light theme or an option to follow your phone, under Appearance.',
   },
   {
