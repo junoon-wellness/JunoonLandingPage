@@ -51,6 +51,21 @@
  * DELIBERATELY NOT RE-SHOT (Kush, 2026-09-01): `ritualProposal` and
  * `breathworkSession`. The ritual proposal can only be captured during the
  * Sunday ritual window, and neither screen's UI has meaningfully changed.
+ *
+ * ── 2026-09-23, LV5-069 (fix, not a re-shoot) ────────────────────────────
+ * `ritual-proposal.png` and `ritual-week.png` were PULLED FROM PUBLIC
+ * ENTIRELY (deleted from `public/screenshots/v3/`, not just unreferenced)
+ * because both named Kush in on-screen text ("THE REST OF KUSH'S WEEK",
+ * "KUSH'S WEEK AHEAD") — the same defect `coachPicks` was fixed for on
+ * 2026-09-01, missed here. Both keys below now point at
+ * `breathwork-session.png` as a STAND-IN (same precedent as the old
+ * `liveClass`/`liveTab` note above: this file "used to stand in" for the
+ * Live chapter before real live captures existed). It carries no name, no
+ * date, and is the only dark-mode capture in this batch, so it clashes
+ * with the ritual chapter's copy less than a stale light screenshot would.
+ * ⇒ **ONE-FILE SWAP FOR LV5-068**: once the dark re-shoot lands real ritual
+ * captures, change only the two `src` (and `alt`) values below — nothing
+ * else in the app references these files directly.
  */
 
 export interface Screen {
@@ -64,22 +79,16 @@ export const SCREEN_HEIGHT = 1800
 
 export const SCREENS = {
   ritualProposal: {
-    src: '/screenshots/v3/ritual-proposal.png',
-    // LV5-007 (2026-08-22): swapped for a newer capture (2026-08-17) of the
-    // same ritual-proposal screen - content changed, framing and crop did
-    // not (straight proportional resize of the same 1206x2622 capture
-    // format the rest of the batch used, no visible crop in either).
-    alt:
-      "What's different this week: 2 slots added, 4 removed, with an Approve this week button",
+    // LV5-069 (2026-09-23): was ritual-proposal.png, deleted for naming
+    // Kush on-screen. See the 2026-09-23 note above.
+    src: '/screenshots/v3/breathwork-session.png',
+    alt: 'A guided breathing session in progress in the Junoon app',
   },
   ritualWeek: {
-    src: '/screenshots/v3/ritual-week.png',
-    // 2026-09-01: re-shot. The old capture printed MONDAY 10 AUG - SUNDAY
-    // 16 AUG on screen, three weeks stale on a page we promote from today.
-    // This one is the ritual tab itself, dated the current week, with the
-    // Adjust plan control at the top.
-    alt:
-      'The Junoon week ahead laid out day by day, each session labelled with its type, above an Adjust plan button',
+    // LV5-069 (2026-09-23): was ritual-week.png, deleted for naming Kush
+    // on-screen. See the 2026-09-23 note above.
+    src: '/screenshots/v3/breathwork-session.png',
+    alt: 'A guided breathing session in progress in the Junoon app',
   },
   coachChat: {
     src: '/screenshots/v3/coach-chat.png',

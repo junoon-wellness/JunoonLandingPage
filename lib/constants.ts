@@ -16,11 +16,9 @@ export const SHOW_TOUR = false
 export const TOTAL_SPOTS = 500
 
 /**
- * LV5-002: the nav badge and hero CTA link here. '#' placeholder until Kush
- * supplies the real App Store URL — every caller treats a click as a no-op
- * anchor jump until this is filled in, never a broken external link.
- * TODO(Kush): swap in the real App Store listing URL once the app is live
- * there and the link is known.
+ * LV5-002: the nav badge and hero CTA link here. Verified correct: matches
+ * the app repo's own JUNOON_APP_APPLE_ID, its test, and the StoreKit file
+ * (LV5-071, 23 Sep).
  */
 export const APP_STORE_URL = 'https://apps.apple.com/us/app/junoon-wellness/id6781123809'
 
