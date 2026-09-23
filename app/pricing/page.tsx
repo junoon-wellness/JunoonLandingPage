@@ -35,9 +35,11 @@ const PRICING_JAALI = true
  *
  * All copy below is LOCKED from LV5-010's notes — do not rephrase the offer
  * line, the "500 founder spots" fact, or the five "what we're building
- * next" chips. The six feature-checklist rows are PLACEHOLDERS (see the
- * build report) pending Kush pasting the real App Store listing text; they
- * live in components/pricing/PricingCard.tsx now.
+ * next" chips. The feature-checklist rows are ALSO locked (LV5-031 cut it
+ * to five, "do not rephrase" — see components/pricing/PricingCard.tsx,
+ * where they live). Corrected 2026-09-23 (LV5-071 scope): this comment
+ * used to call those rows PLACEHOLDERS pending real App Store text; that
+ * shipped already (LV5-010/LV5-031) and this comment had drifted.
  */
 export const metadata: Metadata = {
   title: clean('Pricing - Junoon'),

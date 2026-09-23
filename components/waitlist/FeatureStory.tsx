@@ -60,7 +60,13 @@ const CHAPTERS: StoryChapter[] = [
     ),
     body: 'Practice with real instructors in real time: live yoga, meditation and breathwork sessions you join straight from the app, at every level.',
     points: [
-      'Yoga, meditation and breathwork, taught live through the week.',
+      // LV5-070 (2026-09-23): was "taught live through the week" - both
+      // live screenshots (SCREENS.liveClass, SCREENS.liveTab) show a
+      // single scheduled session, and there was no read-only way to check
+      // the real schedule this round (Supabase access needs an OAuth
+      // approval nobody could complete unattended). Softened rather than
+      // asserting a frequency nobody verified.
+      'Yoga, meditation and breathwork, taught live by real instructors.',
       'Every level welcome — follow along in real time.',
       "Can't join live? The recorded library is always open.",
     ],
