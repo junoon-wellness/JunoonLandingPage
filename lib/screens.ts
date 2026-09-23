@@ -125,23 +125,25 @@ export const SCREENS = {
     alt: 'The Junoon class library with classes recommended for you and recorded yoga, meditation and pranayama classes with their teachers and lengths',
   },
   liveClass: {
-    src: '/screenshots/v3/live-class.png',
-    // 2026-09-01: the old capture was a RECORDED class detail page sitting
-    // under a hero slide labelled "Live Classes" - the picture and the
-    // promise disagreed. This one is a genuine scheduled live session:
-    // LIVE CLASS chip, a real date, a named instructor, and the note about
-    // stream access that proves it is not a video.
-    alt:
-      'A scheduled Junoon live class with its date, its instructor and what the session covers',
+    // 2026-09-23 (LV5-070, Kush's yes): dark capture of a live class page,
+    // sample member, with the date line cut out so the frame does not age.
+    // Live classes start weekly; the chapter copy says so.
+    src: '/screenshots/v3/live-class-dark.png',
+    alt: 'A live Junoon class page with its instructor, what the session covers and an RSVP button',
   },
   liveTab: {
-    src: '/screenshots/v3/live-tab.png',
-    // 2026-09-01, new key. Shows the Live classes / Recorded toggle, which
-    // the class-detail capture cannot - so the Live chapter's two frames are
-    // "here is the structure" and "here is one session", instead of leaning
-    // on the breathwork player it used to borrow.
-    alt:
-      'The Junoon classes tab switched to Live classes, showing an upcoming session with its date and instructor',
+    // 2026-09-23 (LV5-070): key name is historical. Live classes are not
+    // running weekly yet (Kush, 23 Sep), so the second live frame is a
+    // recorded class, matching the chapter's "the recorded library is always
+    // open" line, instead of a list of upcoming live sessions.
+    src: '/screenshots/v3/recorded-class-dark.png',
+    alt: "A recorded Junoon class with the coach's reason for suggesting it and the next class recommended",
+  },
+  morningCheckIn: {
+    // 2026-09-23 (LV5-070, Kush's yes): replaces Live Classes in the hero.
+    // Dark capture of the morning check-in, sample member, date line cut out.
+    src: '/screenshots/v3/morning-check-in-dark.png',
+    alt: 'The Junoon morning check-in building the day, with today\'s plan of two sessions',
   },
   breathworkSession: {
     src: '/screenshots/v3/breathwork-session.png',
@@ -173,7 +175,9 @@ export function screen(key: ScreenKey): Screen {
  */
 export const HERO_SLIDES: { key: ScreenKey; label: string }[] = [
   { key: 'coachChat', label: 'AI Coach' },
-  { key: 'liveClass', label: 'Live Classes' },
+  // 2026-09-23 (Kush): Live Classes came out of the hero until live classes
+  // run weekly; the daily check-in takes its place.
+  { key: 'morningCheckIn', label: 'Daily Check-ins' },
   { key: 'library', label: 'Recorded Classes' },
   { key: 'planTab', label: 'Your Plan' },
   { key: 'ritualProposal', label: 'Weekly Ritual' },
