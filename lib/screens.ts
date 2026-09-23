@@ -66,6 +66,11 @@
  * ⇒ **ONE-FILE SWAP FOR LV5-068**: once the dark re-shoot lands real ritual
  * captures, change only the two `src` (and `alt`) values below — nothing
  * else in the app references these files directly.
+ * ── 2026-09-23, LV5-068: five slots now dark 1.0.4 captures ───────────────
+ * coachChat, coachPicks, planTab, ritualProposal and ritualWeek point at the
+ * App Store 1.0.4 dark captures (sample member "Maya", no status bar, no BETA
+ * pill). library, liveClass, liveTab and breathworkSession are still the older
+ * captures until the next capture pass.
  */
 
 export interface Screen {
@@ -79,41 +84,36 @@ export const SCREEN_HEIGHT = 1800
 
 export const SCREENS = {
   ritualProposal: {
-    // LV5-069 (2026-09-23): was ritual-proposal.png, deleted for naming
-    // Kush on-screen. See the 2026-09-23 note above.
-    src: '/screenshots/v3/breathwork-session.png',
-    alt: 'A guided breathing session in progress in the Junoon app',
+    // 2026-09-23 (LV5-068): the 1.0.4 App Store capture, dark, sample member
+    // "Maya", resized to 828 wide with the bottom 128px filled from the
+    // capture's own flattest row. Source: Desktop/Junoon/Marketing/App Store/
+    // 2026-09-20-v1.0.4/captures-0920/.
+    src: '/screenshots/v3/schedule-dark.png',
+    alt: 'A week in the Junoon app: completed and upcoming sessions laid out day by day beside calendar events',
   },
   ritualWeek: {
-    // LV5-069 (2026-09-23): was ritual-week.png, deleted for naming Kush
-    // on-screen. See the 2026-09-23 note above.
-    src: '/screenshots/v3/breathwork-session.png',
-    alt: 'A guided breathing session in progress in the Junoon app',
+    // 2026-09-23 (LV5-068): the 1.0.4 App Store capture, dark, sample member
+    // "Maya", resized to 828 wide with the bottom 128px filled from the
+    // capture's own flattest row. Source: Desktop/Junoon/Marketing/App Store/
+    // 2026-09-20-v1.0.4/captures-0920/.
+    src: '/screenshots/v3/body-map-dark.png',
+    alt: 'The Junoon body map showing which areas were worked in the last seven days, with the next step to practise',
   },
   coachChat: {
-    src: '/screenshots/v3/coach-chat.png',
-    // 2026-08-30: swapped for a current capture (Kush's ruling — refresh only
-    // the screens we have new shots of, leave the rest). The 2026-08-09 batch
-    // was full-screen 1206x2622 including the iOS status bar; this one starts
-    // at the app header, so it is proportionally resized to 828 wide and the
-    // remaining 110px is the capture's own first row repeated upward, which
-    // continues the header's horizontal gradient with no seam. Do NOT drop a
-    // raw capture in here: .v2-device img is object-fit:cover, so anything
-    // that is not 828x1800 gets its SIDES cropped and loses the header
-    // buttons. Alt rewritten — the old one described the retired
-    // swap-a-class conversation and no longer matched the image.
-    alt:
-      'The Junoon coach introducing itself, offering to build a routine around yoga, meditation and the habits around them',
+    // 2026-09-23 (LV5-068): the 1.0.4 App Store capture, dark, sample member
+    // "Maya", resized to 828 wide with the bottom 128px filled from the
+    // capture's own flattest row. Source: Desktop/Junoon/Marketing/App Store/
+    // 2026-09-20-v1.0.4/captures-0920/.
+    src: '/screenshots/v3/coach-chat-dark.png',
+    alt: 'A conversation with the Junoon coach, which notices a pattern in the week and suggests a class for this evening',
   },
   coachPicks: {
-    src: '/screenshots/v3/coach-picks.png',
-    // 2026-09-01: re-shot. The old capture was headed "Kush's week", made a
-    // claim about a specific person ("practised Sat midday 8 weeks running")
-    // and showed an EMPTY focus panel reading "Nothing set yet" - an empty
-    // state doing marketing work. This one is a real class with the coach's
-    // "Why this" reason expanded, which is what the chapter copy promises.
-    alt:
-      "A recorded class with the coach's reason for choosing it expanded: it is pitched at where you are starting from",
+    // 2026-09-23 (LV5-068): the 1.0.4 App Store capture, dark, sample member
+    // "Maya", resized to 828 wide with the bottom 128px filled from the
+    // capture's own flattest row. Source: Desktop/Junoon/Marketing/App Store/
+    // 2026-09-20-v1.0.4/captures-0920/.
+    src: '/screenshots/v3/session-dark.png',
+    alt: 'A session the coach built for the evening, playing a downward-facing dog clip with the next poses listed below',
   },
   library: {
     src: '/screenshots/v3/library.png',
@@ -150,12 +150,12 @@ export const SCREENS = {
       'A guided Extended Box Breathing session in progress, showing the exhale cue and the cycle count',
   },
   planTab: {
-    src: '/screenshots/v3/plan-tab.png',
-    // 2026-08-30: current capture, same treatment as coachChat above. Alt
-    // rewritten — the old one promised habits and nutrition items that this
-    // day does not contain.
-    alt:
-      'The Junoon plan tab with the day laid out across morning, midday and evening: a midday yoga sequence and an evening guided meditation',
+    // 2026-09-23 (LV5-068): the 1.0.4 App Store capture, dark, sample member
+    // "Maya", resized to 828 wide with the bottom 128px filled from the
+    // capture's own flattest row. Source: Desktop/Junoon/Marketing/App Store/
+    // 2026-09-20-v1.0.4/captures-0920/.
+    src: '/screenshots/v3/home-dark.png',
+    alt: "The Junoon home screen with today's three sessions, a nudge from the coach, and the body map below",
   },
 } as const satisfies Record<string, Screen>
 
