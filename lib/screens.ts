@@ -70,7 +70,8 @@
  * coachChat, coachPicks, planTab, ritualProposal and ritualWeek point at the
  * App Store 1.0.4 dark captures (sample member "Maya", no status bar, no BETA
  * pill). library, liveClass, liveTab and breathworkSession are still the older
- * captures until the next capture pass.
+ * captures until the next capture pass. library moved to a dark capture
+ * the same day; the two live slots wait on Kush (live classes are not weekly yet).
  */
 
 export interface Screen {
@@ -116,14 +117,12 @@ export const SCREENS = {
     alt: 'A session the coach built for the evening, playing a downward-facing dog clip with the next poses listed below',
   },
   library: {
-    src: '/screenshots/v3/library.png',
-    // 2026-08-30: current capture, same treatment as coachChat above. The
-    // file name stays `library` because KEEPER-SPEC, POSTER-SPEC and
-    // SEED-LIBRARY all bind cards to these filenames — the app's own tab is
-    // now labelled "Classes", which is why this shot shows a Classes tab bar.
-    // Alt still accurate: it is the recorded shelf either way.
-    alt:
-      'The Junoon library of recorded yoga, meditation and pranayama classes with their lengths and instructors',
+    // 2026-09-23 (LV5-068): dark V5 capture of the Classes tab (Library),
+    // sample member "Maya", from Desktop/Junoon/Marketing/Screenshots/
+    // 2026-09-23-dark-features/landing/01-library-shelf.png. The library is
+    // in 1.0.4. File name kept distinct from library.png, which specs bind to.
+    src: '/screenshots/v3/library-dark.png',
+    alt: 'The Junoon class library with classes recommended for you and recorded yoga, meditation and pranayama classes with their teachers and lengths',
   },
   liveClass: {
     src: '/screenshots/v3/live-class.png',
