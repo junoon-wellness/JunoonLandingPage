@@ -1,11 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import Lotus from '@/components/brand/Lotus'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import AppStoreBadge from './AppStoreBadge'
+import ThemeSwitch from '@/components/theme/ThemeSwitch'
 
 /**
  * Scroll-aware chrome (spec §B1). Airy over the hero, tighter and more opaque
@@ -21,11 +21,12 @@ import AppStoreBadge from './AppStoreBadge'
  */
 const THRESHOLD = 24
 
+/* LV5-074 (folds in LV5-064): Library moves to the end of the row. */
 const NAV_LINKS = [
   { label: 'Home', href: '/' },
   { label: 'Pricing', href: '/pricing' },
-  { label: 'Library', href: '/library' },
   { label: 'About', href: '/about' },
+  { label: 'Library', href: '/library' },
 ] as const
 
 export default function NavV2() {
@@ -80,7 +81,10 @@ export default function NavV2() {
   return (
     <>
     <nav className="v2-nav" data-scrolled={scrolled}>
-      <a href="#top" className="v2-link v2-nav-brand">
+      {/* LV5-074 (folds in LV5-064): the logo goes HOME from every page. It
+          used to be href="#top", which on /pricing or /about only scrolled
+          that page back up. */}
+      <Link href="/" className="v2-link v2-nav-brand" aria-label="Junoon Wellness, home">
         {/* The badge carries "JUNOON" inside it, but at this size that text is
             illegible, so it reads as a tree emblem. The wordmark beside it does
             the naming work.
@@ -106,14 +110,14 @@ export default function NavV2() {
         <span className="v2-wordmark">
           Junoon<span className="v2-wordmark-tail"> Wellness</span>
         </span>
-      </a>
+      </Link>
 
       <div className="v2-nav-links" aria-label="Primary">
         {NAV_LINKS.map(link => (
           <Link
             key={link.href}
             href={link.href}
-            className="v2-link v2-nav-link jn-mono"
+            className="v2-link v2-nav-link"
             data-active={isActive(link.href)}
             aria-current={isActive(link.href) ? 'page' : undefined}
           >
@@ -122,7 +126,10 @@ export default function NavV2() {
         ))}
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+      <div className="v2-nav-right">
+        {/* LV5-074 / W8: the Dark / Light switch. Hidden on the phone bar
+            (no room beside the wordmark); the menu sheet carries it there. */}
+        <ThemeSwitch />
         {/* LV5-002: the App Store badge replaces the "Pre-launch · 2026"
             pill + "Join waitlist" button that used to live here. */}
         <div className="v2-nav-cta">
@@ -183,16 +190,11 @@ export default function NavV2() {
       </div>
 
       <div className="v2-nav-sheet-cta">
-        {/* Kush, 2026-08-23: a lotus closes the phone menu above the badge.
-            2026-08-24: it is now the filled two-tone brand mark, and this plus
-            the footer are the only two places the lotus appears at all. */}
-        {/* `width: '100%'` is load-bearing: .v2-nav-sheet-cta is a column flex
-            with align-items:flex-start, so without it this wrapper shrink-wraps
-            to the mark's own 22px and justifyContent has nothing to centre. The
-            mark sat hard left for as long as it has existed; the old faint sage
-            outline just did not show it. */}
-        <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginBottom: '18px' }}>
-          <Lotus size={22} />
+        {/* LV5-074: the lotus that closed this sheet is gone (LV5-064 asked
+            for a new mark; the nav bar's own logo already carries the brand).
+            The Dark / Light switch takes its place on the phone. */}
+        <div className="v2-nav-sheet-mode">
+          <ThemeSwitch />
         </div>
         <AppStoreBadge full size="nav" onClick={() => setMenuOpen(false)} />
       </div>

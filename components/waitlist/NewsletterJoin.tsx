@@ -1,7 +1,6 @@
 'use client'
 
 import SignupForm from './SignupForm'
-import Reveal, { RevealGroup, RevealItem } from '@/components/motion/Reveal'
 
 interface NewsletterJoinProps {
   source: string
@@ -32,6 +31,18 @@ const TOPICS = [
   'Recipes and more',
 ]
 
+/*
+ * LV5-074 (website refresh, phase 4): MARKUP AND STYLE ONLY. The headline's
+ * gold italic clause, the dotted code-font topic chips and the two
+ * "NO SPAM / UNSUBSCRIBE ANYTIME" pills became plain text: the topics as a
+ * simple list, the pills as one quiet line. Every word is unchanged; the
+ * reassurance line uses the exact words the form itself already shows on
+ * its full variant ("No spam. Unsubscribe anytime.").
+ *
+ * 🔴 SignupForm and app/api/waitlist/route.ts are NOT touched (the route's
+ * utm_source "Waitlist" drives the beehiiv welcome automation). Never submit
+ * this form to test it: every submit is a real signup.
+ */
 export default function NewsletterJoin({
   source,
   onSignupSuccess,
@@ -41,128 +52,54 @@ export default function NewsletterJoin({
     <section
       className={`v2-section v2-two-col${firstSection ? ' v2-section-top v2-section-newsletter' : ''}`}
       style={{
-        background: 'var(--jn-surface)',
-        borderTop: '0.5px solid rgba(245,240,232,0.06)',
-        // LV5-031 (Kush: "first name is clipping, move it down to be aligned
-        // with the text to the left"): was 'center', which let the taller
-        // form column start ABOVE the headline. 'start' pins both columns'
-        // tops together; the form's first label now lines up with the headline.
+        background: 'var(--jn-sheet)',
+        borderBottom: '1px solid var(--jn-hairline)',
+        // LV5-031: 'start' pins both columns' tops together.
         alignItems: 'start',
         overflow: 'hidden',
       }}
     >
-      {/* LV5-022 SC5 / LV5-024: /library's header panel used to render HERE.
-          This `<section>` is `.v2-section`, which is `position: relative`, so
-          the old call scoped to this local box instead of the page wrapper.
-          It now renders at app/library/page.tsx as `LIBRARY_JAALI` — see the
-          "ONE GEOMETRY" note atop components/brand/Jaali.tsx. */}
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <Reveal>
-          <h3
-            style={{
-              fontFamily: 'var(--font-cormorant), serif',
-              fontSize: 'clamp(26px, 2.8vw, 36px)',
-              fontWeight: 400,
-              color: 'var(--jn-text)',
-              lineHeight: 1.15,
-              marginBottom: '14px',
-              letterSpacing: '-0.008em',
-            }}
-          >
-            Get updates by email.{' '}
-            <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>
-              Join the newsletter.
-            </em>
-          </h3>
-          <p
-            style={{
-              fontSize: '14px',
-              fontWeight: 300,
-              color: 'var(--jn-text-soft)',
-              lineHeight: 1.75,
-              maxWidth: '440px',
-              marginBottom: '18px',
-            }}
-          >
-            {/* Kush, 2026-08-23: his exact replacement line — verbatim. The
-                TOPICS chips below stay unchanged, his ruling the same day. */}
-            Deepen your understanding of ancient Indian wellness practices and discover how they
-            connect with modern science and everyday life.
-          </p>
-        </Reveal>
-
-        <RevealGroup
-          stagger={0.05}
-          delayChildren={0.1}
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: '1224px' }}>
+        <h1
           style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '8px 16px',
-            maxWidth: '380px',
-            marginBottom: '18px',
+            fontFamily: 'var(--font-cormorant), serif',
+            fontSize: 'clamp(34px, 4vw, 52px)',
+            fontWeight: 400,
+            color: 'var(--jn-text)',
+            lineHeight: 1.06,
+            margin: '0 0 16px',
+            letterSpacing: '-0.008em',
           }}
         >
-          {TOPICS.map(topic => (
-            <RevealItem
-              key={topic}
-              as="span"
-              y={10}
-              className="jn-mono"
-              style={{
-                display: 'flex',
-                alignItems: 'baseline',
-                gap: '8px',
-                fontSize: '11px',
-                letterSpacing: '0.08em',
-                textTransform: 'none',
-                color: 'var(--jn-text-soft)',
-                lineHeight: 1.5,
-              }}
-            >
-              <span
-                aria-hidden="true"
-                style={{
-                  width: '4px',
-                  height: '4px',
-                  borderRadius: '50%',
-                  background: 'var(--jn-sage)',
-                  flexShrink: 0,
-                }}
-              />
-              {topic}
-            </RevealItem>
-          ))}
-        </RevealGroup>
-
-        <RevealGroup
-          stagger={0.07}
-          delayChildren={0.12}
-          style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}
+          Get updates by email. Join the newsletter.
+        </h1>
+        <p
+          style={{
+            fontSize: '18px',
+            fontWeight: 400,
+            color: 'var(--jn-text-dim)',
+            lineHeight: 1.6,
+            maxWidth: '30em',
+            margin: '0 0 20px',
+          }}
         >
-          {['No spam', 'Unsubscribe anytime'].map(b => (
-            <RevealItem
-              key={b}
-              as="span"
-              y={10}
-              className="jn-mono"
-              style={{
-                fontSize: '11px',
-                letterSpacing: '0.1em',
-                padding: '5px 12px',
-                border: '0.5px solid rgba(245,240,232,0.12)',
-                borderRadius: '2px',
-                color: 'rgba(245,240,232,0.7)',
-              }}
-            >
-              {b}
-            </RevealItem>
+          {/* Kush, 2026-08-23: his exact replacement line, verbatim. */}
+          Deepen your understanding of ancient Indian wellness practices and discover how they
+          connect with modern science and everyday life.
+        </p>
+
+        <ul className="rf-newsletter-topics" aria-label="What the newsletter covers">
+          {TOPICS.map(topic => (
+            <li key={topic}>{topic}</li>
           ))}
-        </RevealGroup>
+        </ul>
+
+        <p className="rf-newsletter-note">No spam. Unsubscribe anytime.</p>
       </div>
 
-      <Reveal delay={0.1} style={{ position: 'relative', zIndex: 1 }}>
+      <div style={{ position: 'relative', zIndex: 1 }}>
         <SignupForm id="join" source={source} onSignupSuccess={onSignupSuccess} compact />
-      </Reveal>
+      </div>
     </section>
   )
 }

@@ -25,84 +25,111 @@
   --font-dm-sans: var(--font-sans);
 
   /* ════════════════════════════════════════════════════════════════
-     JUNOON DARK PAGE TOKENS  (spec LANDING-V3-SPEC.md §A1)
+     LV5-074 (website refresh, 1 Oct 2026): THE APP'S OWN COLOURS.
 
-     These names are the contract. Phase 2 reuses them, so add here
-     rather than reintroducing inline hexes. brand-tokens.ts mirrors
-     them under `darkPage` for anything that needs them in TS.
+     Dark is the default (no attribute, or data-theme="dark"); the Warm
+     glow light scheme is [data-theme="light"] below. The values come from
+     the app's Theme.swift / Brand.swift (V5 cd99b342, recorded in the
+     27 Sep scope, handoffs/2026-09-27/website-refresh/SCOPE.md §b).
 
-     Note these deliberately diverge from the Brand.swift-derived light
-     tokens in brand-tokens.ts: the dark landing page uses a deeper,
-     more saturated clay/turmeric than the in-app light theme.
+     The OLD NAMES are kept on purpose: every component already speaks
+     --jn-bg / --jn-text / --jn-clay, so re-pointing them here recolours
+     the whole site in both schemes without touching each call site.
+
+     App rules the site follows too: turmeric GLOWS but never carries
+     words (so --jn-turmeric, which the site uses for words, now points at
+     the accent); the accent carries words and the one filled button;
+     green means done. The *-rgb channels exist so translucent tints flip
+     with the scheme: rgb(var(--jn-ink-rgb) / 0.08).
      ════════════════════════════════════════════════════════════════ */
-  --jn-bg: #1C1410;            /* page background */
-  --jn-surface: #2C2118;       /* elevated surface, bezel (== bark) */
-  --jn-surface-deep: #4A3728;  /* gradient end (== soil) */
-  --jn-text: #F5F0E8;          /* primary text (== ivory) */
-  --jn-text-dim: rgba(245, 240, 232, 0.64);
-  --jn-clay: #B5522A;          /* accent: rules, primary button FILL */
-  --jn-turmeric: #C8902A;      /* accent: italic emphasis, active states */
-  --jn-mute: #93826F;          /* mono labels (== driftwood, lifted for AA) */
-  --jn-stone: #B5A898;         /* tertiary accent */
-  --jn-gold: #D4A96A;          /* footer wordmark */
+  --jn-ink-rgb: 245 240 232;
+  --jn-clay-rgb: 196 114 74;
+  --jn-glow-rgb: 232 184 112;
+  --jn-ground-rgb: 18 13 9;
+
+  --jn-bg: #120D09;            /* Theme.Dark.ground */
+  --jn-sheet: #1B1510;         /* Dark.sheet: bands */
+  --jn-surface: #241C15;       /* Dark.plate: cards */
+  --jn-surface-deep: #33281F;  /* Dark.raise */
+  --jn-deep: #0A0705;          /* Dark.deep */
+  --jn-bezel: #0A0705;         /* phone frames stay dark in BOTH schemes */
+  --jn-text: #F5F0E8;          /* Dark.ink */
+  --jn-text-dim: rgba(237, 232, 223, 0.72);
+  --jn-text-soft: rgba(237, 232, 223, 0.72);
+  --jn-text-faint: rgb(var(--jn-ink-rgb) / 0.58);
+  --jn-reading: rgb(var(--jn-ink-rgb) / 0.86);
+  --jn-mute: #8C7B6B;          /* Dark.ink3: labels */
+  --jn-stone: rgba(237, 232, 223, 0.72);
+  --jn-clay: #C4724A;          /* the accent: links, the one button */
+  --jn-accent: #C4724A;
+  --jn-on-clay: #120D09;       /* dark words on clay (ruling 16 Sep) */
+  --jn-turmeric: #C4724A;      /* WORDS in the accent; the glow is --jn-glow */
+  --jn-glow: #E8B870;          /* halo and dots only, never words */
+  --jn-gold: #C4724A;
+  --jn-sel: #33281F;           /* selected pill */
+  --jn-sel-ink: #F5F0E8;
   --jn-error: #E08A62;
 
-  /* ════════════════════════════════════════════════════════════════
-     THE SECOND HUE (round 4)
+  --jn-sage: #7B9E87;          /* done / included only */
+  --jn-moss: #7B9E87;
+  --jn-sage-wash: rgb(var(--jn-ink-rgb) / 0.04);
+  --jn-sage-line: rgb(var(--jn-ink-rgb) / 0.14);
 
-     Every token above sits in a 20-40° hue band. That is why the page
-     reads flat, and it is also why clay kept failing contrast at label
-     size: warm text on a warm ground has nowhere to go. Sage is ~150°
-     away and is already Junoon's own check-in colour in Brand.swift,
-     so this is a brand move rather than a new one.
-
-     ⚠️ SAGE IS THE TEXT COLOUR. MOSS IS NOT. Measured against --jn-bg:
-       sage  #7B9E87  6.12:1  passes AA for body text
-       moss  #5C7A65  3.83:1  FAILS AA for text
-     Moss is for fills, bars, borders and shapes only. If you ever need
-     green type on a smaller-than-heading element, it is sage.
-     ════════════════════════════════════════════════════════════════ */
-  --jn-sage: #7B9E87;          /* accent: eyebrows, labels, green type */
-  --jn-moss: #5C7A65;          /* fills and bar starts ONLY — fails AA as text */
-  --jn-sage-wash: rgba(123, 158, 135, 0.07);
-  --jn-sage-line: rgba(123, 158, 135, 0.28);
-
-  /* Text sitting ON the clay button fill. Ivory measured 4.40:1 there,
-     just under AA; pure white measures 4.99:1. Everywhere else on the
-     page ivory is correct — this token exists so the exception is named
-     rather than eyeballed. */
-  --jn-on-clay: #FFFFFF;
-
-  /* Derived tints. Named so the same wash never gets eyeballed twice.
-     The hairlines carry a sage cast rather than a neutral ivory one, so
-     the second hue reaches the page's structure and not just its accents. */
-  --jn-hairline: rgba(139, 168, 148, 0.13);
-  --jn-hairline-strong: rgba(139, 168, 148, 0.22);
-  --jn-text-soft: rgba(245, 240, 232, 0.62);
-  /* Was 0.38 — 3.30:1, below AA. 0.55 measures 5.53:1. */
-  --jn-text-faint: rgba(245, 240, 232, 0.55);
-  --jn-wash: rgba(245, 240, 232, 0.06);
+  --jn-hairline: rgb(var(--jn-ink-rgb) / 0.08);
+  --jn-hairline-strong: rgb(var(--jn-ink-rgb) / 0.14);
+  --jn-wash: rgb(var(--jn-ink-rgb) / 0.06);
 
   /* One easing for the whole page, so nothing moves in a different accent. */
   --jn-ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* ════════════════════════════════════════════════════════════════
-     PER-ITEM ACCENTS (LV5-019) — a wider ring for the hero dot pills
-     (SC1) and the feature tab outlines (SC2) to draw six/four DIFFERENT
-     colours from instead of reusing just clay/turmeric/sage everywhere.
-     GRAPHIC use only (borders, fills, dots) — never body/label text,
-     so these are only required to clear 3:1 on --jn-bg, not 4.5:1.
-     ════════════════════════════════════════════════════════════════ */
-  --jn-gold-alt: #D9A03C;      /* poster accentAlt — measured 7.82:1 on --jn-bg */
-  /* Poster jade #1F5D50 measured 2.37:1 on --jn-bg — FAILS the 3:1 graphic
-     floor. Lightened (same hue) to #2F8F78, which measures 4.60:1. Fill/
-     border use only, same rule as moss above. */
-  --jn-jade-tint: #2F8F78;
-  /* Poster blush #F2DDD2 at Kush's requested 0.7 alpha, pre-blended over
-     --jn-bg so it can be dropped in anywhere currentColor/a var() is
-     expected without a color-mix() double-blend. Effective rgb(178,161,152),
-     measures 7.30:1 on --jn-bg. */
-  --jn-blush-a70: rgba(242, 221, 210, 0.7);
+  /* LV5-019's per-item accents are retired by "one accent" (Kush, 27 Sep,
+     "Retire all four"). The names stay so nothing references a missing var. */
+  --jn-gold-alt: #C4724A;
+  --jn-jade-tint: #C4724A;
+  --jn-blush-a70: rgba(237, 232, 223, 0.72);
+}
+
+
+/* LV5-074: the app's "Warm glow" light scheme (Kush, 25 Sep). Set on <html>
+   by the inline script in app/layout.tsx before first paint. */
+:root[data-theme='light'] {
+  color-scheme: light;
+  --jn-ink-rgb: 42 30 21;
+  --jn-clay-rgb: 142 69 38;
+  --jn-ground-rgb: 228 214 195;
+
+  --jn-bg: #E4D6C3;            /* Theme.ground, latte */
+  --jn-sheet: #F8F2E9;
+  --jn-surface: #F8F2E9;       /* Theme.plate, ivory */
+  --jn-surface-deep: #EEE3D4;
+  --jn-deep: #2A1E15;
+  --jn-bezel: #2A1E15;
+  --jn-text: #2A1E15;          /* Theme.ink */
+  --jn-text-dim: #62503F;      /* Theme.ink2 */
+  --jn-text-soft: #62503F;
+  --jn-text-faint: #6B5847;    /* Theme.ink3 */
+  --jn-reading: #3E2E21;
+  --jn-mute: #6B5847;
+  --jn-stone: #62503F;
+  --jn-clay: #8E4526;          /* terracotta */
+  --jn-accent: #8E4526;
+  --jn-on-clay: #F8F2E9;
+  --jn-turmeric: #8E4526;
+  --jn-gold: #8E4526;
+  --jn-sel: #F3D9A4;           /* goldPill */
+  --jn-sel-ink: #7A3A1E;       /* deepTerracotta */
+  --jn-error: #9A3B1E;
+
+  --jn-sage: #46604E;          /* Theme.checkinInk */
+  --jn-moss: #46604E;
+
+  --jn-hairline: #D3C2AB;      /* Theme.line */
+  --jn-hairline-strong: #C9B79E;
+  --jn-wash: rgb(var(--jn-ink-rgb) / 0.04);
+
+  --jn-gold-alt: #8E4526;
+  --jn-jade-tint: #8E4526;
+  --jn-blush-a70: #62503F;
 }
 
 html {
@@ -250,8 +277,8 @@ body::before {
      top-left one is half strength so the diagonal reads as a drift and
      not as two matching blobs. */
   background:
-    radial-gradient(circle at 28% 55%, rgba(200, 144, 42, 0.07), transparent 55%),
-    radial-gradient(circle at 72% 28%, rgba(181, 82, 42, 0.06), transparent 50%),
+    radial-gradient(circle at 28% 55%, rgb(var(--jn-glow-rgb) / 0.07), transparent 55%),
+    radial-gradient(circle at 72% 28%, rgb(var(--jn-clay-rgb) / 0.06), transparent 50%),
     radial-gradient(circle at 78% 82%, rgba(123, 158, 135, 0.08), transparent 54%),
     radial-gradient(circle at 14% 14%, rgba(123, 158, 135, 0.04), transparent 48%);
   animation: ambientDrift 22s ease-in-out infinite;
@@ -261,8 +288,8 @@ body::before {
 
 /* ─── NAV PILL PULSE ─── */
 @keyframes pillPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 144, 42, 0); }
-  50% { box-shadow: 0 0 0 5px rgba(200, 144, 42, 0.10); }
+  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--jn-glow-rgb) / 0); }
+  50% { box-shadow: 0 0 0 5px rgb(var(--jn-glow-rgb) / 0.10); }
 }
 .nav-pill {
   animation: pillPulse 3.4s ease-in-out infinite;
@@ -304,8 +331,8 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background-image:
-    repeating-linear-gradient(to right, rgba(245, 240, 232, 0.038) 0 1px, transparent 1px 72px),
-    repeating-linear-gradient(to bottom, rgba(245, 240, 232, 0.038) 0 1px, transparent 1px 72px);
+    repeating-linear-gradient(to right, rgb(var(--jn-ink-rgb) / 0.038) 0 1px, transparent 1px 72px),
+    repeating-linear-gradient(to bottom, rgb(var(--jn-ink-rgb) / 0.038) 0 1px, transparent 1px 72px);
   -webkit-mask-image: radial-gradient(ellipse 70% 65% at 72% 42%, #000 0%, transparent 72%);
   mask-image: radial-gradient(ellipse 70% 65% at 72% 42%, #000 0%, transparent 72%);
   -webkit-mask-size: 130% 130%;
@@ -339,8 +366,8 @@ body::before {
      is deliberately the weakest of the three: any more and the bezel
      starts to read green. */
   background:
-    radial-gradient(ellipse 54% 48% at 46% 44%, rgba(181, 82, 42, 0.32), transparent 70%),
-    radial-gradient(ellipse 44% 40% at 66% 64%, rgba(200, 144, 42, 0.20), transparent 68%),
+    radial-gradient(ellipse 54% 48% at 46% 44%, rgb(var(--jn-clay-rgb) / 0.32), transparent 70%),
+    radial-gradient(ellipse 44% 40% at 66% 64%, rgb(var(--jn-glow-rgb) / 0.20), transparent 68%),
     radial-gradient(ellipse 46% 42% at 24% 76%, rgba(123, 158, 135, 0.24), transparent 66%);
   filter: blur(13px);
   animation: glowBreathe 9s ease-in-out infinite;
@@ -360,7 +387,7 @@ body::before {
   min-height: 46px;
   font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text);
   background: var(--jn-wash);
   border: 0.5px solid var(--jn-hairline-strong);
@@ -368,15 +395,15 @@ body::before {
 }
 .v2-field::placeholder {
   /* LV5-002 ADDED SCOPE: was 0.34 = 2.84:1, below AA. 0.55 measures 5.53:1. */
-  color: rgba(245, 240, 232, 0.55);
+  color: rgb(var(--jn-ink-rgb) / 0.55);
 }
 .v2-field:hover {
-  background: rgba(245, 240, 232, 0.08);
+  background: rgb(var(--jn-ink-rgb) / 0.08);
 }
 .v2-field:focus {
-  background: rgba(245, 240, 232, 0.10);
-  border-color: rgba(181, 82, 42, 0.55);
-  box-shadow: 0 0 0 3px rgba(181, 82, 42, 0.10);
+  background: rgb(var(--jn-ink-rgb) / 0.10);
+  border-color: rgb(var(--jn-clay-rgb) / 0.55);
+  box-shadow: 0 0 0 3px rgb(var(--jn-clay-rgb) / 0.10);
 }
 .v2-field[aria-invalid='true'] {
   border-color: rgba(200, 90, 60, 0.75);
@@ -413,7 +440,7 @@ body::before {
 .v2-btn:hover:not(:disabled) {
   background: #c25c31;
   transform: translateY(-1px);
-  box-shadow: 0 14px 28px -12px rgba(181, 82, 42, 0.6);
+  box-shadow: 0 14px 28px -12px rgb(var(--jn-clay-rgb) / 0.6);
 }
 .v2-btn:active:not(:disabled) {
   transform: scale(0.985) translateY(0);
@@ -485,7 +512,7 @@ body::before {
   justify-content: space-between;
   gap: 16px;
   padding: 20px 48px;
-  background: rgba(28, 20, 16, 0.42);
+  background: rgb(var(--jn-ground-rgb) / 0.42);
   backdrop-filter: blur(6px) saturate(120%);
   -webkit-backdrop-filter: blur(6px) saturate(120%);
   border-bottom: 0.5px solid transparent;
@@ -497,10 +524,10 @@ body::before {
 }
 .v2-nav[data-scrolled='true'] {
   padding: 11px 48px;
-  background: rgba(28, 20, 16, 0.88);
+  background: rgb(var(--jn-ground-rgb) / 0.88);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border-bottom-color: rgba(245, 240, 232, 0.09);
+  border-bottom-color: rgb(var(--jn-ink-rgb) / 0.09);
 }
 
 .v2-nav-logo {
@@ -521,7 +548,7 @@ body::before {
   right: 0;
   bottom: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(181, 82, 42, 0.55), transparent);
+  background: linear-gradient(90deg, transparent, rgb(var(--jn-clay-rgb) / 0.55), transparent);
   transform: scaleX(0);
   transition: transform 0.6s var(--jn-ease);
 }
@@ -639,7 +666,7 @@ body::before {
   transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
 }
 .v2-dot:hover {
-  color: rgba(245, 240, 232, 0.7);
+  color: rgb(var(--jn-ink-rgb) / 0.7);
 }
 .v2-dot.is-active {
   color: var(--jn-turmeric);
@@ -712,7 +739,7 @@ body::before {
   background: var(--jn-surface);
   box-shadow:
     0 40px 80px -28px rgba(0, 0, 0, 0.75),
-    0 0 0 1px rgba(245, 240, 232, 0.07);
+    0 0 0 1px rgb(var(--jn-ink-rgb) / 0.07);
 }
 .v2-device img {
   display: block;
@@ -778,7 +805,7 @@ body::before {
 }
 .wb-intro {
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text-dim);
   line-height: 1.75;
   max-width: 560px;
@@ -814,7 +841,7 @@ body::before {
 }
 .wb-card-copy {
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text-soft);
   line-height: 1.7;
 }
@@ -1070,7 +1097,7 @@ body::before {
 }
 .jn-ch-body {
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text-dim);
   line-height: 1.75;
   margin-bottom: 24px;
@@ -1088,7 +1115,7 @@ body::before {
   gap: 12px;
   align-items: start;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text-soft);
   line-height: 1.7;
 }
@@ -1108,8 +1135,8 @@ body::before {
   overflow: hidden;
   background:
     linear-gradient(180deg, var(--jn-bg) 0%, var(--jn-surface) 100%);
-  border-top: 0.5px solid rgba(245, 240, 232, 0.06);
-  border-bottom: 0.5px solid rgba(245, 240, 232, 0.06);
+  border-top: 0.5px solid rgb(var(--jn-ink-rgb) / 0.06);
+  border-bottom: 0.5px solid rgb(var(--jn-ink-rgb) / 0.06);
   padding: 72px 48px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -1161,7 +1188,7 @@ body::before {
   gap: 12px;
   padding: 15px 28px;
   min-height: 48px;
-  border: 0.5px solid rgba(200, 144, 42, 0.42);
+  border: 0.5px solid rgb(var(--jn-glow-rgb) / 0.42);
   border-radius: 4px;
   overflow: hidden;
   font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
@@ -1493,7 +1520,7 @@ body::before {
 .v2-hero-offer-body {
   font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.6;
   color: var(--jn-text-soft);
   margin: 0 0 10px;
@@ -1566,7 +1593,7 @@ body::before {
   height: 56px;
   border-radius: 50%;
   overflow: hidden;
-  border: 0.5px solid rgba(245, 240, 232, 0.12);
+  border: 0.5px solid rgb(var(--jn-ink-rgb) / 0.12);
 }
 .v2-hero-founder-photo img {
   width: 100%;
@@ -1637,8 +1664,8 @@ body::before {
   gap: 48px;
   margin: 0 48px;
   padding: 44px 48px;
-  background: rgba(181, 82, 42, 0.05);
-  border: 0.5px solid rgba(181, 82, 42, 0.3);
+  background: rgb(var(--jn-clay-rgb) / 0.05);
+  border: 0.5px solid rgb(var(--jn-clay-rgb) / 0.3);
 }
 
 /* ─── Footer ─── */
@@ -1655,11 +1682,11 @@ body::before {
    footer can stay a server component. */
 .v2-footer-link {
   /* LV5-002 ADDED SCOPE: was 0.35 = 2.98:1, below AA. 0.55 measures 5.53:1. */
-  color: rgba(245, 240, 232, 0.55);
+  color: rgb(var(--jn-ink-rgb) / 0.55);
   transition: color 0.2s ease;
 }
 .v2-footer-link:hover {
-  color: rgba(245, 240, 232, 0.78);
+  color: rgb(var(--jn-ink-rgb) / 0.78);
 }
 
 /* ─── Tablet ─── */
@@ -1967,7 +1994,7 @@ body::before {
 .pr-headline {
   font-family: var(--font-cormorant), serif;
   font-size: clamp(28px, 3.2vw, 40px);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.012em;
   color: var(--jn-text);
@@ -2091,7 +2118,7 @@ body::before {
 }
 .pr-free-callout-body {
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.55;
   color: var(--jn-text-soft);
   margin: 0;
@@ -2263,10 +2290,10 @@ body::before {
        a warm lift off the ground. Kush's standing note on this page's scale
        work is "nothing too large or gaudy", so this is a deeper shadow and a
        warmer edge rather than a glow or a gradient. */
-    border-color: rgba(232, 184, 112, 0.3);
+    border-color: rgb(var(--jn-glow-rgb) / 0.3);
     box-shadow:
       0 24px 70px rgba(0, 0, 0, 0.5),
-      0 2px 44px rgba(181, 82, 42, 0.12);
+      0 2px 44px rgb(var(--jn-clay-rgb) / 0.12);
   }
   .pr-price {
     font-size: clamp(40px, 4.4vw, 68px);
@@ -2281,7 +2308,7 @@ body::before {
   max-width: 460px;
   text-align: center;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text-soft);
   line-height: 1.6;
 }
@@ -2306,7 +2333,7 @@ body::before {
   padding: 7px 0; /* LV5-032: was 9 */
   border-bottom: 0.5px solid var(--jn-hairline);
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text-soft);
   line-height: 1.5;
 }
@@ -2320,7 +2347,7 @@ body::before {
 }
 .pr-cta-sub {
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text-faint);
 }
 .pr-cta-fine {
@@ -2351,7 +2378,7 @@ body::before {
   /* LV5-031 (Kush: "make what we're building next easier to read"): was
      12px/300 in --jn-text-soft on the wash with a hairline border. Now 13px,
      regular weight, full ivory on the raised surface, visible border. */
-  border: 0.5px solid rgba(245, 240, 232, 0.2);
+  border: 0.5px solid rgb(var(--jn-ink-rgb) / 0.2);
   background: var(--jn-surface);
   font-size: 13px;
   font-weight: 400;
@@ -2384,7 +2411,7 @@ body::before {
   content: '+';
   flex-shrink: 0;
   font-size: 18px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-mute);
   transition: transform 0.25s var(--jn-ease);
 }
@@ -2393,7 +2420,7 @@ body::before {
 .pr-faq-answer {
   margin-top: 10px;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text-soft);
   line-height: 1.7;
 }
@@ -2451,7 +2478,7 @@ body::before {
      in Cormorant light; 3.7vw at 1280 ≈ 47px ≈ 1105px vs 1184 available).
      Wraps naturally on phones. Was clamp(38px, 5.4vw, 74px) / 1120px box. */
   font-size: clamp(30px, 3.7vw, 56px);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.08;
   letter-spacing: -0.014em;
   color: var(--jn-text);
@@ -2471,7 +2498,7 @@ body::before {
   max-width: 600px;
   font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.7;
   color: var(--jn-text-soft);
 }
@@ -2500,7 +2527,7 @@ body::before {
 }
 .ab-band-copy p {
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text-soft);
   line-height: 1.75;
   margin: 0 0 16px;
@@ -2614,7 +2641,7 @@ body::before {
   border-radius: 20px;
   overflow: hidden;
   background: linear-gradient(155deg, var(--jn-surface) 0%, var(--jn-surface-deep) 100%);
-  border: 1px solid rgba(217, 160, 60, 0.42);
+  border: 1px solid rgb(var(--jn-glow-rgb) / 0.42);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2647,7 +2674,7 @@ body::before {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  border: 1px solid rgba(245, 240, 232, 0.4);
+  border: 1px solid rgb(var(--jn-ink-rgb) / 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2867,9 +2894,9 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(181, 82, 42, 0.14);
+  background: rgb(var(--jn-clay-rgb) / 0.14);
 }
-.ab-person-photo.ab-placeholder svg { color: rgba(245, 240, 232, 0.4); }
+.ab-person-photo.ab-placeholder svg { color: rgb(var(--jn-ink-rgb) / 0.4); }
 .ab-person-name {
   font-size: 14px;
   font-weight: 500;
@@ -2885,7 +2912,7 @@ body::before {
 }
 .ab-person-bio {
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text-soft);
   line-height: 1.6;
   /* Kush, 2026-08-24: Shoam's full app bio is multi-paragraph — render the
@@ -3055,7 +3082,7 @@ body::before {
   transition: border-color 0.2s ease, transform 0.2s var(--jn-ease);
 }
 .lb-card:hover {
-  border-color: rgba(200, 144, 42, 0.35);
+  border-color: rgb(var(--jn-glow-rgb) / 0.35);
   transform: translateY(-2px);
 }
 .lb-card-eyebrow {
@@ -3074,7 +3101,7 @@ body::before {
 }
 .lb-card-desc {
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text-soft);
   line-height: 1.65;
   flex-grow: 1;
@@ -3140,7 +3167,7 @@ body::before {
 }
 .lb-reader-desc {
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
   font-style: italic;
   color: var(--jn-text-soft);
   line-height: 1.7;
@@ -3157,7 +3184,7 @@ body::before {
 }
 .lb-reader-body p {
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--jn-text-soft);
   line-height: 1.85;
   margin: 0 0 20px;
@@ -3180,7 +3207,7 @@ body::before {
 }
 .lb-reader-body li {
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.8;
   margin-bottom: 8px;
 }
@@ -3321,7 +3348,7 @@ body::before {
 .jn-consent-body {
   font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.55;
   color: var(--jn-text-soft);
   margin: 0;
@@ -3413,4 +3440,622 @@ body::before {
     bottom: 12px;
     width: auto;
   }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   LV5-074 — THE WEBSITE REFRESH LAYER (1 Oct 2026)
+
+   Kush's rulings this layer implements: Direction A (27 Sep), "Jaali:
+   Remove it", "August picks: Retire all four" (gold italic phrases,
+   coloured tab outlines, toran dividers, coloured carousel dots), and the
+   A3 hero with the Path 1 tap path (round 3). It sits LAST in the file on
+   purpose: equal-specificity rules here win by source order, so the older
+   rules above stay readable as history and nothing above had to be sliced
+   out (see the LV5-023 banner on why slicing CSS between markers is banned).
+
+   Pricing is deliberately light-touch: Kush, 1 Oct, W2: "I still want the
+   structure to be the same and the look to be the same as what we had
+   before, at least for the card and how when you scroll". Only theme,
+   background and the price formatting change there.
+   ════════════════════════════════════════════════════════════════════ */
+
+html { background-color: var(--jn-bg); }
+body { font-size: 17px; line-height: 1.6; }
+
+/* ── decorations removed (Direction A) ── */
+.v2-grid,
+.v2-device-glow,
+.jn-toran { display: none !important; }
+.drift-bg::after { content: none; }
+.nav-pill { animation: none; }
+
+/* ── one quiet nav: no frosted glass, no glowing line ── */
+.v2-nav {
+  background: var(--jn-bg);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+}
+.v2-nav[data-scrolled='true'] {
+  background: var(--jn-bg);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom-color: var(--jn-hairline);
+}
+.v2-nav::after { content: none; }
+.v2-wordmark {
+  font-size: 24px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 500;
+}
+.v2-nav-link {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--jn-text-soft);
+}
+.v2-nav-link[data-active='true']::after {
+  bottom: 8px;
+  height: 1.5px;
+  background: var(--jn-accent);
+}
+.v2-nav-sheet-link { color: var(--jn-text-soft); border-bottom-color: var(--jn-hairline); }
+.v2-nav-sheet-link[data-active='true'] { color: var(--jn-text); }
+.v2-nav-right { display: flex; align-items: center; gap: 14px; }
+@media (max-width: 768px) {
+  .v2-wordmark { font-size: 21px; letter-spacing: 0; }
+  .v2-nav-right .rf-mode { display: none; }
+}
+
+/* ── the Dark / Light switch (W8: follows the device on a first visit,
+   then remembers the visitor's pick). The selected look is driven by the
+   <html data-theme> attribute itself, so it is right on the very first
+   paint and never waits for React. ── */
+.rf-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--jn-hairline-strong);
+  border-radius: 999px;
+}
+.rf-mode button {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  min-height: 34px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--jn-text-soft);
+  cursor: pointer;
+}
+:root:not([data-theme='light']) .rf-mode button[data-mode='dark'],
+:root[data-theme='light'] .rf-mode button[data-mode='light'] {
+  background: var(--jn-sel);
+  color: var(--jn-sel-ink);
+}
+.rf-mode button:focus-visible { outline: 2px solid var(--jn-accent); outline-offset: 2px; }
+.v2-nav-sheet-mode { display: flex; justify-content: center; width: 100%; margin-bottom: 18px; }
+
+/* ── type: body at full strength, no spaced code-font capitals on
+   buttons, tabs, links or the footer ── */
+.eyebrow {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  font-style: normal;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: var(--jn-text);
+}
+:is(h1, h2, h3, h4) em,
+.ab-letter-accent {
+  font-style: normal;
+  color: inherit;
+}
+.v2-btn {
+  font-size: 15px;
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: 999px;
+}
+.v2-btn:hover:not(:disabled) { background: var(--jn-clay); box-shadow: none; filter: brightness(1.06); }
+.v2-field { border-radius: 12px; font-size: 16px; }
+.v2-link:focus-visible,
+.v2-btn:focus-visible,
+.v2-field:focus-visible { outline-color: var(--jn-accent); }
+
+/* ── phones stay dark in both schemes (the screenshots are dark) ── */
+.v2-device {
+  border-color: var(--jn-bezel);
+  background: var(--jn-bezel);
+  box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.6);
+}
+
+/* ── feature story: plain text tabs in ONE accent ── */
+.jn-story { padding: 72px 48px 72px; border-top: 1px solid var(--jn-hairline); }
+.jn-story-tabs {
+  gap: 30px;
+  padding: 0;
+  margin-bottom: 44px;
+  border-bottom: 1px solid var(--jn-hairline-strong);
+}
+.jn-story-tab {
+  flex: none;
+  min-height: 48px;
+  padding: 12px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 17px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--jn-text-soft);
+}
+.jn-story-tab[data-active='true'] {
+  color: var(--jn-text);
+  background: transparent;
+  box-shadow: inset 0 -2px 0 var(--jn-accent);
+}
+.jn-story-copy .eyebrow {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.jn-ch-title em { color: inherit; font-style: normal; }
+.jn-ch-body { font-size: 18px; color: var(--jn-text-dim); }
+.jn-ch-point { font-size: 16px; color: var(--jn-text-dim); }
+.jn-ch-point::before { background: var(--jn-accent); }
+@media (max-width: 640px) {
+  .jn-story-tabs { display: flex; overflow-x: auto; gap: 22px; }
+  .jn-story-tab { padding: 12px 0; font-size: 16px; }
+}
+@media (max-width: 768px) {
+  .jn-story { padding: 48px 24px 48px; }
+}
+
+/* ════════ HOME: the A3 hero ════════ */
+.rf-hero {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  grid-template-areas: 'h ph' 't ph';
+  grid-template-rows: auto 1fr;
+  column-gap: 64px;
+  align-items: start;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 136px 48px 88px;
+}
+.rf-hero-headline {
+  grid-area: h;
+  margin: 0;
+  max-width: 9.5em;
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(48px, 6.2vw, 84px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.012em;
+  color: var(--jn-text);
+  text-wrap: balance;
+}
+.rf-hero-text { grid-area: t; }
+.rf-hero-lede {
+  max-width: 30em;
+  margin: 28px 0 0;
+  font-size: 20px;
+  line-height: 1.55;
+  color: var(--jn-text-dim);
+}
+.rf-hero-cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 26px;
+  margin-top: 34px;
+}
+.rf-textlink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--jn-accent);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+  white-space: nowrap;
+}
+.rf-fine {
+  max-width: 34em;
+  margin: 18px 0 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--jn-text-faint);
+}
+.rf-hero-phone {
+  grid-area: ph;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* One entrance on the whole site, and only here (scope: "at most one"). */
+  animation: rfRise 0.9s var(--jn-ease) both 0.15s;
+}
+@keyframes rfRise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rf-hero-phone { animation: none; }
+}
+@media (max-width: 900px) {
+  .rf-hero {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'h' 't' 'ph';
+    grid-template-rows: auto;
+    row-gap: 32px;
+    padding: 104px 24px 56px;
+  }
+  .rf-hero-headline { font-size: clamp(42px, 11vw, 56px); line-height: 1; }
+  .rf-hero-lede { margin-top: 0; font-size: 17px; }
+  .rf-hero-cta { margin-top: 24px; gap: 18px; }
+  .rf-fine { font-size: 14px; }
+}
+
+/* ── the looping phone (Path 1, stills stitched in code) ── */
+.tp-host { position: relative; display: flex; justify-content: center; width: 100%; }
+.tp-phone {
+  position: relative;
+  flex: none;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 10px solid #0A0705;
+  border-radius: 46px;
+  background: #0A0705;
+  box-shadow: 0 0 0 3px rgb(var(--jn-glow-rgb) / 0.3), 0 0 60px rgb(var(--jn-glow-rgb) / 0.28);
+}
+:root[data-theme='light'] .tp-phone {
+  box-shadow: 0 0 0 3px rgb(var(--jn-glow-rgb) / 0.45), 0 0 60px rgb(var(--jn-glow-rgb) / 0.55);
+}
+.tp-view { position: relative; overflow: hidden; border-radius: 36px; background: #120D09; }
+.tp-stage {
+  position: absolute; left: 0; top: 0; width: 402px; height: 812px;
+  transform-origin: 0 0;
+  font-family: var(--font-dm-sans), 'DM Sans', system-ui, sans-serif;
+  color: #F5F0E8; text-align: left; -webkit-font-smoothing: antialiased;
+}
+.tp-stage p { margin: 0; }
+.tp-layer { position: absolute; left: 0; top: 0; width: 402px; height: 812px; overflow: hidden; visibility: hidden; background: #120D09; }
+.tp-layer.on { visibility: visible; }
+.tp-dim { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; }
+.tp-img { position: absolute; left: 0; top: 0; display: block; width: 402px; height: 812px; max-width: none; }
+.tp-coach { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 22px; padding: 8px 20px 0; font-size: 16.5px; line-height: 1.5; }
+.tp-coach .tm { margin-bottom: -8px; text-align: center; font: 400 11px var(--font-mono), 'DM Mono', monospace; letter-spacing: 0.08em; color: rgba(245, 240, 232, 0.5); }
+.tp-coach .it { position: relative; }
+.tp-coach .cm .tx { color: #EDE8DF; }
+.tp-coach .me { align-self: flex-end; max-width: 76%; padding: 11px 16px; border-radius: 22px 22px 4px 22px; background: #2E251D; color: #F5F0E8; }
+.tp-coach .typing { position: absolute; left: 2px; top: 8px; display: flex; gap: 6px; }
+.tp-coach .typing i { width: 8px; height: 8px; border-radius: 50%; background: #F5F0E8; }
+.tp-coach .pk { display: grid; gap: 6px; padding: 16px 16px 14px; border: 1px solid rgba(232, 184, 112, 0.42); border-radius: 18px; background: #221A13; }
+.tp-coach .pk .top { display: flex; justify-content: space-between; font: 400 11px var(--font-mono), 'DM Mono', monospace; letter-spacing: 0.1em; color: rgba(245, 240, 232, 0.78); }
+.tp-coach .pk b { font-size: 18px; font-weight: 500; }
+.tp-coach .pk .d { font-size: 15.5px; line-height: 1.5; color: rgba(237, 232, 223, 0.6); }
+.tp-coach .pk .act { display: flex; justify-content: space-between; margin-top: 2px; font-size: 15.5px; color: rgba(237, 232, 223, 0.55); }
+.tp-coach .pk .go { color: #C4724A; }
+.tp-coach .inp { display: flex; align-items: center; justify-content: space-between; margin-top: -4px; padding: 6px 6px 6px 20px; border: 1px solid rgba(245, 240, 232, 0.08); border-radius: 999px; background: #1B1510; font-size: 16.5px; color: rgba(237, 232, 223, 0.4); }
+.tp-coach .inp img { width: 38px; height: 38px; padding: 6px; border-radius: 50%; background: #2A221B; opacity: 0.75; }
+.tp-pre { position: absolute; inset: 0; padding: 0 18px; }
+.tp-pre .top { display: flex; align-items: center; height: 50px; }
+.tp-pre .top svg { width: 22px; height: 22px; fill: none; stroke: #F5F0E8; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tp-pre .fig0 { display: flex; align-items: center; justify-content: center; height: 292px; margin-bottom: 14px; }
+.tp-pre .fig0 img { width: auto; max-width: none; height: 284px; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent); mask-image: radial-gradient(closest-side, #000 72%, transparent); }
+.tp-pre .eb { margin-bottom: 8px; font: 400 12px var(--font-mono), 'DM Mono', monospace; letter-spacing: 0.14em; color: #C4724A; }
+.tp-pre .tt { margin-bottom: 14px; font: 300 34px/1.08 var(--font-cormorant), Georgia, serif; color: #F5F0E8; }
+.tp-pre .chips { display: flex; gap: 8px; margin-bottom: 14px; }
+.tp-pre .chips span { padding: 7px 11px; border-radius: 8px; background: #2A1E17; font: 400 12px var(--font-mono), 'DM Mono', monospace; letter-spacing: 0.06em; }
+.tp-pre .ds { font-size: 16px; line-height: 1.5; color: rgba(237, 232, 223, 0.72); }
+.tp-pre .pcta { position: absolute; left: 18px; right: 18px; bottom: 30px; display: flex; gap: 10px; }
+.tp-pre .pcta span { flex: 1; display: flex; align-items: center; justify-content: center; height: 50px; border-radius: 18px; font-size: 15.5px; font-weight: 500; }
+.tp-pre .add { background: #2A221B; color: #E9DCC9; }
+.tp-pre .go { background: #C4724A; color: #120D09; }
+.tp-band { position: absolute; left: 16px; top: 212px; width: 370px; height: 209px; overflow: hidden; border-radius: 4px 12px 4px 4px; }
+.tp-band img { position: absolute; left: -16px; top: -212px; width: 402px; height: 812px; max-width: none; transform-origin: 201px 316px; }
+.tp-card { position: absolute; left: 15px; top: 211px; display: flex; flex-direction: column; width: 372px; height: 211px; padding: 16px; border-radius: 4px; background: rgba(10, 7, 5, 0.94); }
+.tp-card .sp { flex: 1; }
+.tp-card .tr { position: relative; flex: none; align-self: center; width: 76px; height: 76px; }
+.tp-card .ring { position: absolute; left: 7px; top: 7px; width: 62px; height: 62px; overflow: visible; transform: scaleX(-1) rotate(-90deg); }
+.tp-card .ring circle { fill: none; stroke: #D4935A; stroke-width: 3; stroke-linecap: round; }
+.tp-card .fig { position: absolute; left: 14.5px; top: 14.5px; width: 47px; height: 47px; overflow: visible; }
+.tp-card .ln { margin: 10px 10px 0; text-align: center; font-size: 13px; line-height: 1.45; color: #F5F0E8; }
+.tp-card .ln .tail { color: transparent; }
+.tp-card .phz { align-self: flex-end; font-size: 12px; font-weight: 500; color: #F5F0E8; }
+.tp-tap,
+.tp-rip { position: absolute; left: 0; top: 0; z-index: 9; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; opacity: 0; pointer-events: none; }
+.tp-tap { background: rgba(245, 240, 232, 0.32); box-shadow: 0 0 0 1.5px rgba(245, 240, 232, 0.8), 0 6px 20px rgba(0, 0, 0, 0.4); }
+.tp-rip { border: 2px solid rgba(245, 240, 232, 0.85); }
+.tp-bar { width: 100%; max-width: 300px; margin: 18px auto 0; }
+.tp-ticks { display: flex; gap: 5px; }
+.tp-ticks span { flex: 1; height: 3px; overflow: hidden; border-radius: 2px; background: var(--jn-hairline-strong); }
+.tp-ticks i { display: block; height: 100%; background: var(--jn-accent); transform: scaleX(0); transform-origin: 0 0; }
+.tp-cap { min-height: 2.9em; margin: 10px 0 0; text-align: center; font-size: 15px; line-height: 1.45; color: var(--jn-text-dim); }
+.tp-toggle {
+  margin-top: 6px;
+  min-height: 44px;
+  padding: 4px 6px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--jn-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+.tp-toggle:focus-visible { outline: 2px solid var(--jn-accent); outline-offset: 3px; }
+
+/* ── bands below the hero ── */
+.rf-band {
+  position: relative;
+  z-index: 2;
+  padding: 96px 48px;
+  border-top: 1px solid var(--jn-hairline);
+}
+.rf-band-inner { max-width: 1224px; margin: 0 auto; }
+.rf-band h2 {
+  margin: 0;
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(36px, 4.2vw, 56px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.008em;
+  color: var(--jn-text);
+  text-wrap: balance;
+}
+.rf-body { max-width: 34em; margin: 18px 0 0; font-size: 19px; line-height: 1.6; color: var(--jn-text-dim); }
+.rf-quote blockquote {
+  max-width: 17em;
+  margin: 0;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: clamp(36px, 4.6vw, 64px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.005em;
+  color: var(--jn-text);
+}
+.rf-quote cite { display: block; margin-top: 22px; font-size: 16px; font-style: normal; color: var(--jn-text-faint); }
+.rf-feat {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 80px;
+  margin: 44px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--jn-hairline-strong);
+}
+.rf-feat li { padding: 26px 0; border-bottom: 1px solid var(--jn-hairline-strong); }
+.rf-feat h3 { margin: 0; font-family: var(--font-cormorant), serif; font-size: 28px; font-weight: 400; line-height: 1.15; color: var(--jn-text); }
+.rf-feat p { margin: 8px 0 0; font-size: 17px; line-height: 1.6; color: var(--jn-text-dim); }
+.rf-subhead {
+  margin: 72px 0 0;
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--jn-text);
+}
+.rf-founder { display: flex; align-items: center; gap: 28px; max-width: 760px; }
+.rf-founder-photo { flex: none; width: 96px; height: 96px; overflow: hidden; border-radius: 50%; border: 1px solid var(--jn-hairline-strong); }
+.rf-founder-photo img { width: 100%; height: 100%; object-fit: cover; }
+.rf-founder-quote { margin: 0; font-family: var(--font-cormorant), serif; font-size: clamp(24px, 2.4vw, 30px); font-style: italic; line-height: 1.3; color: var(--jn-text); }
+.rf-founder-name { margin: 10px 0 0; font-size: 15px; color: var(--jn-text-faint); }
+@media (max-width: 768px) {
+  .rf-band { padding: 64px 24px; }
+  .rf-body { font-size: 17px; }
+  .rf-feat { grid-template-columns: minmax(0, 1fr); margin-top: 32px; }
+  .rf-feat h3 { font-size: 25px; }
+  .rf-subhead { margin-top: 52px; }
+  .rf-founder { flex-direction: column; align-items: flex-start; gap: 18px; }
+}
+
+/* ════════ FOOTER ════════ */
+.v2-footer {
+  position: relative;
+  z-index: 2;
+  padding: 56px 48px 64px;
+  background: var(--jn-sheet);
+  border-top: 1px solid var(--jn-hairline);
+}
+.v2-footer-wordmark {
+  font-size: 24px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: var(--jn-text) !important;
+}
+.v2-footer-fine { font-size: 15px; color: var(--jn-text-faint); }
+.v2-footer-link { color: var(--jn-text-soft); }
+.v2-footer-link:hover { color: var(--jn-text); }
+.v2-footer-nav { font-size: 15px; }
+@media (max-width: 768px) {
+  .v2-footer { padding: 40px 24px 48px; }
+}
+
+/* ════════ PRICING (theme only, structure untouched) ════════ */
+.pr-offer-line { font-size: 15px; color: var(--jn-text-dim); }
+.pr-offer-line span { display: block; }
+.pr-offer-then { margin-top: 2px; color: var(--jn-text-faint); font-size: 14px; }
+.pr-free-callout-body { font-size: 15px; }
+.pr-faq-answer { font-size: 15px; }
+.pr-chip { border-color: var(--jn-hairline-strong); }
+.pr-head .eyebrow { font-size: 22px; color: var(--jn-text-dim); }
+
+/* ════════ LIBRARY ════════ */
+.lb-grid-section { padding: 56px 48px 24px; max-width: 1224px; margin: 0 auto; }
+.lb-grid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--jn-hairline-strong);
+}
+.lb-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px;
+  grid-template-areas: 'title meta' 'desc meta';
+  column-gap: 30px;
+  row-gap: 6px;
+  padding: 22px 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--jn-hairline-strong);
+  border-radius: 0;
+}
+.lb-card:hover { border-color: var(--jn-hairline-strong); transform: none; }
+.lb-card:hover .lb-card-title { color: var(--jn-accent); }
+.lb-card-eyebrow { display: none; }
+.lb-card-title { grid-area: title; font-size: 28px; font-weight: 400; transition: color 0.2s ease; }
+.lb-card-desc { grid-area: desc; font-size: 16px; color: var(--jn-text-dim); }
+.lb-card-meta {
+  grid-area: meta;
+  align-self: start;
+  margin-top: 8px;
+  text-align: right;
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--jn-text-faint);
+}
+.lb-app-link,
+.lb-reader-back {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--jn-accent);
+}
+.lb-reader-back { color: var(--jn-text-faint); }
+.lb-reader-title { font-size: clamp(36px, 4.6vw, 56px); }
+.lb-reader-desc { font-size: 18px; font-style: normal; color: var(--jn-text-dim); border-left-color: var(--jn-accent); }
+.lb-reader-body p,
+.lb-reader-body li { font-size: 18px; line-height: 1.75; color: var(--jn-reading); }
+.lb-reader-body ul { color: var(--jn-reading); }
+.lb-reader-body h2 { font-size: 30px; font-weight: 400; }
+.lb-reader-body h3 { font-size: 24px; font-weight: 400; }
+.lb-reader-body a { color: var(--jn-accent); }
+.rf-newsletter-topics { display: grid; gap: 4px; margin: 0 0 16px; padding: 0; list-style: none; font-size: 16px; color: var(--jn-text-dim); }
+.rf-newsletter-note { margin: 0; font-size: 15px; color: var(--jn-text-faint); }
+@media (max-width: 768px) {
+  .lb-grid-section { padding: 40px 24px 16px; }
+  .lb-card { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'title' 'desc' 'meta'; }
+  .lb-card-title { font-size: 24px; }
+  .lb-card-meta { text-align: left; margin-top: 2px; }
+}
+
+/* ════════ ABOUT ════════ */
+.ab-headline { font-weight: 400; }
+.ab-subline { font-size: 18px; color: var(--jn-text-dim); }
+.ab-tagline-band { padding-top: 40px; }
+.ab-tagline-band .ab-tagline-panel,
+.ab-tagline-panel {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+.ab-tagline-text {
+  font-style: normal;
+  font-size: clamp(26px, 2.8vw, 36px);
+  color: var(--jn-text);
+}
+.ab-letter-copy p { font-size: 17px; color: var(--jn-reading); }
+.ab-letter-quotemark { color: var(--jn-accent); }
+.ab-video-slot { border-color: var(--jn-hairline-strong); border-radius: 18px; }
+.ab-founder-card,
+.ab-person-photo { border-radius: 18px; }
+.ab-founder-role,
+.ab-person-role {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--jn-text-faint);
+}
+.ab-person-name { font-size: 16px; }
+.ab-person-bio { font-size: 15px; color: var(--jn-text-dim); }
+.ab-bio-toggle {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--jn-accent);
+}
+.ab-people-section { padding-top: 56px; }
+.ab-contact-section { margin-top: 32px; }
+
+/* ── the contact form, on About and on /contact. ContactForm ships light
+   Tailwind classes, so its chrome is re-pointed at the tokens here. ── */
+.ab-contact-inner input,
+.ab-contact-inner textarea {
+  border-radius: 12px !important;
+  font-size: 16px !important;
+}
+.ab-contact-inner label {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif !important;
+  font-size: 14px !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: var(--jn-text-dim) !important;
+}
+.ab-contact-inner button[type='submit'] { border-radius: 999px !important; box-shadow: none !important; }
+.ab-contact-inner p { color: var(--jn-text-dim) !important; }
+.ab-contact-inner .font-serif { color: var(--jn-text) !important; }
+.ab-contact-inner [role='alert'] { color: var(--jn-error) !important; }
+
+/* ════════ LEGAL + CONTACT pages ════════ */
+.rf-doc {
+  position: relative;
+  z-index: 2;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 140px 24px 96px;
+}
+.rf-doc-title { margin: 0; font-family: var(--font-cormorant), serif; font-size: clamp(44px, 5.6vw, 64px); font-weight: 400; line-height: 1.04; color: var(--jn-text); }
+.rf-doc-sub { margin: 16px 0 0; font-size: 17px; color: var(--jn-text-dim); }
+.rf-doc-head { padding-bottom: 28px; border-bottom: 1px solid var(--jn-hairline-strong); }
+.rf-doc h2 { margin: 44px 0 0; font-family: var(--font-cormorant), serif; font-size: 30px; font-weight: 400; line-height: 1.2; color: var(--jn-text); }
+.rf-doc h3 { margin: 26px 0 0; font-family: var(--font-cormorant), serif; font-size: 24px; font-weight: 400; line-height: 1.25; color: var(--jn-text); }
+.rf-doc p,
+.rf-doc li,
+.rf-doc td { font-size: 17px; line-height: 1.7; color: var(--jn-reading); }
+.rf-doc p { margin: 14px 0 0; }
+.rf-doc ul { display: flex; flex-direction: column; gap: 8px; margin: 14px 0 0; padding: 0 0 0 4px; list-style: none; }
+.rf-doc li { display: flex; gap: 12px; }
+.rf-doc li::before { content: ''; flex: none; width: 6px; height: 6px; margin-top: 11px; border-radius: 50%; background: var(--jn-accent); }
+.rf-doc a { color: var(--jn-accent); text-decoration: underline; text-underline-offset: 2px; }
+.rf-doc-callout { margin-top: 22px; padding: 18px 22px; border: 1px solid var(--jn-hairline-strong); border-radius: 18px; background: var(--jn-surface); }
+.rf-doc-callout p:first-child { margin-top: 0; }
+.rf-doc table { width: 100%; border-collapse: collapse; text-align: left; }
+.rf-doc th { padding: 0 24px 8px 0; border-bottom: 1px solid var(--jn-hairline-strong); font-size: 14px; font-weight: 500; color: var(--jn-text-faint); }
+.rf-doc td { padding: 12px 24px 12px 0; vertical-align: top; border-bottom: 1px solid var(--jn-hairline); font-size: 15px; }
+@media (max-width: 768px) {
+  .rf-doc { padding: 104px 22px 64px; }
+  .rf-doc p, .rf-doc li { font-size: 16px; }
+}
+.lb-reader-eyebrow.eyebrow {
+  font-family: var(--font-mono), 'DM Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--jn-text-faint);
 }

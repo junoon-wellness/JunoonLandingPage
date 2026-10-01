@@ -4,20 +4,22 @@ import NavV2 from '@/components/waitlist/NavV2'
 import FooterV2 from '@/components/waitlist/FooterV2'
 import PricingCard from '@/components/pricing/PricingCard'
 import PricingStage from '@/components/pricing/PricingStage'
-import Jaali from '@/components/brand/Jaali'
 import { clean } from '@/lib/text'
 
-/**
- * LV5-024: the lattice panel that lights the page ground behind the pricing
- * card. Moved here from inside PricingCard.tsx — `.pr-card-stage` is
- * `position: relative`, which scoped the old call to that local box instead
- * of the page wrapper. See the "ONE GEOMETRY" note atop
- * components/brand/Jaali.tsx. The card opens centred and travels left as the
- * stage pins (see PricingStage.tsx), but that travel is a CSS transform, not
- * a document-flow change, so the card's actual document position — and this
- * mask's target — stays put near the top of the page throughout the scroll.
+/*
+ * LV5-074 (website refresh, 1 Oct 2026). Kush's W2 ruling, verbatim: "I
+ * still want the structure to be the same and the look to be the same as
+ * what we had before, at least for the card and how when you scroll, it
+ * shows that what we're building next. I want that. So update the basic
+ * things like the overall theme and background, but I still want the
+ * structure of the pricing page to work in be the same. Just update it to,
+ * have the new information formatted in a better way."
+ *
+ * So on this page ONLY the theme (the app's dark / light colours), the
+ * background (the jaali lattice panel is gone: "Jaali: Remove it", 27 Sep)
+ * and the price formatting on the card changed. The stage, the card, the
+ * chips and the FAQ are exactly as LV5-020/022/032 built them.
  */
-const PRICING_JAALI = true
 
 /**
  * LV5-015 — /pricing, board A "One card" (LV5-011, ACCEPTED), padding cut
@@ -74,9 +76,6 @@ const FAQ = [
 export default function PricingPage() {
   return (
     <div id="top">
-      {PRICING_JAALI && (
-        <Jaali variant="panel" zIndex={-1} maskPosition="50% 460px" maskSize="760px 900px" />
-      )}
       <NavV2 />
 
       <PricingStage
@@ -98,10 +97,8 @@ export default function PricingPage() {
                 the first thing the sliding-in column says. No card/auto-renew
                 wording, no future price (LV4-016 rulings). */}
             <section className="pr-side-block pr-free-callout" aria-label="Free month">
-              <h2 className="pr-free-callout-title">
-                Start with a{' '}
-                <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>free month.</em>
-              </h2>
+              {/* LV5-074: the gold italic clause is retired; same words. */}
+              <h2 className="pr-free-callout-title">Start with a free month.</h2>
               <p className="pr-free-callout-body">
                 Everyone&apos;s first month is free. The first 100 members then pay $4.99 a month,
                 locked for life. After that it is $8.99 a month.

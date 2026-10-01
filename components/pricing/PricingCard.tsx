@@ -71,8 +71,14 @@ export default function PricingCard() {
           <span className="pr-price-unit">/month</span>
         </div>
 
+        {/* LV5-074 / W2 ("have the new information formatted in a better
+            way"): the founder price and the price after it now read as two
+            lines under the big figure, instead of one run-on sentence that
+            also repeated the free-month line printed just above. The words
+            are PR #3's, unchanged (Arjav's OK requested 1 Oct). */}
         <p className="pr-offer-line">
-          Your first month is free. The first 100 members keep $4.99 a month for life. After that it is $8.99 a month.
+          <span>The first 100 members keep $4.99 a month for life.</span>
+          <span className="pr-offer-then">After that it is $8.99 a month.</span>
         </p>
 
         <ul className="pr-checklist">

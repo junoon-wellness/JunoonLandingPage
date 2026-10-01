@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { meta } from "@/lib/meta";
 import { clean } from "@/lib/text";
-import JaaliGround from "@/components/brand/JaaliGround";
 import MetaPixel from "@/components/analytics/MetaPixel";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -60,6 +59,11 @@ const dmMono = localFont({
 // images/siteName/type here so each page's own title/description still flow
 // into og:title / og:description - setting openGraph.title in the layout
 // would override every page with the Home title.
+/** LV5-074 / W8: see the <head> comment in RootLayout. Kept tiny and
+ *  dependency-free; every failure path (no storage, no matchMedia) falls
+ *  back to dark, the CSS default. */
+const THEME_SCRIPT = `(function(){try{var d=document.documentElement,s=localStorage.getItem('jn-theme');var t=(s==='light'||s==='dark')?s:(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');d.setAttribute('data-theme',t);}catch(e){}})();`;
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://junoonwellness.com"),
   title: clean(meta.title),
@@ -91,23 +95,27 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${cormorant.variable} ${dmSans.variable} ${dmMono.variable}`}
+      // The inline script below sets data-theme before React hydrates, so
+      // the server HTML and the live <html> legitimately differ on it.
+      suppressHydrationWarning
     >
+      <head>
+        {/* LV5-074 / W8 (Kush, 1 Oct: "yes"): a first-time visitor gets their
+            device's light/dark setting; once they tap the Dark / Light switch
+            in the nav, that choice is remembered (localStorage "jn-theme").
+            Runs before first paint so there is no flash of the wrong scheme.
+            No attribute (script blocked) means the CSS default, dark. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       {/*
         bg/text colours deliberately live in globals.css rather than as Tailwind
         utilities here - utility classes would out-specify the `body` rule and
         keep the page cream.
       */}
       <body className="font-sans antialiased relative">
-        {/* LV5-024: position:relative — THE PAGE WRAPPER. Every Jaali
-            instance (this ground layer, and every per-page panel) is
-            `position:absolute; inset:0` against this box, so they all share
-            one containing block and one tile origin. See the "ONE GEOMETRY"
-            note atop components/brand/Jaali.tsx. */}
-        {/* LV5-022 SC5: the site-wide jaali ground. One mount, every route.
-            Absolute and at z-index -1, so it sits under all page content and
-            over the canvas background, and scrolls with the page like every
-            panel. See components/brand/JaaliGround.tsx. */}
-        <JaaliGround />
+        {/* LV5-074: the site-wide jaali ground came off here (Kush, 27 Sep,
+            round 1: "Jaali: Remove it"). components/brand/Jaali*.tsx stay on
+            disk, unmounted, in case it ever returns as one deliberate moment. */}
         {children}
         {/*
           Added 2026-09-01 — the site had NO analytics at all while a Meta
