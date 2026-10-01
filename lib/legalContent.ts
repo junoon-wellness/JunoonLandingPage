@@ -130,7 +130,7 @@ export const termsOfService: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "Junoon currently offers a Monthly subscription at $15/month. Current pricing is always displayed in the App at the time of purchase."
+      "text": "Junoon offers a monthly subscription. Current pricing is always displayed in the App at the time of purchase."
     },
     {
       "type": "h3",
