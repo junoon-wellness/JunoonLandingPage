@@ -145,14 +145,14 @@ export default function HeroV2() {
           <div className="v2-hero-offer-desktop">
             <div className="eyebrow no-rule">Founding member offer</div>
             <p className="v2-hero-offer-headline">
-              First 500 members.{' '}
+              First 100 members.{' '}
               <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>
                 Permanent pricing.
               </em>
             </p>
             <p className="v2-hero-offer-body">
-              Your first month is free, for everyone. The first 500 members then keep $8.99 a
-              month for life.
+              Your first month is free, for everyone. The first 100 members then keep $4.99 a
+              month for life. After that it is $8.99 a month.
             </p>
             <Link href="/pricing" className="v2-link v2-hero-offer-link">
               See pricing →
@@ -181,7 +181,7 @@ export default function HeroV2() {
               <span className="v2-hero-offer-mobile-line">
                 Free month for everyone.
                 <br />
-                First 500: $8.99 for life.
+                First 100: $4.99 for life.
               </span>
             </Link>
             <AppStoreBadge size="nav" />

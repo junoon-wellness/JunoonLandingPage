@@ -34,7 +34,7 @@ const PRICING_JAALI = true
  * each column.
  *
  * All copy below is LOCKED from LV5-010's notes — do not rephrase the offer
- * line, the "500 founder spots" fact, or the five "what we're building
+ * line, the "100 founder spots" fact (ruled 1 Oct 2026: $4.99 for life, first 100, then $8.99), or the five "what we're building
  * next" chips. The feature-checklist rows are ALSO locked (LV5-031 cut it
  * to five, "do not rephrase" — see components/pricing/PricingCard.tsx,
  * where they live). Corrected 2026-09-23 (LV5-071 scope): this comment
@@ -44,7 +44,7 @@ const PRICING_JAALI = true
 export const metadata: Metadata = {
   title: clean('Pricing - Junoon'),
   description: clean(
-    'One membership at $8.99 a month. Your first month is free, and the first 500 members keep that price for life.'
+    'One membership. Your first month is free. The first 100 members then pay $4.99 a month for life, and after that it is $8.99 a month.'
   ),
 }
 
@@ -63,7 +63,7 @@ const FAQ = [
   },
   {
     q: 'What happens after the free month?',
-    a: 'You keep your membership at $8.99 a month. If you\'re one of the first 500 members, that price is yours for life.',
+    a: 'If you\'re one of the first 100 members, you pay $4.99 a month and that price is yours for life. After the first 100, it is $8.99 a month.',
   },
   {
     q: 'Can I cancel?',
@@ -103,8 +103,8 @@ export default function PricingPage() {
                 <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>free month.</em>
               </h2>
               <p className="pr-free-callout-body">
-                Everyone&apos;s first month is free. The first 500 members then pay $8.99 a month,
-                locked for life.
+                Everyone&apos;s first month is free. The first 100 members then pay $4.99 a month,
+                locked for life. After that it is $8.99 a month.
               </p>
             </section>
 
