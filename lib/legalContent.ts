@@ -130,7 +130,7 @@ export const termsOfService: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "Junoon currently offers a Monthly subscription at $15/month. Current pricing is always displayed in the App at the time of purchase."
+      "text": "Junoon offers a monthly subscription. Current pricing is always displayed in the App at the time of purchase."
     },
     {
       "type": "h3",
@@ -641,6 +641,10 @@ export const termsOfService: LegalDoc = {
 export const privacyPolicy: LegalDoc = {
   "title": "Privacy Policy",
   "subtitle": "Junoon Wellness LLC",
+  // TODO(W10, Kush 1 Oct: "yes"): set this to the day the LLC name fix goes
+  // LIVE on junoonwellness.com, i.e. the day this refresh (or PR #3) merges
+  // and its Vercel production deploy reads Ready. That date is not known
+  // while this is a preview, so it is deliberately NOT guessed here.
   "updated": "Last updated: September 10, 2026",
   "blocks": [
     {

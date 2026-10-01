@@ -19,6 +19,15 @@ import { SCREENS } from '@/lib/screens'
  * tabs") - `railLabel` below is now each chapter's only short name, used for
  * both the tab text and (previously) the progress rail.
  */
+/**
+ * LV5-074: ONE accent for all four tabs. Kush, 27 Sep: "August picks: Retire
+ * all four", which includes LV5-019's per-tab coloured outlines (clay, gold,
+ * sage, turmeric). The per-chapter comments below explain the old colours;
+ * they are history now. The accent is the app's clay / terracotta, which
+ * carries words in both schemes.
+ */
+const ACCENT = 'var(--jn-accent)'
+
 const CHAPTERS: StoryChapter[] = [
   {
     id: 'coach',
@@ -38,13 +47,13 @@ const CHAPTERS: StoryChapter[] = [
     // AA. This slipped through ba2760a itself (the library chapter got
     // fixed to sage in that commit, this one didn't). Sage measures 6.12:1
     // and keeps the four chapters from reading as three-turmeric-one-sage.
-    accent: 'var(--jn-sage)',
+    accent: ACCENT,
     // Clay measures 3.63:1 on --jn-bg - clears the 3:1 graphic/border floor
     // this tab outline needs, but is exactly the ratio that failed as this
     // chapter's 11px eyebrow TEXT above (needs 4.5:1 - see the LV5-001
     // comment on `accent`). Kept apart so the outline can be clay without
     // reopening that AA failure.
-    tabAccent: 'var(--jn-clay)',
+    tabAccent: ACCENT,
     railLabel: 'The coach',
     screens: [SCREENS.coachChat, SCREENS.coachPicks],
   },
@@ -71,11 +80,11 @@ const CHAPTERS: StoryChapter[] = [
       'Every level welcome. Follow along in real time.',
       "Can't join live? The recorded library is always open.",
     ],
-    accent: 'var(--jn-turmeric)',
+    accent: ACCENT,
     // Poster gold, inherited from the retired Breathwork chapter's slot
     // (--jn-gold-alt, 7.82:1 on --jn-bg per LV5-019) so the four tab
     // outlines stay clay/gold/sage/turmeric — one each.
-    tabAccent: 'var(--jn-gold-alt)',
+    tabAccent: ACCENT,
     railLabel: 'Live classes',
     // 2026-09-01: both frames are now genuinely live-class screens. Frame 1
     // is one scheduled session, frame 2 is the Live classes / Recorded
@@ -102,8 +111,8 @@ const CHAPTERS: StoryChapter[] = [
     // The one chapter that carries the second hue. Stone was the weakest
     // accent of the four — a warm grey among three warm accents — so the
     // library chapter is where sage costs the least and reads the most.
-    accent: 'var(--jn-sage)',
-    tabAccent: 'var(--jn-sage)',
+    accent: ACCENT,
+    tabAccent: ACCENT,
     railLabel: 'The library',
     // liveClass moved to the Live classes chapter; planTab (where a class
     // lands in your day) fills the second frame so no screen repeats
@@ -124,12 +133,12 @@ const CHAPTERS: StoryChapter[] = [
       'Move, swap or remove anything. The plan is yours.',
       'Life shifted mid-week? Re-work the remaining days in seconds.',
     ],
-    accent: 'var(--jn-turmeric)',
+    accent: ACCENT,
     // LV5-019: tab outline colours - each chapter gets its own. Separate
     // from `accent` above (which stays put) because that one also colours
     // 11px eyebrow text, and only some of these pass 4.5:1 at that size -
     // see ScrollStory's comment.
-    tabAccent: 'var(--jn-turmeric)',
+    tabAccent: ACCENT,
     railLabel: 'The ritual',
     screens: [SCREENS.ritualProposal, SCREENS.ritualWeek],
   },

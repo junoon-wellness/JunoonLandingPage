@@ -6,7 +6,6 @@
  * The previous version of this page carried all three; do not drop them.
  */
 import Link from 'next/link'
-import Toran from '@/components/brand/Toran'
 
 const legalLinks = [
   { label: 'Privacy Policy', href: '/privacy' },
@@ -20,11 +19,10 @@ const socials = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/company/junoon-wellness/' },
 ]
 
-// Structure is deliberately untouched in v3 (spec §B8). Only the hardcoded
-// Courier stack and hex values moved onto the type/colour tokens.
+// LV5-074: the footer links are plain sentence-case text now; the tiny
+// spaced capitals in the code font were one of the scope's "reads like a
+// template" items. 44px tap height kept.
 const linkStyle: React.CSSProperties = {
-  fontSize: '11px',
-  letterSpacing: '0.14em',
   textDecoration: 'none',
   minHeight: '44px',
   display: 'inline-flex',
@@ -33,66 +31,27 @@ const linkStyle: React.CSSProperties = {
 
 export default function FooterV2() {
   return (
-    <>
-    {/* Kush, 2026-08-23: the toran divider sits above every footer, replacing
-        the plain hairline. The lotus that used to lead the wordmark is GONE —
-        Kush, 2026-08-25: "remove lotus in footer in desktop as well as mobile".
-        🔴 CONSEQUENCE: the brand mark now renders in exactly ONE place on the
-        whole site, the phone menu sheet (NavV2). It is therefore invisible to
-        desktop visitors entirely. That is what was asked for; it supersedes the
-        2026-08-24 "keep it in nav and footer only". */}
-    <Toran />
-    <footer
-      className="v2-footer has-toran"
-      style={{ position: 'relative', zIndex: 2 }}
-    >
-      {/* Kush, 2026-08-25 (mobile): "remove the lotus from the bottom text in
-          each page and move the Junoon wellness to the middle so it's lined w
-          the text below". The footer already centres its TEXT at <=768 via
-          `text-align: center`, but this wordmark is an inline-flex box inside a
-          column flex, so it sat hard left while the copyright line under it was
-          centred. Classes added so the phone rules can reach both. Desktop is
-          unchanged — the lotus stays there. */}
-      <div className="v2-footer-brand" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+    <footer className="v2-footer">
+      {/* LV5-074: the toran divider that sat above every footer is retired
+          (Kush, 27 Sep: "August picks: Retire all four"). */}
+      <div className="v2-footer-brand" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <span
           className="v2-footer-wordmark"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '10px',
             fontFamily: 'var(--font-cormorant), serif',
-            fontSize: '15px',
-            fontWeight: 600,
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'var(--jn-gold)',
           }}
         >
           Junoon Wellness
         </span>
-        <span
-          className="jn-mono"
-          style={{
-            fontSize: '11px',
-            letterSpacing: '0.1em',
-            textTransform: 'none',
-            color: 'var(--jn-mute)',
-          }}
-        >
-          © {new Date().getFullYear()} Junoon Wellness. All rights reserved.
+        {/* LV5-073: the company is a Delaware LLC (confirmed by Arjav, 26 Sep). */}
+        <span className="v2-footer-fine">
+          © {new Date().getFullYear()} Junoon Wellness LLC. All rights reserved.
         </span>
-        {/* LV5-002: replaces the waitlist pitch that used to live near here —
-            the ways to keep up with Junoon now that signing up isn't the
-            only route in. */}
-        <span
-          className="jn-mono"
-          style={{
-            fontSize: '11px',
-            letterSpacing: '0.1em',
-            textTransform: 'none',
-            color: 'var(--jn-mute)',
-          }}
-        >
+        {/* LV5-002: the ways to keep up with Junoon now that signing up isn't
+            the only route in. */}
+        <span className="v2-footer-fine">
           Follow along on{' '}
           <a
             href="https://www.instagram.com/junoonwellness/"
@@ -110,17 +69,12 @@ export default function FooterV2() {
       </div>
 
       <div
-        className="v2-footer-right"
+        className="v2-footer-right v2-footer-nav"
         style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}
       >
-        <div style={{ display: 'flex', gap: '18px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '22px', flexWrap: 'wrap', justifyContent: 'center' }}>
           {legalLinks.map(l => (
-            <a
-              key={l.label}
-              href={l.href}
-              className="v2-link v2-footer-link jn-mono"
-              style={linkStyle}
-            >
+            <a key={l.label} href={l.href} className="v2-link v2-footer-link" style={linkStyle}>
               {l.label}
             </a>
           ))}
@@ -130,7 +84,7 @@ export default function FooterV2() {
               href={s.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="v2-link v2-footer-link jn-mono"
+              className="v2-link v2-footer-link"
               style={linkStyle}
             >
               {s.label}
@@ -139,6 +93,5 @@ export default function FooterV2() {
         </div>
       </div>
     </footer>
-    </>
   )
 }

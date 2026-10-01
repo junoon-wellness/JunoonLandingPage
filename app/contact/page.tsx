@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import NavV2 from "@/components/waitlist/NavV2";
+import FooterV2 from "@/components/waitlist/FooterV2";
 import ContactForm from "@/components/cta/ContactForm";
 
 export const metadata: Metadata = {
@@ -7,41 +8,37 @@ export const metadata: Metadata = {
   description: "Get in touch with the Junoon Wellness team.",
 };
 
+/**
+ * ⚠️ This route is registered as the app's App Store SUPPORT URL. Keep it.
+ *
+ * LV5-074 (website refresh): moved from the old cream page onto the site's
+ * two schemes, with the site nav and footer. Same words. The form's light
+ * Tailwind chrome is re-pointed at the theme tokens by the `.ab-contact-inner`
+ * rules in globals.css (shared with the About page's contact section).
+ */
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-cream px-6 py-14 text-bark sm:px-10">
-      <div className="mx-auto max-w-2xl">
-        <Link
-          href="/"
-          className="inline-flex items-baseline gap-1 font-serif text-2xl font-light text-bark transition-colors hover:text-clay"
-        >
-          Junoon<span className="text-clay">.</span>
-        </Link>
-
-        <header className="mt-10 border-b border-linen pb-8">
-          <p className="font-mono text-xs uppercase tracking-widest text-driftwood">Support</p>
-          <h1 className="mt-3 font-serif text-4xl font-normal leading-tight">Contact Us</h1>
-          <p className="mt-3 font-sans text-base leading-relaxed text-soil">
-            Have a question, feedback, or need help with the Junoon app? Fill out the form below and we&apos;ll get back to you.
+    <div id="top">
+      <NavV2 />
+      <main className="rf-doc">
+        <header className="rf-doc-head">
+          <h1 className="rf-doc-title">Contact Us</h1>
+          <p className="rf-doc-sub">
+            Have a question, feedback, or need help with the Junoon app? Fill out the form below and
+            we&apos;ll get back to you.
           </p>
         </header>
 
-        <div className="mt-8">
+        <div className="ab-contact-inner" style={{ marginTop: "32px", maxWidth: "none" }}>
           <ContactForm />
         </div>
 
-        <footer className="mt-12 border-t border-linen pt-8">
-          <p className="font-sans text-sm text-driftwood">
-            You can also reach us directly at{" "}
-            <a
-              href="mailto:admin@junoonwellness.com"
-              className="text-clay underline underline-offset-2 hover:text-clay700"
-            >
-              admin@junoonwellness.com
-            </a>
-          </p>
-        </footer>
-      </div>
-    </main>
+        <p style={{ marginTop: "40px" }}>
+          You can also reach us directly at{" "}
+          <a href="mailto:admin@junoonwellness.com">admin@junoonwellness.com</a>
+        </p>
+      </main>
+      <FooterV2 />
+    </div>
   );
 }
