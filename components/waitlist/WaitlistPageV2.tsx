@@ -1,104 +1,46 @@
-'use client'
-
 import NavV2 from './NavV2'
-import Toran from '@/components/brand/Toran'
 import HeroV2 from './HeroV2'
-import WhatWereBuildingV2 from './WhatWereBuildingV2'
+import CoachQuote from './CoachQuote'
 import FeatureStory from './FeatureStory'
-import WhatsNewV2 from './WhatsNewV2'
+import PracticeSection from './PracticeSection'
+import FounderNote from './FounderNote'
 import WalkthroughTeaser from './WalkthroughTeaser'
 import FooterV2 from './FooterV2'
-import Jaali from '@/components/brand/Jaali'
 import { SHOW_TOUR } from '@/lib/constants'
 
 /**
- * LV5-021 (c) / LV5-024: a jaali PANEL behind the hero phone, never a page
- * texture. Kush chose solid dark pages (LV5-018 took the ambient ground
- * radials back off this hero), so the lattice reads as a local moment behind
- * the device column, not a page-wide wash.
+ * HOME, after the LV5-074 website refresh (1 Oct 2026).
  *
- * LV5-024 moved this from inside HeroV2 (where it was sized to `.v2-devices`,
- * a local `position:relative` box) to here, as a page-level full-page copy —
- * see the "ONE GEOMETRY" note atop components/brand/Jaali.tsx for why. Mask
- * coordinates are a best-effort estimate (top-right, roughly where the phone
- * carousel sits in the hero) — no live browser pass this round.
+ * Order, top to bottom:
+ *   1. Hero: A3, one plain headline, the badge + "See pricing", the founder
+ *      price as fine print, the phone looping Path 1 (HeroV2, TapPathPhone)
+ *   2. The big coach quote, "(Example conversation.)" (CoachQuote)
+ *   3. The four product tabs, now plain text tabs in ONE accent (FeatureStory)
+ *   4. "A practice that knows you": the old "What we're building" and
+ *      "What's new since launch" merged, no 01-04 numbers (PracticeSection)
+ *   5. Arjav's founder quote, moved out of the hero (FounderNote)
+ *   6. Footer
  *
- * Set to false and the hero is exactly what LV5-018 shipped.
+ * Gone from Home, per Kush's rulings:
+ * - both jaali panels (the HERO_JAALI / FEATURE_JAALI lattice copies) and
+ *   the site-wide ground: "Jaali: Remove it" (27 Sep, round 1)
+ * - the toran divider: "August picks: Retire all four" (27 Sep)
+ * - NO teacher row: W9 "Leave it off Home" (1 Oct)
+ *
+ * WhatWereBuildingV2.tsx and WhatsNewV2.tsx are deleted: their words moved
+ * verbatim into PracticeSection.tsx. DeviceCarousel.tsx stays on disk,
+ * unmounted (the hero carousel the tap path replaced).
  */
-const HERO_JAALI = true
-
-/**
- * LV5-022 SC5 / LV5-024: the same panel treatment behind the feature-story
- * phone pair, moved out of ScrollStory for the same "page wrapper" reason.
- * Mask is centred lower on the page than the hero panel, roughly where
- * FeatureStory's phone column sits after StatBand + WhatWereBuildingV2.
- */
-const FEATURE_JAALI = true
-
-/*
-  The page-level scroll-reveal IntersectionObserver that used to live here is
-  gone (spec §A3). It collected whatever [data-reveal] elements existed at
-  mount and unobserved each as it fired, so a section mounted later would sit
-  at opacity 0 forever. Reveals are now per-component via framer's
-  whileInView - see components/motion/Reveal.tsx.
-
-  LV5-024: this component used to take `initialClaimed`/`source` props and
-  hold `claimed`/`isFlashing` state for a live subscriber counter + signup
-  attribution, threaded down into HeroV2. HeroV2 dropped its own signup form
-  under LV5-018 and never read any of it — see app/page.tsx's own note.
-*/
 export default function WaitlistPageV2() {
   return (
     <div id="top" className="jn-home-scale">
-      {/* LV5-024: page-level jaali panels. Both are full-page `inset:0`
-          copies of the same tile grid the site-wide ground (mounted in
-          app/layout.tsx) uses — see the "ONE GEOMETRY" note atop
-          components/brand/Jaali.tsx. zIndex={-1} matches ground so both stay
-          behind all real content regardless of local stacking contexts, and
-          paint above ground because they come later in DOM tree order. */}
-      {/* Kush, 2026-08-25: a scroll-driven drift was built for these panels and
-          REVERTED the same day — "background looks a little weird in places
-          like its duplicated weirdly can we just have the background normal
-          like it was before and we keep the animated toran".
-          🔴 WHY IT LOOKED DUPLICATED, so nobody rebuilds it: the SAME tile is
-          painted by THREE layers — the site-wide <JaaliGround> plus these two
-          panels. Drifting only the panels desynchronised them from the ground,
-          and one lattice offset against an identical lattice reads as ghosting.
-          Any future parallax here has to move ALL THREE together, or move none. */}
-      {HERO_JAALI && (
-        <Jaali variant="panel" zIndex={-1} maskPosition="82% 380px" maskSize="820px 820px" />
-      )}
-      {FEATURE_JAALI && (
-        <Jaali variant="panel" zIndex={-1} maskPosition="28% 2050px" maskSize="900px 780px" />
-      )}
       <NavV2 />
       <HeroV2 />
-      {/* LV5-032: <StatBand /> (500 founder spots · 6 practices · 1 AI coach) removed — Kush, 2026-08-23: "remove this section and move up accordingly". Component stays on disk. */}
-      {/* Kush, 2026-08-24: "move the element ... to between hero and the second
-          section". Confirmed with him that "the element" meant the TORAN
-          DIVIDER ONLY — FeatureStory and the phone stay put. It used to sit
-          between WhatWereBuildingV2 and FeatureStory (Kush, 2026-08-23: "toran
-          divider at the major break before the feature tabs"); the major break
-          is now read as hero-to-body instead.
-
-          Consequence, stated rather than hidden: WhatWereBuildingV2 now runs
-          straight into FeatureStory with no divider between them. */}
-      <Toran />
-      <WhatWereBuildingV2 />
+      <CoachQuote />
       <FeatureStory />
-      {/* LV5-070 (2026-09-23): the page had no "what's new" surface at all —
-          every claim above describes the August app. This is additive, not
-          a rewrite of WhatWereBuildingV2's four evergreen features above. */}
-      <WhatsNewV2 />
+      <PracticeSection />
       {SHOW_TOUR && <WalkthroughTeaser />}
-      {/* LV5-018: OfferBandV2 + FounderBlockV2 removed from the page — both
-          folded into a condensed version inside HeroV2 (Kush's review: the
-          empty space under the hero copy should carry this, not two more
-          full-width bands lower down). SecondCTA is also gone — Home no
-          longer has a newsletter section at all; its layout lives on now as
-          NewsletterJoin, used on /library only. LV5-024: all three component
-          files are deleted (grep proved zero remaining imports), not just
-          unreferenced. */}
+      <FounderNote />
       <FooterV2 />
     </div>
   )
