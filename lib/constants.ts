@@ -46,7 +46,7 @@ export const APP_STORE_URL = 'https://apps.apple.com/us/app/junoon-wellness/id67
  *   - the homepage "what's new" heading and intro:
  *     components/waitlist/WhatsNewV2.tsx
  */
-export const LAUNCHING_SOON = true
+export const LAUNCHING_SOON = false
 
 /**
  * Where the launching-soon button goes: the site's existing newsletter
