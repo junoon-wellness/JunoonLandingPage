@@ -1,4 +1,5 @@
 import AppStoreBadge from '@/components/waitlist/AppStoreBadge'
+import { LAUNCHING_SOON } from '@/lib/constants'
 import CheckMark from './CheckMark'
 import FeatureIcon, { type FeatureIconName } from './FeatureIcon'
 
@@ -92,8 +93,15 @@ export default function PricingCard() {
               ticket's stated fallback for fitting the card in 800px, and it
               was needed - 14px back. */}
           <AppStoreBadge size="nav" />
-          <span className="pr-cta-sub">Subscribe in the app</span>
-          <span className="pr-cta-fine">Cancel anytime in the App Store.</span>
+          {/* THE LAUNCHING-SOON SWITCH (lib/constants.ts): off = the original two lines. */}
+          <span className="pr-cta-sub">
+            {LAUNCHING_SOON ? 'We will email you when the app opens' : 'Subscribe in the app'}
+          </span>
+          <span className="pr-cta-fine">
+            {LAUNCHING_SOON
+              ? 'Cancel anytime in the App Store, once we launch.'
+              : 'Cancel anytime in the App Store.'}
+          </span>
         </div>
       </div>
     </div>

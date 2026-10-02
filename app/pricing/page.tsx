@@ -6,6 +6,7 @@ import PricingCard from '@/components/pricing/PricingCard'
 import PricingStage from '@/components/pricing/PricingStage'
 import Jaali from '@/components/brand/Jaali'
 import { clean } from '@/lib/text'
+import { LAUNCHING_SOON } from '@/lib/constants'
 
 /**
  * LV5-024: the lattice panel that lights the page ground behind the pricing
@@ -67,7 +68,10 @@ const FAQ = [
   },
   {
     q: 'Can I cancel?',
-    a: 'Yes, any time, right in the App Store.',
+    // THE LAUNCHING-SOON SWITCH (lib/constants.ts): off = the original answer.
+    a: LAUNCHING_SOON
+      ? 'Yes, any time. Once the app launches, you cancel right in the App Store.'
+      : 'Yes, any time, right in the App Store.',
   },
 ]
 

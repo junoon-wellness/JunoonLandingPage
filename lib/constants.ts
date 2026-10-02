@@ -34,8 +34,17 @@ export const APP_STORE_URL = 'https://apps.apple.com/us/app/junoon-wellness/id67
  * true  = launching soon: email list button instead of the App Store badge.
  * false = the site exactly as before: Apple's badge, linking to APP_STORE_URL.
  *
- * Flip it back by changing this one line to `false`. The swap happens in
- * components/waitlist/AppStoreBadge.tsx and nowhere else.
+ * Flip it back by changing this one line to `false`.
+ *
+ * The same switch also changes the other lines that said the app is out
+ * today (each one keeps its original wording, unchanged, when this is false):
+ *   - the badges: components/waitlist/AppStoreBadge.tsx
+ *   - the Google / link-preview description: lib/meta.ts
+ *   - the /pricing FAQ answer "Can I cancel?": app/pricing/page.tsx
+ *   - the two small lines under the /pricing card's button:
+ *     components/pricing/PricingCard.tsx
+ *   - the homepage "what's new" heading and intro:
+ *     components/waitlist/WhatsNewV2.tsx
  */
 export const LAUNCHING_SOON = true
 
