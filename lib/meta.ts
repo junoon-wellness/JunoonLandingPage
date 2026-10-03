@@ -10,8 +10,16 @@
  * an em dash anyway, but the source is what gets grepped for brand-voice
  * violations, so it should be clean at rest.
  */
+import { LAUNCHING_SOON } from "@/lib/constants"
+
+const DESCRIPTION_BASE =
+  "An AI wellness coach that brings India's living traditions of yoga, breathwork and meditation into a practice built around your modern life."
+
 export const meta = {
   title: "Junoon - Ancient Practice, Personal Coaching",
-  description:
-    "An AI wellness coach that brings India's living traditions of yoga, breathwork and meditation into a practice built around your modern life. Available now on the App Store.",
+  // THE LAUNCHING-SOON SWITCH (lib/constants.ts): the Google and link-preview
+  // description follows it. With the switch off this is the same string as before.
+  description: LAUNCHING_SOON
+    ? `${DESCRIPTION_BASE} Launching soon. Join our email list.`
+    : `${DESCRIPTION_BASE} Available now on the App Store.`,
 } as const
