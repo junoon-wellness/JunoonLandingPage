@@ -9,11 +9,11 @@
 export const SHOW_TOUR = false
 
 /**
- * Single source of truth for the founding-member offer - the "500" in
- * "First 500 members. Permanent pricing." and the denominator of the progress
+ * Single source of truth for the founding-member offer - the "100" in
+ * "First 100 members. Permanent pricing." and the denominator of the progress
  * bar. Change it here and it updates everywhere.
  */
-export const TOTAL_SPOTS = 500
+export const TOTAL_SPOTS = 100
 
 /**
  * LV5-002: the nav badge and hero CTA link here. Verified correct: matches
