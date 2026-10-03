@@ -1297,6 +1297,57 @@ body::before {
   justify-content: center;
 }
 
+/* ─── Launching-soon button ─── (the LAUNCHING_SOON switch, lib/constants.ts)
+   Takes the App Store badge's place while the switch is on. Same 46px
+   height and roughly the same ~155px width as the "nav" badge, so the nav
+   bar, the hero's phone banner (whose copy column is budgeted against a
+   155px badge, see .v2-hero-offer-mobile-line) and the /pricing card keep
+   their layout. Clay fill + white text is .v2-btn's pairing (~5:1, passes
+   AA at these sizes). Unused, and harmless, while the switch is off. */
+.v2-launch-cta {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  flex-shrink: 0;
+  min-width: 155px;
+  min-height: 46px;
+  padding: 5px 14px;
+  border-radius: 8px;
+  background: var(--jn-clay);
+  color: var(--jn-on-clay);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 0.2s var(--jn-ease),
+    background 0.2s ease;
+}
+.v2-launch-cta:hover {
+  background: #c25c31;
+  transform: translateY(-1px);
+}
+.v2-launch-cta--full {
+  width: 100%;
+}
+.v2-launch-cta-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+}
+.v2-launch-cta-label {
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-launch-cta:hover {
+    transform: none !important;
+  }
+}
+
 /* ─── Nav wordmark ─── */
 .v2-nav-brand {
   display: inline-flex;

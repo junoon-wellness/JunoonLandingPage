@@ -23,6 +23,40 @@ export const TOTAL_SPOTS = 500
 export const APP_STORE_URL = 'https://apps.apple.com/us/app/junoon-wellness/id6781123809'
 
 /**
+ * THE LAUNCHING-SOON SWITCH (Kush + Arjav, marketing call, 2 Oct 2026).
+ * While the app is in its test week (from Fri 9 Oct, for a week or two),
+ * every "Download on the App Store" badge on the site (nav bar, phone menu,
+ * the homepage hero's phone banner, the /pricing card) becomes a
+ * "Launching soon / Join our email list" button that takes the visitor to
+ * the existing email signup (EMAIL_SIGNUP_HREF below, the beehiiv form on
+ * /library).
+ *
+ * true  = launching soon: email list button instead of the App Store badge.
+ * false = the site exactly as before: Apple's badge, linking to APP_STORE_URL.
+ *
+ * Flip it back by changing this one line to `false`.
+ *
+ * The same switch also changes the other lines that said the app is out
+ * today (each one keeps its original wording, unchanged, when this is false):
+ *   - the badges: components/waitlist/AppStoreBadge.tsx
+ *   - the Google / link-preview description: lib/meta.ts
+ *   - the /pricing FAQ answer "Can I cancel?": app/pricing/page.tsx
+ *   - the two small lines under the /pricing card's button:
+ *     components/pricing/PricingCard.tsx
+ *   - the homepage "what's new" heading and intro:
+ *     components/waitlist/WhatsNewV2.tsx
+ */
+export const LAUNCHING_SOON = false
+
+/**
+ * Where the launching-soon button goes: the site's existing newsletter
+ * signup (NewsletterJoin on /library, form id="join", posting to
+ * /api/waitlist -> beehiiv). The footer's "join the newsletter" link already
+ * points here.
+ */
+export const EMAIL_SIGNUP_HREF = '/library#join'
+
+/**
  * LV5-016: the /about founder video. Arjav's finished edit landed 2026-08-28
  * and is self-hosted per Kush's ruling — 18MB sits well under the ~25MB bar
  * that would have sent it to Vercel Blob instead.

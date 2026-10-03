@@ -1,6 +1,7 @@
 'use client'
 
 import Reveal, { DrawLine } from '@/components/motion/Reveal'
+import { LAUNCHING_SOON } from '@/lib/constants'
 
 /**
  * "What's new since launch" (LV5-070, 2026-09-23).
@@ -57,13 +58,18 @@ export default function WhatsNewV2() {
       <div className="wb-head">
         <Reveal>
           <h2 className="wb-title">
-            Everything that&apos;s changed{' '}
-            <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>since launch.</em>
+            {/* THE LAUNCHING-SOON SWITCH (lib/constants.ts): off = the original heading and intro. */}
+            {LAUNCHING_SOON ? <>Everything that&apos;s new{' '}</> : <>Everything that&apos;s changed{' '}</>}
+            <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>
+              {LAUNCHING_SOON ? 'at launch.' : 'since launch.'}
+            </em>
           </h2>
         </Reveal>
         <Reveal delay={0.08}>
           <p className="wb-intro">
-            The app in your hand isn&apos;t the app from launch day. Here&apos;s what&apos;s new.
+            {LAUNCHING_SOON
+              ? <>Here&apos;s what you&apos;ll find in the app when it opens.</>
+              : <>The app in your hand isn&apos;t the app from launch day. Here&apos;s what&apos;s new.</>}
           </p>
         </Reveal>
       </div>

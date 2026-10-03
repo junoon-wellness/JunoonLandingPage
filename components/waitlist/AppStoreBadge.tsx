@@ -1,4 +1,5 @@
-import { APP_STORE_URL } from '@/lib/constants'
+import { APP_STORE_URL, LAUNCHING_SOON } from '@/lib/constants'
+import LaunchingSoonCta from './LaunchingSoonCta'
 
 /**
  * LV5-024: Apple's OWN "Download on the App Store" badge artwork, not a
@@ -46,6 +47,11 @@ export default function AppStoreBadge({
   size?: 'nav' | 'lg'
   onClick?: () => void
 }) {
+  // THE LAUNCHING-SOON SWITCH (lib/constants.ts). While it is on, every
+  // badge spot on the site renders the email-list button instead. With it
+  // off, everything below runs exactly as it did before the switch existed.
+  if (LAUNCHING_SOON) return <LaunchingSoonCta full={full} onClick={onClick} />
+
   const height = BADGE_HEIGHT[size ?? 'default']
   const width = Math.round(height * BADGE_ASPECT)
 
