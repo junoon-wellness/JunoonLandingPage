@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="How to join the Junoon beta on TestFlight and send feedback.">
+<title>Junoon Beta Guide</title>
+<style>
+/* Layout: one narrow paper column, phone first. Drawn scene that breathes, one button, Arjav's note,
+   the install steps as a swipe of paper cards, feedback as a two-way switch, a small petal burst to close. */
+:root {
+  --paper: #FAF7F2;      /* cream, the stage */
+  --paper-2: #F2EADC;    /* ivory, a shade deeper than the page, for cards */
+  --ink: #2C2118;        /* bark, text and pencil line */
+  --ink-soft: #6B5B4D;
+  --rule: #E3D8C8;
+  --clay: #C4724A;       /* the one accent */
+  --clay-ink: #FFFFFF;
+  --turmeric: #E8B870;
+  --wash: #EAD7AE;       /* ochre light in the window */
+  --sage: #9AAA8E;
+  --skin: #C98F68;
+  --hair: #2C2118;
+  --steel: #B9B4AC;
+  --tape: rgba(232, 184, 112, .55);
+  --shadow: 0 1px 0 rgba(44, 33, 24, .06), 0 6px 16px -10px rgba(44, 33, 24, .35);
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .45  0 0 0 0 .38  0 0 0 0 .3  0 0 0 .16 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --display: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
+  --body: "DM Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #2C2118; --paper-2: #3A2D22; --ink: #F5F0E8; --ink-soft: #CDBFAE; --rule: #4A3B2E;
+    --clay: #D4845C; --clay-ink: #2C2118; --wash: #6B5634; --sage: #7F8F74;
+    --skin: #B98260; --hair: #120D09; --steel: #8E8880; --tape: rgba(232, 184, 112, .3);
+    --shadow: 0 1px 0 rgba(0, 0, 0, .25), 0 8px 18px -10px rgba(0, 0, 0, .7);
+    --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .95  0 0 0 0 .9  0 0 0 0 .82  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #2C2118; --paper-2: #3A2D22; --ink: #F5F0E8; --ink-soft: #CDBFAE; --rule: #4A3B2E;
+  --clay: #D4845C; --clay-ink: #2C2118; --wash: #6B5634; --sage: #7F8F74;
+  --skin: #B98260; --hair: #120D09; --steel: #8E8880; --tape: rgba(232, 184, 112, .3);
+  --shadow: 0 1px 0 rgba(0, 0, 0, .25), 0 8px 18px -10px rgba(0, 0, 0, .7);
+  --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .95  0 0 0 0 .9  0 0 0 0 .82  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  background: var(--grain), var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.page {
+  max-width: 540px;
+  margin: 0 auto;
+  padding-inline: 20px;
+  padding-block: 22px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+.eyebrow {
+  font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-soft); margin: 0;
+}
+h2 { font-family: var(--display); font-weight: 600; font-size: 30px; line-height: 1.1; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+b { font-weight: 600; }
+
+/* ---------- hero ---------- */
+.hero { display: flex; flex-direction: column; gap: 10px; }
+.stage { position: relative; width: 100%; aspect-ratio: 360 / 276; max-width: 100%; }
+.stage svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.layer { pointer-events: none; }
+.line {
+  font-family: var(--display); font-style: italic; font-weight: 500;
+  font-size: clamp(34px, 9.5vw, 44px); line-height: 1.04; text-wrap: balance;
+}
+.line .name { position: relative; color: var(--clay); white-space: nowrap; }
+.line .name svg { position: absolute; left: -2%; bottom: -.14em; width: 104%; height: .32em; overflow: visible; }
+.intro { color: var(--ink-soft); }
+
+/* ---------- the one button ---------- */
+.join { display: flex; flex-direction: column; gap: 10px; }
+.btn {
+  position: relative;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 58px; padding: 14px 22px;
+  border-radius: 999px;
+  background: var(--clay); color: var(--clay-ink);
+  font: 600 18px/1.2 var(--body);
+  text-decoration: none; text-align: center;
+  box-shadow: var(--shadow);
+  transition: transform .15s ease, filter .15s ease;
+}
+.btn::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  border: 2px solid var(--clay); opacity: 0; pointer-events: none;
+}
+.btn:hover { filter: brightness(1.05); }
+.btn:active { transform: scale(.98); }
+.btn:focus-visible, .copy:focus-visible, .seg button:focus-visible, .nav-btn:focus-visible, .strip:focus-visible, .burst-btn:focus-visible {
+  outline: 3px solid var(--turmeric); outline-offset: 3px;
+}
+.linkrow { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-soft); }
+.linkrow code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px;
+  flex: 1; min-width: 0; overflow-wrap: anywhere;
+  user-select: all; -webkit-user-select: all;
+}
+.copy {
+  flex: none; min-height: 40px; padding: 0 14px; border-radius: 999px;
+  border: 1.5px solid var(--rule); background: transparent; color: var(--ink);
+  font: 500 13px var(--body); cursor: pointer;
+}
+.copy-fail { font-size: 13px; color: var(--clay); }
+
+/* ---------- Arjav's note ---------- */
+.note {
+  position: relative;
+  background: var(--paper-2);
+  border-radius: 4px;
+  padding: 26px 20px 18px;
+  box-shadow: var(--shadow);
+  transform: rotate(-.6deg);
+  display: flex; flex-direction: column; gap: 10px;
+}
+.note::before {
+  content: ""; position: absolute; top: -9px; left: 50%; width: 84px; height: 20px;
+  margin-left: -42px; background: var(--tape); transform: rotate(2deg);
+}
+.note blockquote { margin: 0; font-family: var(--display); font-size: 18px; line-height: 1.38; font-weight: 500; }
+.note .who { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-soft); }
+.note .who svg { width: 26px; height: 14px; }
+
+/* ---------- part heads ---------- */
+.part { display: flex; flex-direction: column; gap: 14px; }
+.part-head { display: flex; flex-direction: column; gap: 4px; }
+.part-head .sub { font-size: 15px; color: var(--ink-soft); }
+
+/* ---------- Part 1: swipe of paper cards ---------- */
+.strip {
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-inline: 2px;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  margin-inline: -6px; padding: 14px 6px 16px;
+  border-radius: 6px;
+}
+.strip::-webkit-scrollbar { display: none; }
+.cards { list-style: none; margin: 0; padding: 0; display: flex; gap: 12px; }
+.card {
+  flex: 0 0 min(72%, 220px);
+  scroll-snap-align: start;
+  min-height: 150px;
+  background: var(--paper-2);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  padding: 14px 16px 16px;
+  display: flex; flex-direction: column; gap: 8px;
+  transform: rotate(var(--tilt, 0deg));
+}
+.card:nth-child(odd) { --tilt: -1deg; }
+.card:nth-child(even) { --tilt: .8deg; }
+.card .num { font-family: var(--display); font-weight: 600; font-size: 40px; line-height: .9; color: var(--clay); font-variant-numeric: lining-nums; }
+.card p { font-size: 15px; line-height: 1.42; min-width: 0; }
+.card a { color: var(--clay); font-weight: 600; text-underline-offset: 3px; }
+.card.pay { background: transparent; border: 1.5px dashed var(--clay); box-shadow: none; }
+.card .tag { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--clay); }
+.strip-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.dots { display: flex; gap: 7px; align-items: center; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--rule); transition: background .25s, transform .25s; }
+.dots i.on { background: var(--clay); transform: scale(1.3); }
+.navs { display: flex; gap: 8px; align-items: center; }
+.swipe-hint { font-size: 13px; color: var(--ink-soft); margin-right: 4px; }
+.nav-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1.5px solid var(--rule); background: transparent; color: var(--ink);
+  display: grid; place-items: center; cursor: pointer;
+}
+.nav-btn:disabled { opacity: .35; cursor: default; }
+
+/* ---------- Part 2: two ways, one switch ---------- */
+.seg {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+  background: var(--paper-2); border-radius: 999px; padding: 4px;
+}
+.seg button {
+  min-height: 42px; border: 0; border-radius: 999px; cursor: pointer;
+  background: transparent; color: var(--ink-soft);
+  font: 500 14px/1.2 var(--body);
+}
+.seg button[aria-selected="true"] { background: var(--clay); color: var(--clay-ink); font-weight: 600; }
+.way { display: flex; flex-direction: column; gap: 10px; }
+.way .best { font-size: 14px; color: var(--ink-soft); }
+ol.mini { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; counter-reset: m; }
+ol.mini li {
+  counter-increment: m;
+  display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: baseline;
+  padding: 12px 14px; background: var(--paper-2); border-radius: 4px;
+  font-size: 15px; line-height: 1.42;
+}
+ol.mini li::before { content: counter(m); font-family: var(--display); font-weight: 600; font-size: 26px; line-height: 1; color: var(--clay); font-variant-numeric: lining-nums; }
+ol.mini li > span { min-width: 0; }
+
+/* ---------- weekly call ---------- */
+.call { display: grid; grid-template-columns: 48px 1fr; gap: 14px; align-items: center; }
+.call svg { width: 48px; height: 48px; }
+.call p { font-size: 15px; }
+
+/* ---------- closing ---------- */
+.closing { display: grid; grid-template-columns: 96px 1fr; gap: 14px; align-items: center; }
+.burst-btn { padding: 0; border: 0; background: transparent; cursor: pointer; border-radius: 12px; }
+.burst-btn svg { width: 96px; height: 84px; display: block; overflow: visible; }
+.closing .last { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 25px; line-height: 1.2; text-wrap: balance; }
+.foot { font-size: 12px; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 16px; }
+
+/* ---------- motion (all of it lives here; reduced motion keeps the still frames above) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  /* she breathes: the upper body is its own layer, so only a transform moves */
+  .breathe { transform-origin: 39.2% 76%; will-change: transform; animation: breathe 6.5s ease-in-out infinite; }
+  @keyframes breathe {
+    0%, 100% { transform: translateY(0) scale(1, 1); }
+    42% { transform: translateY(-1.2%) scale(1.012, 1.03); }
+    55% { transform: translateY(-1.2%) scale(1.012, 1.03); }
+  }
+  /* chai steam rising */
+  .steam path { transform-box: fill-box; transform-origin: 50% 100%; animation: rise 3.6s ease-in-out infinite; opacity: 0; }
+  .steam path:nth-child(2) { animation-delay: 1.2s; }
+  .steam path:nth-child(3) { animation-delay: 2.4s; }
+  @keyframes rise {
+    0% { transform: translateY(6px) scaleY(.7); opacity: 0; }
+    35% { opacity: .65; }
+    100% { transform: translateY(-12px) scaleY(1.1); opacity: 0; }
+  }
+  /* window light drifts, very slowly */
+  .glow { animation: glow 9s ease-in-out infinite; }
+  @keyframes glow { 0%, 100% { opacity: .85; } 50% { opacity: .62; } }
+  /* underline draws itself under Junoon */
+  .line .name path { stroke-dasharray: 220; animation: draw 1.1s .5s cubic-bezier(.6,.1,.3,1) both; }
+  @keyframes draw { from { stroke-dashoffset: 220; } to { stroke-dashoffset: 0; } }
+  /* the button pulses, twice, then rests */
+  .btn::after { animation: ping 1.6s 1.4s ease-out 2; }
+  @keyframes ping { 0% { opacity: .7; transform: scale(1); } 100% { opacity: 0; transform: scale(1.12, 1.45); } }
+  /* cards and blocks ease in (only ones that start below the fold get .pre) */
+  .pre { opacity: 0; transform: translateY(18px) rotate(var(--tilt, 0deg)); }
+  .in { opacity: 1; transform: translateY(0) rotate(var(--tilt, 0deg)); transition: opacity .6s ease, transform .7s cubic-bezier(.2,.8,.25,1.15); transition-delay: calc(var(--i, 0) * 90ms); }
+  .note.pre, .note.in { --tilt: -.6deg; }
+  /* the closing petals */
+  .burst.go .petal { animation: petal 1s cubic-bezier(.15,.7,.3,1) both; animation-delay: calc(var(--n) * 35ms); }
+  @keyframes petal {
+    0% { transform: rotate(var(--a)) translateX(0) scale(.2); opacity: 0; }
+    60% { opacity: 1; }
+    100% { transform: rotate(var(--a)) translateX(30px) scale(1); opacity: 1; }
+  }
+  .burst.go .cup { animation: hop .6s ease-out both; transform-box: fill-box; transform-origin: 50% 100%; }
+  @keyframes hop { 0% { transform: translateY(0); } 40% { transform: translateY(-5px) rotate(-4deg); } 100% { transform: translateY(0); } }
+}
+/* resting petal positions (the still frame) */
+.petal { transform-origin: 48px 56px; transform: rotate(var(--a)) translateX(30px); }
+</style>
+
+<style>
+@font-face{font-family:"Cormorant Garamond";src:url("/fonts/CormorantGaramond[wght].woff2") format("woff2");font-style:normal;font-weight:300 700;font-display:swap}
+@font-face{font-family:"Cormorant Garamond";src:url("/fonts/CormorantGaramond-Italic[wght].woff2") format("woff2");font-style:italic;font-weight:300 700;font-display:swap}
+@font-face{font-family:"DM Sans";src:url("/fonts/DMSans[opsz,wght].woff2") format("woff2");font-style:normal;font-weight:100 1000;font-display:swap}
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="hero">
+    <p class="eyebrow">Junoon · Beta testing guide</p>
+
+    <div class="stage">
+      <!-- Base scene: window, mat, legs, chai, tulsi. The upper body and the steam sit on their own layers so they can move cheaply. -->
+      <svg viewBox="0 6 360 276" role="img" aria-label="A hand-drawn woman sitting cross-legged on a mat by a sunny window, breathing slowly as she looks at her phone, a steaming cup of chai and a tulsi plant beside her.">
+        <defs>
+          <filter id="wob" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4" result="t"/>
+            <feDisplacementMap in="SourceGraphic" in2="t" scale="3.2"/>
+          </filter>
+          <filter id="crayon" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4" result="t"/>
+            <feDisplacementMap in="SourceGraphic" in2="t" scale="3.2" result="d"/>
+            <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="9" result="g"/>
+            <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.75" result="ga"/>
+            <feComposite in="d" in2="ga" operator="in"/>
+          </filter>
+          <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)">
+            <line x1="0" y1="0" x2="0" y2="6" stroke="var(--ink)" stroke-width="1" opacity=".18"/>
+          </pattern>
+        </defs>
+
+        <g filter="url(#crayon)">
+          <path class="glow" d="M214 22 L330 20 L332 150 L212 152 Z" fill="var(--wash)" opacity=".85"/>
+          <path class="glow" d="M212 152 L332 150 L346 250 L196 252 Z" fill="var(--wash)" opacity=".35" style="animation-delay:-4s"/>
+        </g>
+        <g filter="url(#wob)" fill="none" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" opacity=".8">
+          <path d="M214 22 L330 20 L332 150 L212 152 Z"/>
+          <path d="M272 21 L272 151"/>
+          <path d="M213 86 L331 85"/>
+          <path d="M242 22 L242 151 M302 21 L302 151" stroke-width="1" opacity=".55"/>
+          <path d="M206 156 L338 154" stroke-width="2.2"/>
+        </g>
+
+        <path d="M8 252 Q120 249 240 252 T352 251" fill="none" stroke="var(--ink)" stroke-width="1.4" opacity=".55" filter="url(#wob)"/>
+
+        <g filter="url(#crayon)">
+          <path d="M40 238 L232 236 L248 262 L28 265 Z" fill="var(--sage)" opacity=".9"/>
+          <ellipse cx="238" cy="249" rx="10" ry="14" fill="var(--sage)"/>
+        </g>
+        <g filter="url(#wob)" fill="none" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round" opacity=".8">
+          <path d="M40 238 L230 236 M28 265 L246 262 M40 238 L28 265"/>
+          <ellipse cx="238" cy="249" rx="10" ry="14"/>
+          <path d="M238 243 q4 6 0 12"/>
+        </g>
+
+        <g filter="url(#crayon)">
+          <path d="M78 236 C80 214 112 206 140 210 C168 206 202 212 206 234 C190 246 96 248 78 236 Z" fill="var(--turmeric)" opacity=".75"/>
+          <ellipse cx="96" cy="238" rx="10" ry="5" fill="var(--skin)"/>
+          <ellipse cx="188" cy="238" rx="10" ry="5" fill="var(--skin)"/>
+        </g>
+        <path d="M78 236 C80 214 112 206 140 210 C168 206 202 212 206 234 C190 246 96 248 78 236 Z M108 228 C126 222 156 222 176 230" fill="url(#hatch)" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round" filter="url(#wob)" opacity=".85"/>
+
+        <g filter="url(#crayon)">
+          <path d="M262 226 L284 226 L281 250 L265 250 Z" fill="var(--steel)"/>
+          <ellipse cx="273" cy="226" rx="11" ry="3" fill="#9A6A44" opacity=".9"/>
+        </g>
+        <g filter="url(#wob)" fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round" opacity=".8">
+          <path d="M262 226 L284 226 L281 250 L265 250 Z"/>
+        </g>
+
+        <g filter="url(#crayon)">
+          <path d="M300 220 L334 220 L329 252 L305 252 Z" fill="var(--turmeric)" opacity=".7"/>
+          <path d="M317 220 C315 200 314 186 318 172" stroke="var(--sage)" stroke-width="3" fill="none"/>
+          <ellipse cx="306" cy="198" rx="10" ry="5" fill="var(--sage)" transform="rotate(-25 306 198)"/>
+          <ellipse cx="328" cy="190" rx="10" ry="5" fill="var(--sage)" transform="rotate(25 328 190)"/>
+          <ellipse cx="308" cy="178" rx="9" ry="4.5" fill="var(--sage)" transform="rotate(-30 308 178)"/>
+          <ellipse cx="327" cy="172" rx="9" ry="4.5" fill="var(--sage)" transform="rotate(30 327 172)"/>
+          <ellipse cx="318" cy="164" rx="5" ry="8" fill="var(--sage)"/>
+          <ellipse cx="320" cy="208" rx="9" ry="4.5" fill="var(--sage)" transform="rotate(20 320 208)"/>
+        </g>
+        <g filter="url(#wob)" fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round" opacity=".8">
+          <path d="M300 220 L334 220 L329 252 L305 252 Z M298 220 L336 220"/>
+        </g>
+      </svg>
+
+      <!-- Upper body: kurta, head, arms, phone. Moves as one layer for the slow breath. -->
+      <svg class="layer breathe" viewBox="0 6 360 276" aria-hidden="true">
+        <g filter="url(#crayon)">
+          <path d="M118 142 C128 134 154 134 164 142 L176 214 C156 222 126 222 106 214 Z" fill="var(--clay)"/>
+        </g>
+        <path d="M118 142 C128 134 154 134 164 142 L176 214 C156 222 126 222 106 214 Z" fill="url(#hatch)" stroke="var(--ink)" stroke-width="1.5" stroke-linejoin="round" filter="url(#wob)" opacity=".85"/>
+        <g filter="url(#crayon)">
+          <path d="M134 128 L148 128 L147 140 L135 140 Z" fill="var(--skin)"/>
+          <ellipse cx="141" cy="112" rx="17" ry="19" fill="var(--skin)"/>
+          <path d="M123 108 C122 88 160 86 159 106 C152 98 136 98 123 108 Z" fill="var(--hair)"/>
+          <circle cx="128" cy="96" r="9" fill="var(--hair)"/>
+        </g>
+        <g filter="url(#wob)" fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round" opacity=".85">
+          <ellipse cx="141" cy="112" rx="17" ry="19"/>
+          <path d="M137 116 q3 2 6 0 M148 116 q3 2 6 0" stroke-width="1.6"/>
+          <path d="M146 125 q3 1.5 6 0" stroke-width="1.2"/>
+        </g>
+        <g filter="url(#crayon)">
+          <path d="M120 150 C108 170 112 190 140 192 L146 184 C126 182 122 170 128 156 Z" fill="var(--skin)"/>
+          <path d="M162 150 C176 168 172 188 150 192 L144 184 C160 182 162 170 156 156 Z" fill="var(--skin)"/>
+          <rect x="138" y="168" width="14" height="23" rx="3" fill="var(--hair)" transform="rotate(-8 145 180)"/>
+        </g>
+        <g filter="url(#wob)" fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round" opacity=".85">
+          <path d="M120 150 C108 170 112 190 140 192 M162 150 C176 168 172 188 150 192"/>
+          <rect x="138" y="168" width="14" height="23" rx="3" transform="rotate(-8 145 180)"/>
+        </g>
+      </svg>
+
+      <!-- Steam from the chai. No filter here, so each wisp is cheap to move. -->
+      <svg class="layer steam" viewBox="0 6 360 276" aria-hidden="true" fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linecap="round" opacity=".55">
+        <path d="M267 219 q-5 -7 -.5 -13 q4.5 -6 -.5 -12"/>
+        <path d="M274 218 q-5 -8 0 -14 q5 -6 0 -13"/>
+        <path d="M280 219 q-4 -7 .5 -12 q4 -5 -.5 -11"/>
+      </svg>
+    </div>
+
+    <p class="line">Thank you for testing <span class="name">Junoon<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M4 12 C 50 4, 110 18, 196 7" fill="none" stroke="var(--turmeric)" stroke-width="5" stroke-linecap="round"/></svg></span>.</p>
+    <p class="intro">Open this on your iPhone, tap the button, then tell us everything you notice.</p>
+  </header>
+
+  <section class="join" aria-label="Join the beta">
+    <a class="btn" href="https://testflight.apple.com/join/ZvzyXUWw" target="_blank" rel="noopener">
+      Join the Junoon beta on TestFlight
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <div class="linkrow">
+      <code id="tf-link">https://testflight.apple.com/join/ZvzyXUWw</code>
+      <button class="copy" id="copy-btn" type="button">Copy link</button>
+    </div>
+    <p class="copy-fail" id="copy-fail" hidden>The link is selected. Press Cmd+C to copy it, or press and hold on a phone.</p>
+  </section>
+
+  <section class="note" aria-label="A note from Arjav" data-reveal>
+    <blockquote>As a beta tester, we expect that you will try your best to follow the Junoon system, and will be prepared to give feedback on every and all aspects of Junoon. The goal is to find flaws in the system so we are able to adjust the platform before we launch to the general public. Thank you.</blockquote>
+    <p class="who">
+      <svg viewBox="0 0 26 14" aria-hidden="true"><path d="M2 10 C 7 2, 10 13, 14 6 S 20 4, 24 8" fill="none" stroke="var(--clay)" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Arjav, Junoon
+    </p>
+  </section>
+
+  <section class="part" aria-labelledby="p1">
+    <div class="part-head">
+      <p class="eyebrow">Part 1</p>
+      <h2 id="p1">Get Junoon on your phone</h2>
+    </div>
+    <div class="strip" id="strip" tabindex="0" role="region" aria-label="Six steps. Swipe sideways to see them all.">
+      <ol class="cards">
+        <li class="card" data-reveal style="--i:0"><span class="num">1</span><p>Tap the button above, or this <a href="https://testflight.apple.com/join/ZvzyXUWw" target="_blank" rel="noopener">Junoon TestFlight link</a>.</p></li>
+        <li class="card" data-reveal style="--i:1"><span class="num">2</span><p>No TestFlight app yet? You'll be sent to the App Store. Tap <b>Get</b> (or <b>Install</b>), then reopen the invite link.</p></li>
+        <li class="card" data-reveal style="--i:2"><span class="num">3</span><p>In TestFlight, tap <b>Accept</b> to join the Junoon beta.</p></li>
+        <li class="card" data-reveal style="--i:3"><span class="num">4</span><p>Tap <b>Install</b> to download the Junoon app.</p></li>
+        <li class="card pay" data-reveal style="--i:4"><span class="num">5</span><span class="tag">Note</span><p>You will hit a paywall after the onboarding. Select any option. Our app is in testing and <b>does not charge you in any way</b>.</p></li>
+        <li class="card" data-reveal style="--i:5"><span class="num">6</span><p>Once installed, open Junoon from TestFlight or your home screen.</p></li>
+      </ol>
+    </div>
+    <div class="strip-nav">
+      <div class="dots" id="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="navs">
+        <span class="swipe-hint">Swipe</span>
+        <button class="nav-btn" id="prev" type="button" aria-label="Previous step" disabled>
+          <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M16 10H5M9 5l-5 5 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="nav-btn" id="next" type="button" aria-label="Next step">
+          <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="part" aria-labelledby="p2">
+    <div class="part-head">
+      <p class="eyebrow">Part 2</p>
+      <h2 id="p2">How to send feedback</h2>
+      <p class="sub">Something broke, confused you, or made you smile? Tell us from TestFlight.</p>
+    </div>
+    <div class="seg" role="tablist" aria-label="Two ways to send feedback">
+      <button type="button" role="tab" id="tab-shot" aria-controls="way-shot" aria-selected="true">From a screenshot</button>
+      <button type="button" role="tab" id="tab-app" aria-controls="way-app" aria-selected="false" tabindex="-1">From TestFlight</button>
+    </div>
+    <div class="way" id="way-shot" role="tabpanel" aria-labelledby="tab-shot" data-reveal>
+      <p class="best">Best for showing us a screen.</p>
+      <ol class="mini">
+        <li><span>Take a screenshot while you are in Junoon.</span></li>
+        <li><span>Tap the little preview, draw on it if you like, tap <b>Done</b>.</span></li>
+        <li><span>Tap <b>Share Beta Feedback</b>, add a note, tap <b>Submit</b>.</span></li>
+      </ol>
+    </div>
+    <div class="way" id="way-app" role="tabpanel" aria-labelledby="tab-app" hidden>
+      <p class="best">Best for a thought or an idea.</p>
+      <ol class="mini">
+        <li><span>Open the <b>TestFlight</b> app and tap <b>Junoon</b>.</span></li>
+        <li><span>Tap <b>Send Beta Feedback</b>. Add a screenshot if you have one.</span></li>
+        <li><span>Write your note and tap <b>Submit</b>.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="call" aria-label="Weekly call" data-reveal>
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <g filter="url(#wob)" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="18" y="8" width="26" height="48" rx="5" fill="var(--paper-2)"/>
+        <path d="M27 13 h8"/>
+        <path d="M50 22 q5 6 0 12 M54 18 q9 10 0 20" stroke="var(--clay)"/>
+      </g>
+    </svg>
+    <p>Arjav will be scheduling a 5 to 10 minute call with you once per week to get your direct feedback.</p>
+  </section>
+
+  <section class="closing" aria-label="That's it">
+    <button class="burst-btn" id="burst-btn" type="button" aria-label="Celebrate">
+      <svg class="burst" id="burst" viewBox="0 0 96 84" aria-hidden="true">
+        <g>
+          <ellipse class="petal" cx="48" cy="56" rx="6" ry="3" fill="var(--turmeric)" style="--a:-170deg;--n:0"/>
+          <ellipse class="petal" cx="48" cy="56" rx="6" ry="3" fill="var(--clay)" style="--a:-150deg;--n:1"/>
+          <ellipse class="petal" cx="48" cy="56" rx="6" ry="3" fill="var(--turmeric)" style="--a:-130deg;--n:2"/>
+          <ellipse class="petal" cx="48" cy="56" rx="6" ry="3" fill="var(--sage)" style="--a:-110deg;--n:3"/>
+          <ellipse class="petal" cx="48" cy="56" rx="6" ry="3" fill="var(--clay)" style="--a:-90deg;--n:4"/>
+          <ellipse class="petal" cx="48" cy="56" rx="6" ry="3" fill="var(--turmeric)" style="--a:-70deg;--n:5"/>
+          <ellipse class="petal" cx="48" cy="56" rx="6" ry="3" fill="var(--sage)" style="--a:-50deg;--n:6"/>
+          <ellipse class="petal" cx="48" cy="56" rx="6" ry="3" fill="var(--clay)" style="--a:-30deg;--n:7"/>
+          <ellipse class="petal" cx="48" cy="56" rx="6" ry="3" fill="var(--turmeric)" style="--a:-10deg;--n:8"/>
+        </g>
+        <g class="cup">
+          <g filter="url(#crayon)">
+            <path d="M37 54 L59 54 L56 78 L40 78 Z" fill="var(--steel)"/>
+            <ellipse cx="48" cy="54" rx="11" ry="3" fill="#9A6A44" opacity=".9"/>
+          </g>
+          <path d="M37 54 L59 54 L56 78 L40 78 Z" fill="none" stroke="var(--ink)" stroke-width="1.4" stroke-linejoin="round" filter="url(#wob)" opacity=".8"/>
+        </g>
+      </svg>
+    </button>
+    <p class="last">That's it. Come back to Part 2 anytime you have feedback.</p>
+  </section>
+
+  <footer class="foot">
+    <p>Junoon Wellness · Beta on Apple TestFlight</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  /* copy link, with a visible fallback when the clipboard is blocked */
+  var btn = document.getElementById('copy-btn');
+  var code = document.getElementById('tf-link');
+  var fail = document.getElementById('copy-fail');
+  function selectLink() {
+    try { var r = document.createRange(); r.selectNodeContents(code); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) {}
+  }
+  function failed() { selectLink(); fail.hidden = false; btn.textContent = 'Copy link'; }
+  btn.addEventListener('click', function () {
+    var text = code.textContent.trim();
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          fail.hidden = true; btn.textContent = 'Copied';
+          setTimeout(function () { btn.textContent = 'Copy link'; }, 2000);
+        }, failed);
+      } else { failed(); }
+    } catch (e) { failed(); }
+  });
+
+  /* swipe strip: dots and arrows */
+  var strip = document.getElementById('strip');
+  var cards = strip.querySelectorAll('.card');
+  var dots = document.querySelectorAll('#dots i');
+  var prev = document.getElementById('prev');
+  var next = document.getElementById('next');
+  function current() {
+    var left = strip.scrollLeft, best = 0, d = Infinity;
+    for (var i = 0; i < cards.length; i++) {
+      var dd = Math.abs(cards[i].offsetLeft - cards[0].offsetLeft - left);
+      if (dd < d) { d = dd; best = i; }
+    }
+    if (strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 4) best = cards.length - 1;
+    return best;
+  }
+  function paint() {
+    var c = current();
+    for (var i = 0; i < dots.length; i++) dots[i].classList.toggle('on', i === c);
+    prev.disabled = strip.scrollLeft <= 2;
+    next.disabled = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 4;
+  }
+  function go(dir) {
+    var c = Math.max(0, Math.min(cards.length - 1, current() + dir));
+    strip.scrollTo({ left: cards[c].offsetLeft - cards[0].offsetLeft, behavior: 'smooth' });
+  }
+  var ticking = false;
+  strip.addEventListener('scroll', function () {
+    if (ticking) return; ticking = true;
+    requestAnimationFrame(function () { ticking = false; paint(); });
+  }, { passive: true });
+  prev.addEventListener('click', function () { go(-1); });
+  next.addEventListener('click', function () { go(1); });
+  strip.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+  });
+  paint();
+
+  /* feedback switch */
+  var tabs = [document.getElementById('tab-shot'), document.getElementById('tab-app')];
+  var panels = [document.getElementById('way-shot'), document.getElementById('way-app')];
+  function pick(n, focus) {
+    tabs.forEach(function (t, i) {
+      var on = i === n;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      panels[i].hidden = !on;
+    });
+    if (focus) tabs[n].focus();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { pick(i); });
+    t.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); pick(1 - i, true); }
+    });
+  });
+
+  /* motion: ease-ins and the petal burst. Nothing starts hidden unless motion is allowed and it starts below the fold. */
+  var calm = true;
+  try { calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  var burst = document.getElementById('burst');
+  function pop() {
+    burst.classList.remove('go');
+    void burst.getBoundingClientRect();
+    burst.classList.add('go');
+  }
+  document.getElementById('burst-btn').addEventListener('click', function () { if (!calm) pop(); });
+  if (calm || !('IntersectionObserver' in window)) return;
+
+  var vh = window.innerHeight || 700;
+  var els = document.querySelectorAll('[data-reveal]');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var el = en.target;
+      el.classList.add('in');
+      el.classList.remove('pre');
+      io.unobserve(el);
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' });
+  for (var i = 0; i < els.length; i++) {
+    if (els[i].getBoundingClientRect().top > vh * 0.92) {
+      els[i].classList.add('pre');
+      io.observe(els[i]);
+    }
+  }
+  /* safety net: anything still waiting shows after a few seconds of no scrolling */
+  setTimeout(function () {
+    for (var j = 0; j < els.length; j++) {
+      var r = els[j].getBoundingClientRect();
+      if (els[j].classList.contains('pre') && r.top < vh) { els[j].classList.add('in'); els[j].classList.remove('pre'); }
+    }
+  }, 4000);
+
+  var closing = document.querySelector('.closing');
+  var io2 = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) { pop(); io2.disconnect(); }
+  }, { threshold: 0.6 });
+  io2.observe(closing);
+})();
+</script>
+
+</body>
+</html>

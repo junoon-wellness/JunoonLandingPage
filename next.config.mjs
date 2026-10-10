@@ -123,6 +123,15 @@ const nextConfig = {
    * Right before a promotion push is the worst time to be competing with
    * yourself. 308 keeps the method and is cached, unlike a 302.
    */
+  /**
+   * The beta tester guide (Kush, Sat 10 Oct 2026): a plain HTML page anyone can
+   * open at /beta, served from public/beta/index.html. It uses the site's own
+   * fonts, so it fits the CSP above. Off the index (its own robots meta).
+   */
+  async rewrites() {
+    return [{ source: "/beta", destination: "/beta/index.html" }];
+  },
+
   async redirects() {
     return [
       {
