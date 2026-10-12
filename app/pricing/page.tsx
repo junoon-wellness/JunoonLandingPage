@@ -45,7 +45,7 @@ const PRICING_JAALI = true
 export const metadata: Metadata = {
   title: clean('Pricing - Junoon'),
   description: clean(
-    'One membership at $8.99 a month. Your first month is free, and the first 100 members keep that price for life.'
+    'One membership at $8.99 a month. Your first month is free, and the first 100 members get a founding price, theirs for life.'
   ),
 }
 
@@ -64,7 +64,7 @@ const FAQ = [
   },
   {
     q: 'What happens after the free month?',
-    a: 'You keep your membership at $8.99 a month. If you\'re one of the first 100 members, that price is yours for life.',
+    a: 'You keep your membership at $8.99 a month. If you\'re one of the first 100 members, you get a founding price, yours for life.',
   },
   {
     q: 'Can I cancel?',
@@ -107,8 +107,8 @@ export default function PricingPage() {
                 <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>free month.</em>
               </h2>
               <p className="pr-free-callout-body">
-                Everyone&apos;s first month is free. The first 100 members then pay $8.99 a month,
-                locked for life.
+                Everyone&apos;s first month is free. The first 100 members then get a founding price,
+                theirs for life.
               </p>
             </section>
 
