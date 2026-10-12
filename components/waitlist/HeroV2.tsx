@@ -6,6 +6,12 @@ import Link from 'next/link'
 import { motion, transform, useScroll, useTransform } from 'framer-motion'
 import DeviceCarousel from './DeviceCarousel'
 import AppStoreBadge from './AppStoreBadge'
+import {
+  APP_STORE_URL,
+  EARLY_ACCESS_LABEL,
+  LAUNCHING_SOON,
+  LAUNCH_DATE_LABEL,
+} from '@/lib/constants'
 
 /**
  * LV5-021 (c) / LV5-024: the jaali PANEL behind the phone used to render
@@ -86,6 +92,13 @@ export default function HeroV2() {
       >
         {/* LV5-031: the "Now on the App Store" eyebrow is gone (Kush: "completely remove SC 3"); the headline now opens the copy column level with the phone. */}
 
+        {/* THE LAUNCHING-SOON SWITCH (lib/constants.ts): the launch date line. Gone when the switch is false. */}
+        {LAUNCHING_SOON && (
+          <motion.p className="eyebrow no-rule v2-hero-eyebrow jn-reveal" variants={step}>
+            Launching {LAUNCH_DATE_LABEL}
+          </motion.p>
+        )}
+
         <motion.h1
           className="v2-hero-headline jn-reveal"
           variants={step}
@@ -130,6 +143,16 @@ export default function HeroV2() {
           grew up around.
         </motion.p>
 
+        {/* THE LAUNCHING-SOON SWITCH (lib/constants.ts): a small text link that keeps
+            the App Store reachable for testers. Separate from the email button. */}
+        {LAUNCHING_SOON && (
+          <motion.p className="v2-hero-earlyaccess jn-reveal" variants={step}>
+            <a href={APP_STORE_URL} className="v2-link v2-earlyaccess-link">
+              {EARLY_ACCESS_LABEL}
+            </a>
+          </motion.p>
+        )}
+
         {/* LV5-018: replaces the App Store badge + "500 founder spots ·
             first month free · see pricing" line. Kush's review on the first
             full preview: that empty space under the sub-copy should carry a
@@ -145,13 +168,13 @@ export default function HeroV2() {
           <div className="v2-hero-offer-desktop">
             <div className="eyebrow no-rule">Founding member offer</div>
             <p className="v2-hero-offer-headline">
-              First 500 members.{' '}
+              First 100 members.{' '}
               <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>
                 Permanent pricing.
               </em>
             </p>
             <p className="v2-hero-offer-body">
-              Your first month is free, for everyone. The first 500 members then keep $8.99 a
+              Your first month is free, for everyone. The first 100 members then keep $8.99 a
               month for life.
             </p>
             <Link href="/pricing" className="v2-link v2-hero-offer-link">
@@ -181,7 +204,7 @@ export default function HeroV2() {
               <span className="v2-hero-offer-mobile-line">
                 Free month for everyone.
                 <br />
-                First 500: $8.99 for life.
+                First 100: $8.99 for life.
               </span>
             </Link>
             <AppStoreBadge size="nav" />

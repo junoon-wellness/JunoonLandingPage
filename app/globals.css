@@ -1342,6 +1342,34 @@ body::before {
   line-height: 1.25;
 }
 
+/* ─── Launching-soon extras ─── (the LAUNCHING_SOON switch, lib/constants.ts)
+   The hero's "Launching Sunday, Nov 1" line reuses .eyebrow (gold italic) and
+   only needs bottom space. The early-access link is a small quiet text link,
+   so the clay email button stays the one loud action. Unused while the switch is off. */
+.v2-hero-eyebrow {
+  margin: 0 0 14px;
+}
+.v2-hero-earlyaccess {
+  margin: -14px 0 22px;
+}
+.v2-earlyaccess-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--jn-text-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.v2-earlyaccess-link:hover {
+  color: var(--jn-turmeric);
+}
+@media (max-width: 1023.98px) {
+  .v2-hero-earlyaccess { order: 3; margin: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .v2-launch-cta:hover {
     transform: none !important;
