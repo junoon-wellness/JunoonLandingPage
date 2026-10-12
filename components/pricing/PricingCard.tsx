@@ -1,5 +1,10 @@
 import AppStoreBadge from '@/components/waitlist/AppStoreBadge'
-import { LAUNCHING_SOON } from '@/lib/constants'
+import {
+  APP_STORE_URL,
+  EARLY_ACCESS_LABEL,
+  LAUNCHING_SOON,
+  LAUNCH_DATE_LABEL,
+} from '@/lib/constants'
 import CheckMark from './CheckMark'
 import FeatureIcon, { type FeatureIconName } from './FeatureIcon'
 
@@ -62,10 +67,10 @@ export default function PricingCard() {
         <p className="pr-free-line">Your first month is free.</p>
 
         {/* JV3-307: the pill labels the PRICE, not the free month (the free
-            month is for everyone; only the first 500 keep $8.99). Desktop
+            month is for everyone; only the first 100 keep $8.99). Desktop
             position is unchanged - the pill is absolute in the card corner
             there; at <=540px it is in flow and now sits above the price row. */}
-        <span className="pr-founder-pill">First 500</span>
+        <span className="pr-founder-pill">First 100</span>
 
         <div className="pr-price-row">
           <span className="pr-price">$8.99</span>
@@ -73,7 +78,7 @@ export default function PricingCard() {
         </div>
 
         <p className="pr-offer-line">
-          Your first month is free. The first 500 members keep $8.99 a month for life.
+          Your first month is free. The first 100 members keep $8.99 a month for life.
         </p>
 
         <ul className="pr-checklist">
@@ -95,13 +100,20 @@ export default function PricingCard() {
           <AppStoreBadge size="nav" />
           {/* THE LAUNCHING-SOON SWITCH (lib/constants.ts): off = the original two lines. */}
           <span className="pr-cta-sub">
-            {LAUNCHING_SOON ? 'We will email you when the app opens' : 'Subscribe in the app'}
+            {LAUNCHING_SOON
+              ? `Launching ${LAUNCH_DATE_LABEL}. We will email you when the app opens`
+              : 'Subscribe in the app'}
           </span>
           <span className="pr-cta-fine">
             {LAUNCHING_SOON
               ? 'Cancel anytime in the App Store, once we launch.'
               : 'Cancel anytime in the App Store.'}
           </span>
+          {LAUNCHING_SOON && (
+            <a href={APP_STORE_URL} className="v2-link v2-earlyaccess-link">
+              {EARLY_ACCESS_LABEL}
+            </a>
+          )}
         </div>
       </div>
     </div>

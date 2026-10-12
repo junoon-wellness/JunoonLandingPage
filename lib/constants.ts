@@ -9,11 +9,11 @@
 export const SHOW_TOUR = false
 
 /**
- * Single source of truth for the founding-member offer - the "500" in
- * "First 500 members. Permanent pricing." and the denominator of the progress
+ * Single source of truth for the founding-member offer - the "100" in
+ * "First 100 members. Permanent pricing." and the denominator of the progress
  * bar. Change it here and it updates everywhere.
  */
-export const TOTAL_SPOTS = 500
+export const TOTAL_SPOTS = 100
 
 /**
  * LV5-002: the nav badge and hero CTA link here. Verified correct: matches
@@ -34,7 +34,10 @@ export const APP_STORE_URL = 'https://apps.apple.com/us/app/junoon-wellness/id67
  * true  = launching soon: email list button instead of the App Store badge.
  * false = the site exactly as before: Apple's badge, linking to APP_STORE_URL.
  *
- * Flip it back by changing this one line to `false`.
+ * Flip it back by changing this one line to `false`. THAT IS THE WHOLE
+ * SWITCH-BACK: the Nov 1 launch line and the "Early access on the App Store"
+ * text links below are gated on this same constant, so they disappear with it.
+ * Planned for Sun 1 Nov 2026, the public launch day.
  *
  * The same switch also changes the other lines that said the app is out
  * today (each one keeps its original wording, unchanged, when this is false):
@@ -45,8 +48,19 @@ export const APP_STORE_URL = 'https://apps.apple.com/us/app/junoon-wellness/id67
  *     components/pricing/PricingCard.tsx
  *   - the homepage "what's new" heading and intro:
  *     components/waitlist/WhatsNewV2.tsx
+ *   - the "Launching Sunday, Nov 1" line above the homepage headline and the
+ *     "Early access on the App Store" text link under its intro:
+ *     components/waitlist/HeroV2.tsx
+ *   - the date and the early-access link on the /pricing card:
+ *     components/pricing/PricingCard.tsx
  */
-export const LAUNCHING_SOON = false
+export const LAUNCHING_SOON = true
+
+/** The public launch day shown while LAUNCHING_SOON is on. */
+export const LAUNCH_DATE_LABEL = 'Sunday, Nov 1'
+
+/** Words of the small text link that keeps the App Store reachable for testers. */
+export const EARLY_ACCESS_LABEL = 'Early access on the App Store'
 
 /**
  * Where the launching-soon button goes: the site's existing newsletter

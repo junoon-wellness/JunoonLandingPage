@@ -305,7 +305,7 @@ export default function SignupForm({
                 phone collection again, and no caller has been silently
                 broken by removing it. */}
             {withPhone
-              ? 'First 500 founding members get permanent pricing. Text updates, never shared.'
+              ? 'First 100 founding members get permanent pricing. Text updates, never shared.'
               : 'No spam. Unsubscribe anytime.'}
           </span>
         </div>
