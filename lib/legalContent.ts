@@ -19,7 +19,7 @@ export type LegalDoc = {
 
 export const termsOfService: LegalDoc = {
   "title": "Terms of Service",
-  "subtitle": "Junoon Wellness, Inc.",
+  "subtitle": "Junoon Wellness LLC",
   "updated": "Last updated: June 2, 2026",
   "blocks": [
     {
@@ -28,7 +28,7 @@ export const termsOfService: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "These Terms of Service (\"Terms\") form a legally binding agreement between you (\"you\" or \"User\") and Junoon Wellness, Inc. (\"Junoon,\" \"we,\" \"us,\" or \"our\") governing your access to and use of the Junoon mobile application (the \"App\") and all related services (collectively, the \"Services\")."
+      "text": "These Terms of Service (\"Terms\") form a legally binding agreement between you (\"you\" or \"User\") and Junoon Wellness LLC (\"Junoon,\" \"we,\" \"us,\" or \"our\") governing your access to and use of the Junoon mobile application (the \"App\") and all related services (collectively, the \"Services\")."
     },
     {
       "type": "p",
@@ -640,7 +640,7 @@ export const termsOfService: LegalDoc = {
 
 export const privacyPolicy: LegalDoc = {
   "title": "Privacy Policy",
-  "subtitle": "Junoon Wellness, Inc.",
+  "subtitle": "Junoon Wellness LLC",
   "updated": "Last updated: September 10, 2026",
   "blocks": [
     {
@@ -649,7 +649,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "Junoon Wellness, Inc. (\"Junoon,\" \"we,\" \"us,\" or \"our\") operates the Junoon mobile application (the \"App\"), our website at junoonwellness.com, and related services (collectively, the \"Services\"). We are the data controller for personal information collected through the App and our website."
+      "text": "Junoon Wellness LLC (\"Junoon,\" \"we,\" \"us,\" or \"our\") operates the Junoon mobile application (the \"App\"), our website at junoonwellness.com, and related services (collectively, the \"Services\"). We are the data controller for personal information collected through the App and our website."
     },
     {
       "type": "p",

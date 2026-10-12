@@ -62,18 +62,18 @@ export default function PricingCard() {
         <p className="pr-free-line">Your first month is free.</p>
 
         {/* JV3-307: the pill labels the PRICE, not the free month (the free
-            month is for everyone; only the first 500 keep $8.99). Desktop
+            month is for everyone; only the first 100 keep $4.99). Desktop
             position is unchanged - the pill is absolute in the card corner
             there; at <=540px it is in flow and now sits above the price row. */}
-        <span className="pr-founder-pill">First 500</span>
+        <span className="pr-founder-pill">First 100</span>
 
         <div className="pr-price-row">
-          <span className="pr-price">$8.99</span>
+          <span className="pr-price">$4.99</span>
           <span className="pr-price-unit">/month</span>
         </div>
 
         <p className="pr-offer-line">
-          Your first month is free. The first 500 members keep $8.99 a month for life.
+          Your first month is free. The first 100 members keep $4.99 a month for life. After that it is $8.99 a month.
         </p>
 
         <ul className="pr-checklist">
