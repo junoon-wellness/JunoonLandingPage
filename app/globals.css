@@ -3657,11 +3657,15 @@ body { font-size: 17px; line-height: 1.6; }
 }
 
 /* ── feature story: plain text tabs in ONE accent ── */
-.jn-story { padding: 72px 48px 72px; border-top: 1px solid var(--jn-hairline); }
+.jn-story { padding: 48px 48px 48px; border-top: 1px solid var(--jn-hairline); }
+/* 19 Oct dead-space pass: the copy column no longer has a fixed floor (the
+   grid already sizes it to the tallest tab), and the stage sits closer. */
+.jn-story-stage { gap: 48px; }
+.jn-story-copies { min-height: 0; }
 .jn-story-tabs {
   gap: 30px;
   padding: 0;
-  margin-bottom: 44px;
+  margin-bottom: 28px;
   border-bottom: 1px solid var(--jn-hairline-strong);
 }
 .jn-story-tab {
@@ -3697,7 +3701,9 @@ body { font-size: 17px; line-height: 1.6; }
   .jn-story-tab { padding: 12px 0; font-size: 16px; }
 }
 @media (max-width: 768px) {
-  .jn-story { padding: 48px 24px 48px; }
+  .jn-story { padding: 32px 24px 32px; }
+  .jn-story-copies { min-height: 0; }
+  .jn-story-stage { gap: 20px; }
 }
 
 /* ════════ HOME: the A3 hero ════════ */
@@ -3706,14 +3712,27 @@ body { font-size: 17px; line-height: 1.6; }
   z-index: 2;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 380px;
-  grid-template-areas: 'h ph' 't ph';
-  grid-template-rows: auto 1fr;
-  column-gap: 64px;
+  /* 19 Oct dead-space pass: the text block is centred against the phone
+     (it used to hang at the top with ~300px of nothing under it), the
+     launch-date line is a real grid row, and the padding is 104/40 (was 136/88). */
+  grid-template-areas: '. ph' 'e ph' 'h ph' 't ph' '. ph';
+  grid-template-rows: minmax(0, 1fr) auto auto auto minmax(0, 1fr);
+  column-gap: 56px;
   align-items: start;
   max-width: 1320px;
   margin: 0 auto;
-  padding: 136px 48px 88px;
+  padding: 104px 48px 40px;
 }
+.rf-eyebrow {
+  grid-area: e;
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--jn-accent);
+}
+.rf-earlyaccess { margin: 6px 0 0; }
+.rf-earlyaccess .v2-earlyaccess-link { min-height: 40px; }
 .rf-hero-headline {
   grid-area: h;
   margin: 0;
@@ -3729,7 +3748,7 @@ body { font-size: 17px; line-height: 1.6; }
 .rf-hero-text { grid-area: t; }
 .rf-hero-lede {
   max-width: 30em;
-  margin: 28px 0 0;
+  margin: 22px 0 0;
   font-size: 20px;
   line-height: 1.55;
   color: var(--jn-text-dim);
@@ -3739,7 +3758,7 @@ body { font-size: 17px; line-height: 1.6; }
   align-items: center;
   flex-wrap: wrap;
   gap: 26px;
-  margin-top: 34px;
+  margin-top: 26px;
 }
 .rf-textlink {
   display: inline-flex;
@@ -3755,7 +3774,7 @@ body { font-size: 17px; line-height: 1.6; }
 }
 .rf-fine {
   max-width: 34em;
-  margin: 18px 0 0;
+  margin: 8px 0 0;
   font-size: 15px;
   line-height: 1.55;
   color: var(--jn-text-faint);
@@ -3778,14 +3797,16 @@ body { font-size: 17px; line-height: 1.6; }
 @media (max-width: 900px) {
   .rf-hero {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: 'h' 't' 'ph';
+    grid-template-areas: 'e' 'h' 't' 'ph';
     grid-template-rows: auto;
-    row-gap: 32px;
-    padding: 104px 24px 56px;
+    row-gap: 0;
+    padding: 84px 24px 32px;
   }
+  .rf-hero-text { margin-top: 20px; }
+  .rf-hero-phone { margin-top: 28px; }
   .rf-hero-headline { font-size: clamp(42px, 11vw, 56px); line-height: 1; }
   .rf-hero-lede { margin-top: 0; font-size: 17px; }
-  .rf-hero-cta { margin-top: 24px; gap: 18px; }
+  .rf-hero-cta { margin-top: 18px; gap: 18px; }
   .rf-fine { font-size: 14px; }
 }
 
@@ -3886,7 +3907,7 @@ body { font-size: 17px; line-height: 1.6; }
 .rf-band {
   position: relative;
   z-index: 2;
-  padding: 96px 48px;
+  padding: 56px 48px;
   border-top: 1px solid var(--jn-hairline);
 }
 .rf-band-inner { max-width: 1224px; margin: 0 auto; }
@@ -3900,7 +3921,7 @@ body { font-size: 17px; line-height: 1.6; }
   color: var(--jn-text);
   text-wrap: balance;
 }
-.rf-body { max-width: 34em; margin: 18px 0 0; font-size: 19px; line-height: 1.6; color: var(--jn-text-dim); }
+.rf-body { max-width: 34em; margin: 14px 0 0; font-size: 19px; line-height: 1.6; color: var(--jn-text-dim); }
 .rf-quote blockquote {
   max-width: 17em;
   margin: 0;
@@ -3911,21 +3932,21 @@ body { font-size: 17px; line-height: 1.6; }
   letter-spacing: -0.005em;
   color: var(--jn-text);
 }
-.rf-quote cite { display: block; margin-top: 22px; font-size: 16px; font-style: normal; color: var(--jn-text-faint); }
+.rf-quote cite { display: block; margin-top: 16px; font-size: 16px; font-style: normal; color: var(--jn-text-faint); }
 .rf-feat {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 80px;
-  margin: 44px 0 0;
+  margin: 28px 0 0;
   padding: 0;
   list-style: none;
   border-top: 1px solid var(--jn-hairline-strong);
 }
-.rf-feat li { padding: 26px 0; border-bottom: 1px solid var(--jn-hairline-strong); }
+.rf-feat li { padding: 18px 0; border-bottom: 1px solid var(--jn-hairline-strong); }
 .rf-feat h3 { margin: 0; font-family: var(--font-cormorant), serif; font-size: 28px; font-weight: 400; line-height: 1.15; color: var(--jn-text); }
 .rf-feat p { margin: 8px 0 0; font-size: 17px; line-height: 1.6; color: var(--jn-text-dim); }
 .rf-subhead {
-  margin: 72px 0 0;
+  margin: 44px 0 0;
   font-family: var(--font-cormorant), serif;
   font-size: clamp(28px, 3vw, 40px);
   font-weight: 400;
@@ -3938,11 +3959,12 @@ body { font-size: 17px; line-height: 1.6; }
 .rf-founder-quote { margin: 0; font-family: var(--font-cormorant), serif; font-size: clamp(24px, 2.4vw, 30px); font-style: italic; line-height: 1.3; color: var(--jn-text); }
 .rf-founder-name { margin: 10px 0 0; font-size: 15px; color: var(--jn-text-faint); }
 @media (max-width: 768px) {
-  .rf-band { padding: 64px 24px; }
+  .rf-band { padding: 40px 24px; }
   .rf-body { font-size: 17px; }
-  .rf-feat { grid-template-columns: minmax(0, 1fr); margin-top: 32px; }
+  .rf-feat { grid-template-columns: minmax(0, 1fr); margin-top: 22px; }
+  .rf-feat li { padding: 16px 0; }
   .rf-feat h3 { font-size: 25px; }
-  .rf-subhead { margin-top: 52px; }
+  .rf-subhead { margin-top: 36px; }
   .rf-founder { flex-direction: column; align-items: flex-start; gap: 18px; }
 }
 
@@ -3950,7 +3972,7 @@ body { font-size: 17px; line-height: 1.6; }
 .v2-footer {
   position: relative;
   z-index: 2;
-  padding: 56px 48px 64px;
+  padding: 40px 48px 44px;
   background: var(--jn-sheet);
   border-top: 1px solid var(--jn-hairline);
 }
@@ -3966,7 +3988,7 @@ body { font-size: 17px; line-height: 1.6; }
 .v2-footer-link:hover { color: var(--jn-text); }
 .v2-footer-nav { font-size: 15px; }
 @media (max-width: 768px) {
-  .v2-footer { padding: 40px 24px 48px; }
+  .v2-footer { padding: 32px 24px 36px; }
 }
 
 /* ════════ PRICING (theme only, structure untouched) ════════ */
@@ -4107,12 +4129,12 @@ body { font-size: 17px; line-height: 1.6; }
   z-index: 2;
   max-width: 780px;
   margin: 0 auto;
-  padding: 140px 24px 96px;
+  padding: 112px 24px 56px;
 }
 .rf-doc-title { margin: 0; font-family: var(--font-cormorant), serif; font-size: clamp(44px, 5.6vw, 64px); font-weight: 400; line-height: 1.04; color: var(--jn-text); }
 .rf-doc-sub { margin: 16px 0 0; font-size: 17px; color: var(--jn-text-dim); }
 .rf-doc-head { padding-bottom: 28px; border-bottom: 1px solid var(--jn-hairline-strong); }
-.rf-doc h2 { margin: 44px 0 0; font-family: var(--font-cormorant), serif; font-size: 30px; font-weight: 400; line-height: 1.2; color: var(--jn-text); }
+.rf-doc h2 { margin: 36px 0 0; font-family: var(--font-cormorant), serif; font-size: 30px; font-weight: 400; line-height: 1.2; color: var(--jn-text); }
 .rf-doc h3 { margin: 26px 0 0; font-family: var(--font-cormorant), serif; font-size: 24px; font-weight: 400; line-height: 1.25; color: var(--jn-text); }
 .rf-doc p,
 .rf-doc li,
@@ -4128,7 +4150,7 @@ body { font-size: 17px; line-height: 1.6; }
 .rf-doc th { padding: 0 24px 8px 0; border-bottom: 1px solid var(--jn-hairline-strong); font-size: 14px; font-weight: 500; color: var(--jn-text-faint); }
 .rf-doc td { padding: 12px 24px 12px 0; vertical-align: top; border-bottom: 1px solid var(--jn-hairline); font-size: 15px; }
 @media (max-width: 768px) {
-  .rf-doc { padding: 104px 22px 64px; }
+  .rf-doc { padding: 88px 22px 40px; }
   .rf-doc p, .rf-doc li { font-size: 16px; }
 }
 .lb-reader-eyebrow.eyebrow {

@@ -22,9 +22,10 @@ import { APP_STORE_URL, EARLY_ACCESS_LABEL, LAUNCHING_SOON, LAUNCH_DATE_LABEL } 
  *   Where it finally lives is Arjav's call.
  *
  * WORDS: the headline and the two lede sentences are the site's existing
- * words (only the italics went). The fine print is PR #3's founder-price
- * wording, verbatim, which Arjav has been asked to approve (Group DM 3,
- * 1 Oct 11:44); no approved rewording had arrived when this was built.
+ * words (only the italics went). The fine print is live main's wording
+ * (PR #8, Kush 12 Oct: no founder figure, "a founding price, theirs for
+ * life"), unchanged. Waitlist mode (PR #7, until Sun 1 Nov) keeps its date
+ * line, its email button (inside AppStoreBadge) and its early-access link.
  */
 export default function HeroV2() {
   return (

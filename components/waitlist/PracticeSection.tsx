@@ -1,3 +1,5 @@
+import { LAUNCHING_SOON } from '@/lib/constants'
+
 /**
  * "A practice that knows you" (LV5-074). ONE section where Home used to have
  * two identical numbered lists in a row: WhatWereBuildingV2 (the four
@@ -74,9 +76,18 @@ export default function PracticeSection() {
         </p>
         <List items={FEATURES} />
 
-        <h3 className="rf-subhead">Everything that&apos;s changed since launch.</h3>
+        {/* THE LAUNCHING-SOON SWITCH (lib/constants.ts, PR #7): while it is on
+            the heading and intro are the waitlist-mode words; off = the
+            original "since launch" words. Carried over from WhatsNewV2. */}
+        <h3 className="rf-subhead">
+          {LAUNCHING_SOON
+            ? <>Everything that&apos;s new at launch.</>
+            : <>Everything that&apos;s changed since launch.</>}
+        </h3>
         <p className="rf-body">
-          The app in your hand isn&apos;t the app from launch day. Here&apos;s what&apos;s new.
+          {LAUNCHING_SOON
+            ? <>Here&apos;s what you&apos;ll find in the app when it opens.</>
+            : <>The app in your hand isn&apos;t the app from launch day. Here&apos;s what&apos;s new.</>}
         </p>
         <List items={NEW_SINCE_LAUNCH} />
       </div>
