@@ -62,13 +62,13 @@ export default function NotFound() {
         <p
           style={{
             fontSize: '15px',
-            fontWeight: 300,
+            fontWeight: 400,
             color: 'var(--jn-text-soft)',
             lineHeight: 1.7,
             margin: 0,
           }}
         >
-          The address you followed doesn&apos;t match anything here — try one of these instead.
+          The address you followed doesn&apos;t match anything here. Try one of these instead.
         </p>
 
         <div

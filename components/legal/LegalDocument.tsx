@@ -1,4 +1,5 @@
-import Link from "next/link";
+import NavV2 from "@/components/waitlist/NavV2";
+import FooterV2 from "@/components/waitlist/FooterV2";
 import type { ReactNode } from "react";
 import type { LegalDoc } from "@/lib/legalContent";
 
@@ -17,7 +18,6 @@ function linkify(text: string): ReactNode[] {
       <a
         key={m.index}
         href={email ? `mailto:${email}` : url}
-        className="text-clay underline underline-offset-2 hover:text-soil"
         {...(url ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         {match}
@@ -29,58 +29,42 @@ function linkify(text: string): ReactNode[] {
   return nodes;
 }
 
+/**
+ * LV5-074 (website refresh, scope phase 6): /privacy and /terms move from the
+ * old cream light page onto the site's own two schemes, with the site nav
+ * (and its Dark / Light switch) and footer. The TEXT is untouched: it comes
+ * from lib/legalContent.ts, where the only change in this round is the
+ * company name (LV5-073, PR #3) and the privacy date TODO (W10).
+ *
+ * ⚠️ /privacy is also the App Store's privacy-policy link, and /terms,
+ * /privacy and /contact are App Store review requirements. Keep all three.
+ */
 export default function LegalDocument({ doc }: { doc: LegalDoc }) {
   return (
-    <main className="min-h-screen bg-cream px-6 py-14 text-bark sm:px-10">
-      <div className="mx-auto max-w-3xl">
-        <Link
-          href="/"
-          className="inline-flex items-baseline gap-1 font-serif text-2xl font-light text-bark transition-colors hover:text-clay"
-        >
-          Junoon<span className="text-clay">.</span>
-        </Link>
-
-        <header className="mt-10 border-b border-linen pb-8">
-          <h1 className="font-serif text-4xl font-normal leading-tight">{doc.title}</h1>
-          <p className="mt-3 font-sans text-base text-soil">{doc.subtitle}</p>
-          <p className="mt-1 font-mono text-xs uppercase tracking-wide text-driftwood">
-            {doc.updated}
+    <div id="top">
+      <NavV2 />
+      <main className="rf-doc">
+        <header className="rf-doc-head">
+          <h1 className="rf-doc-title">{doc.title}</h1>
+          <p className="rf-doc-sub">
+            {doc.subtitle} · {doc.updated}
           </p>
         </header>
 
-        <article className="mt-8">
+        <article>
           {doc.blocks.map((block, i) => {
             switch (block.type) {
               case "h2":
-                return (
-                  <h2
-                    key={i}
-                    className="mt-10 font-serif text-2xl font-normal leading-snug text-bark"
-                  >
-                    {block.text}
-                  </h2>
-                );
+                return <h2 key={i}>{block.text}</h2>;
               case "h3":
-                return (
-                  <h3
-                    key={i}
-                    className="mt-6 font-serif text-xl font-normal leading-snug text-bark"
-                  >
-                    {block.text}
-                  </h3>
-                );
+                return <h3 key={i}>{block.text}</h3>;
               case "p":
-                return (
-                  <p key={i} className="mt-4 font-sans text-base leading-relaxed text-soil">
-                    {linkify(block.text)}
-                  </p>
-                );
+                return <p key={i}>{linkify(block.text)}</p>;
               case "ul":
                 return (
-                  <ul key={i} className="mt-4 flex flex-col gap-2 pl-1">
+                  <ul key={i}>
                     {block.items.map((item, j) => (
-                      <li key={j} className="flex gap-3 font-sans text-base leading-relaxed text-soil">
-                        <span aria-hidden className="mt-2.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-clay" />
+                      <li key={j}>
                         <span>{linkify(item)}</span>
                       </li>
                     ))}
@@ -88,46 +72,28 @@ export default function LegalDocument({ doc }: { doc: LegalDoc }) {
                 );
               case "callout":
                 return (
-                  <div
-                    key={i}
-                    className="mt-6 rounded-md border border-clay/30 bg-clayLight/40 px-5 py-4"
-                  >
+                  <div key={i} className="rf-doc-callout">
                     {block.paras.map((p, j) => (
-                      <p
-                        key={j}
-                        className={`font-sans text-sm leading-relaxed text-soil${j > 0 ? " mt-3" : ""}`}
-                      >
-                        {linkify(p)}
-                      </p>
+                      <p key={j}>{linkify(p)}</p>
                     ))}
                   </div>
                 );
               case "table":
                 return (
-                  <div key={i} className="mt-6 overflow-x-auto">
-                    <table className="w-full border-collapse text-left font-sans text-sm">
+                  <div key={i} style={{ marginTop: "22px", overflowX: "auto" }}>
+                    <table>
                       <thead>
                         <tr>
                           {block.head.map((h, j) => (
-                            <th
-                              key={j}
-                              className="border-b border-clay/40 pb-2 pr-6 font-mono text-xs uppercase tracking-wide text-driftwood"
-                            >
-                              {h}
-                            </th>
+                            <th key={j}>{h}</th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
                         {block.rows.map((row, r) => (
-                          <tr key={r} className="align-top">
+                          <tr key={r}>
                             {row.map((cell, c) => (
-                              <td
-                                key={c}
-                                className="border-b border-linen py-3 pr-6 leading-relaxed text-soil"
-                              >
-                                {linkify(cell)}
-                              </td>
+                              <td key={c}>{linkify(cell)}</td>
                             ))}
                           </tr>
                         ))}
@@ -138,7 +104,8 @@ export default function LegalDocument({ doc }: { doc: LegalDoc }) {
             }
           })}
         </article>
-      </div>
-    </main>
+      </main>
+      <FooterV2 />
+    </div>
   );
 }

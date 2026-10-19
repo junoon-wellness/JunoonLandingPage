@@ -1,89 +1,49 @@
-'use client'
-
-import { motion, type Transition } from 'framer-motion'
-import type { CSSProperties, ElementType, ReactNode } from 'react'
+import { createElement, type CSSProperties, type ElementType, type ReactNode } from 'react'
 
 /**
- * The page's one reveal primitive (spec §A3).
+ * LV5-074 (website refresh, 1 Oct 2026): SCROLL FADE-UPS ARE OFF.
  *
- * Replaces the old `[data-reveal]` + one-shot IntersectionObserver in
- * WaitlistPageV2. That observer collected whatever existed at mount and
- * unobserved each element as it fired, so anything mounted later stayed at
- * opacity 0 forever. `whileInView` is per-element and has no such window.
+ * This used to be the page's reveal primitive (framer-motion whileInView,
+ * 25 call sites): every section, card and hairline faded or drew itself in
+ * as it scrolled into view. The 27 Sep refresh scope lists "something moves
+ * on every scroll" as one of the ten things that make the site read as
+ * AI-made, and proposes at most one entrance on the whole site, on the hero
+ * (that one lives in globals.css, `.rf-hero-phone`).
  *
- * REDUCED MOTION is handled in CSS, not here: every reveal carries
- * `.jn-reveal`, and globals.css neutralises the inline transform/opacity for
- * that class inside a `prefers-reduced-motion` block. Branching the component
- * tree on a JS media query instead would either flash hidden content for a
- * frame or disagree with the server render.
+ * The API is kept exactly so no call site had to change: every prop is still
+ * accepted, the motion ones are simply ignored, and content renders in place
+ * at full opacity from the first paint. That also removes the old risk that
+ * content parked at opacity 0 never appeared (screenshots, slow observers).
+ *
+ * To bring the motion back, restore this file from git history (LV5-074's
+ * parent commit); nothing else references framer for reveals.
  */
-
-const EASE = [0.22, 1, 0.36, 1] as const
 
 export interface RevealProps {
   children: ReactNode
-  /** Rendered element. Anything motion() can wrap. */
+  /** Rendered element. */
   as?: ElementType
-  /** Seconds. Use for hand-tuned staircases; prefer `<RevealGroup>` for lists. */
+  /** Ignored since LV5-074 (motion off). */
   delay?: number
   duration?: number
-  /** Starting offset in px. y is the default direction. */
   y?: number
   x?: number
-  /** Starting scale (LV5-032: the About bands settle from 0.96 → 1). */
   scale?: number
-  /** Fraction of the element that must be visible before it fires. */
   amount?: number
-  /** Animate every time it scrolls into view instead of once. */
   repeat?: boolean
   className?: string
   style?: CSSProperties
   id?: string
 }
 
-export default function Reveal({
-  children,
-  as = 'div',
-  delay = 0,
-  duration = 0.7,
-  y = 18,
-  x = 0,
-  scale = 1,
-  amount = 0.2,
-  repeat = false,
-  className = '',
-  style,
-  id,
-}: RevealProps) {
-  const MotionTag = motion[as as 'div']
-  const transition: Transition = { duration, delay, ease: EASE }
-
-  return (
-    <MotionTag
-      id={id}
-      className={`jn-reveal ${className}`.trim()}
-      style={style}
-      initial={{ opacity: 0, y, x, scale }}
-      whileInView={{ opacity: 1, y: 0, x: 0, scale: 1 }}
-      viewport={{ once: !repeat, amount, margin: '0px 0px -8% 0px' }}
-      transition={transition}
-    >
-      {children}
-    </MotionTag>
-  )
+export default function Reveal({ children, as = 'div', className, style, id }: RevealProps) {
+  return createElement(as, { id, className: className || undefined, style }, children)
 }
 
-/**
- * Staggered container. Children animate through the same variants, so the
- * delays live in one place rather than as hand-numbered `.delay-3` classes.
- */
+/** Formerly a staggered container; now a plain wrapper. */
 export function RevealGroup({
   children,
-  stagger = 0.09,
-  delayChildren = 0,
-  amount = 0.2,
-  repeat = false,
-  className = '',
+  className,
   style,
 }: {
   children: ReactNode
@@ -95,30 +55,17 @@ export function RevealGroup({
   style?: CSSProperties
 }) {
   return (
-    <motion.div
-      className={className}
-      style={style}
-      initial="hidden"
-      whileInView="shown"
-      viewport={{ once: !repeat, amount, margin: '0px 0px -8% 0px' }}
-      variants={{
-        hidden: {},
-        shown: { transition: { staggerChildren: stagger, delayChildren } },
-      }}
-    >
+    <div className={className || undefined} style={style}>
       {children}
-    </motion.div>
+    </div>
   )
 }
 
-/** A child of `<RevealGroup>`. Timing comes from the parent. */
+/** A child of `<RevealGroup>`; renders in place. */
 export function RevealItem({
   children,
   as = 'div',
-  y = 16,
-  x = 0,
-  duration = 0.62,
-  className = '',
+  className,
   style,
 }: {
   children: ReactNode
@@ -129,30 +76,13 @@ export function RevealItem({
   className?: string
   style?: CSSProperties
 }) {
-  const MotionTag = motion[as as 'div']
-  return (
-    <MotionTag
-      className={`jn-reveal ${className}`.trim()}
-      style={style}
-      variants={{
-        hidden: { opacity: 0, y, x },
-        shown: { opacity: 1, y: 0, x: 0, transition: { duration, ease: EASE } },
-      }}
-    >
-      {children}
-    </MotionTag>
-  )
+  return createElement(as, { className: className || undefined, style }, children)
 }
 
-/**
- * A hairline that draws itself left-to-right as it enters view. Used above the
- * numbered rows in WhatWereBuilding and between the stat-band figures.
- */
+/** A hairline; it no longer draws itself in, it is simply there. */
 export function DrawLine({
   vertical = false,
-  delay = 0,
-  duration = 0.8,
-  className = '',
+  className,
   style,
 }: {
   vertical?: boolean
@@ -161,19 +91,12 @@ export function DrawLine({
   className?: string
   style?: CSSProperties
 }) {
+  void vertical
   return (
-    <motion.span
+    <span
       aria-hidden="true"
-      className={`jn-reveal ${className}`.trim()}
-      style={{
-        display: 'block',
-        transformOrigin: vertical ? 'top' : 'left',
-        ...style,
-      }}
-      initial={vertical ? { scaleY: 0 } : { scaleX: 0 }}
-      whileInView={vertical ? { scaleY: 1 } : { scaleX: 1 }}
-      viewport={{ once: true, amount: 0.4 }}
-      transition={{ duration, delay, ease: EASE }}
+      className={className || undefined}
+      style={{ display: 'block', ...style }}
     />
   )
 }

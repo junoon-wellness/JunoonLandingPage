@@ -77,8 +77,12 @@ export default function PricingCard() {
           <span className="pr-price-unit">/month</span>
         </div>
 
+        {/* LV5-074 / W2: the offer line no longer repeats "Your first month is
+            free." (the line printed just above the price already says it).
+            The remaining words are live main's (PR #8: no figure, "a founding
+            price, theirs for life"), unchanged. */}
         <p className="pr-offer-line">
-          Your first month is free. The first 100 members get a founding price, theirs for life.
+          The first 100 members get a founding price, theirs for life.
         </p>
 
         <ul className="pr-checklist">

@@ -220,7 +220,7 @@ export default function PricingStage({
               height="22"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="var(--jn-sage)"
+              stroke="var(--jn-accent)"
               strokeWidth={1.5}
               strokeLinecap="round"
               strokeLinejoin="round"

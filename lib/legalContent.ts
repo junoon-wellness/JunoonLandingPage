@@ -641,7 +641,9 @@ export const termsOfService: LegalDoc = {
 export const privacyPolicy: LegalDoc = {
   "title": "Privacy Policy",
   "subtitle": "Junoon Wellness LLC",
-  "updated": "Last updated: September 10, 2026",
+  // W10 (Kush, 19 Oct 2026: "Change it to the fix date"): the date of the LLC
+  // name fix, i.e. the day of this refresh. If it ships on a later day, move it.
+  "updated": "Last updated: October 19, 2026",
   "blocks": [
     {
       "type": "h2",

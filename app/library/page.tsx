@@ -1,22 +1,20 @@
 import type { Metadata } from 'next'
-import Toran from '@/components/brand/Toran'
 import SectionLabel from '@/components/brand/SectionLabel'
 import Link from 'next/link'
 import NavV2 from '@/components/waitlist/NavV2'
 import FooterV2 from '@/components/waitlist/FooterV2'
 import NewsletterJoin from '@/components/waitlist/NewsletterJoin'
-import Jaali from '@/components/brand/Jaali'
 import { getAllArticles } from '@/lib/library'
 import { normaliseSource } from '@/lib/constants'
 import { clean } from '@/lib/text'
 
-/**
- * LV5-022 SC5 / LV5-024: the panel behind /library's header. Moved here from
- * inside NewsletterJoin.tsx — `.v2-section` is `position: relative`, which
- * scoped the old call to that local box instead of the page wrapper. See the
- * "ONE GEOMETRY" note atop components/brand/Jaali.tsx.
+/*
+ * LV5-074 (website refresh): the lattice panel behind the header and the
+ * toran divider are gone ("Jaali: Remove it", "Retire all four", 27 Sep).
+ * The 20 boxed cards became a clean list with hairlines, and the "ARTICLE"
+ * label on every card went (every item here is an article). The newsletter
+ * block's MARKUP changed; its form and the signup route did not.
  */
-const LIBRARY_JAALI = true
 
 /**
  * LV5-017 — /library. Newsletter block at top, then the 20 real articles
@@ -46,30 +44,18 @@ export default function LibraryPage() {
 
   return (
     <div id="top">
-      {LIBRARY_JAALI && (
-        <Jaali
-          variant="panel"
-          vignetteColor="#2C2118"
-          zIndex={-1}
-          maskPosition="50% 260px"
-          maskSize="1100px 620px"
-        />
-      )}
       <NavV2 />
 
       <NewsletterJoin source={source} firstSection />
 
-      {/* Kush, 2026-08-23: toran divider between the newsletter and the articles */}
-      <Toran />
       <section className="lb-grid-section" aria-label="Articles">
         <SectionLabel className="lb-grid-heading">Articles</SectionLabel>
         <div className="lb-grid">
           {articles.map(a => (
             <Link key={a.slug} href={`/library/${a.slug}`} className="v2-link lb-card">
-              <span className="lb-card-eyebrow">{a.type}</span>
               <span className="lb-card-title">{a.title}</span>
               <span className="lb-card-desc">{a.description}</span>
-              <span className="lb-card-meta jn-mono">{a.minutes} min read</span>
+              <span className="lb-card-meta">{a.minutes} min read</span>
             </Link>
           ))}
         </div>

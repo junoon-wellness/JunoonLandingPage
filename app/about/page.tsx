@@ -4,9 +4,7 @@ import NavV2 from '@/components/waitlist/NavV2'
 import FooterV2 from '@/components/waitlist/FooterV2'
 import ContactForm from '@/components/cta/ContactForm'
 import JharokhaFrame from '@/components/brand/JharokhaFrame'
-import Jaali from '@/components/brand/Jaali'
 import Reveal from '@/components/motion/Reveal'
-import Toran from '@/components/brand/Toran'
 import SectionLabel from '@/components/brand/SectionLabel'
 import BioDisclosure from '@/components/about/BioDisclosure'
 /* LV5-032 (Kush: "a better animation/transition as the user scrolls"): each
@@ -28,12 +26,12 @@ import { clean } from '@/lib/text'
 /** Instructor headshots sit inside the jharokha arch instead of a 4:5 box. */
 const INSTRUCTOR_ARCH = true
 
-/**
- * LV5-022 SC5 / LV5-024: the panel behind the instructor grid. Moved here
- * from inside the "Meet our instructors" section — see the note there and
- * the "ONE GEOMETRY" note atop components/brand/Jaali.tsx.
+/*
+ * LV5-074 (website refresh, phase 5): the lattice panel behind the
+ * instructors and both toran dividers are gone ("Jaali: Remove it", "Retire
+ * all four", Kush 27 Sep). The instructor ARCHES stay: that is where Kush
+ * ruled the arch belongs. The tagline box is a plain line now (globals.css).
  */
-const ABOUT_JAALI = true
 
 
 /*
@@ -276,9 +274,6 @@ function PeopleGrid({
 export default function AboutPage() {
   return (
     <div id="top">
-      {ABOUT_JAALI && (
-        <Jaali variant="panel" zIndex={-1} maskPosition="50% 1900px" maskSize="1100px 720px" />
-      )}
       <NavV2 />
 
       {/*
@@ -293,9 +288,11 @@ export default function AboutPage() {
         {/* Kush, 2026-08-23: "remove about junoon smaller golden text at the top" */}
         {/* Kush, 2026-08-24: new headline wording, both phrases in the
             accent, sized to sit as ONE line across the top on desktop. */}
-        <h1 className="ab-headline">
-          Reclaiming <em>Ancient Indian practices</em> for the <em>Modern Life</em>.
-        </h1>
+        {/* LV5-074: sentence case, no gold italics (scope phase 5; the
+            27 Sep scope flagged "for the Modern Life" as Title Case
+            mid-sentence). Same words otherwise. The scope's suggested
+            "for modern life" (dropping "the") is left for Arjav. */}
+        <h1 className="ab-headline">Reclaiming ancient Indian practices for the modern life.</h1>
         <p className="ab-subline">{SUBLINE}</p>
       </header>
 
@@ -386,8 +383,6 @@ export default function AboutPage() {
         </Reveal>
       </section>
 
-      {/* Kush, 2026-08-23: toran divider between the story and the people */}
-      <Toran />
       <section className="ab-people-section" aria-label="Our team">
         <SectionLabel align="center" className="ab-people-heading">Our team</SectionLabel>
         <PeopleGrid people={TEAM} className="ab-team-grid" />
@@ -405,8 +400,6 @@ export default function AboutPage() {
         <PeopleGrid people={INSTRUCTORS} arch={INSTRUCTOR_ARCH} className="ab-instructor-grid" />
       </section>
 
-      {/* Kush, 2026-08-23: toran divider between the instructors and the contact form */}
-      <Toran />
       <section className="ab-contact-section" aria-label="Contact">
         <div className="ab-contact-inner">
           <div className="ab-contact-heading">
