@@ -856,9 +856,9 @@ export const privacyPolicy: LegalDoc = {
     {
       "type": "ul",
       "items": [
-        "You can see it. The \"What Junoon knows\" page in the App shows what the coach has learned, grouped by where it came from (what you told us, what we noticed, your nightly reflections, and what is true for you right now). You can change your own answers there and delete anything else.",
-        "You can ask the coach to forget. Telling the coach to forget something, or deleting it on the \"What Junoon knows\" page, removes it from what the coach remembers and stops the coach learning it again from your conversation. The message you sent stays in your conversation history.",
-        "What we choose not to keep. We do not keep details of sensitive life events you mention in conversation (for example, a family member in hospital); the coach responds in the moment and does not store them. We do not ask about your family or relationships; if you mention practical facts about your practice (for example, someone who exercises with you), the coach may remember them."
+        "You can see it. The \"What Junoon knows\" page in the App shows the main things the coach has learned, grouped by where it came from (what you told us, what we noticed, your nightly reflections, and what is true for you right now). You can change your own answers there and delete anything else.",
+        "You can ask the coach to forget. Saying \"forget that\" straight after telling the coach something, or deleting it on the \"What Junoon knows\" page, stops the coach using it and stops it learning it again from your conversation. A note the coach already wrote about an earlier day may still mention it. The message you sent stays in your conversation history.",
+        "What we choose not to keep. We screen details of sensitive life events you mention in conversation (for example, a family member in hospital) out of what the coach remembers; the coach responds in the moment. The message itself stays in your conversation history. We do not ask about your family or relationships; if you mention practical facts about your practice (for example, someone who exercises with you), the coach may remember them."
       ]
     },
     {
@@ -1050,9 +1050,9 @@ export const privacyPolicy: LegalDoc = {
         "Your coach messages are processed by Anthropic's infrastructure in the United States",
         "Anthropic acts as a data processor on our behalf, bound by a data processing agreement",
         "Anthropic's use of data sent via API is governed by their API usage policy, which prohibits using API data to train models without consent",
-        "We do not share your name or directly identifying information with Anthropic; messages are associated with a random user identifier, not your name",
+        "We do not send your email or account details to Anthropic with your messages, and we do not attach an account identifier. Your first name can appear in the conversation we send, for example in a line where the coach greets you by name, and anything you type goes as you typed it.",
         "You should not share sensitive personal information (financial details, government ID numbers, passwords) in coach messages",
-        "Some decisions in the App, such as when to send a reminder or which practice to suggest, are made by fixed rules rather than the AI model. The AI writes the words.",
+        "Some decisions in the App, such as when to send a reminder and which practices are safe for you, are made by fixed rules rather than the AI model. The AI may choose from those practices and writes many of the words.",
         "If you or a message you send suggests someone may be at risk of harm, the App may show crisis helplines and set safety guidance instead of an AI-written reply.",
         "If a message in the chat or in your nightly reflection suggests you may be at risk of harm, we keep that message and a safety note, and a member of our team may be told so that someone can respond.",
         "Some of the coach's lines are spoken aloud. The sound is made by an outside text-to-speech service. We send it only the words of the line to be spoken, not your messages."
@@ -1118,11 +1118,11 @@ export const privacyPolicy: LegalDoc = {
       "type": "ul",
       "items": [
         "Account data, coach conversation history, and practice activity: kept while your account is active, then deleted or anonymised after your account is closed, unless we need to retain it longer to meet legal obligations, resolve disputes, or enforce our agreements.",
-        "What the coach remembers (Section 3.4): kept while your account is active, until you delete it on the \"What Junoon knows\" page or ask the coach to forget it.",
-        "Safety flags (Section 3.5): kept while your account is active so your practice stays safe, until you delete them. \"Going gentle\" notes end on their own after a few days.",
-        "Notes the coach writes about each day that has ended (Section 3.4): kept 30 days, then deleted.",
+        "What the coach remembers (Section 3.4): kept while your account is active. When you delete it on the \"What Junoon knows\" page or ask the coach to forget it, the coach stops using it. We keep a private record of it, used only so it is not learned again, until you delete your account.",
+        "Safety flags (Section 3.5): kept while your account is active so your practice stays safe. When you delete one, it stops being used. \"Going gentle\" notes end on their own after a few days.",
+        "Notes the coach writes about each day that has ended (Section 3.4): kept while your account is active and deleted with your account. The coach reads only the most recent few.",
         "Calendar information (Section 3.6): not kept. It is used to answer you and then it is gone.",
-        "Nightly reflection notes (Section 3.7): the coach uses them for up to 14 days (notes about tomorrow for 2 days). The notes you sent stay with your account until you delete them or your account. The rest of what you said or typed is not kept.",
+        "Nightly reflection notes (Section 3.7): the coach uses them for up to 14 days (notes about tomorrow for 2 days). The notes you sent stay with your account until you delete your account; you can delete tonight's from the reflection screen. The rest of what you said or typed is not kept, except a message kept for safety (Section 5).",
         "Talk-to-type technical notes (Section 3.7): kept while your account is active. They hold no audio and no words.",
         "Health data summaries (Section 3.3): daily summaries are kept while your account is active and deleted when you delete your account.",
         "Server logs: kept for a limited period for security and debugging, then deleted or anonymised.",
@@ -1258,11 +1258,15 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "When you delete your account we delete your profile, your coach conversation, what the coach remembers, your reflection notes, your Apple Health summaries and your practice activity. A few technical records (for example, video playback attempts, subscription attempts, Apple's subscription notices, coach usage counts, and moments when the coach had no suitable practice to suggest) are kept with your member ID removed, so they no longer point to you."
+      "text": "When you delete your account we delete your profile, your coach conversation, what the coach remembers, your reflection notes, your Apple Health summaries and your practice activity. A few technical records are kept without your name or email (for example, video playback attempts, subscription attempts, Apple's subscription notices, coach usage counts, moments when the coach had no suitable practice to suggest, practice milestones and one-time internal safety copies of scores and saved items). Some of these still carry a random internal ID or Apple's purchase reference, and we no longer hold an account that ID belongs to."
     },
     {
       "type": "p",
       "text": "We will process deletion requests without undue delay and within the timeframes required by applicable law. Residual copies may persist in backups until they are removed on our routine backup-rotation cycle, and we may retain information required by law (such as transaction records) for the period required by applicable regulation."
+    },
+    {
+      "type": "p",
+      "text": "If you joined our email list, your name and email stay on it until you unsubscribe; deleting your account does not remove them yet."
     },
     {
       "type": "h2",
