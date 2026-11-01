@@ -20,7 +20,7 @@ export type LegalDoc = {
 export const termsOfService: LegalDoc = {
   "title": "Terms of Service",
   "subtitle": "Junoon Wellness LLC",
-  "updated": "Last updated: June 2, 2026",
+  "updated": "Last updated: November 1, 2026",
   "blocks": [
     {
       "type": "h2",
@@ -44,7 +44,7 @@ export const termsOfService: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "You must be at least 13 years of age to use the App. If you are under 18, you represent that a parent or legal guardian has reviewed and agreed to these Terms on your behalf."
+      "text": "You must be 18 or older to use Junoon. The App asks for your age when you set up your account. Your age is what you tell us; we do not check ID. If you are under 18, you may not create an account or use the App, and if we learn that an account belongs to someone under 18, we will delete it (see our Privacy Policy, Section 14)."
     },
     {
       "type": "p",
@@ -53,7 +53,7 @@ export const termsOfService: LegalDoc = {
     {
       "type": "ul",
       "items": [
-        "You are at least 13 years of age",
+        "You are 18 or older",
         "You have the legal capacity to enter into a binding agreement",
         "Your use of the App does not violate any applicable law or regulation",
         "You are not located in a country subject to a US government embargo or designated as a \"terrorist supporting\" country",
@@ -641,8 +641,28 @@ export const termsOfService: LegalDoc = {
 export const privacyPolicy: LegalDoc = {
   "title": "Privacy Policy",
   "subtitle": "Junoon Wellness LLC",
-  "updated": "Last updated: September 10, 2026",
+  "updated": "Last updated: November 1, 2026",
   "blocks": [
+    {
+      "type": "h2",
+      "text": "What changed on November 1, 2026"
+    },
+    {
+      "type": "p",
+      "text": "We updated this policy for the new version of Junoon. In short:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Junoon is for adults. You must be 18 or older to use it (Sections 2 and 14).",
+        "Your calendar. If you allow it, the titles and times of your next seven days go to your coach with each message you send, so it can plan around your day. We do not save them (Section 3.6).",
+        "Apple Health. A short summary goes to our AI provider to shape your plan. It is never sold or used for ads. We now say exactly what we keep and for how long (Sections 3.3 and 7).",
+        "What the coach remembers, and how you can see, change or delete it (Section 3.4). How we handle health and safety information you share (Section 3.5).",
+        "Talking instead of typing, and the nightly reflection. Our servers never receive your voice. From the nightly reflection we keep only the short notes you send (Section 3.7).",
+        "Ad measurement. The App sends nothing to Meta unless you tap Allow when it asks about tracking (Section 3.8).",
+        "How we tell you about changes like this one (Section 16)."
+      ]
+    },
     {
       "type": "h2",
       "text": "1. Who We Are"
@@ -673,7 +693,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "The App is not directed to children under the age of 13 (or 16 in the European Economic Area). If you are under this age, you may not use the App. See Section 14 (Children's Privacy) for details."
+      "text": "Junoon is for adults. You must be 18 or older to use Junoon. See Section 14 (Age Limit and Children's Privacy) for details."
     },
     {
       "type": "h2",
@@ -709,7 +729,7 @@ export const privacyPolicy: LegalDoc = {
       "type": "ul",
       "items": [
         "Gender",
-        "Age band",
+        "Age",
         "Height and weight (optional)",
         "Wellness goals and focus areas (habits, movement, mental health)",
         "Stress baseline",
@@ -728,9 +748,11 @@ export const privacyPolicy: LegalDoc = {
     {
       "type": "ul",
       "items": [
-        "Messages you send to the AI coach",
-        "Your responses during weekly check-ins",
-        "Your reactions to coach-proposed content (accepted, swapped, removed)"
+        "Messages you send to the coach, and the coach's replies",
+        "Your answers to the short questions the coach asks to get to know you (for example, your usual times, what helps you, how you'd like Junoon to show up)",
+        "Your feedback after a session (how helpful it was and how it felt), and whether you practised",
+        "Your reactions to what the coach suggests (accepted, changed, skipped)",
+        "The short notes you send from your nightly reflection (Section 3.7)"
       ]
     },
     {
@@ -763,6 +785,16 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
+      "text": "Subscription records:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Your plan, whether it is active, and Apple's transaction numbers. Payments are handled by Apple, not by us."
+      ]
+    },
+    {
+      "type": "p",
       "text": "Technical and device information:"
     },
     {
@@ -784,13 +816,15 @@ export const privacyPolicy: LegalDoc = {
     {
       "type": "ul",
       "items": [
-        "Step count - to understand your baseline daily activity",
-        "Resting heart rate - to understand cardiovascular recovery",
-        "Heart rate variability (HRV) - to understand stress and recovery signals",
-        "Exercise time - to understand your existing movement habits",
-        "Sleep analysis - to understand your rest and recovery",
-        "Mindful session data - to understand your existing mindfulness practice",
-        "Workout history - to contextualise your overall fitness activity"
+        "Step count: to understand your baseline daily activity",
+        "Resting heart rate: to understand cardiovascular recovery",
+        "Heart rate variability (HRV): to understand stress and recovery signals",
+        "Exercise time: to understand your existing movement habits",
+        "Active energy: to understand how much you move in a day",
+        "Dietary energy: to understand how much energy you take in from food, for nutrition suggestions",
+        "Sleep analysis: to understand your rest and recovery",
+        "Mindful session data: to understand your existing mindfulness practice",
+        "Workout history: to contextualise your overall fitness activity"
       ]
     },
     {
@@ -800,20 +834,106 @@ export const privacyPolicy: LegalDoc = {
     {
       "type": "ul",
       "items": [
-        "Workout records - to log completed Junoon yoga and movement sessions",
-        "Mindful session records - to log completed Junoon meditation and breathwork sessions"
+        "Workout records: to log completed Junoon yoga and movement sessions",
+        "Mindful session records: to log completed Junoon meditation and breathwork sessions"
       ]
     },
     {
       "type": "callout",
       "paras": [
-        "Important: Health data read from Apple Health is used solely to inform and personalise your AI coaching experience within the App. It is transmitted to our servers only in anonymised, aggregated summary form to generate coaching responses. We do not store raw HealthKit records on our servers, do not share your health data with third-party advertisers, and do not use health data for any commercial purpose beyond delivering your coaching service.",
+        "Important: Health data read from Apple Health is used only to personalise your coaching. A short summary (for example, hours slept last night and steps today) goes to our AI provider, Anthropic, so the coach can shape your plan and answer you (Section 5). We also store daily summaries linked to your account (hours slept, steps, number and minutes of workouts, resting heart rate, heart rate variability, mindful minutes, active energy and dietary energy), not the raw records from Apple Health, so the coach can notice patterns such as a run of short nights. We keep these daily summaries while your account is active and delete them when you delete your account. We never sell your health data, never use it for advertising, and never send it to Meta.",
         "Granting or denying health permissions is voluntary. The App functions without health data access; granting access improves the personalisation of your coaching plan."
       ]
     },
     {
       "type": "h3",
-      "text": "3.4 Cookies, Analytics and Tracking on Our Website"
+      "text": "3.4 What Junoon remembers about you"
+    },
+    {
+      "type": "p",
+      "text": "To personalise your practice, the coach keeps a picture of you built from what you tell it and what you do in the App: for example, the times that suit you, the practices that have helped, your sleep and energy patterns, and your routines."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "You can see it. The \"What Junoon knows\" page in the App shows the main things the coach has learned, grouped by where it came from (what you told us, what we noticed, your nightly reflections, and what is true for you right now). You can change your own answers there and delete anything else.",
+        "You can ask the coach to forget. Saying \"forget that\" straight after telling the coach something, or deleting it on the \"What Junoon knows\" page, stops the coach using it and stops it learning it again from your conversation. A note the coach already wrote about an earlier day may still mention it. The message you sent stays in your conversation history.",
+        "What we choose not to keep. We screen details of sensitive life events you mention in conversation (for example, a family member in hospital) out of what the coach remembers; the coach responds in the moment. The message itself stays in your conversation history. We do not ask about your family or relationships; if you mention practical facts about your practice (for example, someone who exercises with you), the coach may remember them."
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "3.5 Health and safety information you share"
+    },
+    {
+      "type": "p",
+      "text": "If you tell the coach about a health matter, we keep only what is needed to keep your practice safe:"
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Never medication. We do not store details of medication you mention.",
+        "Safety flags, only with your yes. For conditions that change which practices are safe (for example, pregnancy, high blood pressure or a recent injury), we save a short safety flag (the condition or body area, a level, and the date) only after you confirm it with one tap. The flag is used to keep unsuitable practices out of your plan. You can see and delete it on the \"What Junoon knows\" page.",
+        "\"Going gentle\" notes. If you tell us something hurts, the App may go gentle for a few days and tells you so. This note holds no medical detail, ends on its own, and you can delete it.",
+        "If you are under a doctor's care, we may note that fact so the coach can defer to your doctor, but not the details."
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "3.6 Your calendar (with your permission)"
+    },
+    {
+      "type": "p",
+      "text": "If you allow calendar access, and say yes when the App asks whether your coach may read your week, the App reads your calendar on your phone to plan practice around your day."
+    },
+    {
+      "type": "p",
+      "text": "Each time you send your coach a message, and when your weekly plan is made, the App sends the titles, dates, start and end times, whether each event lasts all day, and whether you are busy or free, for your events in the next seven days. Titles are shortened to 60 characters. Our AI provider, Anthropic, receives this with your message so the coach can answer you (Section 5). We do not save your calendar information. We do not send attendees, notes or locations."
+    },
+    {
+      "type": "p",
+      "text": "If the coach mentions one of your events in a reply, that reply is kept in your conversation like any other message."
+    },
+    {
+      "type": "p",
+      "text": "Junoon can also add the practices and habits you choose to your calendar. Events that Junoon added are left out of what we send."
+    },
+    {
+      "type": "p",
+      "text": "You can turn calendar access off at any time in your device Settings. The App then stops sending calendar information."
+    },
+    {
+      "type": "h3",
+      "text": "3.7 Talking instead of typing, and the nightly reflection"
+    },
+    {
+      "type": "p",
+      "text": "Talking instead of typing. You can answer some questions out loud, for example in your check-in and your nightly reflection. Your speech is turned into text on your phone where your phone can do that. Where it cannot, Apple's speech service does it, under Apple's own privacy policy. Either way, the words appear as text you can edit before you send them. Junoon's servers receive only the text you send, never the audio, and we do not keep recordings. Each time you use it we keep a small technical note: whether your phone or Apple's service listened, your phone model, your iOS version and your language setting. It holds no audio and no words."
+    },
+    {
+      "type": "p",
+      "text": "The nightly reflection. In the evening you can talk or type about your day. What you say or type is sent to our servers and to our AI provider, Anthropic, which turns it into a few short notes. You can edit or delete the notes before you send them. We keep only the notes you send, never your voice and never the rest of what you said. The notes appear on the \"What Junoon knows\" page (Section 3.4), where you can delete them. The one exception is safety: see Section 5."
+    },
+    {
+      "type": "h3",
+      "text": "3.8 Measuring which ads bring people to the App"
+    },
+    {
+      "type": "p",
+      "text": "The App includes a tool from Meta Platforms, Inc. that helps us measure which of our ads on Facebook and Instagram bring people to Junoon. Junoon shows no ads inside the App."
+    },
+    {
+      "type": "ul",
+      "items": [
+        "Nothing goes to Meta unless you allow it. After you sign up, the App asks whether you allow tracking. Until you tap Allow, the Meta tool is not started and the App sends Meta nothing. If you choose Ask App Not to Track, the App sends Meta nothing.",
+        "If you tap Allow, the App tells Meta that you created an account, and the Meta tool reports its own standard events, such as app opens and the start of a trial or a subscription. Meta also receives your device's advertising ID, so it can match these events to an ad.",
+        "We never send Meta your Apple Health data, your calendar, your coach messages or your reflection notes.",
+        "You can change your choice at any time in iOS Settings, Privacy and Security, Tracking."
+      ]
+    },
+    {
+      "type": "h3",
+      "text": "3.9 Cookies, Analytics and Tracking on Our Website"
     },
     {
       "type": "p",
@@ -855,12 +975,24 @@ export const privacyPolicy: LegalDoc = {
           "Performance of contract"
         ],
         [
-          "Delivering the AI coaching service, weekly plans, and content recommendations",
+          "Delivering the AI coaching service, your daily plan, and content recommendations",
           "Performance of contract"
         ],
         [
           "Personalising your practice plan based on your wellness profile and health data",
           "Performance of contract / Legitimate interests"
+        ],
+        [
+          "Remembering what helps you and planning around your schedule (Sections 3.4 and 3.6)",
+          "Performance of contract / Consent (calendar, Apple Health)"
+        ],
+        [
+          "Keeping unsuitable practices out of your plan when you share a health condition (Section 3.5)",
+          "Explicit consent"
+        ],
+        [
+          "Turning your speech into text, and the nightly reflection (Section 3.7)",
+          "Performance of contract"
         ],
         [
           "Processing subscription payments through Apple's App Store",
@@ -875,8 +1007,16 @@ export const privacyPolicy: LegalDoc = {
           "Legitimate interests"
         ],
         [
+          "Responding to safety concerns, including showing crisis helplines",
+          "Vital interests / Legitimate interests"
+        ],
+        [
           "Improving the App and fixing bugs",
           "Legitimate interests"
+        ],
+        [
+          "Measuring which ads bring people to the App, only if you allow tracking (Section 3.8)",
+          "Consent"
         ],
         [
           "Complying with legal obligations",
@@ -890,7 +1030,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "We do not sell your personal information for money, and we never use your health information - including Apple Health data and the content of your coach conversations - for advertising or share it with advertising partners. We do use the Meta Pixel on our website to measure our advertising and to reach people who may be interested in Junoon, as described in Section 3.4. Where the law gives you an opt-out or consent choice over that use, we will provide it."
+      "text": "We do not sell your personal information for money, and we never use your health information (including Apple Health data and the content of your coach conversations) for advertising or share it with advertising partners. We do use the Meta Pixel on our website, and a Meta tool in the App if you allow tracking, to measure our advertising, as described in Sections 3.8 and 3.9. Where the law gives you an opt-out or consent choice over that use, we will provide it."
     },
     {
       "type": "h2",
@@ -898,7 +1038,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "The Junoon coach is powered by a large language model (LLM) provided by Anthropic, PBC. When you send a message to your coach, that message - along with relevant context from your wellness profile and health summary - is transmitted to Anthropic's API to generate a coaching response."
+      "text": "The Junoon coach is powered by a large language model (LLM) provided by Anthropic, PBC. When you send a message to your coach, that message, along with relevant context from your wellness profile, your health summary and, if you allow it, your calendar for the next seven days (Section 3.6), is transmitted to Anthropic's API to generate a coaching response. The same goes for what you say or type in the nightly reflection (Section 3.7)."
     },
     {
       "type": "p",
@@ -910,8 +1050,12 @@ export const privacyPolicy: LegalDoc = {
         "Your coach messages are processed by Anthropic's infrastructure in the United States",
         "Anthropic acts as a data processor on our behalf, bound by a data processing agreement",
         "Anthropic's use of data sent via API is governed by their API usage policy, which prohibits using API data to train models without consent",
-        "We do not share your name or directly identifying information with Anthropic; messages are associated with an anonymised user identifier",
-        "You should not share sensitive personal information (financial details, government ID numbers, passwords) in coach messages"
+        "We do not send your email or account details to Anthropic with your messages, and we do not attach an account identifier. Your first name can appear in the conversation we send, for example in a line where the coach greets you by name, and anything you type goes as you typed it.",
+        "You should not share sensitive personal information (financial details, government ID numbers, passwords) in coach messages",
+        "Some decisions in the App, such as when to send a reminder and which practices are safe for you, are made by fixed rules rather than the AI model. The AI may choose from those practices and writes many of the words.",
+        "If you or a message you send suggests someone may be at risk of harm, the App may show crisis helplines and set safety guidance instead of an AI-written reply.",
+        "If a message in the chat or in your nightly reflection suggests you may be at risk of harm, we keep that message and a safety note, and a member of our team may be told so that someone can respond.",
+        "Some of the coach's lines are spoken aloud. The sound is made by an outside text-to-speech service. We send it only the words of the line to be spoken, not your messages."
       ]
     },
     {
@@ -940,6 +1084,18 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
+      "text": "AI provider (Anthropic, PBC): receives your coach messages and the context described in Section 5, including your health summary and, if you allow it, your calendar for the next seven days, to write the coach's replies. Anthropic acts as a data processor on our behalf."
+    },
+    {
+      "type": "p",
+      "text": "Text-to-speech service: receives the words of the coach's spoken lines so it can turn them into sound (Section 5)."
+    },
+    {
+      "type": "p",
+      "text": "Meta Platforms, Inc.: receives website-visit information from the Meta Pixel (Section 3.9) and, only if you tap Allow when the App asks about tracking, app events and your advertising ID (Section 3.8)."
+    },
+    {
+      "type": "p",
       "text": "Legal requirements: We may disclose personal information if required to do so by law, court order, or governmental authority, or if we believe in good faith that such disclosure is necessary to protect the rights, property, or safety of Junoon, our users, or the public."
     },
     {
@@ -948,7 +1104,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "We do not sell your personal information for money. We do share limited website-visit information with Meta Platforms, Inc. for advertising purposes, as described in Section 3.4 - this never includes your health data or the content of your coach conversations. If our sharing practices change in any other way, we will update this Policy and notify you in advance."
+      "text": "We do not sell your personal information for money. We do share limited information with Meta Platforms, Inc. for advertising measurement, as described in Sections 3.8 and 3.9. This never includes your health data, your calendar, the content of your coach conversations or your reflection notes. If our sharing practices change in any other way, we will update this Policy and notify you in advance."
     },
     {
       "type": "h2",
@@ -962,7 +1118,13 @@ export const privacyPolicy: LegalDoc = {
       "type": "ul",
       "items": [
         "Account data, coach conversation history, and practice activity: kept while your account is active, then deleted or anonymised after your account is closed, unless we need to retain it longer to meet legal obligations, resolve disputes, or enforce our agreements.",
-        "Health data summaries: kept only as long as needed to generate your coaching responses, and not beyond what is necessary to deliver the Services.",
+        "What the coach remembers (Section 3.4): kept while your account is active. When you delete it on the \"What Junoon knows\" page or ask the coach to forget it, the coach stops using it. We keep a private record of it, used only so it is not learned again, until you delete your account.",
+        "Safety flags (Section 3.5): kept while your account is active so your practice stays safe. When you delete one, it stops being used. \"Going gentle\" notes end on their own after a few days.",
+        "Notes the coach writes about each day that has ended (Section 3.4): kept while your account is active and deleted with your account. The coach reads only the most recent few.",
+        "Calendar information (Section 3.6): not kept. It is used to answer you and then it is gone.",
+        "Nightly reflection notes (Section 3.7): the coach uses them for up to 14 days (notes about tomorrow for 2 days). The notes you sent stay with your account until you delete your account; you can delete tonight's from the reflection screen. The rest of what you said or typed is not kept, except a message kept for safety (Section 5).",
+        "Talk-to-type technical notes (Section 3.7): kept while your account is active. They hold no audio and no words.",
+        "Health data summaries (Section 3.3): daily summaries are kept while your account is active and deleted when you delete your account.",
         "Server logs: kept for a limited period for security and debugging, then deleted or anonymised.",
         "Backups: residual copies in backups are removed on our routine backup-rotation cycle."
       ]
@@ -1014,7 +1176,7 @@ export const privacyPolicy: LegalDoc = {
         "Access: Request a copy of the personal information we hold about you, and review your account and wellness profile at any time in the App.",
         "Correction: Update or correct inaccurate or incomplete information, including your name, timezone, and wellness profile, through your account settings or by contacting us.",
         "Deletion: Delete your account and associated personal information at any time via Settings > Account > Delete Account, as described in Section 10.",
-        "Withdraw consent: Where processing is based on your consent, withdraw it at any time, for example by revoking Apple Health access in your device settings or turning off push notifications, without affecting the lawfulness of processing before withdrawal.",
+        "Withdraw consent: Where processing is based on your consent, withdraw it at any time, for example by revoking Apple Health, calendar or tracking access in your device settings or turning off push notifications, without affecting the lawfulness of processing before withdrawal.",
         "Object or restrict: Ask us to stop or limit certain processing of your information by contacting us.",
         "Complaint: Raise a concern about how we handle your information by contacting us; you may also have the right to complain to your local data protection or consumer protection authority."
       ]
@@ -1059,14 +1221,14 @@ export const privacyPolicy: LegalDoc = {
         "Right to know and access (Cal. Civ. Code §§ 1798.100, 1798.110, 1798.115): request that we disclose the categories and specific pieces of personal information we have collected about you, the sources, the business or commercial purposes for collecting it, and the categories of third parties with whom we share it.",
         "Right to delete (Cal. Civ. Code § 1798.105): request deletion of personal information we collected from you, subject to certain exceptions.",
         "Right to correct (Cal. Civ. Code § 1798.106): request that we correct inaccurate personal information we maintain about you.",
-        "Right to opt out of sale or sharing (Cal. Civ. Code § 1798.120): we do not currently sell or share your personal information for cross-context behavioral advertising. If we begin to, we will provide a \"Do Not Sell or Share My Personal Information\" opt-out and honor your request; you retain this right at all times.",
+        "Right to opt out of sale or sharing (Cal. Civ. Code § 1798.120): we do not sell your personal information for money. We share limited information with Meta to measure our advertising: website visits through the Meta Pixel and, only if you tap Allow when the App asks about tracking, app events and your advertising ID. California law may treat that as \"sharing\" for cross-context behavioral advertising. You can opt out by choosing Ask App Not to Track, or by turning off tracking in iOS Settings, Privacy and Security, Tracking, and by blocking cookies in your browser. You can also write to admin@junoonwellness.com and we will honor your request.",
         "Right to limit use of sensitive personal information (Cal. Civ. Code § 1798.121): direct us to limit the use of your sensitive personal information to what is necessary to provide the Services. We use your health and fitness data only to deliver and personalise your coaching, and not for any other purpose.",
         "Right to non-discrimination (Cal. Civ. Code § 1798.125): we will not discriminate against you for exercising any of your CCPA rights."
       ]
     },
     {
       "type": "p",
-      "text": "Categories of personal information collected under CCPA: Identifiers (name, email, phone); personal information (account data, wellness profile); sensitive personal information (health and fitness data with your consent); internet/electronic network activity (app usage data); inferences drawn to create a wellness profile."
+      "text": "Categories of personal information collected under CCPA: Identifiers (name, email, phone, and your device advertising ID only if you allow tracking); personal information (account data, wellness profile); commercial information (your subscription plan and status); sensitive personal information (health and fitness data with your consent); internet/electronic network activity (app usage data); inferences drawn to create a wellness profile."
     },
     {
       "type": "p",
@@ -1096,7 +1258,15 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
+      "text": "When you delete your account we delete your profile, your coach conversation, what the coach remembers, your reflection notes, your Apple Health summaries and your practice activity. A few technical records are kept without your name or email (for example, video playback attempts, subscription attempts, Apple's subscription notices, coach usage counts, moments when the coach had no suitable practice to suggest, practice milestones and one-time internal safety copies of scores and saved items). Some of these still carry a random internal ID or Apple's purchase reference, and we no longer hold an account that ID belongs to."
+    },
+    {
+      "type": "p",
       "text": "We will process deletion requests without undue delay and within the timeframes required by applicable law. Residual copies may persist in backups until they are removed on our routine backup-rotation cycle, and we may retain information required by law (such as transaction records) for the period required by applicable regulation."
+    },
+    {
+      "type": "p",
+      "text": "If you joined our email list, your name and email stay on it until you unsubscribe; deleting your account does not remove them yet."
     },
     {
       "type": "h2",
@@ -1132,11 +1302,15 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "h2",
-      "text": "14. Children's Privacy"
+      "text": "14. Age Limit and Children's Privacy"
     },
     {
       "type": "p",
-      "text": "The App is not directed to individuals under the age of 13 (or 16 in the EEA). We do not knowingly collect personal information from children under these ages. If you are a parent or guardian and believe your child has provided us with personal information, please contact us at admin@junoonwellness.com and we will delete that information promptly."
+      "text": "You must be 18 or older to use Junoon. The App asks for your age when you set up your account. If you enter an age under 18, the App stops the sign-up and deletes the account, and we keep no personal details. If we learn that an account belongs to someone under 18, we delete it."
+    },
+    {
+      "type": "p",
+      "text": "We do not knowingly collect personal information from anyone under 18. If you are a parent or guardian and believe your child has an account or has given us information, please contact us at admin@junoonwellness.com and we will delete it promptly."
     },
     {
       "type": "h2",
@@ -1147,7 +1321,7 @@ export const privacyPolicy: LegalDoc = {
       "paras": [
         "Junoon is a wellness and lifestyle application. It is not a medical device, is not intended to diagnose, treat, cure, or prevent any disease or medical condition, and does not constitute medical advice. The AI coaching content is for general informational and wellness purposes only.",
         "The health data we read from Apple Health is used to personalise wellness recommendations - not to make medical assessments. Nothing in the App should be construed as a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.",
-        "If you have a serious medical condition, physical limitation, or are pregnant or postpartum, consult a qualified healthcare professional before beginning any exercise or wellness programme."
+        "If you have a serious medical condition, physical limitation, or are pregnant or postpartum, consult a qualified healthcare professional before beginning any exercise or wellness programme. The coach will never advise on medication or a medical decision, and will always defer to your doctor."
       ]
     },
     {
@@ -1156,7 +1330,11 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "We may update this Privacy Policy from time to time. If we make material changes, we will notify you by posting a prominent notice in the App and, where required by law, by sending you an email notification at least 7 days before the changes take effect. The \"Last updated\" date at the top of this Policy reflects the most recent revision. Your continued use of the App after the effective date of a revised Policy constitutes your acceptance of the changes."
+      "text": "We may update this Privacy Policy from time to time. When we make a material change, we will put a short, dated \"What changed\" note at the top of this page, update the \"Last updated\" date, and email the members who have an account. We do this when the change is published, and before it takes effect where we can. Where the law requires a longer notice period, we will give it. We may also tell you in the App."
+    },
+    {
+      "type": "p",
+      "text": "If you do not agree with a change, you can delete your account at any time (Section 10). Your continued use of the App after a revised Policy is published means you accept the changes."
     },
     {
       "type": "h2",
