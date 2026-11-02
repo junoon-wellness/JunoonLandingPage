@@ -945,7 +945,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "If you join our waitlist or newsletter, we collect your email address (and, if you provide them, your first name and phone number) and send them to beehiiv, Inc., our email and waitlist provider, to manage your subscription and send you updates. You can unsubscribe at any time using the link in any email you receive from us."
+      "text": "If you join our waitlist or newsletter, we collect your email address (and, if you provide them, your first name and phone number) and send them to beehiiv, Inc., our email and waitlist provider, to manage your subscription and send you updates. When you create a Junoon account, we also add your first name and email address to this list (and your phone number only if you agreed to WhatsApp updates). You can unsubscribe at any time using the link in any email you receive from us."
     },
     {
       "type": "p",
@@ -1080,7 +1080,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "Email and waitlist provider (beehiiv): If you join our waitlist or subscribe to updates through our website, we collect your email address and process it using beehiiv, Inc. to manage our waitlist and send newsletters and product updates. beehiiv acts as a data processor on our behalf. You can unsubscribe at any time using the link in any email. For more information: https://www.beehiiv.com/privacy"
+      "text": "Email and waitlist provider (beehiiv): If you join our waitlist, subscribe to updates through our website, or create a Junoon account, we collect your email address and process it using beehiiv, Inc. to manage our waitlist and send newsletters and product updates. beehiiv acts as a data processor on our behalf. You can unsubscribe at any time using the link in any email. For more information: https://www.beehiiv.com/privacy"
     },
     {
       "type": "p",
@@ -1266,7 +1266,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "If you joined our email list, your name and email stay on it until you unsubscribe; deleting your account does not remove them yet."
+      "text": "If you are on our email list, your name and email stay on it until you unsubscribe; deleting your account does not remove them yet."
     },
     {
       "type": "h2",
