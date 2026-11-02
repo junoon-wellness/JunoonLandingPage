@@ -20,7 +20,7 @@ export type LegalDoc = {
 export const termsOfService: LegalDoc = {
   "title": "Terms of Service",
   "subtitle": "Junoon Wellness LLC",
-  "updated": "Last updated: November 1, 2026",
+  "updated": "Last updated: November 2, 2026",
   "blocks": [
     {
       "type": "h2",
@@ -98,11 +98,11 @@ export const termsOfService: LegalDoc = {
     },
     {
       "type": "h3",
-      "text": "3.3 Guest Mode"
+      "text": "3.3 Account Required"
     },
     {
       "type": "p",
-      "text": "You may access limited features of the App without creating an account (\"Guest Mode\"). Guest Mode functionality is provided without guarantee and may be changed or removed at any time. Account-gated features such as saving progress, personalised coaching, and weekly plans require a registered account."
+      "text": "You need an account to use Junoon."
     },
     {
       "type": "h3",
@@ -110,7 +110,7 @@ export const termsOfService: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "You may delete your account at any time via Settings > Account > Delete Account in the App. See our Privacy Policy (Section 10) for details on data deletion."
+      "text": "You may delete your account at any time in the app: Settings, then Delete account at the bottom. See our Privacy Policy (Section 10) for details on data deletion."
     },
     {
       "type": "h2",
@@ -122,7 +122,7 @@ export const termsOfService: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "The App offers both free features and premium features available through a paid subscription. Free features may be used without charge. Premium subscription features require an active paid subscription."
+      "text": "Junoon needs an active subscription or free trial. When you start, you can try it free for the trial period shown in the App. Premium subscription features require an active paid subscription."
     },
     {
       "type": "h3",
@@ -517,7 +517,7 @@ export const termsOfService: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "Sections 7, 8, 9, 13, 14, 15, 19, 20, and 21 of these Terms shall survive termination. Upon termination of a paid subscription, access to premium features will continue until the end of the paid subscription period, after which access will revert to free features only."
+      "text": "Sections 7, 8, 9, 13, 14, 15, 19, 20, and 21 of these Terms shall survive termination. Upon termination of a paid subscription, access to premium features will continue until the end of the paid subscription period, after which you will need to subscribe again to keep using Junoon. Your account and data stay until you delete the account."
     },
     {
       "type": "h2",
@@ -525,7 +525,7 @@ export const termsOfService: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "We may modify these Terms at any time. If we make material changes, we will provide at least 14 days' advance notice by posting a notice in the App and, where we have your email address, by sending you an email. Your continued use of the App after the effective date of the revised Terms constitutes your acceptance. If you do not agree to the revised Terms, you must stop using the App."
+      "text": "We may modify these Terms at any time. If we make material changes, we will provide reasonable advance notice by posting a notice in the App and, where we have your email address, by sending you an email. Your continued use of the App after the effective date of the revised Terms constitutes your acceptance. If you do not agree to the revised Terms, you must stop using the App."
     },
     {
       "type": "h2",
@@ -641,7 +641,7 @@ export const termsOfService: LegalDoc = {
 export const privacyPolicy: LegalDoc = {
   "title": "Privacy Policy",
   "subtitle": "Junoon Wellness LLC",
-  "updated": "Last updated: November 1, 2026",
+  "updated": "Last updated: November 2, 2026",
   "blocks": [
     {
       "type": "h2",
@@ -685,7 +685,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "This Privacy Policy applies to all users of the Junoon App, including users who access the App without creating an account (\"Guest Mode\"). By using the App, you agree to the collection and use of information in accordance with this Policy."
+      "text": "This Privacy Policy applies to all users of the Junoon App and to visitors to our website. By using the App, you agree to the collection and use of information in accordance with this Policy."
     },
     {
       "type": "p",
@@ -778,7 +778,6 @@ export const privacyPolicy: LegalDoc = {
       "items": [
         "Videos watched and time spent watching each video",
         "Videos and articles you save or bookmark",
-        "Teachers you follow",
         "Weekly plan items you complete, skip, or swap",
         "Progress snapshots across practice pillars"
       ]
@@ -858,7 +857,7 @@ export const privacyPolicy: LegalDoc = {
       "items": [
         "You can see it. The \"What Junoon knows\" page in the App shows the main things the coach has learned, grouped by where it came from (what you told us, what we noticed, your nightly reflections, and what is true for you right now). You can change your own answers there and delete anything else.",
         "You can ask the coach to forget. Saying \"forget that\" straight after telling the coach something, or deleting it on the \"What Junoon knows\" page, stops the coach using it and stops it learning it again from your conversation. A note the coach already wrote about an earlier day may still mention it. The message you sent stays in your conversation history.",
-        "What we choose not to keep. We screen details of sensitive life events you mention in conversation (for example, a family member in hospital) out of what the coach remembers; the coach responds in the moment. The message itself stays in your conversation history. We do not ask about your family or relationships; if you mention practical facts about your practice (for example, someone who exercises with you), the coach may remember them."
+        "What we choose not to keep. We try to keep details of sensitive life events you mention (for example, a family member in hospital) out of what the coach remembers; the coach responds in the moment. The screening is not perfect, and the message itself stays in your conversation history. We do not ask about your family or relationships; if you mention practical facts about your practice (for example, someone who exercises with you), the coach may remember them."
       ]
     },
     {
@@ -872,8 +871,8 @@ export const privacyPolicy: LegalDoc = {
     {
       "type": "ul",
       "items": [
-        "Never medication. We do not store details of medication you mention.",
-        "Safety flags, only with your yes. For conditions that change which practices are safe (for example, pregnancy, high blood pressure or a recent injury), we save a short safety flag (the condition or body area, a level, and the date) only after you confirm it with one tap. The flag is used to keep unsuitable practices out of your plan. You can see and delete it on the \"What Junoon knows\" page.",
+        "Never medication. We do not keep details of medication you mention in what the coach remembers or in safety flags. If you mention medication in a message, the message stays in your conversation history.",
+        "Safety flags, only with your yes. For conditions that change which practices are safe (for example, pregnancy, high blood pressure or a recent injury), we save a short safety flag (the condition or body area, a level, and the date) only after you say yes (a tap on Yes, or typing yes), or when you pick it at sign-up. The flag is used to keep unsuitable practices out of your plan. You can see and delete it on the \"What Junoon knows\" page.",
         "\"Going gentle\" notes. If you tell us something hurts, the App may go gentle for a few days and tells you so. This note holds no medical detail, ends on its own, and you can delete it.",
         "If you are under a doctor's care, we may note that fact so the coach can defer to your doctor, but not the details."
       ]
@@ -953,7 +952,7 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "Your choices: You can control or delete cookies at any time through your browser settings. If the Meta Pixel is active, you can also manage how Meta uses information about you for ads through Meta's Ad Preferences settings. Every email we send you includes an unsubscribe link."
+      "text": "Your choices: You can control or delete cookies at any time through your browser settings. If the Meta Pixel is active, you can also manage how Meta uses information about you for ads through Meta's Ad Preferences settings. Every newsletter or update email we send you includes an unsubscribe link. Account emails such as password resets do not."
     },
     {
       "type": "h2",
@@ -1104,6 +1103,10 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
+      "text": "We also use hosting, email-sending, video-streaming and sign-in providers (for example Vercel, Resend, Mux and Google) who handle data only to run Junoon for us."
+    },
+    {
+      "type": "p",
       "text": "We do not sell your personal information for money. We do share limited information with Meta Platforms, Inc. for advertising measurement, as described in Sections 3.8 and 3.9. This never includes your health data, your calendar, the content of your coach conversations or your reflection notes. If our sharing practices change in any other way, we will update this Policy and notify you in advance."
     },
     {
@@ -1146,7 +1149,7 @@ export const privacyPolicy: LegalDoc = {
       "items": [
         "All data transmitted between the App and our servers is encrypted using TLS",
         "Passwords are hashed using industry-standard cryptographic methods; we cannot retrieve your plaintext password",
-        "Authentication tokens are stored securely on-device",
+        "Authentication tokens are stored on your device in the app's private storage",
         "Access to production databases is restricted to authorised personnel only"
       ]
     },
@@ -1175,7 +1178,7 @@ export const privacyPolicy: LegalDoc = {
       "items": [
         "Access: Request a copy of the personal information we hold about you, and review your account and wellness profile at any time in the App.",
         "Correction: Update or correct inaccurate or incomplete information, including your name, timezone, and wellness profile, through your account settings or by contacting us.",
-        "Deletion: Delete your account and associated personal information at any time via Settings > Account > Delete Account, as described in Section 10.",
+        "Deletion: Delete your account and associated personal information at any time in the app: Settings, then Delete account at the bottom, as described in Section 10.",
         "Withdraw consent: Where processing is based on your consent, withdraw it at any time, for example by revoking Apple Health, calendar or tracking access in your device settings or turning off push notifications, without affecting the lawfulness of processing before withdrawal.",
         "Object or restrict: Ask us to stop or limit certain processing of your information by contacting us.",
         "Complaint: Raise a concern about how we handle your information by contacting us; you may also have the right to complain to your local data protection or consumer protection authority."
@@ -1253,7 +1256,7 @@ export const privacyPolicy: LegalDoc = {
     {
       "type": "ul",
       "items": [
-        "In-app: Settings > Account > Delete Account"
+        "In the app: Settings, then Delete account at the bottom"
       ]
     },
     {
@@ -1321,7 +1324,7 @@ export const privacyPolicy: LegalDoc = {
       "paras": [
         "Junoon is a wellness and lifestyle application. It is not a medical device, is not intended to diagnose, treat, cure, or prevent any disease or medical condition, and does not constitute medical advice. The AI coaching content is for general informational and wellness purposes only.",
         "The health data we read from Apple Health is used to personalise wellness recommendations - not to make medical assessments. Nothing in the App should be construed as a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.",
-        "If you have a serious medical condition, physical limitation, or are pregnant or postpartum, consult a qualified healthcare professional before beginning any exercise or wellness programme. The coach will never advise on medication or a medical decision, and will always defer to your doctor."
+        "If you have a serious medical condition, physical limitation, or are pregnant or postpartum, consult a qualified healthcare professional before beginning any exercise or wellness programme. The coach is built not to advise on medication or a medical decision, and to defer to your doctor."
       ]
     },
     {
