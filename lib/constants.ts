@@ -54,7 +54,7 @@ export const APP_STORE_URL = 'https://apps.apple.com/us/app/junoon-wellness/id67
  *   - the date and the early-access link on the /pricing card:
  *     components/pricing/PricingCard.tsx
  */
-export const LAUNCHING_SOON = true
+export const LAUNCHING_SOON = false
 
 /** The public launch day shown while LAUNCHING_SOON is on. */
 export const LAUNCH_DATE_LABEL = 'Sunday, Nov 1'
