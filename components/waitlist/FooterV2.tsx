@@ -7,6 +7,7 @@
  */
 import Link from 'next/link'
 import Toran from '@/components/brand/Toran'
+import { FOOTER_LEGAL } from '@/lib/landing-copy'
 
 const legalLinks = [
   { label: 'Privacy Policy', href: '/privacy' },
@@ -79,7 +80,7 @@ export default function FooterV2() {
             color: 'var(--jn-mute)',
           }}
         >
-          © {new Date().getFullYear()} Junoon Wellness. All rights reserved.
+          {FOOTER_LEGAL}
         </span>
         {/* LV5-002: replaces the waitlist pitch that used to live near here —
             the ways to keep up with Junoon now that signing up isn't the

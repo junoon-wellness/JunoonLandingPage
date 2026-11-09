@@ -1,23 +1,17 @@
-import WaitlistPageV2 from "@/components/waitlist/WaitlistPageV2";
+import HomeLanding from "@/components/home/HomeLanding";
+import "./home.css";
 
 /**
- * The junoonwellness.com marketing site (LV5-002: the app is live, so this
- * is no longer a waitlist page — see WaitlistPageV2's component name, kept
- * unchanged as an internal identifier only).
+ * The junoonwellness.com home page.
  *
- * The previous SplitLayout design (sticky 40% dark panel + 60% scrolling
- * column) has been replaced by the full-width product-first redesign. The
- * components it used still exist under components/layout and
- * components/sections but are no longer rendered.
+ * Mon 9 Nov 2026 (launch): rebuilt to match the approved mock-up,
+ * junoon-team pages/mockups/landing-editable-1106.html ("Arjav's words,
+ * 8 Nov"), on Kush's word: the approved page is the editable mock-up, not the
+ * old site layout. See components/home/HomeLanding.tsx and app/home.css.
  *
- * LV5-024: this used to fetch a live beehiiv subscriber count and thread a
- * `?ref=` source param down to HeroV2 for signup attribution. Both were dead
- * — HeroV2 dropped its own signup form under LV5-018 (the App Store badge
- * replaced it) and never read either value again, so the fetch and the prop
- * threading through WaitlistPageV2 were pure plumbing with nothing on the
- * other end. lib/beehiiv.ts and the SPOTS_CLAIMED_FALLBACK constant went
- * with it — grep proved both had no other caller.
+ * The old home (components/waitlist/WaitlistPageV2 and its sections) is no
+ * longer rendered here; its files stay on disk, unchanged from main.
  */
 export default function Home() {
-  return <WaitlistPageV2 />;
+  return <HomeLanding />;
 }
