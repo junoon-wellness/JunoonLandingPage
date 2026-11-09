@@ -296,7 +296,7 @@ export const FAQ_COPY = {
 /* ── Section 11 and 12: download, footer ─────────────────────────────────── */
 
 export const DOWNLOAD = {
-  heading: 'Start your two weeks.',
+  heading: 'Start your free month.',
   body: 'Your first month is free, for everyone. The first 100 members get a founding price, theirs for life.',
 }
 

@@ -613,9 +613,13 @@ function Footer() {
               </a>
             ))}
           </div>
-          {/* /privacy, /terms and /contact are required: App Store review and
-              the app's support URL point at them (see FooterV2). */}
-          <nav className="k-flinks" aria-label="Legal and contact">
+          {/* About and Library are here because phones have no top-bar menu
+              (Kush's yes, Mon 9 Nov 5:05 PM). /privacy, /terms and /contact
+              are required: App Store review and the app's support URL point
+              at them (see FooterV2). */}
+          <nav className="k-flinks" aria-label="More pages, legal and contact">
+            <Link href="/about">About</Link>
+            <Link href="/library">Library</Link>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
             <Link href="/contact">Contact</Link>
