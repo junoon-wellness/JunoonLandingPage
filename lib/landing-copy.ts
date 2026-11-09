@@ -31,7 +31,7 @@ export const FOUNDING_LINE =
 
 export const NAV_CTA = 'Get the app'
 
-export const HERO_HEADLINE = 'Connecting Ancient India with modern life.'
+export const HERO_HEADLINE = 'Connecting Ancient India With Modern Life'
 
 export const HERO_SUB =
   'Junoon brings back the practices of ancient India, and connects them under one system to fit your modern day life. Yoga, meditation and breathwork rooted in how these practices were taught in India.'
