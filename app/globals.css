@@ -1863,9 +1863,6 @@ body::before {
   .v2-hero-eyebrow { order: 1; }
   .v2-hero-headline { order: 2; }
   .v2-hero-sub { order: 3; margin-bottom: 0 !important; }
-  /* Launch page: the five tags and the badge row sit under the intro, above the phone. */
-  .ld-chips { order: 3; margin: 18px 0 0; }
-  .ld-hero-offer { order: 3; margin-top: 4px; }
   .v2-devices { order: 4; }
   /* Kush, 2026-08-23: "move arjavs quote down a bit more on mobile" — the
      quote sat one 22px grid-gap under the carousel; +18px on top. */
@@ -3495,101 +3492,4 @@ body::before {
     bottom: 12px;
     width: auto;
   }
-}
-
-/* ─── Launch page sections (Mon 9 Nov 2026) ───
-   The sections in components/waitlist/LandingSections.tsx and the hero tags.
-   Built from the site's own tokens; nothing here introduces a new colour. */
-.ld-chips {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 22px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.ld-chip {
-  padding: 7px 14px;
-  border-radius: 100px;
-  border: 0.5px solid rgba(245, 240, 232, 0.2);
-  background: var(--jn-surface);
-  font-size: 12.5px;
-  color: var(--jn-text);
-  line-height: 1.4;
-}
-.ld-hero-offer { margin-top: 4px; max-width: 460px; }
-.ld-hero-cta { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 18px; }
-.ld-hero-free {
-  font-size: 14px;
-  color: var(--jn-text-soft);
-  line-height: 1.5;
-  margin: 0;
-}
-.v2-section.ld-sec { padding-top: 34px; padding-bottom: 34px; }
-.ld-hero-fine { margin: 14px 0 0; font-size: 13px; line-height: 1.6; color: var(--jn-text-soft); max-width: 460px; }
-.ld-hero-fine b { color: var(--jn-turmeric); font-weight: 500; }
-.ld-head { display: grid; gap: 10px; margin-bottom: 14px; }
-.ld-wide-intro { max-width: 760px; }
-.ld-center { margin-left: auto; margin-right: auto; text-align: center; }
-.ld-cards { display: grid; gap: 14px; margin-top: 24px; grid-template-columns: 1fr; }
-.ld-cards--tight { margin-top: 20px; }
-.ld-card {
-  position: relative;
-  padding: 18px 18px 20px;
-  border: 0.5px solid var(--jn-hairline-strong);
-  background: var(--jn-surface);
-  border-radius: 4px;
-  display: grid;
-  gap: 6px;
-  align-content: start;
-}
-.ld-card .wb-num { padding-top: 0; }
-.ld-card-link { display: grid; gap: 6px; color: inherit; text-decoration: none; }
-.ld-card--link:hover { border-color: var(--jn-turmeric); }
-.ld-soon {
-  margin-left: 10px;
-  font-family: var(--font-dm-sans), sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--jn-turmeric);
-}
-.ld-split { display: grid; gap: 32px; align-items: center; }
-.ld-phone { display: flex; justify-content: center; }
-.ld-ring-wrap { display: flex; justify-content: center; }
-.ld-ring { width: min(100%, 300px); height: auto; }
-.ld-limbs { display: grid; gap: 0 28px; margin-top: 28px; grid-template-columns: 1fr; }
-.ld-limb { border-top: 0.5px solid var(--jn-hairline); padding: 16px 0; }
-.ld-limb-row { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; }
-.ld-plans { display: grid; gap: 14px; margin-top: 24px; max-width: 760px; grid-template-columns: 1fr; }
-.ld-plan { gap: 8px; }
-.ld-plan-price {
-  font-family: var(--font-cormorant), serif;
-  font-size: 44px;
-  line-height: 1.05;
-  color: var(--jn-text);
-}
-.ld-plan-price span { font-size: 15px; font-family: var(--font-dm-sans), sans-serif; color: var(--jn-text-soft); }
-.ld-plan-name { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--jn-turmeric); }
-.ld-pricing-link { margin-top: 18px; font-size: 14px; }
-.ld-faq { margin: 24px 0 0; max-width: 760px; }
-.v2-section.ld-sec.ld-download { text-align: center; padding-top: 56px; padding-bottom: 64px; }
-.ld-download .wb-title { margin-bottom: 12px; }
-.ld-download-badge { display: flex; justify-content: center; margin-top: 22px; }
-@media (min-width: 769px) {
-  .ld-plans { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ld-cards--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .ld-cards--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ld-cards--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ld-limbs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (min-width: 1025px) {
-  .ld-cards--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .ld-split { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 56px; }
-  .ld-split--flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
-  .ld-split--ring { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
-}
-@media (max-width: 768px) {
-  .v2-section.ld-sec.ld-download { padding-top: 44px; padding-bottom: 52px; }
-  .ld-plan-price { font-size: 38px; }
 }

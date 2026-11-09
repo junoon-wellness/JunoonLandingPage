@@ -1,16 +1,20 @@
 /**
  * THE LANDING PAGE WORDS, in one place.
  *
- * Source: Arjav's text for the whole landing page (editable mock-up, his words
- * of Sun 8 Nov 2026), with his six health and science rewordings applied
- * (Mon 9 Nov, answers 4, 5, 6, 8, 23 and 24 on his health-lines page).
+ * Source: Arjav's text for the whole landing page (the approved editable
+ * mock-up, junoon-team pages/mockups/landing-editable-1106.html, his words of
+ * Sun 8 Nov 2026), with his six health and science rewordings applied (Mon
+ * 9 Nov, answers 4, 5, 6, 8, 23 and 24 on his health-lines page).
  *
- * Two rulings shape what is NOT here:
+ * Rulings that shape what is here:
  *  - Member quotes are left off the page until real members give theirs with
  *    their yes (Kush, Mon 9 Nov, D1). Nobody writes them for them.
- *  - The founding price and the word "lifetime" stay off until Kush has
- *    checked the price in App Store Connect (Kush's rule K25). They live in a
- *    separate commit so they can be added back on his word.
+ *  - The founding price and "theirs for life" / "Lifetime deal" are IN: Kush
+ *    checked App Store Connect (Mon 9 Nov, 4:21 PM, the founders price is live
+ *    and permanent).
+ *  - FAQ answers 6, 7 and 8 are the agent drafts marked DRAFT on the mock-up,
+ *    kept as drafted; the mock-up's third pricing block (DRAFT: remove, same
+ *    as plan 1) is removed as drafted.
  *
  * No em dashes in any visible text.
  */
@@ -25,6 +29,10 @@ export const FOUNDING_LINE =
 
 /* ── The top ─────────────────────────────────────────────────────────────── */
 
+export const NAV_CTA = 'Get the app'
+
+export const HERO_HEADLINE = 'Connecting Ancient India with modern life.'
+
 export const HERO_SUB =
   'Junoon brings back the practices of ancient India, and connects them under one system to fit your modern day life. Yoga, meditation and breathwork rooted in how these practices were taught in India.'
 
@@ -36,9 +44,20 @@ export const HERO_CHIPS = [
   "Patanjali's 8 limbs",
 ]
 
-/** The eight things inside the app, right under the top of the page. */
-export const FEATURES_EYEBROW = 'Made for your life'
+/** The words around the map of India and the arrow to the phone. */
+export const HERO_MAP = {
+  caption: 'Where it comes from',
+  captionSmall: 'Rooted in India',
+  bridge: 'made for your life',
+}
 
+/** The line above the App Store badge on the first screen. */
+export const HERO_FINE = {
+  lead: 'Founding members:',
+  rest: 'your first month is free, for everyone. ' + FOUNDING_LINE,
+}
+
+/** The eight features around the drawn phone: four left, four right. */
 export const FEATURES = [
   { title: 'A coach who knows you', body: 'Remembers your sleep, energy and needs' },
   { title: 'Sessions built for your life', body: 'Fits the time and energy you have' },
@@ -217,18 +236,15 @@ export const PRICING = {
   eyebrow: 'Pricing',
   heading: 'Your first month is free.',
   body: 'Your first month is free, for everyone. The first 100 members get a founding price, theirs for life.',
-  body2: FOUNDING_LINE,
   plans: [
     {
       name: 'Founders pricing',
-      price: '$4.99',
-      unit: 'per month for the first 100 users',
+      price: '$4.99 per month for the first 100 users',
       included: 'Lifetime deal, as a thank you from our junoon team',
     },
     {
       name: 'Post 100',
-      price: '$8.99',
-      unit: 'per month',
+      price: '$8.99 per month',
       included: 'Everything included',
     },
   ],

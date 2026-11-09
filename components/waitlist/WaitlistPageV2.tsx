@@ -3,18 +3,9 @@
 import NavV2 from './NavV2'
 import Toran from '@/components/brand/Toran'
 import HeroV2 from './HeroV2'
-import {
-  FeaturesSection,
-  TwoWeeksSection,
-  CoachSection,
-  LimbsSection,
-  JScoreSection,
-  ClassesSection,
-  LearnSection,
-  PricingSection,
-  FaqSection,
-  DownloadSection,
-} from './LandingSections'
+import WhatWereBuildingV2 from './WhatWereBuildingV2'
+import FeatureStory from './FeatureStory'
+import WhatsNewV2 from './WhatsNewV2'
 import WalkthroughTeaser from './WalkthroughTeaser'
 import FooterV2 from './FooterV2'
 import Jaali from '@/components/brand/Jaali'
@@ -93,20 +84,12 @@ export default function WaitlistPageV2() {
           Consequence, stated rather than hidden: WhatWereBuildingV2 now runs
           straight into FeatureStory with no divider between them. */}
       <Toran />
-      {/* Launch page (Mon 9 Nov 2026): Arjav's text, in his order. The old
-          WhatWereBuildingV2 / FeatureStory / WhatsNewV2 sections are replaced
-          by the sections below; their files stay on disk. Member quotes are
-          left off on purpose (Kush, D1). */}
-      <FeaturesSection />
-      <TwoWeeksSection />
-      <CoachSection />
-      <LimbsSection />
-      <JScoreSection />
-      <ClassesSection />
-      <LearnSection />
-      <PricingSection />
-      <FaqSection />
-      <DownloadSection />
+      <WhatWereBuildingV2 />
+      <FeatureStory />
+      {/* LV5-070 (2026-09-23): the page had no "what's new" surface at all —
+          every claim above describes the August app. This is additive, not
+          a rewrite of WhatWereBuildingV2's four evergreen features above. */}
+      <WhatsNewV2 />
       {SHOW_TOUR && <WalkthroughTeaser />}
       {/* LV5-018: OfferBandV2 + FounderBlockV2 removed from the page — both
           folded into a condensed version inside HeroV2 (Kush's review: the

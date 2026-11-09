@@ -12,7 +12,6 @@ import {
   LAUNCHING_SOON,
   LAUNCH_DATE_LABEL,
 } from '@/lib/constants'
-import { FOUNDING_LINE, HERO_CHIPS, HERO_SUB } from '@/lib/landing-copy'
 
 /**
  * LV5-021 (c) / LV5-024: the jaali PANEL behind the phone used to render
@@ -113,7 +112,7 @@ export default function HeroV2() {
             marginBottom: '22px',
           }}
         >
-          Connecting{' '}
+          Wellness rooted in{' '}
           {/* The italic clause settles a beat after the line lands: it opens
               slightly tracked-out and closes to its resting letter-spacing. */}
           <motion.em
@@ -123,9 +122,8 @@ export default function HeroV2() {
             animate={{ opacity: 1, letterSpacing: '-0.015em' }}
             transition={{ duration: 1.1, delay: 0.5, ease: EASE }}
           >
-            Ancient India
-          </motion.em>{' '}
-          with modern life.
+            where you&apos;re from.
+          </motion.em>
         </motion.h1>
 
         <motion.p
@@ -140,7 +138,9 @@ export default function HeroV2() {
             marginBottom: '32px',
           }}
         >
-          {HERO_SUB}
+          A modern wellness platform built for the South Asian diaspora. Live classes, on-demand
+          content, and an AI Coach that personalises your practice, grounded in the traditions you
+          grew up around.
         </motion.p>
 
         {/* THE LAUNCHING-SOON SWITCH (lib/constants.ts): a small text link that keeps
@@ -153,31 +153,62 @@ export default function HeroV2() {
           </motion.p>
         )}
 
-        {/* Launch copy (Arjav's words, Sun 8 Nov): the five tags, then the free
-            month and Apple's App Store badge. The old founding-member card is
-            gone from this build; the founding price waits for Kush's check in
-            App Store Connect. */}
-        <motion.ul className="ld-chips jn-reveal" variants={step} aria-label="What Junoon draws on">
-          {HERO_CHIPS.map(c => (
-            <li key={c} className="ld-chip">
-              {c}
-            </li>
-          ))}
-        </motion.ul>
-
-        <motion.div className="ld-hero-offer jn-reveal" variants={step}>
-          <div className="ld-hero-cta">
-            <AppStoreBadge size="nav" />
-            <p className="ld-hero-free">
-              Your first month is free.{' '}
-              <Link href="/pricing" className="v2-link v2-hero-offer-link">
-                See pricing →
-              </Link>
+        {/* LV5-018: replaces the App Store badge + "500 founder spots ·
+            first month free · see pricing" line. Kush's review on the first
+            full preview: that empty space under the sub-copy should carry a
+            condensed version of the offer band + founder quote instead, so
+            the two full-width sections lower on the page (OfferBandV2,
+            FounderBlockV2) could come out entirely. Same copy, same photo,
+            same quote — just tight enough to sit in the hero. The App Store
+            CTA itself isn't lost: the nav badge and the /pricing card both
+            still carry it. */}
+        <motion.div className="v2-hero-offer jn-reveal" variants={step}>
+          {/* Desktop / tablet card — unchanged since LV5-018. Hidden ≤768px
+              (globals.css), replaced there by .v2-hero-offer-mobile below. */}
+          <div className="v2-hero-offer-desktop">
+            <div className="eyebrow no-rule">Founding member offer</div>
+            <p className="v2-hero-offer-headline">
+              First 100 members.{' '}
+              <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>
+                Permanent pricing.
+              </em>
             </p>
+            <p className="v2-hero-offer-body">
+              Your first month is free, for everyone. The first 100 members then get a founding
+              price, theirs for life.
+            </p>
+            <Link href="/pricing" className="v2-link v2-hero-offer-link">
+              See pricing →
+            </Link>
           </div>
-          <p className="ld-hero-fine">
-            <b>Founding members:</b> {FOUNDING_LINE}
-          </p>
+
+          {/* LV5-030: slim mobile banner (Kush: "way smaller and at the top
+              only" + "download icon in the top with the founder pricing
+              banner if possible"). The copy block itself is the link to
+              /pricing — it stands in for the desktop "See pricing →" link
+              rather than repeating a second small link beside the badge.
+              The badge is its own link (Apple's own artwork, App Store
+              URL); it is a SIBLING of the copy link, not nested inside it —
+              an <a> can't legally contain another <a>. Hidden above 768px. */}
+          <div className="v2-hero-offer-mobile">
+            <Link href="/pricing" className="v2-hero-offer-mobile-copy">
+              {/* LV5-030 review (Fable, measured at 375px): the copy column
+                  beside the 155px badge is 135px wide. "Founding member
+                  offer" is 150px at 11px and wrapped; the full sentence was
+                  293px and wrapped to three lines, making the banner 112px
+                  tall. Shorter label + a deliberate two-line copy (121px /
+                  122px at 12px) keeps the text block level with the badge. */}
+              <span className="eyebrow no-rule v2-hero-offer-mobile-eyebrow">
+                Founder offer
+              </span>
+              <span className="v2-hero-offer-mobile-line">
+                Free month for everyone.
+                <br />
+                First 100: a founding price, for life.
+              </span>
+            </Link>
+            <AppStoreBadge size="nav" />
+          </div>
         </motion.div>
 
         <motion.div className="v2-hero-founder jn-reveal" variants={step}>
