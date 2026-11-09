@@ -15,6 +15,14 @@
  * No em dashes in any visible text.
  */
 
+/**
+ * The founding offer, live in App Store Connect as a permanent price (Kush,
+ * Mon 9 Nov, 4:21 PM: "founders price is live in appstore connect and it is
+ * a permanent price so both are true they can be on the landing page").
+ */
+export const FOUNDING_LINE =
+  'The first 100 members get a founding price, theirs for life.'
+
 /* ── The top ─────────────────────────────────────────────────────────────── */
 
 export const HERO_SUB =
@@ -208,10 +216,22 @@ export const LEARN = {
 export const PRICING = {
   eyebrow: 'Pricing',
   heading: 'Your first month is free.',
-  body: 'Your first month is free, for everyone.',
-  price: '$8.99',
-  unit: 'per month',
-  included: 'Everything included',
+  body: 'Your first month is free, for everyone. The first 100 members get a founding price, theirs for life.',
+  body2: FOUNDING_LINE,
+  plans: [
+    {
+      name: 'Founders pricing',
+      price: '$4.99',
+      unit: 'per month for the first 100 users',
+      included: 'Lifetime deal, as a thank you from our junoon team',
+    },
+    {
+      name: 'Post 100',
+      price: '$8.99',
+      unit: 'per month',
+      included: 'Everything included',
+    },
+  ],
 }
 
 /* ── Section 10: questions ───────────────────────────────────────────────── */
@@ -238,7 +258,7 @@ export const FAQ_COPY = {
     },
     {
       q: 'What does it cost?',
-      a: "Your first month is free, for everyone. After that, it's $8.99 per month.",
+      a: "Your first month is free, for everyone. After that, it's $8.99 per month, with the exception of the first 100 users ($4.99).",
     },
     // The next three answers are agent drafts from the editable mock-up,
     // not yet confirmed by Arjav (marked DRAFT there). Listed as assumed.
@@ -261,7 +281,7 @@ export const FAQ_COPY = {
 
 export const DOWNLOAD = {
   heading: 'Start your two weeks.',
-  body: 'Your first month is free, for everyone.',
+  body: 'Your first month is free, for everyone. The first 100 members get a founding price, theirs for life.',
 }
 
 export const FOOTER_LEGAL =

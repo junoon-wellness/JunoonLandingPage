@@ -262,13 +262,16 @@ export function PricingSection() {
         <p className="wb-intro">{PRICING.body}</p>
       </Reveal>
       <div className="ld-plans">
-        <Reveal y={14} amount={0.3} className="ld-card ld-plan">
-          <div className="ld-plan-price">
-            {PRICING.price}
-            <span> {PRICING.unit}</span>
-          </div>
-          <div className="wb-card-copy">{PRICING.included}</div>
-        </Reveal>
+        {PRICING.plans.map((plan, i) => (
+          <Reveal key={plan.name} delay={i * 0.08} y={14} amount={0.3} className="ld-card ld-plan">
+            <div className="ld-plan-name">{plan.name}</div>
+            <div className="ld-plan-price">
+              {plan.price}
+              <span> {plan.unit}</span>
+            </div>
+            <div className="wb-card-copy">{plan.included}</div>
+          </Reveal>
+        ))}
       </div>
       <p className="ld-pricing-link">
         <Link href="/pricing" className="v2-link v2-hero-offer-link">

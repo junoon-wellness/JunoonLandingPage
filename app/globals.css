@@ -3526,6 +3526,8 @@ body::before {
   margin: 0;
 }
 .v2-section.ld-sec { padding-top: 34px; padding-bottom: 34px; }
+.ld-hero-fine { margin: 14px 0 0; font-size: 13px; line-height: 1.6; color: var(--jn-text-soft); max-width: 460px; }
+.ld-hero-fine b { color: var(--jn-turmeric); font-weight: 500; }
 .ld-head { display: grid; gap: 10px; margin-bottom: 14px; }
 .ld-wide-intro { max-width: 760px; }
 .ld-center { margin-left: auto; margin-right: auto; text-align: center; }
@@ -3559,7 +3561,7 @@ body::before {
 .ld-limbs { display: grid; gap: 0 28px; margin-top: 28px; grid-template-columns: 1fr; }
 .ld-limb { border-top: 0.5px solid var(--jn-hairline); padding: 16px 0; }
 .ld-limb-row { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; }
-.ld-plans { display: grid; gap: 14px; margin-top: 24px; max-width: 520px; }
+.ld-plans { display: grid; gap: 14px; margin-top: 24px; max-width: 760px; grid-template-columns: 1fr; }
 .ld-plan { gap: 8px; }
 .ld-plan-price {
   font-family: var(--font-cormorant), serif;
@@ -3575,6 +3577,7 @@ body::before {
 .ld-download .wb-title { margin-bottom: 12px; }
 .ld-download-badge { display: flex; justify-content: center; margin-top: 22px; }
 @media (min-width: 769px) {
+  .ld-plans { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ld-cards--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .ld-cards--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ld-cards--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }

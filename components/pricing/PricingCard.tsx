@@ -77,7 +77,7 @@ export default function PricingCard() {
         </div>
 
         <p className="pr-offer-line">
-          Your first month is free.
+          Your first month is free. The first 100 members get a founding price, theirs for life.
         </p>
 
         <ul className="pr-checklist">

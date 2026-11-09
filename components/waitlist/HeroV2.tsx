@@ -12,7 +12,7 @@ import {
   LAUNCHING_SOON,
   LAUNCH_DATE_LABEL,
 } from '@/lib/constants'
-import { HERO_CHIPS, HERO_SUB } from '@/lib/landing-copy'
+import { FOUNDING_LINE, HERO_CHIPS, HERO_SUB } from '@/lib/landing-copy'
 
 /**
  * LV5-021 (c) / LV5-024: the jaali PANEL behind the phone used to render
@@ -175,6 +175,9 @@ export default function HeroV2() {
               </Link>
             </p>
           </div>
+          <p className="ld-hero-fine">
+            <b>Founding members:</b> {FOUNDING_LINE}
+          </p>
         </motion.div>
 
         <motion.div className="v2-hero-founder jn-reveal" variants={step}>
