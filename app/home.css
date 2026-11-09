@@ -150,6 +150,14 @@ html:has(.jh) body::-webkit-scrollbar {
   max-width: 900px;
   margin: 0 auto;
 }
+.jh .h4-head h1 {
+  /* Arnav, 9 Nov: the headline sits on one line on wider screens */
+  white-space: nowrap;
+  font-size: min(58px, 4.3vw);
+}
+.jh .h4-head {
+  max-width: none;
+}
 .jh .h4-head .lede {
   max-width: 760px;
   margin: 0 auto;
@@ -1063,6 +1071,10 @@ html:has(.jh) body::-webkit-scrollbar {
 
 /* ── phone: the mock-up's `.isph` rules ── */
 @media (max-width: 760px) {
+  .jh .h4-head h1 {
+    white-space: normal;
+    font-size: 40px;
+  }
   .jh {
     font-size: 16px;
   }
