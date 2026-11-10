@@ -34,8 +34,8 @@ import {
  * The mock-up's section 8 (members' words) is left out on purpose: no member
  * quotes until real members give theirs (Kush, D1).
  *
- * Where the mock-up had a "picture goes here" box (breathwork, live classes)
- * this draws a stand-in in the same style as the Day 14 ring, so the live
+ * Where the mock-up had a "picture goes here" box (live classes) this draws a
+ * stand-in in the same style as the Day 14 ring, so the live
  * page never shows a placeholder.
  */
 
@@ -241,12 +241,11 @@ function TopSection() {
 /* ── 2. Your first two weeks ─────────────────────────────────────────────── */
 
 function TwoWeeksSection() {
-  // Both are crops from the lower part of the screen, so they sit at the
-  // bottom of the frame; the gap above is the capture's own top colour.
-  // New full captures are on the review page's list (test account name).
+  // Full-screen captures from the staging app (Mon 9 Nov night, test logins
+  // renamed Rohan and Arjun), so they fill the frame like every other phone.
   const pics = [
-    { src: '/landing/day1-coach-chat.jpg', alt: 'The coach chat', bg: '#120d0a' },
-    { src: '/landing/day2-session.jpg', alt: 'A session playing', bg: '#120d0a' },
+    { src: '/landing/day1-coach-chat.jpg', alt: 'The coach chat on day one' },
+    { src: '/landing/day2-session.jpg', alt: 'A session playing' },
   ]
   return (
     <section className="k-s alt" id="two-weeks">
@@ -272,7 +271,7 @@ function TwoWeeksSection() {
               </div>
               <div className="pic phone">
                 {i < 2 ? (
-                  <IPhoneFrame src={pics[i].src} alt={pics[i].alt} fit="bottom" screenBg={pics[i].bg} sizes="214px" />
+                  <IPhoneFrame src={pics[i].src} alt={pics[i].alt} sizes="214px" />
                 ) : (
                   <IPhoneFrame alt="Your J Score on day 14">
                     <div className="ds">
@@ -313,7 +312,7 @@ function CoachSection() {
         <div className="k-picside">
           <div className="k-phones">
             <IPhoneFrame src="/landing/coach-chat.jpg" alt="The coach chat" sizes="236px" />
-            <IPhoneFrame src="/landing/coach-voices.jpg" alt="Choosing a coach voice" sizes="236px" />
+            <IPhoneFrame src="/landing/coach-voices.jpg" alt="The evening reflection with the coach" sizes="236px" />
           </div>
         </div>
       </div>
@@ -421,19 +420,6 @@ function JScoreSection() {
 
 /* ── 6. Classes and breathwork ───────────────────────────────────────────── */
 
-function BreathDrawing() {
-  return (
-    <svg className="k-breath" viewBox="0 0 180 180" aria-hidden="true">
-      <circle cx="90" cy="90" r="84" fill="none" stroke="rgba(232,184,112,.22)" strokeWidth="2" />
-      <circle cx="90" cy="90" r="64" fill="rgba(232,184,112,.10)" stroke="rgba(232,184,112,.35)" strokeWidth="1.5" />
-      <circle cx="90" cy="90" r="44" fill="rgba(196,114,74,.28)" />
-      <text x="90" y="98" textAnchor="middle" fill="#E8B870" fontSize="24" style={{ fontFamily: 'var(--serif)' }}>
-        Inhale
-      </text>
-    </svg>
-  )
-}
-
 function ClassesSection() {
   return (
     <section className="k-s alt" id="classes">
@@ -453,18 +439,7 @@ function ClassesSection() {
                 {i === 0 ? (
                   <IPhoneFrame src="/landing/class-library.jpg" alt="The class library" sizes="214px" />
                 ) : i === 1 ? (
-                  // Drawn until the new breathwork screen is captured (see
-                  // the review page's list of new screenshots).
-                  <IPhoneFrame alt="A breathwork session">
-                    <div className="ds">
-                      <div className="ds-kick">Breathwork</div>
-                      <BreathDrawing />
-                      <div className="ds-bar">
-                        <i />
-                      </div>
-                      <div className="ds-small">Cycle 4 of 10</div>
-                    </div>
-                  </IPhoneFrame>
+                  <IPhoneFrame src="/landing/breathwork.jpg" alt="A breathwork session, mid-breath" sizes="214px" />
                 ) : (
                   <IPhoneFrame alt="Live classes, coming soon">
                     <div className="ds">
