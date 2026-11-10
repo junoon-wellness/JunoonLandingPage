@@ -312,13 +312,16 @@ html:has(.jh) body::-webkit-scrollbar {
    Tue 10 Nov; components/home/HeroGallery.tsx). The features on each side are
    buttons; the one whose screen is showing lights its dot. */
 .jh .h4-gal {
+  flex: none;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
 }
-.jh .h4-gal-phone {
-  --ip-w: 262px;
+/* .ip.h4-gal-phone: the frame's own .ip rule comes later in this file, so
+   the gallery's size needs the extra class to win */
+.jh .ip.h4-gal-phone {
+  --ip-w: 240px;
 }
 .jh .h4-gal-img {
   opacity: 0;
@@ -1108,8 +1111,8 @@ html:has(.jh) body::-webkit-scrollbar {
   .jh .h4-gal {
     order: -1;
   }
-  .jh .h4-gal-phone {
-    --ip-w: 250px;
+  .jh .ip.h4-gal-phone {
+    --ip-w: 230px;
   }
   .jh .h4-feats {
     display: grid;
