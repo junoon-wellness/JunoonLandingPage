@@ -43,7 +43,7 @@ const SOCIALS = [
 
 export default function SiteFooter() {
   return (
-    <div className="jh">
+    <div className="jh jh-foot">
     <footer className="k-s k-footer">
       <div className="swrap k-foot">
         <div>

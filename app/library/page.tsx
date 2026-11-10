@@ -3,6 +3,7 @@ import Toran from '@/components/brand/Toran'
 import SectionLabel from '@/components/brand/SectionLabel'
 import Link from 'next/link'
 import SiteHeader from '@/components/site/SiteHeader'
+import PageCrest from '@/components/site/PageCrest'
 import SiteFooter from '@/components/site/SiteFooter'
 import NewsletterJoin from '@/components/waitlist/NewsletterJoin'
 import Jaali from '@/components/brand/Jaali'
@@ -56,6 +57,7 @@ export default function LibraryPage() {
         />
       )}
       <SiteHeader current="/library" />
+      <PageCrest />
 
       <NewsletterJoin source={source} firstSection />
 

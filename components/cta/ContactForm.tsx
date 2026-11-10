@@ -124,7 +124,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="inline-flex items-center justify-center gap-2 rounded-md bg-clay px-6 py-3.5 font-sans text-sm font-medium text-ivory shadow-button transition-[background-color,transform] duration-200 hover:bg-clay700 active:scale-[0.985] disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:active:scale-100"
+        className="inline-flex items-center justify-center gap-2 rounded-md bg-clay700 px-6 py-3.5 font-sans text-sm font-medium text-white shadow-button transition-[background-color,transform] duration-200 hover:bg-[#92502F] active:scale-[0.985] disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:active:scale-100"
       >
         {status === "loading" ? (
           <>

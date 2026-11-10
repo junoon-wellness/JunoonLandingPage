@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import SiteHeader from '@/components/site/SiteHeader'
+import PageCrest from '@/components/site/PageCrest'
 import SiteFooter from '@/components/site/SiteFooter'
 import { getAllArticles, getArticleBySlug } from '@/lib/library'
 import { markdownToHtml } from '@/lib/markdown'
@@ -44,6 +45,7 @@ export default async function LibraryArticlePage({
   return (
     <div id="top">
       <SiteHeader current="/library" />
+      <PageCrest />
 
       <header className="lb-reader-hero">
         <Link href="/library" className="v2-link lb-reader-back">

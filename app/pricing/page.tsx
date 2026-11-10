@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import SectionLabel from '@/components/brand/SectionLabel'
 import SiteHeader from '@/components/site/SiteHeader'
+import PageCrest from '@/components/site/PageCrest'
 import SiteFooter from '@/components/site/SiteFooter'
 import PricingCard from '@/components/pricing/PricingCard'
 import PricingStage from '@/components/pricing/PricingStage'
@@ -82,6 +83,7 @@ export default function PricingPage() {
         <Jaali variant="panel" zIndex={-1} maskPosition="50% 460px" maskSize="760px 900px" />
       )}
       <SiteHeader current="/pricing" />
+      <PageCrest />
 
       <PricingStage
         head={

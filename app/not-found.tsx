@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import SiteHeader from '@/components/site/SiteHeader'
+import PageCrest from '@/components/site/PageCrest'
 import SiteFooter from '@/components/site/SiteFooter'
 
 /**
@@ -19,6 +20,7 @@ export default function NotFound() {
   return (
     <div id="top">
       <SiteHeader />
+      <PageCrest />
 
       <main
         style={{

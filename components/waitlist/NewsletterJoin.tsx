@@ -41,7 +41,9 @@ export default function NewsletterJoin({
     <section
       className={`v2-section v2-two-col${firstSection ? ' v2-section-top v2-section-newsletter' : ''}`}
       style={{
-        background: 'var(--jn-surface)',
+        // Rework, Mon 9 Nov: at the top of /library it sits on the page's
+        // bark to soil band (components/site/PageCrest), so it lets it show.
+        background: firstSection ? 'transparent' : 'var(--jn-surface)',
         borderTop: '0.5px solid rgba(245,240,232,0.06)',
         // LV5-031 (Kush: "first name is clipping, move it down to be aligned
         // with the text to the left"): was 'center', which let the taller

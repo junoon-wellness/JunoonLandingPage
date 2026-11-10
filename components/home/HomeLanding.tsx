@@ -72,9 +72,10 @@ const RING_LABELS: [string, number][] = [
 ]
 const RING_R = 42
 
-/** Which entrance the ring plays (see app/home.css, "4b"). The pick is
- * 'sweep'; 'orbit' is the other one shown on the review page. */
-const RING_VARIANT: 'sweep' | 'orbit' = 'sweep'
+/** Which entrance the ring plays (see app/home.css, "4b"). Kush's pick,
+ * Mon 9 Nov 10:22 PM: 'orbit' ("Fan out like a clock"). 'sweep' is the
+ * other one, kept so a switch back is this one line. */
+const RING_VARIANT: 'sweep' | 'orbit' = 'orbit'
 
 /** The J Score card's drawn bars (lengths are illustrative, as in the mock-up). */
 const SCORE_BARS: [string, number][] = [
@@ -594,7 +595,7 @@ function DownloadSection() {
 
 export default function HomeLanding() {
   return (
-    <div className="jh jn-home-scale" id="top">
+    <div className="jh jh-home jn-home-scale" id="top">
       <SiteHeader current="/" />
       <main>
         <TopSection />

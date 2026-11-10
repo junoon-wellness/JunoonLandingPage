@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import SiteHeader from '@/components/site/SiteHeader'
+import PageCrest from '@/components/site/PageCrest'
 import SiteFooter from '@/components/site/SiteFooter'
 import ContactForm from '@/components/cta/ContactForm'
 import JharokhaFrame from '@/components/brand/JharokhaFrame'
@@ -280,6 +281,7 @@ export default function AboutPage() {
         <Jaali variant="panel" zIndex={-1} maskPosition="50% 1900px" maskSize="1100px 720px" />
       )}
       <SiteHeader current="/about" />
+      <PageCrest />
 
       {/*
         LV5-022 SC3. Kush: "text is bland." Given the site's standard headline
