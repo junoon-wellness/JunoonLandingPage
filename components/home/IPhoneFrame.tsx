@@ -18,6 +18,9 @@ import Image from 'next/image'
  *     `screenBg` fills the gap in the capture's own top colour.
  *   - children: a screen drawn in code (breathwork, live classes, day 14),
  *     with the status bar and island drawn by the frame.
+ *   - children with `bare`: full-screen captures supplied by the caller (the
+ *     first screen's rotating gallery), placed straight in the screen with no
+ *     drawn status bar or island, as with fit="full".
  */
 export default function IPhoneFrame({
   src,
@@ -27,6 +30,7 @@ export default function IPhoneFrame({
   width,
   sizes = '240px',
   className,
+  bare = false,
   children,
 }: {
   src?: string
@@ -36,9 +40,10 @@ export default function IPhoneFrame({
   width?: string
   sizes?: string
   className?: string
+  bare?: boolean
   children?: ReactNode
 }) {
-  const drawsChrome = !src || fit === 'bottom'
+  const drawsChrome = !bare && (!src || fit === 'bottom')
   return (
     <div className={`ip${className ? ` ${className}` : ''}`} style={width ? { width } : undefined}>
       <div className="ip-body">
@@ -56,6 +61,8 @@ export default function IPhoneFrame({
               height={1430}
               sizes={sizes}
             />
+          ) : bare ? (
+            children
           ) : (
             <div className="ip-drawn" role={alt ? 'img' : undefined} aria-label={alt || undefined}>
               {children}

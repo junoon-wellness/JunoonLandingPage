@@ -2,6 +2,8 @@ import { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import AppStoreBadge from '@/components/waitlist/AppStoreBadge'
+import HeroGallery from '@/components/home/HeroGallery'
+import IndiaMiniature from '@/components/home/IndiaMiniature'
 import IPhoneFrame from '@/components/home/IPhoneFrame'
 import SiteFooter from '@/components/site/SiteFooter'
 import SiteHeader from '@/components/site/SiteHeader'
@@ -31,6 +33,11 @@ import {
  * drawings (the map of India with the Junoon tree, the drawn session player,
  * the ring of the eight limbs), same type and spacing. Styles: app/home.css.
  *
+ * Round 2 (Kush, 9:30 call Tue 10 Nov): the drawn player became a rotating
+ * gallery of real screens (HeroGallery), the map became a Pahari-miniature
+ * drawing (IndiaMiniature), and the ring of the limbs turns slowly after it
+ * fans out (RING_SPIN).
+ *
  * The mock-up's section 8 (members' words) is left out on purpose: no member
  * quotes until real members give theirs (Kush, D1).
  *
@@ -39,15 +46,38 @@ import {
  * page never shows a placeholder.
  */
 
-/** The five pins around the map: on the outline, never over the tree
- * (rework, Mon 9 Nov: "the trees kind of covered"). */
-const CHIP_POS: React.CSSProperties[] = [
-  { top: '4%', left: '2%' },
-  { top: '22%', right: '-4%' },
-  { top: '46%', left: '-12%' },
-  { top: '68%', right: '-10%' },
-  { top: '80%', left: '-4%' },
+/** The five labels around the map (round 2, Kush, 9:30 call Tue 10 Nov: "put
+ * the asanas, pranayam, real Indian instructors, eight limbs, and ancient texts
+ * around that image"), in HERO_CHIPS order, each with a small line drawing.
+ * Positions are the `.c0`..`.c4` classes in app/home.css. */
+const CHIP_ICONS: React.ReactNode[] = [
+  // Asana: a standing pose, arms joined overhead
+  <svg key="asana" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="7.5" r="2" />
+    <path d="M12 9.5v6.5M12 16l-2.5 5M12 13l3.5 1.5-3.5 1.5M10.5 6 12 1.5 13.5 6" />
+  </svg>,
+  // Pranayama: the breath, three soft waves
+  <svg key="pranayama" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3 8c3-3 6 3 9 0s6 3 9 0M3 13c3-3 6 3 9 0s6 3 9 0M3 18c3-3 6 3 9 0s6 3 9 0" />
+  </svg>,
+  // Ancient texts: a palm-leaf manuscript
+  <svg key="texts" viewBox="0 0 24 24" aria-hidden="true">
+    <rect x="2.5" y="7" width="19" height="10" rx="3" />
+    <path d="M6 10.5h9M6 13.5h12" />
+    <circle cx="18.5" cy="10.5" r=".6" />
+  </svg>,
+  // Real Indian instructors: our teachers' own photos (see INSTRUCTOR_FACES)
+  null,
+  // Patanjali's 8 limbs: a wheel of eight spokes
+  <svg key="limbs" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" />
+    <circle cx="12" cy="12" r="2" />
+    <path d="M12 3v7M12 14v7M3 12h7M14 12h7M5.6 5.6l5 5M13.4 13.4l5 5M18.4 5.6l-5 5M10.6 13.4l-5 5" />
+  </svg>,
 ]
+
+/** Three of the teachers on the About page, by their real photos. */
+const INSTRUCTOR_FACES = ['/instructors/divya-head.jpg', '/instructors/amman-head-v2.jpg', '/instructors/shoam-head.jpg']
 
 /** Seven spokes and seven labels around the ring; Samadhi is the centre. */
 const RING_SPOKES = [
@@ -77,6 +107,12 @@ const RING_R = 42
  * other one, kept so a switch back is this one line. */
 const RING_VARIANT: 'sweep' | 'orbit' = 'orbit'
 
+/** Round 2 (Kush, 9:30 call Tue 10 Nov: "a version of ... the fan one ...
+ * rotating in a circle after it's been fanned out just slowly"): once the ring
+ * has fanned out, the seven limbs and their spokes turn slowly round Samadhi,
+ * the labels staying upright. `false` brings back the still ring. */
+const RING_SPIN = true
+
 /** The J Score card's drawn bars (lengths are illustrative, as in the mock-up). */
 const SCORE_BARS: [string, number][] = [
   ['Yama', 62],
@@ -105,74 +141,6 @@ function Tree({ className, size }: { className?: string; size: number }) {
 
 /* ── 1. The top ──────────────────────────────────────────────────────────── */
 
-function DrawnPlayer() {
-  return (
-    <div className="h4-phone" aria-label="The Junoon session player, drawn" role="img">
-      <div className="h4-screen">
-        <div className="h4-island" />
-        <div className="h4-video">
-          <div className="h4-top">
-            <span className="h4-pill">Evening wind-down</span>
-            <span className="h4-pill">With Anjali</span>
-          </div>
-          <svg viewBox="0 0 270 312" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <circle cx="135" cy="150" r="96" fill="#E8B870" opacity=".12" />
-            <circle cx="135" cy="150" r="64" fill="#E8B870" opacity=".14" />
-            <circle cx="135" cy="128" r="17" fill="#F5F0E8" />
-            <path d="M135 148 C112 150 104 176 106 206 L164 206 C166 176 158 150 135 148 Z" fill="#F5F0E8" />
-            <path d="M88 214 C108 198 162 198 182 214 C170 224 100 224 88 214 Z" fill="#F5F0E8" />
-            <path d="M108 170 C96 184 98 198 116 204" stroke="#F5F0E8" strokeWidth="9" fill="none" strokeLinecap="round" />
-            <path d="M162 170 C174 184 172 198 154 204" stroke="#F5F0E8" strokeWidth="9" fill="none" strokeLinecap="round" />
-            <rect x="40" y="226" width="190" height="4" rx="2" fill="#C4724A" opacity=".7" />
-          </svg>
-        </div>
-        <div className="h4-body">
-          <div className="h4-kick">Nadi shodhana · 3 of 6</div>
-          <div className="h4-title">Alternate nostril breathing</div>
-          <p className="h4-cue">
-            Breathe in through the left for four. You slept five hours, so we&apos;re keeping tonight slow.
-          </p>
-          <div className="h4-bar">
-            <div className="h4-track">
-              <i />
-            </div>
-            <div className="h4-time">
-              <span>6:12</span>
-              <span>of 15:00</span>
-            </div>
-            <div className="h4-ctrl">
-              <svg className="h4-sm" viewBox="0 0 24 24" fill="#F5F0E8" aria-hidden="true">
-                <path d="M6 5h2v14H6zM20 5v14L9 12z" />
-              </svg>
-              <div className="h4-play">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#2C2118" aria-hidden="true">
-                  <rect x="6" y="5" width="4" height="14" rx="1" />
-                  <rect x="14" y="5" width="4" height="14" rx="1" />
-                </svg>
-              </div>
-              <svg className="h4-sm" viewBox="0 0 24 24" fill="#F5F0E8" aria-hidden="true">
-                <path d="M16 5h2v14h-2zM4 5v14l11-7z" />
-              </svg>
-            </div>
-            <div className="h4-next">
-              Next up <b>Child&apos;s pose · 2 min</b>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function Feature({ title, body }: { title: string; body: string }) {
-  return (
-    <div className="h4-feat">
-      <b>{title}</b>
-      <span>{body}</span>
-    </div>
-  )
-}
-
 function TopSection() {
   return (
     <section className="h4" id="top-section">
@@ -182,18 +150,16 @@ function TopSection() {
       </div>
       <div className="h4-stage">
         <div className="h4-roots">
-          <Image
-            className="h4-art"
-            src="/landing/roots-india.webp"
-            alt="Map of India with the Junoon tree at its heart"
-            width={640}
-            height={800}
-            sizes="(max-width: 760px) 290px, 330px"
-            priority
-          />
+          <IndiaMiniature />
           {HERO_CHIPS.map((chip, i) => (
-            <span key={chip} className="h4-chip" style={CHIP_POS[i]}>
-              <i aria-hidden="true" />
+            <span key={chip} className={`h4-chip c${i}`}>
+              {CHIP_ICONS[i] ?? (
+                <span className="h4-faces" aria-hidden="true">
+                  {INSTRUCTOR_FACES.map(src => (
+                    <Image key={src} src={src} alt="" width={44} height={44} sizes="22px" />
+                  ))}
+                </span>
+              )}
               {chip}
             </span>
           ))}
@@ -209,19 +175,7 @@ function TopSection() {
             <path d="M126 50 L140 64 L122 70" fill="none" stroke="#C4724A" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
-        <div className="h4-app">
-          <div className="h4-feats l">
-            {FEATURES.slice(0, 4).map(f => (
-              <Feature key={f.title} {...f} />
-            ))}
-          </div>
-          <DrawnPlayer />
-          <div className="h4-feats r">
-            {FEATURES.slice(4).map(f => (
-              <Feature key={f.title} {...f} />
-            ))}
-          </div>
-        </div>
+        <HeroGallery features={FEATURES} />
       </div>
       <div className="h4-offer">
         <p className="fine">
@@ -330,25 +284,28 @@ function LimbsSection() {
           <InView
             className="k-ring"
             data-variant={RING_VARIANT}
+            data-spin={RING_SPIN || undefined}
             role="img"
             aria-label="The eight limbs of yoga in a ring, with Samadhi, your J Score, in the middle"
           >
             <div className="halo" />
-            <svg viewBox="0 0 100 100" className="spokes" aria-hidden="true">
-              {RING_SPOKES.map(([x1, y1, x2, y2], i) => (
-                <line key={`${x1}-${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} pathLength={1} style={{ '--i': i } as React.CSSProperties} />
+            <div className="orb">
+              <svg viewBox="0 0 100 100" className="spokes" aria-hidden="true">
+                {RING_SPOKES.map(([x1, y1, x2, y2], i) => (
+                  <line key={`${x1}-${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} pathLength={1} style={{ '--i': i } as React.CSSProperties} />
+                ))}
+              </svg>
+              {RING_LABELS.map(([name, angle], i) => (
+                <span
+                  key={name}
+                  className="lb"
+                  style={{ '--a': `${angle}deg`, '--r': RING_R, '--i': i } as React.CSSProperties}
+                  aria-hidden="true"
+                >
+                  <b>{name}</b>
+                </span>
               ))}
-            </svg>
-            {RING_LABELS.map(([name, angle], i) => (
-              <span
-                key={name}
-                className="lb"
-                style={{ '--a': `${angle}deg`, '--r': RING_R, '--i': i } as React.CSSProperties}
-                aria-hidden="true"
-              >
-                {name}
-              </span>
-            ))}
+            </div>
             <div className="centre" aria-hidden="true">
               <Tree size={64} />
               Samadhi
