@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import NavV2 from '@/components/waitlist/NavV2'
-import FooterV2 from '@/components/waitlist/FooterV2'
+import SiteHeader from '@/components/site/SiteHeader'
+import SiteFooter from '@/components/site/SiteFooter'
 import ContactForm from '@/components/cta/ContactForm'
 import JharokhaFrame from '@/components/brand/JharokhaFrame'
 import Jaali from '@/components/brand/Jaali'
@@ -33,7 +33,7 @@ const INSTRUCTOR_ARCH = true
  * from inside the "Meet our instructors" section — see the note there and
  * the "ONE GEOMETRY" note atop components/brand/Jaali.tsx.
  */
-const ABOUT_JAALI = true
+const ABOUT_JAALI = false // rework 9 Nov: one plain ground, as on the home page
 
 
 /*
@@ -279,7 +279,7 @@ export default function AboutPage() {
       {ABOUT_JAALI && (
         <Jaali variant="panel" zIndex={-1} maskPosition="50% 1900px" maskSize="1100px 720px" />
       )}
-      <NavV2 />
+      <SiteHeader current="/about" />
 
       {/*
         LV5-022 SC3. Kush: "text is bland." Given the site's standard headline
@@ -418,7 +418,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <FooterV2 />
+      <SiteFooter />
     </div>
   )
 }

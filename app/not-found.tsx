@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import NavV2 from '@/components/waitlist/NavV2'
-import FooterV2 from '@/components/waitlist/FooterV2'
+import SiteHeader from '@/components/site/SiteHeader'
+import SiteFooter from '@/components/site/SiteFooter'
 
 /**
  * LV5-048 — branded 404. Next renders this for any route that resolves to
@@ -18,7 +18,7 @@ import FooterV2 from '@/components/waitlist/FooterV2'
 export default function NotFound() {
   return (
     <div id="top">
-      <NavV2 />
+      <SiteHeader />
 
       <main
         style={{
@@ -89,7 +89,7 @@ export default function NotFound() {
         </div>
       </main>
 
-      <FooterV2 />
+      <SiteFooter />
     </div>
   )
 }

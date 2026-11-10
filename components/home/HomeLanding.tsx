@@ -2,15 +2,16 @@ import { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import AppStoreBadge from '@/components/waitlist/AppStoreBadge'
-import { APP_STORE_URL } from '@/lib/constants'
-import { INDIA_MAP_PATH } from '@/lib/india-map'
+import IPhoneFrame from '@/components/home/IPhoneFrame'
+import SiteFooter from '@/components/site/SiteFooter'
+import SiteHeader from '@/components/site/SiteHeader'
+import InView from '@/components/home/InView'
 import {
   CLASSES,
   COACH,
   DOWNLOAD,
   FAQ_COPY,
   FEATURES,
-  FOOTER_LEGAL,
   HERO_CHIPS,
   HERO_FINE,
   HERO_HEADLINE,
@@ -19,7 +20,6 @@ import {
   JSCORE,
   LEARN,
   LIMBS,
-  NAV_CTA,
   PRICING,
   TWO_WEEKS,
 } from '@/lib/landing-copy'
@@ -39,13 +39,14 @@ import {
  * page never shows a placeholder.
  */
 
-/** The five pins around the map, positions as in the mock-up. */
+/** The five pins around the map: on the outline, never over the tree
+ * (rework, Mon 9 Nov: "the trees kind of covered"). */
 const CHIP_POS: React.CSSProperties[] = [
-  { top: '6%', left: '4%' },
-  { top: '22%', right: 0 },
-  { top: '46%', left: '-6%' },
-  { top: '60%', right: 0 },
-  { top: '76%', left: '8%' },
+  { top: '4%', left: '2%' },
+  { top: '22%', right: '-4%' },
+  { top: '46%', left: '-12%' },
+  { top: '68%', right: '-10%' },
+  { top: '80%', left: '-4%' },
 ]
 
 /** Seven spokes and seven labels around the ring; Samadhi is the centre. */
@@ -58,15 +59,22 @@ const RING_SPOKES = [
   [25.6, 55.6, 13.9, 58.2],
   [30.5, 34.4, 21.1, 26.9],
 ]
-const RING_LABELS: [string, number, number][] = [
-  ['Yama', 50.0, 8.0],
-  ['Niyama', 82.8, 23.8],
-  ['Asana', 90.9, 59.3],
-  ['Pranayama', 68.2, 87.8],
-  ['Pratyahara', 31.8, 87.8],
-  ['Dharana', 9.1, 59.3],
-  ['Dhyana', 17.2, 23.8],
+/** Each label's angle from the top (degrees, clockwise); all sit 42% of the
+ * ring's width from the centre (the same places as the mock-up's x/y). */
+const RING_LABELS: [string, number][] = [
+  ['Yama', 0],
+  ['Niyama', 51.4],
+  ['Asana', 102.9],
+  ['Pranayama', 154.3],
+  ['Pratyahara', 205.7],
+  ['Dharana', 257.1],
+  ['Dhyana', 308.6],
 ]
+const RING_R = 42
+
+/** Which entrance the ring plays (see app/home.css, "4b"). The pick is
+ * 'sweep'; 'orbit' is the other one shown on the review page. */
+const RING_VARIANT: 'sweep' | 'orbit' = 'sweep'
 
 /** The J Score card's drawn bars (lengths are illustrative, as in the mock-up). */
 const SCORE_BARS: [string, number][] = [
@@ -77,40 +85,6 @@ const SCORE_BARS: [string, number][] = [
   ['Pratyahara', 35],
   ['Dharana', 55],
   ['Dhyana', 44],
-]
-
-const SOCIALS = [
-  {
-    label: 'Instagram',
-    href: 'https://www.instagram.com/junoonwellness/',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
-        <rect x="3" y="3" width="18" height="18" rx="5" />
-        <circle cx="12" cy="12" r="4" />
-        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-      </svg>
-    ),
-  },
-  {
-    label: 'TikTok',
-    href: 'https://www.tiktok.com/@junoonwellness',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M16.5 3c.3 2.3 1.7 3.9 4 4.1v3.2c-1.5 0-2.8-.4-4-1.2v6.1c0 3.6-2.6 5.8-5.6 5.8-3.1 0-5.4-2.4-5.4-5.4 0-3.3 2.8-5.7 6.3-5.3v3.3c-1.6-.4-3.1.6-3.1 2.1 0 1.2 1 2.2 2.2 2.2 1.4 0 2.4-.9 2.4-2.8V3h3.2z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/junoon-wellness/',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <rect x="3" y="9" width="4" height="12" />
-        <circle cx="5" cy="5" r="2.2" />
-        <path d="M10 9h3.8v1.7c.6-1 1.9-2 3.9-2 3.2 0 4.3 2 4.3 5.3V21h-4v-6.2c0-1.6-.3-2.8-1.9-2.8-1.7 0-2.1 1.2-2.1 2.8V21h-4z" />
-      </svg>
-    ),
-  },
 ]
 
 function Tree({ className, size }: { className?: string; size: number }) {
@@ -127,16 +101,6 @@ function Tree({ className, size }: { className?: string; size: number }) {
   )
 }
 
-/** A real app screen inside a drawn phone. */
-function PhoneShot({ src, alt, tall = false }: { src: string; alt: string; tall?: boolean }) {
-  return (
-    <div className="k-phone">
-      <div className={tall ? 'scr tall' : 'scr'}>
-        <Image src={src} alt={alt} width={330} height={717} sizes="228px" />
-      </div>
-    </div>
-  )
-}
 
 /* ── 1. The top ──────────────────────────────────────────────────────────── */
 
@@ -217,10 +181,15 @@ function TopSection() {
       </div>
       <div className="h4-stage">
         <div className="h4-roots">
-          <svg className="h4-map" viewBox="-10 -6 345 365" role="img" aria-label="Map of India with the Junoon tree">
-            <path d={INDIA_MAP_PATH} fill="#3A2A1F" stroke="#8A5A3E" strokeWidth="1.6" strokeLinejoin="round" />
-            <image href="/landing/junoon-tree.png" x="78" y="130" width="110" height="113" />
-          </svg>
+          <Image
+            className="h4-art"
+            src="/landing/roots-india.webp"
+            alt="Map of India with the Junoon tree at its heart"
+            width={640}
+            height={800}
+            sizes="(max-width: 760px) 290px, 330px"
+            priority
+          />
           {HERO_CHIPS.map((chip, i) => (
             <span key={chip} className="h4-chip" style={CHIP_POS[i]}>
               <i aria-hidden="true" />
@@ -271,9 +240,12 @@ function TopSection() {
 /* ── 2. Your first two weeks ─────────────────────────────────────────────── */
 
 function TwoWeeksSection() {
+  // Both are crops from the lower part of the screen, so they sit at the
+  // bottom of the frame; the gap above is the capture's own top colour.
+  // New full captures are on the review page's list (test account name).
   const pics = [
-    { src: '/landing/day1-coach-chat.jpg', alt: 'The coach chat', w: 420, h: 792 },
-    { src: '/landing/day2-session.jpg', alt: 'A session playing', w: 420, h: 659 },
+    { src: '/landing/day1-coach-chat.jpg', alt: 'The coach chat', bg: '#120d0a' },
+    { src: '/landing/day2-session.jpg', alt: 'A session playing', bg: '#120d0a' },
   ]
   return (
     <section className="k-s alt" id="two-weeks">
@@ -297,17 +269,19 @@ function TwoWeeksSection() {
                 <h3>{d.title}</h3>
                 <p>{d.body}</p>
               </div>
-              {i < 2 ? (
-                <div className="pic">
-                  <Image src={pics[i].src} alt={pics[i].alt} width={pics[i].w} height={pics[i].h} sizes="(max-width: 760px) 90vw, 360px" />
-                </div>
-              ) : (
-                <div className="pic drawn">
-                  <div className="k-mini">
-                    J Score<small>day 14</small>
-                  </div>
-                </div>
-              )}
+              <div className="pic phone">
+                {i < 2 ? (
+                  <IPhoneFrame src={pics[i].src} alt={pics[i].alt} fit="bottom" screenBg={pics[i].bg} sizes="214px" />
+                ) : (
+                  <IPhoneFrame alt="Your J Score on day 14">
+                    <div className="ds">
+                      <div className="k-mini">
+                        J Score<small>day 14</small>
+                      </div>
+                    </div>
+                  </IPhoneFrame>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -337,8 +311,8 @@ function CoachSection() {
         </div>
         <div className="k-picside">
           <div className="k-phones">
-            <PhoneShot src="/landing/coach-chat.jpg" alt="The coach chat" />
-            <PhoneShot src="/landing/coach-voices.jpg" alt="Choosing a coach voice" />
+            <IPhoneFrame src="/landing/coach-chat.jpg" alt="The coach chat" sizes="236px" />
+            <IPhoneFrame src="/landing/coach-voices.jpg" alt="Choosing a coach voice" sizes="236px" />
           </div>
         </div>
       </div>
@@ -353,15 +327,25 @@ function LimbsSection() {
     <section className="k-s alt" id="eight-limbs">
       <div className="swrap k-limbs2">
         <div>
-          <div className="k-ring" role="img" aria-label="The eight limbs of yoga in a ring, with Samadhi, your J Score, in the middle">
+          <InView
+            className="k-ring"
+            data-variant={RING_VARIANT}
+            role="img"
+            aria-label="The eight limbs of yoga in a ring, with Samadhi, your J Score, in the middle"
+          >
             <div className="halo" />
             <svg viewBox="0 0 100 100" className="spokes" aria-hidden="true">
-              {RING_SPOKES.map(([x1, y1, x2, y2]) => (
-                <line key={`${x1}-${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} />
+              {RING_SPOKES.map(([x1, y1, x2, y2], i) => (
+                <line key={`${x1}-${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} pathLength={1} style={{ '--i': i } as React.CSSProperties} />
               ))}
             </svg>
-            {RING_LABELS.map(([name, left, top]) => (
-              <span key={name} style={{ left: `${left}%`, top: `${top}%` }} aria-hidden="true">
+            {RING_LABELS.map(([name, angle], i) => (
+              <span
+                key={name}
+                className="lb"
+                style={{ '--a': `${angle}deg`, '--r': RING_R, '--i': i } as React.CSSProperties}
+                aria-hidden="true"
+              >
                 {name}
               </span>
             ))}
@@ -374,7 +358,7 @@ function LimbsSection() {
                 your J Score
               </small>
             </div>
-          </div>
+          </InView>
         </div>
         <div>
           <div className="k-eye">{LIMBS.eyebrow}</div>
@@ -415,19 +399,19 @@ function JScoreSection() {
           </ul>
         </div>
         <div className="k-picside">
-          <div className="k-score" role="img" aria-label="The J Score card: one ring, with a bar for each limb">
+          <InView className="k-score" role="img" aria-label="The J Score card: one ring, with a bar for each limb">
             <div className="ringbig">
               <span>J Score</span>
             </div>
             <div className="bars">
-              {SCORE_BARS.map(([name, w]) => (
+              {SCORE_BARS.map(([name, w], i) => (
                 <div key={name} className="k-b">
                   <span>{name}</span>
-                  <i style={{ width: `${w}%` }} />
+                  <i style={{ width: `${w}%`, '--i': i } as React.CSSProperties} />
                 </div>
               ))}
             </div>
-          </div>
+          </InView>
         </div>
       </div>
     </section>
@@ -464,21 +448,32 @@ function ClassesSection() {
                 {c.soon ? <span className="k-soon">Coming soon</span> : null}
                 <p>{c.body}</p>
               </div>
-              {i === 0 ? (
-                <div className="pic">
-                  <Image src="/landing/class-library.jpg" alt="The class library" width={330} height={717} sizes="(max-width: 760px) 90vw, 360px" />
-                </div>
-              ) : i === 1 ? (
-                <div className="pic drawn">
-                  <BreathDrawing />
-                </div>
-              ) : (
-                <div className="pic drawn">
-                  <div className="k-mini">
-                    Live<small>coming soon</small>
-                  </div>
-                </div>
-              )}
+              <div className="pic phone">
+                {i === 0 ? (
+                  <IPhoneFrame src="/landing/class-library.jpg" alt="The class library" sizes="214px" />
+                ) : i === 1 ? (
+                  // Drawn until the new breathwork screen is captured (see
+                  // the review page's list of new screenshots).
+                  <IPhoneFrame alt="A breathwork session">
+                    <div className="ds">
+                      <div className="ds-kick">Breathwork</div>
+                      <BreathDrawing />
+                      <div className="ds-bar">
+                        <i />
+                      </div>
+                      <div className="ds-small">Cycle 4 of 10</div>
+                    </div>
+                  </IPhoneFrame>
+                ) : (
+                  <IPhoneFrame alt="Live classes, coming soon">
+                    <div className="ds">
+                      <div className="k-mini">
+                        Live<small>coming soon</small>
+                      </div>
+                    </div>
+                  </IPhoneFrame>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -508,7 +503,7 @@ function LearnSection() {
           <p className="k-small">{LEARN.body}</p>
         </div>
         <div className="k-picside">
-          <PhoneShot src="/landing/learn-tab.jpg" alt="The Learn tab" tall />
+          <IPhoneFrame src="/landing/learn-tab.jpg" alt="The Learn tab" sizes="250px" />
         </div>
       </div>
     </section>
@@ -597,62 +592,10 @@ function DownloadSection() {
   )
 }
 
-function Footer() {
-  return (
-    <footer className="k-s k-footer">
-      <div className="swrap k-foot">
-        <div>
-          <p>{FOOTER_LEGAL}</p>
-        </div>
-        <div className="k-fl">
-          <Image src="/logo-clay-text-96.png" alt="" aria-hidden="true" width={96} height={96} sizes="36px" />
-          <div className="k-soc">
-            {SOCIALS.map(s => (
-              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}>
-                {s.icon}
-              </a>
-            ))}
-          </div>
-          {/* About and Library are here because phones have no top-bar menu
-              (Kush's yes, Mon 9 Nov 5:05 PM). /privacy, /terms and /contact
-              are required: App Store review and the app's support URL point
-              at them (see FooterV2). */}
-          <nav className="k-flinks" aria-label="More pages, legal and contact">
-            <Link href="/about">About</Link>
-            <Link href="/library">Library</Link>
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
-            <Link href="/contact">Contact</Link>
-            <a href="https://www.instagram.com/junoonwellness/" target="_blank" rel="noopener noreferrer">
-              Instagram
-            </a>
-          </nav>
-        </div>
-      </div>
-    </footer>
-  )
-}
-
 export default function HomeLanding() {
   return (
     <div className="jh jn-home-scale" id="top">
-      <header className="swrap nav">
-        <Link href="/" className="brand" aria-label="Junoon, home">
-          <Image src="/logo-clay-text-96.png" alt="" aria-hidden="true" width={96} height={96} sizes="40px" priority />
-          Junoon
-        </Link>
-        <nav className="links" aria-label="Primary">
-          <Link href="/" aria-current="page">
-            Home
-          </Link>
-          <Link href="/pricing">Pricing</Link>
-          <Link href="/about">About</Link>
-          <Link href="/library">Library</Link>
-        </nav>
-        <a href={APP_STORE_URL} className="cta">
-          {NAV_CTA}
-        </a>
-      </header>
+      <SiteHeader current="/" />
       <main>
         <TopSection />
         <TwoWeeksSection />
@@ -665,7 +608,7 @@ export default function HomeLanding() {
         <FaqSection />
         <DownloadSection />
       </main>
-      <Footer />
+      <SiteFooter />
     </div>
   )
 }

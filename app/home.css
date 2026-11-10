@@ -1323,3 +1323,388 @@ html:has(.jh) body::-webkit-scrollbar {
     align-items: flex-start;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   REWORK, Mon 9 Nov 2026 (the launch call's list, items 1 to 11)
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* 1. The logo: the app's own icon (white banyan on bark), rounded like the
+   home-screen icon. */
+.jh .brand img.brand-icon,
+.jh .k-fl img.brand-icon {
+  border-radius: 22.5%;
+  box-shadow: 0 0 0 1px rgba(245, 240, 232, 0.12);
+}
+
+/* 2. The roots of India: one clean drawing (line map, white tree), no
+   overlapping layers. The pins sit around the outline, never on the tree. */
+.jh .h4-art {
+  width: 100%;
+  max-width: 330px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* 3. ONE iPhone frame (components/home/IPhoneFrame.tsx). Screen 1179 x 2556,
+   everything else sized in container units of the frame's own width. */
+.jh .ip {
+  --ip-w: 220px;
+  width: var(--ip-w);
+  flex: none;
+  container-type: inline-size;
+}
+.jh .ip-body {
+  position: relative;
+  padding: 3.6cqw;
+  border-radius: 16.5cqw;
+  background: linear-gradient(145deg, #4b3c31, #1d1510 40%, #2b2019 70%, #514034);
+  box-shadow:
+    inset 0 0 0 0.5cqw #120d0a,
+    inset 0 0 0 0.9cqw rgba(245, 240, 232, 0.16),
+    0 6cqw 14cqw rgba(0, 0, 0, 0.5);
+}
+.jh .ip-screen {
+  position: relative;
+  aspect-ratio: 1179 / 2556;
+  border-radius: 13cqw;
+  overflow: hidden;
+  background: #0f0b08;
+}
+.jh .ip .ip-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+.jh .ip .ip-img.ip-img-bottom {
+  object-fit: contain;
+  object-position: bottom;
+}
+.jh .ip-drawn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.jh .ip-island {
+  position: absolute;
+  top: 3.1cqw;
+  left: 50%;
+  width: 30cqw;
+  height: 8.6cqw;
+  transform: translateX(-50%);
+  border-radius: 99px;
+  background: #000;
+}
+.jh .ip-status {
+  position: absolute;
+  top: 3.4cqw;
+  left: 0;
+  right: 0;
+  height: 8cqw;
+  padding: 0 7.5cqw 0 10cqw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #f5f0e8;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 4.6cqw;
+  letter-spacing: -0.01em;
+}
+.jh .ip-status svg {
+  width: 17cqw;
+  height: auto;
+  fill: currentColor;
+}
+.jh .ip-btn {
+  position: absolute;
+  width: 1.1cqw;
+  border-radius: 1cqw;
+  background: #3d3027;
+}
+.jh .ip-btn-action { left: -0.8cqw; top: 19%; height: 6%; }
+.jh .ip-btn-up { left: -0.8cqw; top: 28%; height: 9.5%; }
+.jh .ip-btn-down { left: -0.8cqw; top: 39.5%; height: 9.5%; }
+.jh .ip-btn-power { right: -0.8cqw; top: 30%; height: 14%; }
+
+/* phones in the cards (two weeks, classes): a full phone, standing on the
+   card's floor, all three the same size */
+.jh .k-dcard .pic.phone {
+  height: auto;
+  border: 0;
+  margin: auto 0 0;
+  padding: 6px 22px 26px;
+  display: flex;
+  justify-content: center;
+  background: radial-gradient(70% 55% at 50% 60%, rgba(196, 114, 74, 0.2), transparent 70%);
+  border-radius: 0;
+}
+.jh .k-dcard .pic.phone .ip {
+  --ip-w: 214px;
+}
+.jh .k-phones .ip {
+  --ip-w: 236px;
+}
+.jh .k-phones .ip:nth-child(2) {
+  margin-top: 46px;
+}
+.jh .k-picside > .ip {
+  --ip-w: 250px;
+}
+
+/* drawn screens inside the frame */
+.jh .ds {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5cqw;
+  padding: 16cqw 8cqw 10cqw;
+  text-align: center;
+  background: radial-gradient(90% 60% at 50% 45%, #3a2619, #120d0a 75%);
+}
+.jh .ds-kick {
+  font-size: 4.4cqw;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.jh .ds-title {
+  font-family: var(--serif);
+  font-size: 9cqw;
+  line-height: 1.05;
+  color: var(--ivory);
+}
+.jh .ds .k-breath {
+  width: 64cqw;
+  height: 64cqw;
+}
+.jh .ds .k-mini {
+  width: 60cqw;
+  height: 60cqw;
+  border-width: 3.6cqw;
+  font-size: 10cqw;
+}
+.jh .ds .k-mini small {
+  font-size: 5.4cqw;
+}
+.jh .ds-bar {
+  width: 70%;
+  height: 1.2cqw;
+  border-radius: 9px;
+  background: rgba(245, 240, 232, 0.14);
+  overflow: hidden;
+}
+.jh .ds-bar i {
+  display: block;
+  width: 38%;
+  height: 100%;
+  background: var(--clay);
+}
+.jh .ds-small {
+  font-size: 4.6cqw;
+  color: var(--muted);
+}
+
+/* 4a. The J Score bars grow to their lengths on scroll (InView). */
+.jh .k-score .k-b i {
+  transform-origin: left center;
+}
+.jh [data-anim='ready'] .k-score .k-b i,
+.jh .k-score[data-anim='ready'] .k-b i {
+  transform: scaleX(0);
+}
+.jh .k-score[data-anim='in'] .k-b i {
+  transform: scaleX(1);
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i) * 90ms + 150ms);
+}
+.jh .k-score .ringbig {
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.9s;
+}
+.jh .k-score[data-anim='ready'] .ringbig {
+  transform: rotate(-120deg) scale(0.85);
+  opacity: 0;
+}
+.jh .k-score[data-anim='ready'] .ringbig span,
+.jh .k-score[data-anim='in'] .ringbig span {
+  display: inline-block;
+}
+.jh .k-score[data-anim='ready'] .ringbig span {
+  transform: rotate(120deg);
+}
+.jh .k-score[data-anim='in'] .ringbig span {
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 4b. The ring of the limbs. Every label sits on a circle: --a is its angle
+   from the top, --r its distance from the centre (in % of the ring). Two
+   entrances, chosen by data-variant on .k-ring:
+     sweep (default, the pick): Samadhi grows in, then the seven limbs slide
+       out from the centre along their spokes to their places.
+     orbit: Samadhi grows in, then the seven limbs fan out clockwise from the
+       top, like the hand of a clock, each settling at its place. */
+.jh .k-ring {
+  --ring: 420px;
+}
+.jh .k-ring > span.lb {
+  left: 50%;
+  top: 50%;
+  transform: rotate(var(--a)) translateY(calc(var(--r) * var(--ring) / -100)) rotate(calc(var(--a) * -1)) translate(-50%, -50%);
+}
+.jh .k-ring .spokes line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.jh .k-ring .centre {
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s;
+}
+.jh .k-ring .halo {
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 1s;
+}
+.jh .k-ring[data-anim='ready'] .centre {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+}
+.jh .k-ring[data-anim='ready'] .halo {
+  opacity: 0;
+  transform: scale(0.4);
+}
+.jh .k-ring[data-anim='ready'] > span.lb {
+  opacity: 0;
+}
+.jh .k-ring[data-anim='ready'] .spokes line {
+  stroke-dashoffset: 1;
+}
+.jh .k-ring[data-anim='in'] > span.lb {
+  transition:
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i) * 80ms + 450ms),
+    opacity 0.5s ease calc(var(--i) * 80ms + 450ms);
+}
+.jh .k-ring[data-anim='in'] .spokes line {
+  transition: stroke-dashoffset 0.7s ease calc(var(--i) * 80ms + 400ms);
+}
+/* sweep: start at the centre */
+.jh .k-ring[data-variant='sweep'][data-anim='ready'] > span.lb {
+  transform: rotate(var(--a)) translateY(0) rotate(calc(var(--a) * -1)) translate(-50%, -50%) scale(0.5);
+}
+.jh .k-ring[data-variant='sweep'] > span.lb {
+  transform: rotate(var(--a)) translateY(calc(var(--r) * var(--ring) / -100)) rotate(calc(var(--a) * -1)) translate(-50%, -50%) scale(1);
+}
+/* orbit: start together at the top, then fan out clockwise */
+.jh .k-ring[data-variant='orbit'][data-anim='ready'] > span.lb {
+  transform: rotate(0deg) translateY(calc(var(--r) * var(--ring) / -100)) rotate(0deg) translate(-50%, -50%);
+}
+.jh .k-ring[data-variant='orbit'][data-anim='in'] > span.lb {
+  transition:
+    transform 1.6s cubic-bezier(0.45, 0, 0.2, 1) 500ms,
+    opacity 0.4s ease 450ms;
+}
+.jh .k-ring[data-variant='orbit'][data-anim='in'] .spokes line {
+  transition: stroke-dashoffset 0.6s ease calc(var(--i) * 120ms + 1500ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jh .k-ring *,
+  .jh .k-score * {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .jh .h4-art {
+    max-width: 290px;
+  }
+  .jh .k-ring {
+    --ring: 340px;
+  }
+  .jh .k-dcard .pic.phone .ip {
+    --ip-w: 200px;
+  }
+  .jh .k-phones .ip {
+    --ip-w: 160px;
+  }
+  .jh .k-phones .ip:nth-child(2) {
+    margin-top: 30px;
+  }
+  .jh .k-picside > .ip {
+    --ip-w: 210px;
+  }
+}
+
+/* 5. The shared top bar and footer on every page (components/site). */
+.jh.jh-bar {
+  z-index: 30;
+}
+.jh .nav-end {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.jh .links a[aria-current='page'] {
+  color: var(--turmeric);
+}
+.jh .nav-menu {
+  display: none;
+  position: relative;
+}
+.jh .nav-menu summary {
+  list-style: none;
+  cursor: pointer;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid var(--line-d);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.jh .nav-menu summary::-webkit-details-marker {
+  display: none;
+}
+.jh .nav-menu summary span {
+  display: block;
+  width: 16px;
+  height: 1.6px;
+  border-radius: 2px;
+  background: var(--ivory);
+}
+.jh .nav-menu nav {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 180px;
+  background: var(--n3);
+  border: 1px solid var(--line-d);
+  border-radius: 16px;
+  padding: 8px;
+  display: grid;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+}
+.jh .nav-menu nav a {
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.jh .nav-menu nav a[aria-current='page'] {
+  color: var(--turmeric);
+  background: rgba(232, 184, 112, 0.08);
+}
+@media (max-width: 760px) {
+  .jh .nav-menu {
+    display: block;
+  }
+}

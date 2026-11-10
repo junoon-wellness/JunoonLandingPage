@@ -3493,3 +3493,44 @@ body::before {
     width: auto;
   }
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   ONE THEME (rework, Mon 9 Nov 2026). Kush on the launch call: "redo the
+   other three pages accordingly, so it fits all in one theme". Pricing,
+   About, Library and the articles take the home page's look: its ground,
+   its clay and turmeric, its section labels, no jaali and no grain. The
+   home page's own rules live in app/home.css; these are the tokens and the
+   few shared pieces the older pages read.
+   ════════════════════════════════════════════════════════════════════════ */
+:root {
+  --jn-bg: #120D0A;
+  --jn-surface: #2E2219;
+  --jn-clay: #C4724A;
+  --jn-turmeric: #E8B870;
+  --jn-gold: #E8B870;
+}
+body::before {
+  display: none;
+}
+/* Section labels: the home page's small clay capitals. */
+.eyebrow {
+  font-family: var(--font-sans), 'DM Sans', system-ui, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #C4724A;
+}
+/* The toran garland becomes the home page's plain hairline. */
+.jn-toran-svg {
+  display: none;
+}
+.jn-toran::after {
+  content: '';
+  display: block;
+  max-width: 1200px;
+  height: 1px;
+  margin: 0 auto;
+  background: rgba(245, 240, 232, 0.13);
+}
