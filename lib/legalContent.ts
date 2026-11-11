@@ -641,8 +641,16 @@ export const termsOfService: LegalDoc = {
 export const privacyPolicy: LegalDoc = {
   "title": "Privacy Policy",
   "subtitle": "Junoon Wellness LLC",
-  "updated": "Last updated: November 1, 2026",
+  "updated": "Last updated: November 11, 2026",
   "blocks": [
+    {
+      "type": "h2",
+      "text": "What changed on November 11, 2026"
+    },
+    {
+      "type": "p",
+      "text": "We added one paragraph to Section 10 (Account Deletion). It says that if you had a paid subscription, a bare record of it stays after you delete your account, what that record holds, and why. Nothing else changed."
+    },
     {
       "type": "h2",
       "text": "What changed on November 1, 2026"
@@ -1258,7 +1266,11 @@ export const privacyPolicy: LegalDoc = {
     },
     {
       "type": "p",
-      "text": "When you delete your account we delete your profile, your coach conversation, what the coach remembers, your reflection notes, your Apple Health summaries and your practice activity. A few technical records are kept without your name or email (for example, video playback attempts, subscription attempts, Apple's subscription notices, coach usage counts, moments when the coach had no suitable practice to suggest, practice milestones and one-time internal safety copies of scores and saved items). Some of these still carry a random internal ID or Apple's purchase reference, and we no longer hold an account that ID belongs to."
+      "text": "When you delete your account we delete your profile, your coach conversation, what the coach remembers, your reflection notes, your Apple Health summaries and your practice activity. A few technical records are kept without your name or email (for example, video playback attempts, subscription attempts, Apple's subscription notices, a bare record of a paid subscription (see the next paragraph), coach usage counts, moments when the coach had no suitable practice to suggest, practice milestones and one-time internal safety copies of scores and saved items). Some of these still carry a random internal ID or Apple's purchase reference, and we no longer hold an account that ID belongs to."
+    },
+    {
+      "type": "p",
+      "text": "If you had a paid subscription, we keep a bare record of it after you delete your account: the plan, Apple's purchase reference, whether it was a test or live purchase, the start and end dates, and its status. It is marked \"account deleted\" and holds no name, email or account ID. We keep it so our subscription numbers stay correct and so Apple's later notices about that purchase, such as a renewal or an end date, can be recorded. Apple can still connect its purchase reference to your Apple ID, and if you later create a new Junoon account with the same Apple ID, we may match that record to your new account. Deleting your account does not cancel your subscription with Apple; you cancel that in your Apple ID settings."
     },
     {
       "type": "p",
