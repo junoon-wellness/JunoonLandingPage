@@ -12,7 +12,7 @@
  * Which app glyph each row uses:
  *   plan       tabPlanStrokes()      calendar with the day dot
  *   coach      tabCoachStrokes()     speech bubble
- *   meditation (the lotus, below)     the five-path outline lotus
+ *   meditation (the lotus, below)     the seven-path outline lotus (redrawn 12 Nov)
  *   yoga       yogaStrokes()         seated figure
  *   live       playCircleStrokes()   play in a ring
  *   ritual     habitStrokes()        the loop with its sweep
@@ -58,17 +58,20 @@ export default function FeatureIcon({
         <path d="M7.2 4.4 L16.8 4.4 C19.0091 4.4 20.8 6.1909 20.8 8.4 L20.8 12.4 C20.8 14.6091 19.0091 16.4 16.8 16.4 L10.4 16.4 L7.2 19.6 L7.2 16.4 C4.9909 16.4 3.2 14.6091 3.2 12.4 L3.2 8.4 C3.2 6.1909 4.9909 4.4 7.2 4.4 Z" />
       )}
 
-      {/* Kush, 2026-08-24: the brand lotus became a FILLED two-tone mark and
-          moved to nav + footer only. This stroked lotus is the drawing that
-          used to live in components/brand/Lotus.tsx; it stays here because a
-          filled pink mark would not sit beside five sage line icons. */}
+      {/* Arnav, 2026-11-12: redrawn as the classic outline lotus (a tall
+          centre petal, two back petals peeking out, two side petals and two
+          petals lying flat at the base), after the reference he sent in HQ.
+          Still stroked sage, so it sits beside the five line icons. The
+          filled two-tone brand lotus stays in nav + footer only. */}
       {name === 'meditation' && (
         <>
-          <path d="M12 5 C10.2 7.2 9.6 9.6 9.6 12.6 C9.6 15.6 10.6 17.6 12 18.4 C13.4 17.6 14.4 15.6 14.4 12.6 C14.4 9.6 13.8 7.2 12 5 Z" />
-          <path d="M7.2 8.4 C7.6 11 8.4 13.6 10 15.6 C10.6 16.4 11.2 17 12 18.4" />
-          <path d="M16.8 8.4 C16.4 11 15.6 13.6 14 15.6 C13.4 16.4 12.8 17 12 18.4" />
-          <path d="M3.6 12.2 C4.6 14.8 6.4 17 9 18.2 C10 18.6 11 18.8 12 18.8 C13 18.8 14 18.6 15 18.2 C17.6 17 19.4 14.8 20.4 12.2" />
-          <path d="M8 20.4 C9.3 20.9 10.6 21.1 12 21.1 C13.4 21.1 14.7 20.9 16 20.4" />
+          <path d="M12 4 C9.7 6.6 9.2 9.8 9.4 12.6 C9.6 15.2 10.6 17 12 17.9 C13.4 17 14.4 15.2 14.6 12.6 C14.8 9.8 14.3 6.6 12 4 Z" />
+          <path d="M9.6 9.2 C9.2 7.9 8.4 6.9 7.2 6.3 C6.8 7.6 6.8 8.9 7.1 10.2" />
+          <path d="M14.4 9.2 C14.8 7.9 15.6 6.9 16.8 6.3 C17.2 7.6 17.2 8.9 16.9 10.2" />
+          <path d="M9.5 11.9 C8 10.3 5.7 9.4 3 9.3 C3.4 12.1 4.6 14.2 6.4 15.6" />
+          <path d="M14.5 11.9 C16 10.3 18.3 9.4 21 9.3 C20.6 12.1 19.4 14.2 17.6 15.6" />
+          <path d="M12 18.4 C9.4 15.8 5.6 15.2 2.6 16.4 C5.2 19 8.9 19.8 12 18.4 Z" />
+          <path d="M12 18.4 C14.6 15.8 18.4 15.2 21.4 16.4 C18.8 19 15.1 19.8 12 18.4 Z" />
         </>
       )}
       {name === 'yoga' && (
