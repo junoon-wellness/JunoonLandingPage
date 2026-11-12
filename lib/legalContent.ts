@@ -641,7 +641,7 @@ export const termsOfService: LegalDoc = {
 export const privacyPolicy: LegalDoc = {
   "title": "Privacy Policy",
   "subtitle": "Junoon Wellness LLC",
-  "updated": "Last updated: November 11, 2026",
+  "updated": "Last updated: November 12, 2026",
   "blocks": [
     {
       "type": "h2",
@@ -1035,6 +1035,10 @@ export const privacyPolicy: LegalDoc = {
           "Legal obligation / Legitimate interests"
         ]
       ]
+    },
+    {
+      "type": "p",
+      "text": "Members of the Junoon team (currently our founders and core team) can see your name, contact details, join date and the answers you gave when you joined, so we can support you, check how Junoon is working for you, and improve the app; you can ask us not to contact you at any time through the option when you join or by emailing admin@junoonwellness.com."
     },
     {
       "type": "p",
