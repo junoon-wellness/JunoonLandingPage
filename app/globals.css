@@ -2837,6 +2837,9 @@ body::before {
   padding: 28px 48px;
 }
 .ab-people-heading { margin-bottom: 20px; }
+/* Team, then instructors: their two paddings met in a 63 px empty band
+   (round 2 dead-space check); the second section starts closer. */
+.ab-people-section + .ab-people-panel { padding-top: 12px; }
 /* 🔴 minmax(0, 1fr), NOT 1fr. A bare `1fr` track has an auto MINIMUM, so a
    child that wants to be wider than its share - which is exactly what an
    unconstrained <JharokhaFrame> or a large <Image> does - pushes the track
@@ -3011,7 +3014,8 @@ body::before {
 .ab-contact-section {
   position: relative;
   z-index: 2;
-  padding: 40px 48px 56px;
+  /* bottom 56 -> 40 (round 2 dead-space check: 50 px band above the footer) */
+  padding: 40px 48px 40px;
   border-top: 0.5px solid var(--jn-hairline);
 }
 .ab-contact-inner {
@@ -3167,7 +3171,9 @@ body::before {
 .lb-app-link-row {
   display: flex;
   justify-content: center;
-  padding: 24px 48px 56px;
+  /* bottom 56 -> 40: the dead-space check (round 2) measured a 61 px empty
+     band above the footer; the limit is 48 */
+  padding: 24px 48px 40px;
 }
 .lb-app-link {
   display: inline-flex;
@@ -3491,5 +3497,159 @@ body::before {
     right: 12px;
     bottom: 12px;
     width: auto;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   ONE THEME (rework, Mon 9 Nov 2026). Kush on the launch call: "redo the
+   other three pages accordingly, so it fits all in one theme". Pricing,
+   About, Library and the articles take the home page's look: its ground,
+   its clay and turmeric, its section labels, no jaali and no grain. The
+   home page's own rules live in app/home.css; these are the tokens and the
+   few shared pieces the older pages read.
+   ════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Kush, Mon 9 Nov 10:22 PM: "The black background just looks too plain ...
+     use our dark rich brown". The other pages sit on the Design System's
+     bark (Brand.bark #2C2118), cards one step up (#3A2A1F, between bark and
+     soil #4A3728). The home page keeps its near-black (the rule below).
+     Contrast on bark, measured: ivory 13.8:1, body text at 64% 6.5:1,
+     --jn-mute 6.8:1, turmeric 8.6:1, section labels #D98A62 5.8:1. */
+  --jn-bg: #2C2118;
+  --jn-surface: #3A2A1F;
+  --jn-surface-deep: #4A3728;
+  /* Was #93826F: 4.23:1 on bark, under AA. */
+  --jn-mute: #B4A99F;
+  /* Button FILL with white words: #C4724A gives 3.59:1 (under AA); the
+     Design System's clay700 gives 4.85:1. */
+  --jn-clay: #A85E3A;
+  --jn-turmeric: #E8B870;
+  --jn-gold: #E8B870;
+}
+/* The home page keeps its own near-black ground. */
+html:has(.jh-home) {
+  --jn-bg: #120D0A;
+}
+/* The shared top bar and footer take the brown on the other pages. */
+html:not(:has(.jh-home)) .jh.jh-bar {
+  background: transparent;
+}
+html:not(:has(.jh-home)) .jh.jh-foot,
+html:not(:has(.jh-home)) .jh.jh-foot .k-footer {
+  background: #231A13;
+}
+body::before {
+  display: none;
+}
+/* Section labels: the home page's small clay capitals. */
+.eyebrow {
+  font-family: var(--font-sans), 'DM Sans', system-ui, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  /* clay #C4724A is 4.37:1 on bark (under AA at 13px); this lighter clay is 5.8:1 */
+  color: #D98A62;
+}
+/* The toran garland becomes the home page's plain hairline. */
+.jn-toran-svg {
+  display: none;
+}
+.jn-toran::after {
+  content: '';
+  display: block;
+  max-width: 1200px;
+  height: 1px;
+  margin: 0 auto;
+  background: rgba(245, 240, 232, 0.13);
+}
+
+/* ── The pages after the home page: one quiet Junoon motif (Kush, Mon 9 Nov
+   10:24 PM: "not look bland ... add some flare ... keep it on brand").
+   components/site/PageCrest.tsx draws the layer; the rest is here. ── */
+.pc {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 780px;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.pc-band {
+  position: absolute;
+  inset: 0;
+  /* DesignKit header-gradient: bark to soil, the Deep surface */
+  background: linear-gradient(135deg, #2C2118 0%, #4A3728 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
+}
+.pc-tree {
+  position: absolute;
+  right: -70px;
+  top: 64px;
+  width: 540px;
+  height: auto;
+  opacity: 0.06;
+}
+@media (max-width: 760px) {
+  .pc { height: 620px; }
+  .pc-tree { width: 300px; right: -90px; top: 70px; opacity: 0.05; }
+}
+
+/* Section labels open with a small turmeric dot (no glow ring: round 2,
+   Kush, 9:30 call Tue 10 Nov, "don't like the glow"). */
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  flex: none;
+  width: 7px;
+  height: 7px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: #E8B870;
+}
+
+/* The section divider stays the home page's plain hairline (above). Round 2
+   took out the glowing turmeric line and the banyan ring at its centre (Kush,
+   9:30 call Tue 10 Nov, on the Library page: "don't like the glow ... let's
+   take that part out, the center below that we added"). */
+.jn-toran {
+  /* the line alone needs no margin of its own: the sections around it already
+     give it air (the dead-space check found 58 to 66 px bands with 30 px here) */
+  margin: 0;
+}
+
+/* Cards lift a little, with a warm top edge. */
+.lb-card,
+.pr-card,
+.ab-person-card {
+  transition: transform 0.3s var(--jn-ease), box-shadow 0.3s var(--jn-ease), border-color 0.3s;
+}
+.lb-card,
+.pr-card {
+  border: 1px solid rgba(245, 240, 232, 0.08);
+  box-shadow: inset 0 1px 0 rgba(232, 184, 112, 0.2), 0 12px 30px rgba(0, 0, 0, 0.22);
+}
+.lb-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(232, 184, 112, 0.35);
+}
+
+/* The home page's scroll reveal, in CSS: cards rise in as they enter the
+   screen, where the browser supports scroll timelines; elsewhere, and with
+   reduced motion, they simply show. Uses `translate`, so hover still lifts. */
+@keyframes pc-rise {
+  from { opacity: 0; translate: 0 26px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .lb-card,
+    .ab-person-card {
+      animation: pc-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
   }
 }

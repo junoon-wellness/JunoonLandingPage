@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { meta } from "@/lib/meta";
 import { clean } from "@/lib/text";
-import JaaliGround from "@/components/brand/JaaliGround";
 import MetaPixel from "@/components/analytics/MetaPixel";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+// The home page's look (every rule scoped under .jh): loaded for every page
+// since the rework of Mon 9 Nov, because the shared top bar and footer
+// (components/site) use it on every page.
+import "./home.css";
 
 /*
  * Fonts are WOFF2, subset to Latin (2026-09-01).
@@ -103,11 +106,9 @@ export default function RootLayout({
             `position:absolute; inset:0` against this box, so they all share
             one containing block and one tile origin. See the "ONE GEOMETRY"
             note atop components/brand/Jaali.tsx. */}
-        {/* LV5-022 SC5: the site-wide jaali ground. One mount, every route.
-            Absolute and at z-index -1, so it sits under all page content and
-            over the canvas background, and scrolls with the page like every
-            panel. See components/brand/JaaliGround.tsx. */}
-        <JaaliGround />
+        {/* Rework, Mon 9 Nov 2026: the jaali ground is off, so every page
+            has the home page's plain dark ground (one theme). The component
+            stays in components/brand to bring it back. */}
         {children}
         {/*
           Added 2026-09-01 — the site had NO analytics at all while a Meta

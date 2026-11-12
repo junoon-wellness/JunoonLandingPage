@@ -2,15 +2,18 @@ import { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import AppStoreBadge from '@/components/waitlist/AppStoreBadge'
-import { APP_STORE_URL } from '@/lib/constants'
-import { INDIA_MAP_PATH } from '@/lib/india-map'
+import HeroGallery from '@/components/home/HeroGallery'
+import IndiaMiniature from '@/components/home/IndiaMiniature'
+import IPhoneFrame from '@/components/home/IPhoneFrame'
+import SiteFooter from '@/components/site/SiteFooter'
+import SiteHeader from '@/components/site/SiteHeader'
+import InView from '@/components/home/InView'
 import {
   CLASSES,
   COACH,
   DOWNLOAD,
   FAQ_COPY,
   FEATURES,
-  FOOTER_LEGAL,
   HERO_CHIPS,
   HERO_FINE,
   HERO_HEADLINE,
@@ -19,7 +22,6 @@ import {
   JSCORE,
   LEARN,
   LIMBS,
-  NAV_CTA,
   PRICING,
   TWO_WEEKS,
 } from '@/lib/landing-copy'
@@ -31,22 +33,51 @@ import {
  * drawings (the map of India with the Junoon tree, the drawn session player,
  * the ring of the eight limbs), same type and spacing. Styles: app/home.css.
  *
+ * Round 2 (Kush, 9:30 call Tue 10 Nov): the drawn player became a rotating
+ * gallery of real screens (HeroGallery), the map became a Pahari-miniature
+ * drawing (IndiaMiniature), and the ring of the limbs turns slowly after it
+ * fans out (RING_SPIN).
+ *
  * The mock-up's section 8 (members' words) is left out on purpose: no member
  * quotes until real members give theirs (Kush, D1).
  *
- * Where the mock-up had a "picture goes here" box (breathwork, live classes)
- * this draws a stand-in in the same style as the Day 14 ring, so the live
+ * Where the mock-up had a "picture goes here" box (live classes) this draws a
+ * stand-in in the same style as the Day 14 ring, so the live
  * page never shows a placeholder.
  */
 
-/** The five pins around the map, positions as in the mock-up. */
-const CHIP_POS: React.CSSProperties[] = [
-  { top: '6%', left: '4%' },
-  { top: '22%', right: 0 },
-  { top: '46%', left: '-6%' },
-  { top: '60%', right: 0 },
-  { top: '76%', left: '8%' },
+/** The five labels around the map (round 2, Kush, 9:30 call Tue 10 Nov: "put
+ * the asanas, pranayam, real Indian instructors, eight limbs, and ancient texts
+ * around that image"), in HERO_CHIPS order, each with a small line drawing.
+ * Positions are the `.c0`..`.c4` classes in app/home.css. */
+const CHIP_ICONS: React.ReactNode[] = [
+  // Asana: a standing pose, arms joined overhead
+  <svg key="asana" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="7.5" r="2" />
+    <path d="M12 9.5v6.5M12 16l-2.5 5M12 13l3.5 1.5-3.5 1.5M10.5 6 12 1.5 13.5 6" />
+  </svg>,
+  // Pranayama: the breath, three soft waves
+  <svg key="pranayama" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3 8c3-3 6 3 9 0s6 3 9 0M3 13c3-3 6 3 9 0s6 3 9 0M3 18c3-3 6 3 9 0s6 3 9 0" />
+  </svg>,
+  // Ancient texts: a palm-leaf manuscript
+  <svg key="texts" viewBox="0 0 24 24" aria-hidden="true">
+    <rect x="2.5" y="7" width="19" height="10" rx="3" />
+    <path d="M6 10.5h9M6 13.5h12" />
+    <circle cx="18.5" cy="10.5" r=".6" />
+  </svg>,
+  // Real Indian instructors: our teachers' own photos (see INSTRUCTOR_FACES)
+  null,
+  // Patanjali's 8 limbs: a wheel of eight spokes
+  <svg key="limbs" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" />
+    <circle cx="12" cy="12" r="2" />
+    <path d="M12 3v7M12 14v7M3 12h7M14 12h7M5.6 5.6l5 5M13.4 13.4l5 5M18.4 5.6l-5 5M10.6 13.4l-5 5" />
+  </svg>,
 ]
+
+/** Three of the teachers on the About page, by their real photos. */
+const INSTRUCTOR_FACES = ['/instructors/divya-head.jpg', '/instructors/amman-head-v2.jpg', '/instructors/shoam-head.jpg']
 
 /** Seven spokes and seven labels around the ring; Samadhi is the centre. */
 const RING_SPOKES = [
@@ -58,15 +89,29 @@ const RING_SPOKES = [
   [25.6, 55.6, 13.9, 58.2],
   [30.5, 34.4, 21.1, 26.9],
 ]
-const RING_LABELS: [string, number, number][] = [
-  ['Yama', 50.0, 8.0],
-  ['Niyama', 82.8, 23.8],
-  ['Asana', 90.9, 59.3],
-  ['Pranayama', 68.2, 87.8],
-  ['Pratyahara', 31.8, 87.8],
-  ['Dharana', 9.1, 59.3],
-  ['Dhyana', 17.2, 23.8],
+/** Each label's angle from the top (degrees, clockwise); all sit 42% of the
+ * ring's width from the centre (the same places as the mock-up's x/y). */
+const RING_LABELS: [string, number][] = [
+  ['Yama', 0],
+  ['Niyama', 51.4],
+  ['Asana', 102.9],
+  ['Pranayama', 154.3],
+  ['Pratyahara', 205.7],
+  ['Dharana', 257.1],
+  ['Dhyana', 308.6],
 ]
+const RING_R = 42
+
+/** Which entrance the ring plays (see app/home.css, "4b"). Kush's pick,
+ * Mon 9 Nov 10:22 PM: 'orbit' ("Fan out like a clock"). 'sweep' is the
+ * other one, kept so a switch back is this one line. */
+const RING_VARIANT: 'sweep' | 'orbit' = 'orbit'
+
+/** Round 2 (Kush, 9:30 call Tue 10 Nov: "a version of ... the fan one ...
+ * rotating in a circle after it's been fanned out just slowly"): once the ring
+ * has fanned out, the seven limbs and their spokes turn slowly round Samadhi,
+ * the labels staying upright. `false` brings back the still ring. */
+const RING_SPIN = true
 
 /** The J Score card's drawn bars (lengths are illustrative, as in the mock-up). */
 const SCORE_BARS: [string, number][] = [
@@ -77,40 +122,6 @@ const SCORE_BARS: [string, number][] = [
   ['Pratyahara', 35],
   ['Dharana', 55],
   ['Dhyana', 44],
-]
-
-const SOCIALS = [
-  {
-    label: 'Instagram',
-    href: 'https://www.instagram.com/junoonwellness/',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
-        <rect x="3" y="3" width="18" height="18" rx="5" />
-        <circle cx="12" cy="12" r="4" />
-        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-      </svg>
-    ),
-  },
-  {
-    label: 'TikTok',
-    href: 'https://www.tiktok.com/@junoonwellness',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M16.5 3c.3 2.3 1.7 3.9 4 4.1v3.2c-1.5 0-2.8-.4-4-1.2v6.1c0 3.6-2.6 5.8-5.6 5.8-3.1 0-5.4-2.4-5.4-5.4 0-3.3 2.8-5.7 6.3-5.3v3.3c-1.6-.4-3.1.6-3.1 2.1 0 1.2 1 2.2 2.2 2.2 1.4 0 2.4-.9 2.4-2.8V3h3.2z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/company/junoon-wellness/',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <rect x="3" y="9" width="4" height="12" />
-        <circle cx="5" cy="5" r="2.2" />
-        <path d="M10 9h3.8v1.7c.6-1 1.9-2 3.9-2 3.2 0 4.3 2 4.3 5.3V21h-4v-6.2c0-1.6-.3-2.8-1.9-2.8-1.7 0-2.1 1.2-2.1 2.8V21h-4z" />
-      </svg>
-    ),
-  },
 ]
 
 function Tree({ className, size }: { className?: string; size: number }) {
@@ -127,86 +138,8 @@ function Tree({ className, size }: { className?: string; size: number }) {
   )
 }
 
-/** A real app screen inside a drawn phone. */
-function PhoneShot({ src, alt, tall = false }: { src: string; alt: string; tall?: boolean }) {
-  return (
-    <div className="k-phone">
-      <div className={tall ? 'scr tall' : 'scr'}>
-        <Image src={src} alt={alt} width={330} height={717} sizes="228px" />
-      </div>
-    </div>
-  )
-}
 
 /* ── 1. The top ──────────────────────────────────────────────────────────── */
-
-function DrawnPlayer() {
-  return (
-    <div className="h4-phone" aria-label="The Junoon session player, drawn" role="img">
-      <div className="h4-screen">
-        <div className="h4-island" />
-        <div className="h4-video">
-          <div className="h4-top">
-            <span className="h4-pill">Evening wind-down</span>
-            <span className="h4-pill">With Anjali</span>
-          </div>
-          <svg viewBox="0 0 270 312" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-            <circle cx="135" cy="150" r="96" fill="#E8B870" opacity=".12" />
-            <circle cx="135" cy="150" r="64" fill="#E8B870" opacity=".14" />
-            <circle cx="135" cy="128" r="17" fill="#F5F0E8" />
-            <path d="M135 148 C112 150 104 176 106 206 L164 206 C166 176 158 150 135 148 Z" fill="#F5F0E8" />
-            <path d="M88 214 C108 198 162 198 182 214 C170 224 100 224 88 214 Z" fill="#F5F0E8" />
-            <path d="M108 170 C96 184 98 198 116 204" stroke="#F5F0E8" strokeWidth="9" fill="none" strokeLinecap="round" />
-            <path d="M162 170 C174 184 172 198 154 204" stroke="#F5F0E8" strokeWidth="9" fill="none" strokeLinecap="round" />
-            <rect x="40" y="226" width="190" height="4" rx="2" fill="#C4724A" opacity=".7" />
-          </svg>
-        </div>
-        <div className="h4-body">
-          <div className="h4-kick">Nadi shodhana · 3 of 6</div>
-          <div className="h4-title">Alternate nostril breathing</div>
-          <p className="h4-cue">
-            Breathe in through the left for four. You slept five hours, so we&apos;re keeping tonight slow.
-          </p>
-          <div className="h4-bar">
-            <div className="h4-track">
-              <i />
-            </div>
-            <div className="h4-time">
-              <span>6:12</span>
-              <span>of 15:00</span>
-            </div>
-            <div className="h4-ctrl">
-              <svg className="h4-sm" viewBox="0 0 24 24" fill="#F5F0E8" aria-hidden="true">
-                <path d="M6 5h2v14H6zM20 5v14L9 12z" />
-              </svg>
-              <div className="h4-play">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#2C2118" aria-hidden="true">
-                  <rect x="6" y="5" width="4" height="14" rx="1" />
-                  <rect x="14" y="5" width="4" height="14" rx="1" />
-                </svg>
-              </div>
-              <svg className="h4-sm" viewBox="0 0 24 24" fill="#F5F0E8" aria-hidden="true">
-                <path d="M16 5h2v14h-2zM4 5v14l11-7z" />
-              </svg>
-            </div>
-            <div className="h4-next">
-              Next up <b>Child&apos;s pose · 2 min</b>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function Feature({ title, body }: { title: string; body: string }) {
-  return (
-    <div className="h4-feat">
-      <b>{title}</b>
-      <span>{body}</span>
-    </div>
-  )
-}
 
 function TopSection() {
   return (
@@ -217,13 +150,16 @@ function TopSection() {
       </div>
       <div className="h4-stage">
         <div className="h4-roots">
-          <svg className="h4-map" viewBox="-10 -6 345 365" role="img" aria-label="Map of India with the Junoon tree">
-            <path d={INDIA_MAP_PATH} fill="#3A2A1F" stroke="#8A5A3E" strokeWidth="1.6" strokeLinejoin="round" />
-            <image href="/landing/junoon-tree.png" x="78" y="130" width="110" height="113" />
-          </svg>
+          <IndiaMiniature />
           {HERO_CHIPS.map((chip, i) => (
-            <span key={chip} className="h4-chip" style={CHIP_POS[i]}>
-              <i aria-hidden="true" />
+            <span key={chip} className={`h4-chip c${i}`}>
+              {CHIP_ICONS[i] ?? (
+                <span className="h4-faces" aria-hidden="true">
+                  {INSTRUCTOR_FACES.map(src => (
+                    <Image key={src} src={src} alt="" width={44} height={44} sizes="22px" />
+                  ))}
+                </span>
+              )}
               {chip}
             </span>
           ))}
@@ -239,19 +175,7 @@ function TopSection() {
             <path d="M126 50 L140 64 L122 70" fill="none" stroke="#C4724A" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
-        <div className="h4-app">
-          <div className="h4-feats l">
-            {FEATURES.slice(0, 4).map(f => (
-              <Feature key={f.title} {...f} />
-            ))}
-          </div>
-          <DrawnPlayer />
-          <div className="h4-feats r">
-            {FEATURES.slice(4).map(f => (
-              <Feature key={f.title} {...f} />
-            ))}
-          </div>
-        </div>
+        <HeroGallery features={FEATURES} />
       </div>
       <div className="h4-offer">
         <p className="fine">
@@ -271,9 +195,11 @@ function TopSection() {
 /* ── 2. Your first two weeks ─────────────────────────────────────────────── */
 
 function TwoWeeksSection() {
+  // Full-screen captures from the staging app (Mon 9 Nov night, test logins
+  // renamed Rohan and Arjun), so they fill the frame like every other phone.
   const pics = [
-    { src: '/landing/day1-coach-chat.jpg', alt: 'The coach chat', w: 420, h: 792 },
-    { src: '/landing/day2-session.jpg', alt: 'A session playing', w: 420, h: 659 },
+    { src: '/landing/day1-coach-chat.jpg', alt: 'The coach chat on day one' },
+    { src: '/landing/day2-session.jpg', alt: 'A session playing' },
   ]
   return (
     <section className="k-s alt" id="two-weeks">
@@ -297,17 +223,19 @@ function TwoWeeksSection() {
                 <h3>{d.title}</h3>
                 <p>{d.body}</p>
               </div>
-              {i < 2 ? (
-                <div className="pic">
-                  <Image src={pics[i].src} alt={pics[i].alt} width={pics[i].w} height={pics[i].h} sizes="(max-width: 760px) 90vw, 360px" />
-                </div>
-              ) : (
-                <div className="pic drawn">
-                  <div className="k-mini">
-                    J Score<small>day 14</small>
-                  </div>
-                </div>
-              )}
+              <div className="pic phone">
+                {i < 2 ? (
+                  <IPhoneFrame src={pics[i].src} alt={pics[i].alt} sizes="214px" />
+                ) : (
+                  <IPhoneFrame alt="Your J Score on day 14">
+                    <div className="ds">
+                      <div className="k-mini">
+                        J Score<small>day 14</small>
+                      </div>
+                    </div>
+                  </IPhoneFrame>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -337,8 +265,8 @@ function CoachSection() {
         </div>
         <div className="k-picside">
           <div className="k-phones">
-            <PhoneShot src="/landing/coach-chat.jpg" alt="The coach chat" />
-            <PhoneShot src="/landing/coach-voices.jpg" alt="Choosing a coach voice" />
+            <IPhoneFrame src="/landing/coach-chat.jpg" alt="The coach chat" sizes="236px" />
+            <IPhoneFrame src="/landing/coach-voices.jpg" alt="The evening reflection with the coach" sizes="236px" />
           </div>
         </div>
       </div>
@@ -353,18 +281,31 @@ function LimbsSection() {
     <section className="k-s alt" id="eight-limbs">
       <div className="swrap k-limbs2">
         <div>
-          <div className="k-ring" role="img" aria-label="The eight limbs of yoga in a ring, with Samadhi, your J Score, in the middle">
+          <InView
+            className="k-ring"
+            data-variant={RING_VARIANT}
+            data-spin={RING_SPIN || undefined}
+            role="img"
+            aria-label="The eight limbs of yoga in a ring, with Samadhi, your J Score, in the middle"
+          >
             <div className="halo" />
-            <svg viewBox="0 0 100 100" className="spokes" aria-hidden="true">
-              {RING_SPOKES.map(([x1, y1, x2, y2]) => (
-                <line key={`${x1}-${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} />
+            <div className="orb">
+              <svg viewBox="0 0 100 100" className="spokes" aria-hidden="true">
+                {RING_SPOKES.map(([x1, y1, x2, y2], i) => (
+                  <line key={`${x1}-${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} pathLength={1} style={{ '--i': i } as React.CSSProperties} />
+                ))}
+              </svg>
+              {RING_LABELS.map(([name, angle], i) => (
+                <span
+                  key={name}
+                  className="lb"
+                  style={{ '--a': `${angle}deg`, '--r': RING_R, '--i': i } as React.CSSProperties}
+                  aria-hidden="true"
+                >
+                  <b>{name}</b>
+                </span>
               ))}
-            </svg>
-            {RING_LABELS.map(([name, left, top]) => (
-              <span key={name} style={{ left: `${left}%`, top: `${top}%` }} aria-hidden="true">
-                {name}
-              </span>
-            ))}
+            </div>
             <div className="centre" aria-hidden="true">
               <Tree size={64} />
               Samadhi
@@ -374,7 +315,7 @@ function LimbsSection() {
                 your J Score
               </small>
             </div>
-          </div>
+          </InView>
         </div>
         <div>
           <div className="k-eye">{LIMBS.eyebrow}</div>
@@ -415,19 +356,19 @@ function JScoreSection() {
           </ul>
         </div>
         <div className="k-picside">
-          <div className="k-score" role="img" aria-label="The J Score card: one ring, with a bar for each limb">
+          <InView className="k-score" role="img" aria-label="The J Score card: one ring, with a bar for each limb">
             <div className="ringbig">
               <span>J Score</span>
             </div>
             <div className="bars">
-              {SCORE_BARS.map(([name, w]) => (
+              {SCORE_BARS.map(([name, w], i) => (
                 <div key={name} className="k-b">
                   <span>{name}</span>
-                  <i style={{ width: `${w}%` }} />
+                  <i style={{ width: `${w}%`, '--i': i } as React.CSSProperties} />
                 </div>
               ))}
             </div>
-          </div>
+          </InView>
         </div>
       </div>
     </section>
@@ -435,19 +376,6 @@ function JScoreSection() {
 }
 
 /* ── 6. Classes and breathwork ───────────────────────────────────────────── */
-
-function BreathDrawing() {
-  return (
-    <svg className="k-breath" viewBox="0 0 180 180" aria-hidden="true">
-      <circle cx="90" cy="90" r="84" fill="none" stroke="rgba(232,184,112,.22)" strokeWidth="2" />
-      <circle cx="90" cy="90" r="64" fill="rgba(232,184,112,.10)" stroke="rgba(232,184,112,.35)" strokeWidth="1.5" />
-      <circle cx="90" cy="90" r="44" fill="rgba(196,114,74,.28)" />
-      <text x="90" y="98" textAnchor="middle" fill="#E8B870" fontSize="24" style={{ fontFamily: 'var(--serif)' }}>
-        Inhale
-      </text>
-    </svg>
-  )
-}
 
 function ClassesSection() {
   return (
@@ -464,21 +392,21 @@ function ClassesSection() {
                 {c.soon ? <span className="k-soon">Coming soon</span> : null}
                 <p>{c.body}</p>
               </div>
-              {i === 0 ? (
-                <div className="pic">
-                  <Image src="/landing/class-library.jpg" alt="The class library" width={330} height={717} sizes="(max-width: 760px) 90vw, 360px" />
-                </div>
-              ) : i === 1 ? (
-                <div className="pic drawn">
-                  <BreathDrawing />
-                </div>
-              ) : (
-                <div className="pic drawn">
-                  <div className="k-mini">
-                    Live<small>coming soon</small>
-                  </div>
-                </div>
-              )}
+              <div className="pic phone">
+                {i === 0 ? (
+                  <IPhoneFrame src="/landing/class-library.jpg" alt="The class library" sizes="214px" />
+                ) : i === 1 ? (
+                  <IPhoneFrame src="/landing/breathwork.jpg" alt="A breathwork session, mid-breath" sizes="214px" />
+                ) : (
+                  <IPhoneFrame alt="Live classes, coming soon">
+                    <div className="ds">
+                      <div className="k-mini">
+                        Live<small>coming soon</small>
+                      </div>
+                    </div>
+                  </IPhoneFrame>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -508,7 +436,7 @@ function LearnSection() {
           <p className="k-small">{LEARN.body}</p>
         </div>
         <div className="k-picside">
-          <PhoneShot src="/landing/learn-tab.jpg" alt="The Learn tab" tall />
+          <IPhoneFrame src="/landing/learn-tab.jpg" alt="The Learn tab" sizes="250px" />
         </div>
       </div>
     </section>
@@ -597,62 +525,10 @@ function DownloadSection() {
   )
 }
 
-function Footer() {
-  return (
-    <footer className="k-s k-footer">
-      <div className="swrap k-foot">
-        <div>
-          <p>{FOOTER_LEGAL}</p>
-        </div>
-        <div className="k-fl">
-          <Image src="/logo-clay-text-96.png" alt="" aria-hidden="true" width={96} height={96} sizes="36px" />
-          <div className="k-soc">
-            {SOCIALS.map(s => (
-              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}>
-                {s.icon}
-              </a>
-            ))}
-          </div>
-          {/* About and Library are here because phones have no top-bar menu
-              (Kush's yes, Mon 9 Nov 5:05 PM). /privacy, /terms and /contact
-              are required: App Store review and the app's support URL point
-              at them (see FooterV2). */}
-          <nav className="k-flinks" aria-label="More pages, legal and contact">
-            <Link href="/about">About</Link>
-            <Link href="/library">Library</Link>
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
-            <Link href="/contact">Contact</Link>
-            <a href="https://www.instagram.com/junoonwellness/" target="_blank" rel="noopener noreferrer">
-              Instagram
-            </a>
-          </nav>
-        </div>
-      </div>
-    </footer>
-  )
-}
-
 export default function HomeLanding() {
   return (
-    <div className="jh jn-home-scale" id="top">
-      <header className="swrap nav">
-        <Link href="/" className="brand" aria-label="Junoon, home">
-          <Image src="/logo-clay-text-96.png" alt="" aria-hidden="true" width={96} height={96} sizes="40px" priority />
-          Junoon
-        </Link>
-        <nav className="links" aria-label="Primary">
-          <Link href="/" aria-current="page">
-            Home
-          </Link>
-          <Link href="/pricing">Pricing</Link>
-          <Link href="/about">About</Link>
-          <Link href="/library">Library</Link>
-        </nav>
-        <a href={APP_STORE_URL} className="cta">
-          {NAV_CTA}
-        </a>
-      </header>
+    <div className="jh jh-home jn-home-scale" id="top">
+      <SiteHeader current="/" />
       <main>
         <TopSection />
         <TwoWeeksSection />
@@ -665,7 +541,7 @@ export default function HomeLanding() {
         <FaqSection />
         <DownloadSection />
       </main>
-      <Footer />
+      <SiteFooter />
     </div>
   )
 }

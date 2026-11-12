@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import NavV2 from '@/components/waitlist/NavV2'
-import FooterV2 from '@/components/waitlist/FooterV2'
+import SiteHeader from '@/components/site/SiteHeader'
+import PageCrest from '@/components/site/PageCrest'
+import SiteFooter from '@/components/site/SiteFooter'
 import { getAllArticles, getArticleBySlug } from '@/lib/library'
 import { markdownToHtml } from '@/lib/markdown'
 import { clean } from '@/lib/text'
@@ -43,7 +44,8 @@ export default async function LibraryArticlePage({
 
   return (
     <div id="top">
-      <NavV2 />
+      <SiteHeader current="/library" />
+      <PageCrest />
 
       <header className="lb-reader-hero">
         <Link href="/library" className="v2-link lb-reader-back">
@@ -73,7 +75,7 @@ export default async function LibraryArticlePage({
         </div>
       </div>
 
-      <FooterV2 />
+      <SiteFooter />
     </div>
   )
 }

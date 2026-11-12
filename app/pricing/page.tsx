@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import SectionLabel from '@/components/brand/SectionLabel'
-import NavV2 from '@/components/waitlist/NavV2'
-import FooterV2 from '@/components/waitlist/FooterV2'
+import SiteHeader from '@/components/site/SiteHeader'
+import PageCrest from '@/components/site/PageCrest'
+import SiteFooter from '@/components/site/SiteFooter'
 import PricingCard from '@/components/pricing/PricingCard'
 import PricingStage from '@/components/pricing/PricingStage'
 import Jaali from '@/components/brand/Jaali'
@@ -18,7 +19,7 @@ import { LAUNCHING_SOON } from '@/lib/constants'
  * a document-flow change, so the card's actual document position — and this
  * mask's target — stays put near the top of the page throughout the scroll.
  */
-const PRICING_JAALI = true
+const PRICING_JAALI = false // rework 9 Nov: one plain ground, as on the home page
 
 /**
  * LV5-015 — /pricing, board A "One card" (LV5-011, ACCEPTED), padding cut
@@ -81,7 +82,8 @@ export default function PricingPage() {
       {PRICING_JAALI && (
         <Jaali variant="panel" zIndex={-1} maskPosition="50% 460px" maskSize="760px 900px" />
       )}
-      <NavV2 />
+      <SiteHeader current="/pricing" />
+      <PageCrest />
 
       <PricingStage
         head={
@@ -139,7 +141,7 @@ export default function PricingPage() {
         }
       />
 
-      <FooterV2 />
+      <SiteFooter />
     </div>
   )
 }

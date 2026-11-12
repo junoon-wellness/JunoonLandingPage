@@ -2,8 +2,9 @@ import type { Metadata } from 'next'
 import Toran from '@/components/brand/Toran'
 import SectionLabel from '@/components/brand/SectionLabel'
 import Link from 'next/link'
-import NavV2 from '@/components/waitlist/NavV2'
-import FooterV2 from '@/components/waitlist/FooterV2'
+import SiteHeader from '@/components/site/SiteHeader'
+import PageCrest from '@/components/site/PageCrest'
+import SiteFooter from '@/components/site/SiteFooter'
 import NewsletterJoin from '@/components/waitlist/NewsletterJoin'
 import Jaali from '@/components/brand/Jaali'
 import { getAllArticles } from '@/lib/library'
@@ -16,7 +17,7 @@ import { clean } from '@/lib/text'
  * scoped the old call to that local box instead of the page wrapper. See the
  * "ONE GEOMETRY" note atop components/brand/Jaali.tsx.
  */
-const LIBRARY_JAALI = true
+const LIBRARY_JAALI = false // rework 9 Nov: one plain ground, as on the home page
 
 /**
  * LV5-017 — /library. Newsletter block at top, then the 20 real articles
@@ -55,7 +56,8 @@ export default function LibraryPage() {
           maskSize="1100px 620px"
         />
       )}
-      <NavV2 />
+      <SiteHeader current="/library" />
+      <PageCrest />
 
       <NewsletterJoin source={source} firstSection />
 
@@ -86,7 +88,7 @@ export default function LibraryPage() {
         </a>
       </div>
 
-      <FooterV2 />
+      <SiteFooter />
     </div>
   )
 }

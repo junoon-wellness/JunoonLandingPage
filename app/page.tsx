@@ -1,5 +1,4 @@
 import HomeLanding from "@/components/home/HomeLanding";
-import "./home.css";
 
 /**
  * The junoonwellness.com home page.
