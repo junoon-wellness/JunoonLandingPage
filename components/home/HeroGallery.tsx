@@ -18,14 +18,14 @@ import IPhoneFrame from '@/components/home/IPhoneFrame'
  * one lights its dot on the side, and the dot row under the phone shows the
  * same. "Sit and do nothing" has no capture yet, so it is not in the turn.
  *
- * Motion: one screen every 3.6 s, a short cross-fade. It waits while the
+ * Motion: one screen every 5 s, a short cross-fade. It waits while the
  * phone is off screen or the tab is hidden, pauses while a pointer or focus
- * is on it, and stops for good once someone picks a screen. With
+ * is on it, and carries on from the screen someone picks (Arnav, 13 Nov). With
  * prefers-reduced-motion it never turns by itself (the dots still work).
  * Without JavaScript the first screen shows.
  */
 
-export type GalleryFeature = { title: string; body: string }
+export type GalleryFeature = { title: string }
 
 const SCREENS: { src: string; alt: string; feature: number }[] = [
   { src: '/landing/coach-chat.jpg', alt: 'The coach chat', feature: 0 },
@@ -35,7 +35,7 @@ const SCREENS: { src: string; alt: string; feature: number }[] = [
   { src: '/landing/coach-voices.jpg', alt: 'The evening reflection with the coach', feature: 5 },
 ]
 
-const TURN_MS = 3600
+const TURN_MS = 5000
 
 const MOTION_QUERY = '(prefers-reduced-motion: reduce)'
 function subscribeMotion(onChange: () => void) {
@@ -49,7 +49,6 @@ function prefersStill() {
 
 function Feature({
   title,
-  body,
   on,
   onPick,
 }: GalleryFeature & { on: boolean; onPick?: () => void }) {
@@ -57,14 +56,12 @@ function Feature({
     return (
       <div className="h4-feat">
         <b>{title}</b>
-        <span>{body}</span>
       </div>
     )
   }
   return (
     <button type="button" className="h4-feat" data-on={on || undefined} aria-pressed={on} onClick={onPick}>
       <b>{title}</b>
-      <span>{body}</span>
     </button>
   )
 }
@@ -72,7 +69,6 @@ function Feature({
 export default function HeroGallery({ features }: { features: GalleryFeature[] }) {
   const [shown, setShown] = useState(0)
   const [held, setHeld] = useState(false)
-  const [stopped, setStopped] = useState(false)
   const [visible, setVisible] = useState(false)
   // Reduced motion; on the server and before hydration it counts as "still".
   const still = useSyncExternalStore(subscribeMotion, prefersStill, () => true)
@@ -90,17 +86,16 @@ export default function HeroGallery({ features }: { features: GalleryFeature[] }
   }, [])
 
   useEffect(() => {
-    if (still || held || stopped || !visible) return
+    if (still || held || !visible) return
     const t = window.setInterval(() => {
       if (document.hidden) return
       setShown(i => (i + 1) % SCREENS.length)
     }, TURN_MS)
     return () => window.clearInterval(t)
-  }, [still, held, stopped, visible])
+  }, [still, held, visible])
 
   const pick = (i: number) => {
     setShown(i)
-    setStopped(true)
   }
   const screenFor = (featureIndex: number) => SCREENS.findIndex(s => s.feature === featureIndex)
 

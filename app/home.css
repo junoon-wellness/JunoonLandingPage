@@ -301,13 +301,6 @@ html:has(.jh) body::-webkit-scrollbar {
   font-size: 16px;
   font-weight: 600;
 }
-.jh .h4-feat span {
-  display: block;
-  font-size: 14px;
-  color: var(--muted);
-  margin-top: 2px;
-  line-height: 1.35;
-}
 /* The first phone: a gallery of real app screens (round 2, Kush, 9:30 call
    Tue 10 Nov; components/home/HeroGallery.tsx). The features on each side are
    buttons; the one whose screen is showing lights its dot. */
@@ -375,8 +368,7 @@ html:has(.jh) body::-webkit-scrollbar {
   outline-offset: 3px;
   border-radius: 8px;
 }
-.jh .h4-feat b,
-.jh .h4-feat span {
+.jh .h4-feat b {
   transition: color 0.3s ease;
 }
 .jh .h4-feat::before {
@@ -389,9 +381,6 @@ html:has(.jh) body::-webkit-scrollbar {
 .jh .h4-feat[data-on] b {
   color: var(--turmeric);
 }
-.jh .h4-feat[data-on] span {
-  color: var(--ivory);
-}
 @media (prefers-reduced-motion: reduce) {
   .jh .h4-gal-img,
   .jh .h4-dots button::after,
@@ -400,7 +389,10 @@ html:has(.jh) body::-webkit-scrollbar {
   }
 }
 .jh .h4-offer {
-  max-width: 640px;
+  /* Arnav, 13 Nov: the founding line (about 135 characters at 14px, roughly
+     980px) sits on one line from 1280px up. 1100px is under the 1232px the
+     section has at 1280. Phones are held by the parent's width, so it wraps. */
+  max-width: 1100px;
   margin: 18px auto 0;
   text-align: center;
 }
@@ -1135,9 +1127,6 @@ html:has(.jh) body::-webkit-scrollbar {
   }
   .jh .h4-feat b {
     font-size: 15px;
-  }
-  .jh .h4-feat span {
-    font-size: 13.5px;
   }
   .jh .h4-app .h4-feats.r {
     margin-top: -8px;

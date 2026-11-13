@@ -184,7 +184,7 @@ function TopSection() {
         <div className="ctas">
           <AppStoreBadge size="nav" />
           <Link href="/pricing" className="textlink">
-            See pricing
+            1 MONTH FREE
           </Link>
         </div>
       </div>
