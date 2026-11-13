@@ -2,8 +2,7 @@ import { Fragment } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import AppStoreBadge from '@/components/waitlist/AppStoreBadge'
-import HeroGallery from '@/components/home/HeroGallery'
-import IndiaMiniature from '@/components/home/IndiaMiniature'
+import HeroThread from '@/components/home/HeroThread'
 import IPhoneFrame from '@/components/home/IPhoneFrame'
 import SiteFooter from '@/components/site/SiteFooter'
 import SiteHeader from '@/components/site/SiteHeader'
@@ -13,11 +12,8 @@ import {
   COACH,
   DOWNLOAD,
   FAQ_COPY,
-  FEATURES,
-  HERO_CHIPS,
   HERO_FINE,
   HERO_HEADLINE,
-  HERO_MAP,
   HERO_SUB,
   JSCORE,
   LEARN,
@@ -45,39 +41,6 @@ import {
  * stand-in in the same style as the Day 14 ring, so the live
  * page never shows a placeholder.
  */
-
-/** The five labels around the map (round 2, Kush, 9:30 call Tue 10 Nov: "put
- * the asanas, pranayam, real Indian instructors, eight limbs, and ancient texts
- * around that image"), in HERO_CHIPS order, each with a small line drawing.
- * Positions are the `.c0`..`.c4` classes in app/home.css. */
-const CHIP_ICONS: React.ReactNode[] = [
-  // Asana: a standing pose, arms joined overhead
-  <svg key="asana" viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="12" cy="7.5" r="2" />
-    <path d="M12 9.5v6.5M12 16l-2.5 5M12 13l3.5 1.5-3.5 1.5M10.5 6 12 1.5 13.5 6" />
-  </svg>,
-  // Pranayama: the breath, three soft waves
-  <svg key="pranayama" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M3 8c3-3 6 3 9 0s6 3 9 0M3 13c3-3 6 3 9 0s6 3 9 0M3 18c3-3 6 3 9 0s6 3 9 0" />
-  </svg>,
-  // Ancient texts: a palm-leaf manuscript
-  <svg key="texts" viewBox="0 0 24 24" aria-hidden="true">
-    <rect x="2.5" y="7" width="19" height="10" rx="3" />
-    <path d="M6 10.5h9M6 13.5h12" />
-    <circle cx="18.5" cy="10.5" r=".6" />
-  </svg>,
-  // Real Indian instructors: our teachers' own photos (see INSTRUCTOR_FACES)
-  null,
-  // Patanjali's 8 limbs: a wheel of eight spokes
-  <svg key="limbs" viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="12" cy="12" r="9" />
-    <circle cx="12" cy="12" r="2" />
-    <path d="M12 3v7M12 14v7M3 12h7M14 12h7M5.6 5.6l5 5M13.4 13.4l5 5M18.4 5.6l-5 5M10.6 13.4l-5 5" />
-  </svg>,
-]
-
-/** Three of the teachers on the About page, by their real photos. */
-const INSTRUCTOR_FACES = ['/instructors/divya-head.jpg', '/instructors/amman-head-v2.jpg', '/instructors/shoam-head.jpg']
 
 /** Seven spokes and seven labels around the ring; Samadhi is the centre. */
 const RING_SPOKES = [
@@ -143,40 +106,14 @@ function Tree({ className, size }: { className?: string; size: number }) {
 
 function TopSection() {
   return (
-    <section className="h4" id="top-section">
+    <section className="h4 hx-top" id="top-section">
       <div className="h4-head">
         <h1>{HERO_HEADLINE}</h1>
         <p className="lede">{HERO_SUB}</p>
       </div>
-      <div className="h4-stage">
-        <div className="h4-roots">
-          <IndiaMiniature />
-          {HERO_CHIPS.map((chip, i) => (
-            <span key={chip} className={`h4-chip c${i}`}>
-              {CHIP_ICONS[i] ?? (
-                <span className="h4-faces" aria-hidden="true">
-                  {INSTRUCTOR_FACES.map(src => (
-                    <Image key={src} src={src} alt="" width={44} height={44} sizes="22px" />
-                  ))}
-                </span>
-              )}
-              {chip}
-            </span>
-          ))}
-          <p className="h4-cap">
-            {HERO_MAP.caption}
-            <small>{HERO_MAP.captionSmall}</small>
-          </p>
-        </div>
-        <div className="h4-bridge" aria-hidden="true">
-          <span className="h4-lbl">{HERO_MAP.bridge}</span>
-          <svg viewBox="0 0 150 120">
-            <path d="M6 70 C40 20 100 20 138 62" fill="none" stroke="#C4724A" strokeWidth="2.4" strokeDasharray="2 7" strokeLinecap="round" />
-            <path d="M126 50 L140 64 L122 70" fill="none" stroke="#C4724A" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-        <HeroGallery features={FEATURES} />
-      </div>
+      {/* Round 2 of the first screen (Kush, Fri 13 Nov): components/home/HeroThread.tsx.
+          The round 1 map (IndiaMiniature) and gallery (HeroGallery) stay on disk. */}
+      <HeroThread />
       <div className="h4-offer">
         <p className="fine">
           <b>{HERO_FINE.lead}</b> {HERO_FINE.rest}

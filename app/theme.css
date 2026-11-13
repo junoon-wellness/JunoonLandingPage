@@ -1,0 +1,914 @@
+/*
+  ROUND 2 OF THE SITE (Kush, Fri 13 Nov 2026): Light and Dark for the whole
+  website, a premium top bar, the round 2 first screen, and Pricing, About and
+  Library brought onto the home page's look. Loaded after globals.css and
+  home.css (app/layout.tsx), so the tokens here win.
+
+  HOW THE THEME WORKS. lib/theme-boot.ts writes `data-theme="light|dark"` on
+  <html> before the first paint (the visitor's toggle choice, else their system
+  setting). Every colour that changes with the theme is a token below:
+    - the home page's own names (`--ivory`, `--muted`, `--n2` ... inside `.jh`)
+    - the older pages' names (`--jn-*`, from globals.css)
+  In Light, `--ivory` (the home page's word for "the text colour") becomes the
+  dark ink. Surfaces that stay dark in Light too (phone screens, the J Score
+  card, the closing offer band) put the Dark values back locally.
+
+  LIGHT IS THE APP'S OWN LIGHT PALETTE (Junoon-IOS Theme.swift, JV3-879):
+  latte ground #E4D6C3, cream cards #F8F2E9, ink #2A1E15, terracotta #8E4526
+  carries the words, turmeric only glows (fills, dots, rings), never words.
+  `?light=ivory` swaps the ground for a paler ivory, as a variation.
+
+  No visible scroll bars anywhere (home.css hides the page's; the review panel
+  hides its own).
+*/
+
+/* ── 1. Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --s-ground: #120d0a;
+  --s-ground2: #1b140f;
+  --s-plate: #241a13;
+  --s-raise: #2e2219;
+  --s-line: rgba(245, 240, 232, 0.13);
+  --s-ink: #f5f0e8;
+  --s-ink2: #e3dacf; /* body text, the home page's own */
+  --s-ink3: #b4a99f;
+  --s-accent: #c4724a; /* words and the one filled button */
+  --s-accent-text: #d98a62; /* small accent words, AA on the ground */
+  --s-glow: #e8b870; /* turmeric: fills, dots, rings */
+  --s-on-glow: #2a1e15;
+  --s-bar: rgba(18, 13, 10, 0.72); /* the top bar once scrolled */
+  --s-shadow: rgba(0, 0, 0, 0.45);
+  --s-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: dark;
+}
+/* Dark on the inner pages: near-black like the home page and the app (our
+   pick), or the rich brown Kush ruled on 9 Nov (`?ground=brown`). */
+html[data-ground='brown']:not(:has(.jh-home)):not([data-theme='light']) {
+  --s-ground: #2c2118;
+  --s-ground2: #261c15;
+  --s-plate: #3a2a1f;
+  --s-raise: #45332a;
+  --s-bar: rgba(44, 33, 24, 0.78);
+}
+html[data-theme='light'] {
+  --s-ground: #e4d6c3;
+  --s-ground2: #ecdfcd;
+  --s-plate: #f8f2e9;
+  --s-raise: #eee3d4;
+  --s-line: #d3c2ab;
+  --s-ink: #2a1e15;
+  --s-ink2: #4f3f31;
+  --s-ink3: #62503f;
+  --s-accent: #8e4526;
+  --s-accent-text: #8e4526;
+  --s-glow: #e8b870;
+  --s-on-glow: #7a3a1e;
+  --s-bar: rgba(228, 214, 195, 0.78);
+  --s-shadow: rgba(74, 52, 30, 0.18);
+  color-scheme: light;
+}
+html[data-theme='light'][data-light='ivory'] {
+  --s-ground: #f5f0e8;
+  --s-ground2: #efe6d9;
+  --s-plate: #fbf8f3;
+  --s-raise: #ece2d4;
+  --s-line: #ddcfbd;
+  --s-bar: rgba(245, 240, 232, 0.8);
+}
+
+/* The home page's names, and the older pages' names, read the tokens. */
+.jh {
+  --ivory: var(--s-ink);
+  --muted: var(--s-ink3);
+  --line-d: var(--s-line);
+  --n2: var(--s-ground2);
+  --n3: var(--s-raise);
+  --clay: var(--s-accent);
+  background: var(--s-ground);
+}
+.jh p {
+  color: var(--s-ink2);
+}
+html,
+html:has(.jh-home) {
+  --jn-bg: var(--s-ground);
+  --jn-surface: var(--s-plate);
+  --jn-text: var(--s-ink);
+}
+html[data-theme='light'] {
+  --jn-surface-deep: #e2d3bf;
+  --jn-text-dim: #4f3f31;
+  --jn-text-soft: #4f3f31;
+  --jn-text-faint: #62503f;
+  --jn-mute: #62503f;
+  --jn-stone: #62503f;
+  --jn-clay: #8e4526;
+  --jn-turmeric: #8e4526; /* turmeric words are unreadable on latte: terracotta */
+  --jn-gold: #8e4526;
+  --jn-sage: #46604e;
+  --jn-hairline: #d3c2ab;
+  --jn-hairline-strong: #c9b79e;
+  --jn-wash: rgba(42, 30, 21, 0.04);
+}
+body {
+  background-color: var(--s-ground);
+  color: var(--s-ink);
+}
+
+/* A theme switch cross-fades colours (only while switching, so nothing else
+   ever animates its colour by accident). */
+html[data-theme-switching] *,
+html[data-theme-switching] *::before,
+html[data-theme-switching] *::after {
+  transition: background-color 0.4s var(--s-ease), color 0.4s var(--s-ease), border-color 0.4s var(--s-ease),
+    fill 0.4s var(--s-ease), stroke 0.4s var(--s-ease) !important;
+}
+
+/* ── 2. The top bar, premium (Kush: "header updated to feel premium like the
+   new hero"). Sticky, and once the page scrolls it turns to frosted glass
+   with a hairline: Apple's and Linear's top bars (from memory). The links sit
+   in the true centre; the page you are on carries a small turmeric dot (the
+   app's "now" mark); a hover line grows from the centre. ─────────────── */
+.jh.jh-bar,
+html:not(:has(.jh-home)) .jh.jh-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: transparent;
+  transition: background-color 0.35s var(--s-ease), box-shadow 0.35s var(--s-ease);
+}
+html[data-scrolled] .jh.jh-bar {
+  background: var(--s-bar);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
+  backdrop-filter: saturate(160%) blur(18px);
+  box-shadow: 0 1px 0 var(--s-line);
+}
+.jh .nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  padding: 16px 0;
+  transition: padding 0.35s var(--s-ease);
+}
+html[data-scrolled] .jh .nav {
+  padding: 10px 0;
+}
+.jh .brand {
+  justify-self: start;
+  letter-spacing: 0.01em;
+}
+.jh .brand img {
+  width: 36px;
+  height: 36px;
+  transition: transform 0.5s var(--s-ease);
+}
+.jh .brand:hover img {
+  transform: rotate(-6deg) scale(1.04);
+}
+.jh .links {
+  gap: 34px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.jh .links a {
+  position: relative;
+  padding: 6px 0;
+  color: var(--s-ink2);
+  transition: color 0.25s var(--s-ease);
+}
+.jh .links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.35s var(--s-ease);
+}
+.jh .links a:hover {
+  color: var(--s-ink);
+}
+.jh .links a:hover::after {
+  transform: scaleX(1);
+}
+.jh .links a[aria-current='page'] {
+  color: var(--s-ink);
+}
+.jh .links a[aria-current='page']::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: var(--s-glow);
+  box-shadow: 0 0 10px var(--s-glow);
+}
+.jh .links a[aria-current='page']::after {
+  display: none;
+}
+.jh .nav-end {
+  justify-self: end;
+  gap: 10px;
+}
+.jh .cta {
+  background: var(--s-accent);
+  color: #fff;
+  padding: 10px 18px;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  box-shadow: 0 6px 18px -8px var(--s-accent);
+  transition: transform 0.3s var(--s-ease), box-shadow 0.3s var(--s-ease), filter 0.3s;
+}
+.jh .cta:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  box-shadow: 0 10px 24px -10px var(--s-accent);
+}
+.jh .cta:focus-visible,
+.theme-toggle:focus-visible,
+.jh .links a:focus-visible {
+  outline: 2px solid var(--s-glow);
+  outline-offset: 3px;
+}
+
+/* the Light / Dark switch */
+.theme-toggle {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid var(--s-line);
+  background: transparent;
+  color: var(--s-ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  transition: border-color 0.25s, background-color 0.25s;
+}
+.theme-toggle:hover {
+  border-color: var(--s-glow);
+}
+.theme-toggle svg {
+  grid-area: 1 / 1;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.5s var(--s-ease), opacity 0.3s;
+}
+/* Dark shows the sun (the switch to Light); Light shows the moon. */
+html:not([data-theme='light']) .theme-toggle .tt-moon,
+html[data-theme='light'] .theme-toggle .tt-sun {
+  opacity: 0;
+  transform: rotate(-70deg) scale(0.5);
+}
+.jh .nav-menu nav {
+  background: var(--s-plate);
+  box-shadow: 0 14px 36px var(--s-shadow);
+}
+.jh .nav-menu summary span {
+  background: var(--s-ink);
+}
+
+@media (max-width: 760px) {
+  .jh .nav {
+    grid-template-columns: 1fr auto;
+    padding: 12px 0;
+  }
+  .jh .links {
+    display: none;
+  }
+  .jh .cta {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+  .jh .nav-end > .theme-toggle {
+    display: none;
+  }
+  .jh .brand {
+    font-size: 23px;
+  }
+  .jh .brand img {
+    width: 32px;
+    height: 32px;
+  }
+}
+.jh .nav-menu-theme {
+  display: flex;
+  justify-content: flex-end;
+  padding: 6px 4px 2px;
+  border-top: 1px solid var(--s-line);
+  margin-top: 4px;
+}
+@media (max-width: 380px) {
+  .jh .brand {
+    font-size: 0;
+    gap: 0;
+  }
+}
+
+/* ── 3. The first screen, round 2 (components/home/HeroThread.tsx) ─────── */
+.jh .hx-top {
+  padding-top: 26px;
+}
+.jh .hx-top .h4-head h1 {
+  color: var(--s-ink);
+}
+.jh .hx {
+  --hx-map: 300px;
+  --hx-pills: 214px;
+  --hx-phone: 232px;
+  margin: 34px auto 0;
+  display: grid;
+  grid-template-columns: var(--hx-map) var(--hx-pills) minmax(0, 360px) var(--hx-phone);
+  gap: 44px;
+  justify-content: center;
+  align-items: center;
+}
+/* the map */
+.jh .hx-roots {
+  margin: 0;
+  text-align: center;
+}
+.jh .hx-map {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+.jh .hx-dots {
+  fill: none;
+  stroke: var(--s-glow);
+  stroke-linecap: round;
+}
+.jh .hx-dots.t2 {
+  stroke-width: 3.3;
+  opacity: 0.42;
+}
+.jh .hx-dots.t1 {
+  stroke-width: 3.9;
+  opacity: 0.62;
+}
+.jh .hx-dots.t0 {
+  stroke-width: 4.6;
+  opacity: 0.9;
+}
+html[data-theme='light'] .jh .hx-dots {
+  stroke: #a8692f;
+}
+html[data-theme='light'] .jh .hx-dots.t2 {
+  opacity: 0.5;
+}
+.jh .hx-place .hx-spot {
+  fill: var(--s-accent);
+  stroke: var(--s-ground);
+  stroke-width: 2.5;
+}
+.jh .hx-place text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 19px;
+  fill: var(--s-ink);
+  paint-order: stroke;
+  stroke: var(--s-ground);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.jh .hx-ring {
+  fill: none;
+  stroke: var(--s-glow);
+  stroke-width: 1.4;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hx-ripple 3s ease-out infinite;
+}
+.jh .hx-ring.r2 {
+  animation-delay: 1.5s;
+}
+@keyframes hx-ripple {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.8);
+  }
+}
+html[data-pin='none'] .jh .hx-place {
+  display: none;
+}
+.jh .hx-roots figcaption {
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--s-ink3);
+}
+
+/* the practice pills */
+.jh .hx-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.jh .hx-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 14px 7px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--s-ink) 4%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--s-glow) 26%, transparent);
+  color: var(--s-ink3);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.45s var(--s-ease), box-shadow 0.45s var(--s-ease), color 0.45s, transform 0.45s var(--s-ease);
+}
+.jh .hx-pill svg {
+  width: 19px;
+  height: 19px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.jh .hx-pill b {
+  display: block;
+  font-weight: 500;
+  font-size: 14.5px;
+  color: var(--s-ink);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.jh .hx-pill small {
+  display: block;
+  font-size: 11.5px;
+  line-height: 1.25;
+  color: var(--s-ink3);
+  white-space: nowrap;
+}
+.jh .hx-pill:hover {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--s-glow) 55%, transparent);
+}
+.jh .hx-pill[data-on] {
+  background: color-mix(in srgb, var(--s-glow) 15%, transparent);
+  box-shadow: inset 0 0 0 1px var(--s-glow), 0 0 26px -8px var(--s-glow);
+  color: var(--s-glow);
+  transform: translateX(4px);
+}
+/* Light: selected is a gold pill with deep terracotta words (the app's rule 4) */
+html[data-theme='light'] .jh .hx-pill {
+  background: color-mix(in srgb, var(--s-plate) 70%, transparent);
+  box-shadow: inset 0 0 0 1px var(--s-line);
+}
+html[data-theme='light'] .jh .hx-pill[data-on] {
+  background: #f3d9a4;
+  box-shadow: inset 0 0 0 1px #e3bd7c, 0 8px 22px -12px #a06a1c;
+  color: #7a3a1e;
+}
+html[data-theme='light'] .jh .hx-pill[data-on] b,
+html[data-theme='light'] .jh .hx-pill[data-on] small {
+  color: #7a3a1e;
+}
+
+/* the feature words */
+.jh .hx-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.jh .hx-list li {
+  position: relative;
+  width: fit-content;
+  padding-bottom: 5px;
+}
+.jh .hx-list button {
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 31px;
+  line-height: 1.15;
+  color: color-mix(in srgb, var(--s-ink) 30%, transparent);
+  transition: color 0.5s var(--s-ease), transform 0.5s var(--s-ease);
+}
+.jh .hx-list button:hover {
+  color: color-mix(in srgb, var(--s-ink) 60%, transparent);
+}
+.jh .hx-list li[data-on] button {
+  color: var(--s-ink);
+}
+.jh .hx-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--s-glow), var(--s-accent));
+  transform-origin: left;
+  transform: scaleX(1);
+}
+.jh .hx[data-auto] .hx-bar {
+  animation: hx-fill var(--turn) linear both;
+}
+@keyframes hx-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+html[data-join='none'] .jh .hx-bar {
+  display: none;
+}
+
+/* the phone */
+.jh .hx-phone {
+  display: flex;
+  justify-content: center;
+}
+.jh .ip.hx-ip {
+  --ip-w: var(--hx-phone);
+}
+.jh .hx-img {
+  opacity: 0;
+  transform: scale(1.025);
+  transition: opacity 0.6s var(--s-ease), transform 0.9s var(--s-ease);
+}
+.jh .hx-img[data-on] {
+  opacity: 1;
+  transform: none;
+}
+html[data-theme='light'] .jh .ip-body {
+  box-shadow:
+    inset 0 0 0 0.5cqw #120d0a,
+    inset 0 0 0 0.9cqw rgba(245, 240, 232, 0.16),
+    0 6cqw 14cqw rgba(74, 52, 30, 0.28);
+}
+
+/* the first screen's entrance: the four pieces settle in, one after another */
+@media (prefers-reduced-motion: no-preference) {
+  .jh .hx-top .h4-head,
+  .jh .hx > *,
+  .jh .hx-top .h4-offer {
+    animation: hx-in 0.9s var(--s-ease) both;
+  }
+  .jh .hx-top .h4-head {
+    animation-delay: 0.05s;
+  }
+  .jh .hx > :nth-child(1) {
+    animation-delay: 0.2s;
+  }
+  .jh .hx > :nth-child(2) {
+    animation-delay: 0.3s;
+  }
+  .jh .hx > :nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  .jh .hx > :nth-child(4) {
+    animation-delay: 0.5s;
+  }
+  .jh .hx-top .h4-offer {
+    animation-delay: 0.6s;
+  }
+}
+@keyframes hx-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jh .hx-ring {
+    animation: none;
+    opacity: 0;
+  }
+  .jh .hx-pill,
+  .jh .hx-list button,
+  .jh .hx-img {
+    transition: none;
+  }
+  .jh .hx-pill[data-on] {
+    transform: none;
+  }
+}
+
+/* middle widths: map and pills on one row, words and phone on the next */
+@media (max-width: 1180px) {
+  .jh .hx {
+    --hx-map: 280px;
+    grid-template-columns: var(--hx-map) var(--hx-pills);
+    grid-template-areas: 'map pills' 'list phone';
+    row-gap: 36px;
+  }
+  .jh .hx-roots {
+    grid-area: map;
+  }
+  .jh .hx-pills {
+    grid-area: pills;
+  }
+  .jh .hx-list {
+    grid-area: list;
+  }
+  .jh .hx-phone {
+    grid-area: phone;
+  }
+}
+/* phones: the map, the pills as chips, the one feature that is on, the phone */
+@media (max-width: 760px) {
+  .jh .hx-top {
+    padding-top: 14px;
+  }
+  .jh .hx {
+    --hx-map: 210px;
+    --hx-phone: 236px;
+    margin-top: 22px;
+    grid-template-columns: 1fr;
+    grid-template-areas: 'map' 'pills' 'list' 'phone';
+    row-gap: 18px;
+  }
+  .jh .hx-roots {
+    width: var(--hx-map);
+    justify-self: center;
+  }
+  .jh .hx-place text {
+    font-size: 24px;
+  }
+  .jh .hx-pills {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+  }
+  .jh .hx-pill {
+    width: auto;
+    padding: 6px 12px 6px 9px;
+    gap: 7px;
+  }
+  .jh .hx-pill svg {
+    width: 16px;
+    height: 16px;
+  }
+  .jh .hx-pill b {
+    font-size: 13.5px;
+  }
+  .jh .hx-pill small {
+    display: none;
+  }
+  .jh .hx-pill[data-on] {
+    transform: none;
+  }
+  .jh .hx-list {
+    align-items: center;
+  }
+  .jh .hx-list li:not([data-on]) {
+    display: none;
+  }
+  .jh .hx-list button {
+    font-size: 28px;
+    text-align: center;
+  }
+}
+
+/* ── 4. Surfaces that stay dark in Light too (the app's `deep`): put the Dark
+   words back on them. ─────────────────────────────────────────────────── */
+html[data-theme='light'] .jh .ip,
+html[data-theme='light'] .jh .k-score,
+html[data-theme='light'] .jh .k-s.offer {
+  --ivory: #f5f0e8;
+  --muted: #b4a99f;
+}
+html[data-theme='light'] .jh .k-s.offer {
+  color: #f5f0e8;
+}
+html[data-theme='light'] .jh .k-s.offer p {
+  color: #e3dacf;
+}
+html[data-theme='light'] .jh .k-score {
+  color: #f5f0e8;
+}
+
+/* ── 5. The home page in Light: the few surfaces home.css draws with a fixed
+   dark colour. ────────────────────────────────────────────────────────── */
+html[data-theme='light'] .jh .k-s.k-footer,
+html[data-theme='light'] .jh.jh-foot .k-footer,
+html[data-theme='light']:not(:has(.jh-home)) .jh.jh-foot,
+html[data-theme='light']:not(:has(.jh-home)) .jh.jh-foot .k-footer {
+  background: #d9c8b0;
+}
+html:not([data-theme='light']):not(:has(.jh-home)) .jh.jh-foot,
+html:not([data-theme='light']):not(:has(.jh-home)) .jh.jh-foot .k-footer {
+  background: #0d0907;
+}
+html[data-ground='brown']:not([data-theme='light']):not(:has(.jh-home)) .jh.jh-foot,
+html[data-ground='brown']:not([data-theme='light']):not(:has(.jh-home)) .jh.jh-foot .k-footer {
+  background: #231a13;
+}
+html[data-theme='light'] .jh .k-soc a {
+  border-color: var(--s-accent);
+  color: var(--s-accent);
+}
+html[data-theme='light'] .jh .brand img.brand-icon,
+html[data-theme='light'] .jh .k-fl img.brand-icon {
+  box-shadow: 0 0 0 1px rgba(42, 30, 21, 0.14), 0 4px 10px -4px rgba(42, 30, 21, 0.4);
+}
+html[data-theme='light'] .jh .k-eye {
+  color: var(--s-accent);
+}
+html[data-theme='light'] .jh .textlink:hover,
+html[data-theme='light'] .jh .k-flinks a:hover {
+  color: var(--s-accent);
+}
+/* cards on the home page: cream plates with a latte edge */
+html[data-theme='light'] .jh .k-ev,
+html[data-theme='light'] .jh .k-limb,
+html[data-theme='light'] .jh .k-dcard,
+html[data-theme='light'] .jh .k-plan,
+html[data-theme='light'] .jh .k-faq,
+html[data-theme='light'] .jh .k-row {
+  background: var(--s-plate);
+  border-color: var(--s-line);
+}
+html[data-theme='light'] .jh .k-ring .lb b {
+  background: var(--s-plate);
+  color: var(--s-ink);
+  border-color: #e3bd7c;
+}
+html[data-theme='light'] .jh .k-ring .centre {
+  background: radial-gradient(circle, #f7e4bd, #efcb8a);
+  color: #7a3a1e;
+}
+html[data-theme='light'] .jh .k-ring .centre small {
+  color: #5a4432;
+}
+html[data-theme='light'] .jh .k-ring .halo {
+  border-color: rgba(160, 106, 28, 0.25);
+}
+html[data-theme='light'] .jh .k-ring .spokes line {
+  stroke: rgba(160, 106, 28, 0.45);
+}
+
+/* ── 6. Pricing, About and Library on the home page's look (Kush: "on brand
+   and on theme ... clean, polished transitions and animations"). One ground,
+   the home page's cards (plate fill, hairline edge, soft lift), its type
+   (Cormorant 500 headings, DM Sans body), its small clay section labels. ─ */
+.pc-band {
+  background: radial-gradient(120% 90% at 85% 0%, color-mix(in srgb, var(--s-accent) 22%, transparent), transparent 60%),
+    linear-gradient(180deg, color-mix(in srgb, var(--s-raise) 80%, transparent), transparent);
+}
+html[data-theme='light'] .pc-band {
+  background: radial-gradient(110% 80% at 85% 0%, #f7e4bd, transparent 62%),
+    linear-gradient(180deg, #ecdfcd, transparent);
+}
+html[data-theme='light'] .pc-tree {
+  filter: invert(1) sepia(1) saturate(1.4) brightness(0.75);
+  opacity: 0.04;
+}
+/* The person cards became plates: their words need the plate's inset. */
+.ab-person-card {
+  overflow: hidden;
+  padding-bottom: 14px;
+}
+.ab-person-card > :not(.ab-person-photo) {
+  padding-left: 14px;
+  padding-right: 14px;
+}
+.eyebrow {
+  color: var(--s-accent-text);
+}
+.eyebrow::before {
+  background: var(--s-glow);
+}
+.jn-toran::after {
+  background: var(--s-line);
+}
+.lb-card,
+.pr-card,
+.ab-person-card,
+.ab-founder-card,
+.ab-tagline {
+  background: var(--s-plate);
+  border: 1px solid var(--s-line);
+  border-radius: 18px;
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--s-glow) 22%, transparent) inset, 0 18px 40px -24px var(--s-shadow);
+}
+.lb-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--s-glow) 55%, transparent);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--s-glow) 30%, transparent) inset, 0 24px 48px -24px var(--s-shadow);
+}
+.lb-card-title,
+.pr-headline,
+.ab-headline,
+.v2-section h2 {
+  color: var(--s-ink);
+}
+html[data-theme='light'] .lb-card-eyebrow,
+html[data-theme='light'] .lb-card-meta {
+  color: var(--s-ink3);
+}
+html[data-theme='light'] .v2-btn-primary,
+html[data-theme='light'] button[type='submit'] {
+  color: #fff;
+}
+html[data-theme='light'] input,
+html[data-theme='light'] textarea,
+html[data-theme='light'] select {
+  background: var(--s-plate);
+  color: var(--s-ink);
+  border-color: var(--s-line);
+}
+html[data-theme='light'] input::placeholder,
+html[data-theme='light'] textarea::placeholder {
+  color: #8c7b6b;
+}
+
+/* Every page fades in on arrival and on each move between pages (app/
+   template.tsx; Apple and Stripe: a short, quiet fade, no spinners). Opacity
+   only: a transform here would trap the sticky bar and the pricing stage.
+   It starts above zero so the largest text still counts as painted at once. */
+@media (prefers-reduced-motion: no-preference) {
+  .pg-in {
+    animation: pg-in 0.6s var(--s-ease) both;
+  }
+}
+@keyframes pg-in {
+  from {
+    opacity: 0.02;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── 7. The review-only switcher (components/site/ReviewSwitch.tsx). ───── */
+.review-switch {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 60;
+  max-width: calc(100vw - 24px);
+  max-height: 70vh;
+  overflow: auto;
+  scrollbar-width: none;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(18, 13, 10, 0.92);
+  color: #f5f0e8;
+  font: 500 12px/1.3 var(--font-sans), system-ui, sans-serif;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  display: grid;
+  gap: 8px;
+}
+.review-switch::-webkit-scrollbar {
+  display: none;
+}
+.review-switch .rs-row {
+  display: grid;
+  gap: 4px;
+}
+.review-switch .rs-row span {
+  color: #b4a99f;
+}
+.review-switch button {
+  margin-right: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(245, 240, 232, 0.25);
+  background: transparent;
+  color: #f5f0e8;
+  font: inherit;
+  cursor: pointer;
+}
+.review-switch button[aria-pressed='true'] {
+  background: #e8b870;
+  border-color: #e8b870;
+  color: #2a1e15;
+}

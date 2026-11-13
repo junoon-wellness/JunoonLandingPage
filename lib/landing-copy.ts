@@ -73,6 +73,26 @@ export const FEATURES = [
   { title: 'Your Samadhi' },
 ]
 
+/**
+ * THE FIRST SCREEN, ROUND 2 (Kush, Fri 13 Nov 2026, on round 1's drawing A,
+ * "the thread"): each practice from India, the feature in the app it became,
+ * and the real app screen for it. Seven, because Kush answered "show both"
+ * (Your Samadhi and On demand classes). Practice words are Sanskrit with a
+ * short English gloss (his answer to Q2). The feature titles are the site's
+ * own (FEATURES above). The glosses were shortened from round 1, and Abhyasa
+ * is new for On demand classes: both wait for Arjav's words (marked on the
+ * review page). `feature` is the index into FEATURES.
+ */
+export const HERO_THREAD = [
+  { practice: 'Guru', gloss: 'a teacher who knows you', feature: 0, src: '/landing/coach-appstore.jpg', alt: 'The coach chat in the app' },
+  { practice: 'Asana', gloss: 'the postures', feature: 1, src: '/landing/day2-session.jpg', alt: 'A session playing, with the poses coming up next' },
+  { practice: 'Pranayama', gloss: 'the breath', feature: 2, src: '/landing/breathwork.jpg', alt: 'A breathwork session, mid breath' },
+  { practice: 'Dhyana', gloss: 'stillness', feature: 3, src: '/landing/sit.jpg', alt: 'The Sit and do nothing timer' },
+  { practice: 'Abhyasa', gloss: 'steady practice', feature: 4, src: '/landing/class-library.jpg', alt: 'The class library' },
+  { practice: 'Svadhyaya', gloss: 'self-study', feature: 5, src: '/landing/coach-voices.jpg', alt: 'The evening reflection with the coach' },
+  { practice: "Patanjali's 8 limbs", gloss: 'the whole path', feature: 7, src: '/landing/jscore.jpg', alt: 'The J Score screen, built on the eight limbs' },
+] as const
+
 /* ── Section 2: your first two weeks ─────────────────────────────────────── */
 
 export const TWO_WEEKS = {

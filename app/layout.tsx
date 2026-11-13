@@ -4,11 +4,16 @@ import { meta } from "@/lib/meta";
 import { clean } from "@/lib/text";
 import MetaPixel from "@/components/analytics/MetaPixel";
 import { Analytics } from "@vercel/analytics/next";
+import ReviewSwitch from "@/components/site/ReviewSwitch";
+import { THEME_BOOT } from "@/lib/theme-boot";
 import "./globals.css";
 // The home page's look (every rule scoped under .jh): loaded for every page
 // since the rework of Mon 9 Nov, because the shared top bar and footer
 // (components/site) use it on every page.
 import "./home.css";
+// Light and Dark for the whole site, the premium top bar and the round 2
+// first screen (Fri 13 Nov 2026). Loaded last so its tokens win.
+import "./theme.css";
 
 /*
  * Fonts are WOFF2, subset to Latin (2026-09-01).
@@ -94,7 +99,13 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${cormorant.variable} ${dmSans.variable} ${dmMono.variable}`}
+      // The theme script below writes data-theme before React loads.
+      suppressHydrationWarning
     >
+      <head>
+        {/* Sets Light or Dark before the first paint (lib/theme-boot.ts). */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
+      </head>
       {/*
         bg/text colours deliberately live in globals.css rather than as Tailwind
         utilities here - utility classes would out-specify the `body` rule and
@@ -118,6 +129,7 @@ export default function RootLayout({
           NEXT_PUBLIC_META_PIXEL_ID is set — and /privacy must disclose the
           tracking before that happens. See components/analytics/MetaPixel.tsx.
         */}
+        <ReviewSwitch />
         <Analytics />
         <MetaPixel />
       </body>
