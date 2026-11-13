@@ -33,7 +33,7 @@ export const FOUNDING_LINE =
 
 /* ── The top ─────────────────────────────────────────────────────────────── */
 
-export const NAV_CTA = 'Join Junoon Free'
+export const NAV_CTA = 'Join Junoon for Free'
 
 export const HERO_HEADLINE = 'Connecting Ancient India With Modern Life'
 
