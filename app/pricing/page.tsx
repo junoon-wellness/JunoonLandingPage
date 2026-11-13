@@ -36,7 +36,8 @@ const PRICING_JAALI = false // rework 9 Nov: one plain ground, as on the home pa
  * each column.
  *
  * All copy below is LOCKED from LV5-010's notes — do not rephrase the offer
- * line, the "500 founder spots" fact, or the five "what we're building
+ * line (changed on purpose by Kush, Thu 12 Nov 2026: $4.99 a month for life if
+ * you join by 31 December 2026, no longer "the first 100"), or the five "what we're building
  * next" chips. The feature-checklist rows are ALSO locked (LV5-031 cut it
  * to five, "do not rephrase" — see components/pricing/PricingCard.tsx,
  * where they live). Corrected 2026-09-23 (LV5-071 scope): this comment
@@ -46,7 +47,7 @@ const PRICING_JAALI = false // rework 9 Nov: one plain ground, as on the home pa
 export const metadata: Metadata = {
   title: clean('Pricing - Junoon'),
   description: clean(
-    'One membership at $8.99 a month. Your first month is free, and the first 100 members get a founding price, theirs for life.'
+    'One membership at $8.99 a month. Your first month is free. Join by 31 December 2026 and pay $4.99 a month instead, for life.'
   ),
 }
 
@@ -65,7 +66,7 @@ const FAQ = [
   },
   {
     q: 'What happens after the free month?',
-    a: 'You keep your membership at $8.99 a month. If you\'re one of the first 100 members, you get a founding price, yours for life.',
+    a: 'Your membership is $8.99 a month. If you join by 31 December 2026, you pay $4.99 a month instead, and that price is yours for life.',
   },
   {
     q: 'Can I cancel?',
@@ -109,8 +110,8 @@ export default function PricingPage() {
                 <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>free month.</em>
               </h2>
               <p className="pr-free-callout-body">
-                Everyone&apos;s first month is free. The first 100 members then get a founding price,
-                theirs for life.
+                Everyone&apos;s first month is free. If you join by 31 December 2026, you then pay
+                $4.99 a month instead of $8.99, for life.
               </p>
             </section>
 

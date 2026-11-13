@@ -2295,6 +2295,30 @@ body::before {
   color: var(--jn-text);
   line-height: 1;
 }
+/* The regular price, struck through, beside the founding price. Soft and
+   small so $4.99 stays the big number; the strike is drawn by the <s> element
+   so a screen reader also hears it as removed. */
+.pr-price-was {
+  font-family: var(--font-cormorant), serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--jn-text-soft);
+  line-height: 1;
+}
+.pr-price-was s {
+  text-decoration-thickness: 1px;
+}
+.pr-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 /* LV5-020 spruce (3): the unit picks up the page's italic-Cormorant accent
    instead of reading as small sans label text. Turmeric measures 6.46:1 on
    --jn-bg and 5.59:1 on --jn-surface, and 4.58:1 on surface + the LV5-021

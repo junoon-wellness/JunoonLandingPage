@@ -67,17 +67,27 @@ export default function PricingCard() {
         <p className="pr-free-line">Your first month is free.</p>
 
         {/* JV3-307: the pill labels the PRICE, not the free month (the free
-            month is for everyone; only the first 100 get the founding price). Desktop
+            month is for everyone; the founding price runs till 31 December 2026). Desktop
             position is unchanged - the pill is absolute in the card corner
             there; at <=540px it is in flow and now sits above the price row. */}
 
+        {/* Kush, Thu 12 Nov 5:12 PM (round 1 answers): $4.99 is the big number,
+            the regular $8.99 sits beside it struck through (the App Store and
+            SaaS limited-time-price pattern). The line under it says plainly
+            that it is a limited-time founding price. Marketed as an end-of-year
+            special; the App Store sign-up limit is setup, not marketing. */}
         <div className="pr-price-row">
-          <span className="pr-price">$8.99</span>
+          <span className="pr-price-was">
+            <span className="pr-sr-only">Regular price </span>
+            <s>$8.99</s>
+          </span>
+          <span className="pr-price">$4.99</span>
           <span className="pr-price-unit">/month</span>
         </div>
 
         <p className="pr-offer-line">
-          Your first month is free. The first 100 members get a founding price, theirs for life.
+          A limited-time founding price for anyone who joins by 31 December 2026, kept for life.
+          Everyone&apos;s first month is free.
         </p>
 
         <ul className="pr-checklist">

@@ -23,9 +23,13 @@
  * The founding offer, live in App Store Connect as a permanent price (Kush,
  * Mon 9 Nov, 4:21 PM: "founders price is live in appstore connect and it is
  * a permanent price so both are true they can be on the landing page").
+ * Kush, Thu 12 Nov, 10:47 AM: the offer runs till the end of the year, $4.99
+ * instead of $8.99, for life. It is no longer "the first 100". Showing the
+ * $8.99 it replaces is allowed (this supersedes the 12 Oct no-$8.99 rule).
+ * When 31 December 2026 passes, these lines must come out (see the PR).
  */
 export const FOUNDING_LINE =
-  'The first 100 members get a founding price, theirs for life.'
+  'Join by 31 December 2026 and pay $4.99 a month instead of $8.99, for life.'
 
 /* ── The top ─────────────────────────────────────────────────────────────── */
 
@@ -235,15 +239,15 @@ export const LEARN = {
 export const PRICING = {
   eyebrow: 'Pricing',
   heading: 'Your first month is free.',
-  body: 'Your first month is free, for everyone. The first 100 members get a founding price, theirs for life.',
+  body: 'Your first month is free, for everyone. ' + FOUNDING_LINE,
   plans: [
     {
       name: 'Founders pricing',
-      price: '$4.99 per month for the first 100 users',
+      price: '$4.99 per month, for life, if you join by 31 December 2026',
       included: 'Lifetime deal, as a thank you from our junoon team',
     },
     {
-      name: 'Post 100',
+      name: 'After 31 December 2026',
       price: '$8.99 per month',
       included: 'Everything included',
     },
@@ -274,7 +278,7 @@ export const FAQ_COPY = {
     },
     {
       q: 'What does it cost?',
-      a: "Your first month is free, for everyone. After that, it's $8.99 per month, with the exception of the first 100 users ($4.99).",
+      a: "Your first month is free, for everyone. After that, it's $8.99 per month. If you join by 31 December 2026, it's $4.99 per month instead, for life.",
     },
     // The next three answers are agent drafts from the editable mock-up,
     // not yet confirmed by Arjav (marked DRAFT there). Listed as assumed.
@@ -297,7 +301,7 @@ export const FAQ_COPY = {
 
 export const DOWNLOAD = {
   heading: 'Start your free month.',
-  body: 'Your first month is free, for everyone. The first 100 members get a founding price, theirs for life.',
+  body: 'Your first month is free, for everyone. ' + FOUNDING_LINE,
 }
 
 export const FOOTER_LEGAL =
