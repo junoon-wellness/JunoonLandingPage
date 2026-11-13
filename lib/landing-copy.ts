@@ -33,7 +33,7 @@ export const FOUNDING_LINE =
 
 /* ── The top ─────────────────────────────────────────────────────────────── */
 
-export const NAV_CTA = 'Get the app'
+export const NAV_CTA = 'Join Junoon FREE'
 
 export const HERO_HEADLINE = 'Connecting Ancient India With Modern Life'
 
@@ -63,20 +63,14 @@ export const HERO_FINE = {
 
 /** The eight features around the drawn phone: four left, four right. */
 export const FEATURES = [
-  { title: 'A coach who knows you', body: 'Remembers your sleep, energy and needs' },
-  { title: 'Sessions built for your life', body: 'Fits the time and energy you have' },
-  { title: 'Pranayama on demand', body: 'The ancient breathwork system' },
-  {
-    title: 'Sit and do nothing',
-    body: 'Unplug and listen to our junoon music with the lost art of sitting and doing nothing',
-  },
-  {
-    title: 'On demand classes',
-    body: 'Pick from our library of dozens of on demand classes, filmed in Indian studios',
-  },
-  { title: 'Nightly reflection', body: 'Reflect on each day with your coach' },
-  { title: 'Live classes', body: 'Coming soon: practise live with teachers' },
-  { title: 'Your Samadhi', body: "Quantifying your progress on Patanjali's eight limbs" },
+  { title: 'A coach who knows you' },
+  { title: 'Sessions built for your life' },
+  { title: 'Pranayama on demand' },
+  { title: 'Sit and do nothing' },
+  { title: 'On demand classes' },
+  { title: 'Nightly reflection' },
+  { title: 'Live classes' },
+  { title: 'Your Samadhi' },
 ]
 
 /* ── Section 2: your first two weeks ─────────────────────────────────────── */
