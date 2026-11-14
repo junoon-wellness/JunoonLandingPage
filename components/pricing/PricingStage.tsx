@@ -47,6 +47,8 @@ export const PRICING_STAGE_MIN = 1024
 
 /** Breathing room required between the pinned content and the viewport edge. */
 /* Kush, 2026-08-23 ("get everything on one page"): the pin's top/bottom padding (see .pr-stage-pin) — top clears the fixed nav. */
+/* Arnav, 14 Nov 2026: still 124 and still equal to the PINNED padding in globals.css (`.pr-stage-pin`). The not-pinned
+   padding there is now 94 because the top bar is in the page flow, but that state does not use this constant. */
 const PIN_PADDING_TOP = 124
 const PIN_PADDING_BOTTOM = 20
 
