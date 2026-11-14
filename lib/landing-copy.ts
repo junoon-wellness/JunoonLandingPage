@@ -326,5 +326,11 @@ export const DOWNLOAD = {
   body: 'Your first month is free, for everyone. ' + FOUNDING_LINE,
 }
 
-export const FOOTER_LEGAL =
-  '© 2026 Junoon Wellness LLC · Junoon offers wellness guidance, not medical advice. You must be 18 or older to use Junoon.'
+/** The footer's legal line, as two lines: "You must be 18" starts the second
+ *  (Arnav, 3:43 PM Sat 14 Nov). Same words as before. */
+export const FOOTER_LEGAL_LINES = [
+  '© 2026 Junoon Wellness LLC · Junoon offers wellness guidance, not medical advice.',
+  'You must be 18 or older to use Junoon.',
+] as const
+
+export const FOOTER_LEGAL = FOOTER_LEGAL_LINES.join(' ')
