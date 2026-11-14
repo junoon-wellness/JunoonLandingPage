@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import Image from 'next/image'
 import IPhoneFrame from '@/components/home/IPhoneFrame'
 import { INDIA_BOX, INDIA_DOTS } from '@/lib/india-dots'
-import { FEATURES, HERO_MAP, HERO_THREAD } from '@/lib/landing-copy'
+import { FEATURES, HERO_THREAD } from '@/lib/landing-copy'
 
 /**
  * THE FIRST SCREEN, ROUND 2 (Kush, Fri 13 Nov 2026, notes on round 1):
@@ -143,7 +143,6 @@ export default function HeroThread() {
     >
       <figure className="hx-roots">
         <IndiaDots />
-        <figcaption>{HERO_MAP.captionSmall}</figcaption>
       </figure>
 
       <div className="hx-pills" role="group" aria-label="Practices from India">
