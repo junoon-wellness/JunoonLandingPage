@@ -1071,6 +1071,17 @@ html[data-theme='light'] .jh .hw-steps .num {
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
+/* the slow drift (Arnav, Sat 14 Nov; components/home/ScreenRow.tsx): no
+   snapping while it moves, and with reduced motion the looping copies go, so
+   the row is exactly the plain swipe row again */
+.jh .sr-track.is-drifting {
+  scroll-snap-type: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .jh .sr-dup {
+    display: none;
+  }
+}
 .jh .sr-slide .ip {
   --ip-w: 240px;
   margin: 0 auto;
