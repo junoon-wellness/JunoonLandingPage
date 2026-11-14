@@ -159,7 +159,8 @@ html:has(.jh) body::-webkit-scrollbar {
   max-width: none;
 }
 .jh .h4-head .lede {
-  max-width: 760px;
+  /* Two lines on a laptop, not three (Arnav, 3:23 PM Sat 14 Nov). Was 760px. */
+  max-width: 980px;
   margin: 0 auto;
   font-size: 18px;
 }
