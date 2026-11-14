@@ -18,7 +18,6 @@ import {
   JSCORE,
   LEARN,
   LIMBS,
-  PRICING,
   TWO_WEEKS,
 } from '@/lib/landing-copy'
 
@@ -195,60 +194,6 @@ function FaqSection() {
    pricing heading says the same. Kush picked the merge at 7:18 PM; the two
    old sections are deleted. No words are new. */
 
-function ClosingOfferSection() {
-  return (
-    <section className="k-s offer k-close" id="pricing-and-download">
-      <div className="swrap">
-        <div className="k-close-grid">
-          <div>
-            {/* Arnav, 5:41 PM Sat 14 Nov: no tree and no "Pricing" label here, and the short founding line. */}
-            <div className="k-close-head">
-              <div>
-                <h2>{PRICING.heading}</h2>
-              </div>
-            </div>
-            <p className="k-lead">
-              <b>{HERO_FINE.lead}</b> {HERO_FINE.rest}
-            </p>
-            <div className="k-store">
-              <AppStoreBadge size="nav" />
-            </div>
-          </div>
-          <div className="k-close-plans">
-            {PRICING.plans.map(p => (
-              <div key={p.name} className="k-plan">
-                <h3>{p.name}</h3>
-                <p className="k-price">{p.price}</p>
-                <p>{p.included}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ══ ROUND 4: FEWER SECTIONS (Kush, 7:18 PM Fri 13 Nov 2026) ══════════════════
-   "too much repeating ... too many sections ... condense the amount of
-   sections into just what matters". The first screen already lists the seven
-   features with their screens, so the sections after it no longer restate
-   them. Two structures, built from the same lines (one new label, INSIDE_LABEL,
-   [Arjav: words]):
-
-   A (Kush's pick), 5 sections: first screen · how it works (the 14
-   days to the J Score, told once, with the eight limbs folded inside) · inside
-   the app (a swipe row of full-size screens the first screen does not show) ·
-   questions · the closing band.
-
-   B was 4 sections: first screen · one tabbed feature showcase · questions ·
-   the closing band.
-
-   Kush picked A at 7:36 PM Fri 13 Nov; B and round 3's sections are deleted
-   (they are in git history: commit 2b0dd8b). Where each old section's job went
-   is in the pull request. */
-
-/** The eight limbs, folded: the heading opens the list. */
 function LimbsFold() {
   return (
     <details className="k-fold">
@@ -367,7 +312,6 @@ export default function HomeLanding() {
         <HowItWorksSection />
         <InsideSection />
         <FaqSection />
-        <ClosingOfferSection />
       </main>
       <SiteFooter />
     </div>
