@@ -2070,6 +2070,34 @@ body::before {
      (PricingStage.tsx PIN_PADDING_TOP/BOTTOM must match these two values). */
   padding: 124px 48px 20px; /* Kush, 2026-08-23: the lotus above "Pricing" clipped under the nav at 108 */
 }
+/* Arnav, Sat 14 Nov 2026 ("too much space between the top tabs and heading"):
+   the top bar is no longer fixed. It is a sticky bar IN the page flow (~70px
+   tall at rest, ~58px once scrolled), so the old 124px, written for a fixed
+   bar, stacked on top of the bar's own height and left ~194px of air at rest.
+   - Not pinned (phones, tablets, short screens): the bar already takes its own
+     room, so the label needs only a ~94px gap.
+   - Pinned: the pin sticks at the viewport top UNDER the scrolled bar, so
+     124px still clears it (gap 124 - 58 = 66px) and PIN_PADDING_TOP stays 124.
+     At rest the pinned stage is pulled up 30px instead, which makes the
+     at-rest gap 124 - 30 = 94px, the same as the unpinned one. */
+.pr-stage:not(.is-pinned) .pr-stage-pin {
+  padding-top: 94px;
+}
+.pr-stage.is-pinned {
+  margin-top: -30px;
+}
+/* Pricing only: the label above the headline reads as a heading, with no dot
+   (Arnav, Sat 14 Nov 2026). `.eyebrow::before` is the dot; the other pages'
+   labels keep it. */
+.pr-head .eyebrow {
+  font-size: 16px;
+  font-weight: 700;
+}
+.pr-head .eyebrow::before {
+  content: none;
+  display: none;
+  margin: 0;
+}
 /* 🔴 LV5-022 SC2: the stage's HEIGHT is set inline by PricingStage.tsx as
    calc(100vh + travel). It is deliberately NOT here - CSS cannot know the
    measured travel, and the old flat 160vh spent 60vh of scroll moving the
@@ -2212,8 +2240,9 @@ body::before {
    reduced motion, this un-applies it. Both paths mean the same thing, so they
    cannot disagree the way two competing breakpoints could. */
 @media (prefers-reduced-motion: reduce) {
-  .pr-stage.is-pinned { height: auto; }
+  .pr-stage.is-pinned { height: auto; margin-top: 0; }
   .pr-stage.is-pinned .pr-stage-pin {
+    padding-top: 94px;
     position: static;
     height: auto;
     display: block;
@@ -2504,8 +2533,10 @@ body::before {
 @media (max-width: 768px) {
   .pr-section { padding: 24px 24px; }
   /* Mobile is never pinned, so this padding is pure page rhythm. Top clears
-     the UNSCROLLED nav, since the stage now starts at the top of the page. */
-  .pr-stage-pin { padding: 84px 24px 24px; }
+     the UNSCROLLED nav, since the stage now starts at the top of the page.
+     Arnav, 14 Nov: the bar is in the page flow now, so 84 became 56. */
+  .pr-stage:not(.is-pinned) .pr-stage-pin,
+  .pr-stage-pin { padding: 56px 24px 24px; }
   .pr-stage-inner { gap: 28px; }
   .pr-stage-grid { gap: 32px; }
   .pr-card { padding: 24px 22px 20px; }
