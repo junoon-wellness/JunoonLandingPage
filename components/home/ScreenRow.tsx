@@ -77,7 +77,6 @@ export default function ScreenRow({ label, children }: { label: string; children
     let pos = 0
     let speed = 0
     let wrote = -1
-    let hover = false
     let touch = false
     let focus = false
     let onScreen = false
@@ -86,7 +85,7 @@ export default function ScreenRow({ label, children }: { label: string; children
       raf = requestAnimationFrame(tick)
       const dt = last ? Math.min(t - last, 50) : 0
       last = t
-      if (hover || touch || focus || document.hidden || t < quietUntil.current) {
+      if (touch || focus || document.hidden || t < quietUntil.current) {
         speed = 0
         pos = el.scrollLeft
         return
@@ -121,12 +120,7 @@ export default function ScreenRow({ label, children }: { label: string; children
     const onScroll = () => {
       if (Math.abs(el.scrollLeft - wrote) > 1) quietUntil.current = Math.max(quietUntil.current, performance.now() + QUIET_MS)
     }
-    const onEnter = (e: PointerEvent) => {
-      if (e.pointerType !== 'touch') hover = true
-    }
-    const onLeave = (e: PointerEvent) => {
-      if (e.pointerType !== 'touch') hover = false
-    }
+    // No pause on mouse hover (Arnav, 5:25 PM Sat 14 Nov: "it should just keep scrolling").
     const onTouchStart = () => {
       touch = true
     }
@@ -150,8 +144,6 @@ export default function ScreenRow({ label, children }: { label: string; children
     io.observe(el)
     mq.addEventListener('change', onMotionPref)
     el.addEventListener('scroll', onScroll, { passive: true })
-    el.addEventListener('pointerenter', onEnter)
-    el.addEventListener('pointerleave', onLeave)
     el.addEventListener('touchstart', onTouchStart, { passive: true })
     el.addEventListener('touchend', onTouchEnd, { passive: true })
     el.addEventListener('touchcancel', onTouchEnd, { passive: true })
@@ -162,8 +154,6 @@ export default function ScreenRow({ label, children }: { label: string; children
       io.disconnect()
       mq.removeEventListener('change', onMotionPref)
       el.removeEventListener('scroll', onScroll)
-      el.removeEventListener('pointerenter', onEnter)
-      el.removeEventListener('pointerleave', onLeave)
       el.removeEventListener('touchstart', onTouchStart)
       el.removeEventListener('touchend', onTouchEnd)
       el.removeEventListener('touchcancel', onTouchEnd)
