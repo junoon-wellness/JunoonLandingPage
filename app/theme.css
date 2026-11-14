@@ -688,7 +688,6 @@ html[data-theme='light'] .jh .k-flinks a:hover {
   color: var(--s-accent);
 }
 /* cards on the home page: cream plates with a latte edge */
-html[data-theme='light'] .jh .k-ev,
 html[data-theme='light'] .jh .k-limb,
 html[data-theme='light'] .jh .k-dcard,
 html[data-theme='light'] .jh .k-plan,
@@ -702,8 +701,10 @@ html[data-theme='light'] .jh .k-ring .lb b {
   border-color: #e3bd7c;
 }
 html[data-theme='light'] .jh .k-ring .centre {
-  background: radial-gradient(circle, #f7e4bd, #efcb8a);
   color: #7a3a1e;
+}
+html[data-theme='light'] .jh .k-pts li span {
+  color: var(--s-ink2);
 }
 html[data-theme='light'] .jh .k-ring .centre small {
   color: #5a4432;
@@ -853,11 +854,10 @@ html[data-theme='light'] textarea::placeholder {
   color: #2a1e15;
 }
 
-/* ── 8. THE CONDENSED HOME PAGE (round 3, Kush, Fri 13 Nov 6:54 PM: "a little
-   bit of a long scroll ... optimize each section to really highlight what it
-   needs to minimize the space that it takes up"). The default; `?long=1`
-   (lib/theme-boot.ts) brings back round 2's longer page exactly, so every
-   rule here sits under `html:not([data-long='1'])`. Nothing a member needs
+/* ── 8. ROUND 3'S CONDENSED SECTIONS (Kush, Fri 13 Nov 6:54 PM: "a little
+   bit of a long scroll"). Since round 4 (7:18 PM: fewer sections, not smaller
+   ones) these sections live only in round 3's page, shown at `?long=1` for
+   comparison (`.hs-r3`); round 2's longer page is gone. Nothing a member needs
    is cut; it moves or tightens:
      - Two weeks and Classes: the phones peek up from the card's floor instead
        of standing full height (Apple's feature tiles); on phones the three
@@ -873,15 +873,10 @@ html[data-theme='light'] textarea::placeholder {
        ClosingOfferSection).
    Patterns, from memory: Apple's product pages (cropped device tiles, one
    closing buy band), Headspace's swipeable feature rows on phones. ─────── */
-html:not([data-long='1']) .jh #pricing,
-html:not([data-long='1']) .jh #download,
-html[data-long='1'] .jh #pricing-and-download {
-  display: none;
-}
 
 /* Two weeks, Classes: the phone peeks up from the card's floor */
-html:not([data-long='1']) .jh #two-weeks .k-dcard .pic.phone,
-html:not([data-long='1']) .jh #classes .k-dcard .pic.phone {
+html .jh #two-weeks .k-dcard .pic.phone,
+html .jh #classes .k-dcard .pic.phone {
   height: 250px;
   overflow: hidden;
   align-items: flex-start;
@@ -889,66 +884,66 @@ html:not([data-long='1']) .jh #classes .k-dcard .pic.phone {
   -webkit-mask-image: linear-gradient(#000 78%, transparent);
   mask-image: linear-gradient(#000 78%, transparent);
 }
-html:not([data-long='1']) .jh #two-weeks .k-dcard .pic.phone .ip,
-html:not([data-long='1']) .jh #classes .k-dcard .pic.phone .ip {
+html .jh #two-weeks .k-dcard .pic.phone .ip,
+html .jh #classes .k-dcard .pic.phone .ip {
   --ip-w: 200px;
 }
-html:not([data-long='1']) .jh #two-weeks .k-dcard .tp,
-html:not([data-long='1']) .jh #classes .k-dcard .tp {
+html .jh #two-weeks .k-dcard .tp,
+html .jh #classes .k-dcard .tp {
   padding: 16px 20px 10px;
 }
-html:not([data-long='1']) .jh #two-weeks .k-dcard .num {
+html .jh #two-weeks .k-dcard .num {
   font-size: 34px;
 }
 
 /* The eight limbs: a tight list, one hairline per limb */
-html:not([data-long='1']) .jh .k-limbs {
+html .jh .k-limbs {
   gap: 0 26px;
   margin-top: 10px;
 }
-html:not([data-long='1']) .jh .k-limb {
+html .jh .k-limb {
   background: none;
   border: 0;
   border-top: 1px solid var(--line-d);
   border-radius: 0;
   padding: 8px 0 7px;
 }
-html:not([data-long='1']) .jh .k-limb .ln {
+html .jh .k-limb .ln {
   font-size: 22px;
 }
-html:not([data-long='1']) .jh .k-limb b {
+html .jh .k-limb b {
   font-size: 19px;
 }
-html:not([data-long='1']) .jh .k-limb .lt {
+html .jh .k-limb .lt {
   font-size: 14px;
   line-height: 1.4;
   color: var(--s-ink2);
 }
-html:not([data-long='1']) .jh #eight-limbs .k-lead {
+html .jh #eight-limbs .k-lead {
   font-size: 16px;
   margin-bottom: 6px;
 }
-html:not([data-long='1']) .jh .k-ring {
+html .jh .k-ring {
   width: 380px;
   height: 380px;
 }
-html:not([data-long='1']) .jh .k-limbs2 {
+html .jh .k-limbs2 {
   grid-template-columns: 380px 1fr;
 }
 /* the J Score continues the limbs' band: one story, one ground */
-html:not([data-long='1']) .jh #eight-limbs {
+html .jh #eight-limbs {
   padding-bottom: 18px;
 }
-html:not([data-long='1']) .jh #j-score {
+html .jh #j-score {
   background: var(--n2);
   padding-top: 18px;
 }
-html:not([data-long='1']) .jh #j-score .k-lead {
+html .jh #j-score .k-lead {
   font-size: 16px;
 }
 
 /* Learn: a smaller phone */
-html:not([data-long='1']) .jh #learn .k-picside > .ip {
+html .jh #learn .k-picside > .ip {
   --ip-w: 200px;
 }
 
@@ -1006,8 +1001,8 @@ html[data-theme='light'] .jh .k-close .k-plan {
 }
 @media (max-width: 760px) {
   /* Two weeks, Classes: one swipeable row, the next card peeking */
-  html:not([data-long='1']) .jh #two-weeks .k-days,
-  html:not([data-long='1']) .jh #classes .k-days {
+  html .jh #two-weeks .k-days,
+  html .jh #classes .k-days {
     display: flex;
     gap: 12px;
     overflow-x: auto;
@@ -1018,46 +1013,53 @@ html[data-theme='light'] .jh .k-close .k-plan {
     padding: 0 16px 4px;
     scroll-padding: 0 16px;
   }
-  html:not([data-long='1']) .jh #two-weeks .k-days::-webkit-scrollbar,
-  html:not([data-long='1']) .jh #classes .k-days::-webkit-scrollbar {
+  html .jh #two-weeks .k-days::-webkit-scrollbar,
+  html .jh #classes .k-days::-webkit-scrollbar {
     display: none;
   }
-  html:not([data-long='1']) .jh #two-weeks .k-dcard,
-  html:not([data-long='1']) .jh #classes .k-dcard {
-    flex: 0 0 80%;
+  html .jh #two-weeks .k-dcard,
+  html .jh #classes .k-dcard {
+    flex: 0 0 84%;
     scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
-  html:not([data-long='1']) .jh #two-weeks .k-dcard .pic.phone,
-  html:not([data-long='1']) .jh #classes .k-dcard .pic.phone {
-    height: 220px;
+  /* full-size screens, one per swipe (Kush, 7:18 PM: "swipe rows but with
+     the full sized screens") */
+  html .jh #two-weeks .k-dcard .pic.phone,
+  html .jh #classes .k-dcard .pic.phone {
+    height: auto;
+    overflow: visible;
+    padding: 4px 18px 22px;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
-  html:not([data-long='1']) .jh #two-weeks .k-dcard .pic.phone .ip,
-  html:not([data-long='1']) .jh #classes .k-dcard .pic.phone .ip {
-    --ip-w: 180px;
+  html .jh #two-weeks .k-dcard .pic.phone .ip,
+  html .jh #classes .k-dcard .pic.phone .ip {
+    --ip-w: 220px;
   }
   /* Coach: cards two by two, smaller phones */
-  html:not([data-long='1']) .jh .k-ev4 {
+  html .jh .k-ev4 {
     grid-template-columns: 1fr 1fr;
     gap: 12px 16px;
   }
-  html:not([data-long='1']) .jh .k-ev p {
+  html .jh .k-ev p {
     font-size: 14px;
   }
-  html:not([data-long='1']) .jh #coach .k-phones .ip {
+  html .jh #coach .k-phones .ip {
     --ip-w: 150px;
   }
   /* The eight limbs: one column, tight */
-  html:not([data-long='1']) .jh .k-limbs {
+  html .jh .k-limbs {
     grid-template-columns: 1fr;
   }
-  html:not([data-long='1']) .jh .k-ring {
+  html .jh .k-ring {
     width: 320px;
     height: 320px;
   }
-  html:not([data-long='1']) .jh .k-limbs2 {
+  html .jh .k-limbs2 {
     grid-template-columns: 1fr;
   }
-  html:not([data-long='1']) .jh #learn .k-picside > .ip {
+  html .jh #learn .k-picside > .ip {
     --ip-w: 170px;
   }
   .jh .k-close-plans {
@@ -1075,32 +1077,32 @@ html[data-theme='light'] .jh .k-close .k-plan {
 @media (max-width: 640px) {
   /* About: the three of us in one row of small cards, not three
      screen-tall photos (Apple's leadership page, from memory) */
-  html:not([data-long='1']) .ab-team-grid {
+  html .ab-team-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 10px;
   }
-  html:not([data-long='1']) .ab-team-grid .ab-person-card > :not(.ab-person-photo) {
+  html .ab-team-grid .ab-person-card > :not(.ab-person-photo) {
     padding-left: 8px;
     padding-right: 8px;
   }
-  html:not([data-long='1']) .ab-team-grid .ab-person-name {
+  html .ab-team-grid .ab-person-name {
     font-size: 12.5px;
   }
-  html:not([data-long='1']) .ab-team-grid .ab-person-role {
+  html .ab-team-grid .ab-person-role {
     font-size: 9.5px;
   }
 }
 @media (max-width: 760px) {
   /* Library: tighter cards, the summary held to two lines (the full text is
      one tap away in the article) */
-  html:not([data-long='1']) .lb-grid {
+  html .lb-grid {
     gap: 10px;
   }
-  html:not([data-long='1']) .lb-card {
+  html .lb-card {
     padding: 14px 16px;
     gap: 4px;
   }
-  html:not([data-long='1']) .lb-card-desc {
+  html .lb-card-desc {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -1111,4 +1113,320 @@ html[data-theme='light'] .jh .k-close .k-plan {
 /* Light: the closing band stays dark, so its label stays light */
 html[data-theme='light'] .jh .k-close .k-eye {
   color: #f0c58a;
+}
+
+
+/* ── 10. ROUND 4: FEWER SECTIONS (Kush, Fri 13 Nov 7:18 PM). Structure A is
+   the default; `?structure=b` shows B; `?long=1` shows round 3's page. All
+   three share the first screen, the questions and the closing band. ────── */
+.jh .hs-b,
+.jh .hs-r3 {
+  display: none;
+}
+html[data-structure='b']:not([data-long='1']) .jh .hs-a {
+  display: none;
+}
+html[data-structure='b']:not([data-long='1']) .jh .hs-b {
+  display: block;
+}
+html[data-long='1'] .jh .hs-a {
+  display: none;
+}
+html[data-long='1'] .jh .hs-r3 {
+  display: block;
+}
+
+/* A2. how it works: three steps on one line, then the J Score with the ring */
+.jh .hw-steps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 28px;
+  margin: 18px 0 8px;
+  counter-reset: none;
+}
+.jh .hw-steps li {
+  border-top: 2px solid var(--clay);
+  padding-top: 12px;
+}
+.jh .hw-steps .num {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--turmeric);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+html[data-theme='light'] .jh .hw-steps .num {
+  color: var(--s-accent);
+}
+.jh .hw-steps p {
+  font-size: 15px;
+}
+.jh .hw-steps-col {
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.jh .hw-score {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 44px;
+  align-items: center;
+  margin-top: 26px;
+}
+.jh .hw-score .k-ring {
+  width: 360px;
+  height: 360px;
+}
+.jh .hw-h {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 34px !important;
+  line-height: 1.08;
+  margin: 2px 0 8px;
+}
+.jh .hw-score .k-lead,
+.jh .ft .k-lead {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+/* the eight limbs, folded under their heading */
+.jh .k-fold {
+  margin-top: 14px;
+  border-top: 1px solid var(--line-d);
+  border-bottom: 1px solid var(--line-d);
+}
+.jh .k-fold summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 30px 12px 0;
+  position: relative;
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.jh .k-fold summary::-webkit-details-marker {
+  display: none;
+}
+.jh .k-fold summary::after {
+  content: '+';
+  position: absolute;
+  right: 4px;
+  top: 10px;
+  font-family: var(--sans);
+  font-size: 22px;
+  color: var(--turmeric);
+  transition: transform 0.3s var(--s-ease);
+}
+.jh .k-fold[open] summary::after {
+  transform: rotate(45deg);
+}
+.jh .k-fold .k-small {
+  margin: 0 0 8px;
+}
+.jh .k-fold .k-limbs {
+  padding-bottom: 12px;
+}
+
+/* A3. inside the app: full-size screens in one swipe row */
+.jh .sr {
+  position: relative;
+  margin-top: 10px;
+}
+.jh .sr-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 6px 2px 0;
+  outline: none;
+}
+.jh #inside {
+  padding-bottom: 26px;
+}
+.jh .sr-track::-webkit-scrollbar {
+  display: none;
+}
+.jh .sr-slide {
+  flex: 0 0 262px;
+  margin: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.jh .sr-slide .ip {
+  --ip-w: 240px;
+  margin: 0 auto;
+}
+.jh .sr-slide figcaption {
+  padding: 12px 6px 0;
+}
+.jh .sr-slide h3 {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+.jh .sr-slide p {
+  font-size: 14.5px;
+  line-height: 1.45;
+}
+.jh .sr-links {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.jh .sr-links a {
+  border-bottom: 1px solid var(--line-d);
+  padding-bottom: 3px;
+}
+.jh .sr-links a:hover {
+  color: var(--turmeric);
+}
+.jh .sr-nav {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  display: flex;
+  gap: 8px;
+}
+.jh .sr-nav button {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid var(--line-d);
+  background: transparent;
+  color: var(--s-ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: border-color 0.25s;
+}
+.jh .sr-nav button:hover {
+  border-color: var(--s-glow);
+}
+.jh .sr-nav svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* B2. the showcase: a row of tabs over one panel (words beside a full phone) */
+.jh .ft-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 22px;
+}
+.jh .ft-tabs button {
+  border: 0;
+  border-radius: 999px;
+  padding: 9px 16px;
+  font: 500 15px/1 var(--sans);
+  color: var(--s-ink2);
+  background: color-mix(in srgb, var(--s-ink) 5%, transparent);
+  box-shadow: inset 0 0 0 1px var(--line-d);
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+.jh .ft-tabs button[aria-selected='true'] {
+  background: color-mix(in srgb, var(--s-glow) 16%, transparent);
+  box-shadow: inset 0 0 0 1px var(--s-glow);
+  color: var(--s-ink);
+}
+html[data-theme='light'] .jh .ft-tabs button[aria-selected='true'] {
+  background: #f3d9a4;
+  box-shadow: inset 0 0 0 1px #e3bd7c;
+  color: #7a3a1e;
+}
+.jh .ft-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 48px;
+  align-items: center;
+  min-height: 560px;
+}
+.jh .ft-panel[hidden] {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .jh .ft-panel:not([hidden]) {
+    animation: pg-in 0.45s var(--s-ease) both;
+  }
+}
+.jh .ft-phone {
+  display: flex;
+  justify-content: center;
+}
+.jh .ip.ft-ip {
+  --ip-w: 250px;
+}
+
+@media (max-width: 1180px) {
+  .jh .hw-score {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .jh .hw-score .k-ring {
+    margin: 0 auto;
+  }
+}
+@media (max-width: 760px) {
+  .jh .hw-steps {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .jh .hw-score .k-ring {
+    width: 300px;
+    height: 300px;
+  }
+  .jh .hw-h {
+    font-size: 28px !important;
+  }
+  .jh .sr-nav {
+    display: none;
+  }
+  .jh .sr-track {
+    margin: 0 -16px;
+    padding: 6px 16px 10px;
+    scroll-padding: 0 16px;
+    gap: 14px;
+  }
+  .jh .sr-slide {
+    flex: 0 0 84%;
+  }
+  .jh .sr-slide .ip {
+    --ip-w: 236px;
+  }
+  .jh .ft-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 6px -16px 16px;
+    padding: 0 16px;
+  }
+  .jh .ft-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .jh .ft-tabs button {
+    flex: none;
+    font-size: 14px;
+  }
+  .jh .ft-panel {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    min-height: 0;
+  }
+  .jh .ip.ft-ip {
+    --ip-w: 236px;
+  }
 }

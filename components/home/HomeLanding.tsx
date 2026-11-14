@@ -7,13 +7,15 @@ import IPhoneFrame from '@/components/home/IPhoneFrame'
 import SiteFooter from '@/components/site/SiteFooter'
 import SiteHeader from '@/components/site/SiteHeader'
 import InView from '@/components/home/InView'
+import FeatureTabs from '@/components/home/FeatureTabs'
+import ScreenRow from '@/components/home/ScreenRow'
 import {
   CLASSES,
   COACH,
-  DOWNLOAD,
   FAQ_COPY,
   HERO_FINE,
   HERO_HEADLINE,
+  INSIDE_LABEL,
   HERO_SUB,
   JSCORE,
   LEARN,
@@ -211,6 +213,46 @@ function CoachSection() {
   )
 }
 
+function LimbsRing() {
+  return (
+    <InView
+      className="k-ring"
+      data-variant={RING_VARIANT}
+      data-spin={RING_SPIN || undefined}
+      role="img"
+      aria-label="The eight limbs of yoga in a ring, with Samadhi, your J Score, in the middle"
+    >
+      <div className="halo" />
+      <div className="orb">
+        <svg viewBox="0 0 100 100" className="spokes" aria-hidden="true">
+          {RING_SPOKES.map(([x1, y1, x2, y2], i) => (
+            <line key={`${x1}-${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} pathLength={1} style={{ '--i': i } as React.CSSProperties} />
+          ))}
+        </svg>
+        {RING_LABELS.map(([name, angle], i) => (
+          <span
+            key={name}
+            className="lb"
+            style={{ '--a': `${angle}deg`, '--r': RING_R, '--i': i } as React.CSSProperties}
+            aria-hidden="true"
+          >
+            <b>{name}</b>
+          </span>
+        ))}
+      </div>
+      <div className="centre" aria-hidden="true">
+        <Tree size={64} />
+        Samadhi
+        <small>
+          the number in the middle:
+          <br />
+          your J Score
+        </small>
+      </div>
+    </InView>
+  )
+}
+
 /* ── 4. The eight limbs ──────────────────────────────────────────────────── */
 
 function LimbsSection() {
@@ -218,41 +260,7 @@ function LimbsSection() {
     <section className="k-s alt" id="eight-limbs">
       <div className="swrap k-limbs2">
         <div>
-          <InView
-            className="k-ring"
-            data-variant={RING_VARIANT}
-            data-spin={RING_SPIN || undefined}
-            role="img"
-            aria-label="The eight limbs of yoga in a ring, with Samadhi, your J Score, in the middle"
-          >
-            <div className="halo" />
-            <div className="orb">
-              <svg viewBox="0 0 100 100" className="spokes" aria-hidden="true">
-                {RING_SPOKES.map(([x1, y1, x2, y2], i) => (
-                  <line key={`${x1}-${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} pathLength={1} style={{ '--i': i } as React.CSSProperties} />
-                ))}
-              </svg>
-              {RING_LABELS.map(([name, angle], i) => (
-                <span
-                  key={name}
-                  className="lb"
-                  style={{ '--a': `${angle}deg`, '--r': RING_R, '--i': i } as React.CSSProperties}
-                  aria-hidden="true"
-                >
-                  <b>{name}</b>
-                </span>
-              ))}
-            </div>
-            <div className="centre" aria-hidden="true">
-              <Tree size={64} />
-              Samadhi
-              <small>
-                the number in the middle:
-                <br />
-                your J Score
-              </small>
-            </div>
-          </InView>
+          <LimbsRing />
         </div>
         <div>
           <div className="k-eye">{LIMBS.eyebrow}</div>
@@ -380,41 +388,6 @@ function LearnSection() {
   )
 }
 
-/* ── 9. Pricing (8, members' words, is left out: Kush, D1) ───────────────── */
-
-function PricingSection() {
-  return (
-    <section className="k-s" id="pricing">
-      <div className="swrap">
-        <div className="k-prhead">
-          <div className="k-badge">
-            <Tree size={48} />
-            <span>
-              Founding
-              <br />
-              member
-            </span>
-          </div>
-          <div>
-            <div className="k-eye">{PRICING.eyebrow}</div>
-            <h2>{PRICING.heading}</h2>
-            <p className="k-lead">{PRICING.body}</p>
-          </div>
-        </div>
-        <div className="k-three3">
-          {PRICING.plans.map(p => (
-            <div key={p.name} className="k-plan">
-              <h3>{p.name}</h3>
-              <p className="k-price">{p.price}</p>
-              <p>{p.included}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 /* ── 10. Questions ───────────────────────────────────────────────────────── */
 
 function FaqSection() {
@@ -437,25 +410,6 @@ function FaqSection() {
               <p>{item.a}</p>
             </details>
           ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ── 11. Download, 12. Footer ────────────────────────────────────────────── */
-
-function DownloadSection() {
-  return (
-    <section className="k-s offer" id="download">
-      <div className="swrap k-offer">
-        <Tree className="k-treesm" size={92} />
-        <div className="k-grow">
-          <h2>{DOWNLOAD.heading}</h2>
-          <p>{DOWNLOAD.body}</p>
-        </div>
-        <div className="k-store">
-          <AppStoreBadge size="nav" />
         </div>
       </div>
     </section>
@@ -504,21 +458,265 @@ function ClosingOfferSection() {
   )
 }
 
+/* ══ ROUND 4: FEWER SECTIONS (Kush, 7:18 PM Fri 13 Nov 2026) ══════════════════
+   "too much repeating ... too many sections ... condense the amount of
+   sections into just what matters". The first screen already lists the seven
+   features with their screens, so the sections after it no longer restate
+   them. Two structures, built from the same lines (one new label, INSIDE_LABEL,
+   [Arjav: words]):
+
+   A (our pick, the default), 5 sections: first screen · how it works (the 14
+   days to the J Score, told once, with the eight limbs folded inside) · inside
+   the app (a swipe row of full-size screens the first screen does not show) ·
+   questions · the closing band.
+
+   B (`?structure=b`), 4 sections: first screen · one feature showcase (each
+   feature a tab with its own screen; the limbs folded into the J Score tab) ·
+   questions · the closing band.
+
+   Round 3's longer page stays at `?long=1` for comparison. Where each old
+   section's job went is in the pull request. */
+
+/** The eight limbs, folded: the heading opens the list (A and B). */
+function LimbsFold() {
+  return (
+    <details className="k-fold">
+      <summary>{LIMBS.heading}</summary>
+      <p className="k-small">{LIMBS.body}</p>
+      <div className="k-limbs">
+        {LIMBS.items.map((l, i) => (
+          <div key={l.name} className="k-limb">
+            <span className="ln">{i + 1}</span>
+            <b>{l.name}</b>
+            <span className="lt">{l.body}</span>
+          </div>
+        ))}
+      </div>
+    </details>
+  )
+}
+
+function JScorePoints() {
+  return (
+    <ul className="k-pts">
+      {JSCORE.points.map(p => (
+        <li key={p.title}>
+          <b>{p.title}</b>
+          {p.body ? <span>{p.body}</span> : null}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+/* A2. How it works: the 14 days, then the J Score and the limbs, one band. */
+function HowItWorksSection() {
+  return (
+    <section className="k-s alt" id="how-it-works">
+      <div className="swrap">
+        <div className="k-eye">{TWO_WEEKS.eyebrow}</div>
+        <h2>{TWO_WEEKS.heading}</h2>
+        <ol className="hw-steps">
+          {TWO_WEEKS.days.map(d => (
+            <li key={d.label}>
+              <div className="num">{d.label}</div>
+              <h3>{d.title}</h3>
+              <p>{d.body}</p>
+            </li>
+          ))}
+        </ol>
+        <div className="hw-score">
+          <LimbsRing />
+          <div>
+            <div className="k-eye">{JSCORE.eyebrow}</div>
+            <h3 className="hw-h">{JSCORE.heading}</h3>
+            <p className="k-lead">{JSCORE.body}</p>
+            <JScorePoints />
+            <LimbsFold />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* A3. Inside the app: full-size screens the first screen does not show,
+   each with the existing card words. */
+const INSIDE_SLIDES: { src: string; alt: string; title: string; body: string; soon?: boolean; learn?: boolean }[] = [
+  { src: '/landing/day1-coach-chat.jpg', alt: 'The coach chat on day one', title: COACH.heading, body: COACH.body },
+  { src: '/landing/day-briefing.jpg', alt: 'The morning briefing: today’s plan', title: COACH.cards[1].title, body: COACH.cards[1].body },
+  { src: '/landing/four-coaches.jpg', alt: 'Choosing your coach’s voice', title: COACH.cards[2].title, body: COACH.cards[2].body },
+  { src: '/landing/library-appstore.jpg', alt: 'The class library', title: CLASSES.cards[0].title, body: CLASSES.cards[0].body },
+  { src: '/landing/breathwork.jpg', alt: 'A breathwork session, mid breath', title: CLASSES.cards[1].title, body: CLASSES.cards[1].body },
+  { src: '/landing/live-classes.jpg', alt: 'The live classes schedule', title: CLASSES.cards[2].title, body: CLASSES.cards[2].body, soon: true },
+  { src: '/landing/learn-tab.jpg', alt: 'The Learn tab', title: LEARN.heading, body: LEARN.body, learn: true },
+]
+
+function InsideSection() {
+  return (
+    <section className="k-s" id="inside">
+      <div className="swrap">
+        <div className="k-eye">{INSIDE_LABEL}</div>
+        <ScreenRow label={INSIDE_LABEL}>
+          {INSIDE_SLIDES.map(sl => (
+            <figure key={sl.src} className="sr-slide">
+              <IPhoneFrame src={sl.src} alt={sl.alt} sizes="240px" />
+              <figcaption>
+                <h3>
+                  {sl.title}
+                  {sl.soon ? <span className="k-soon">Coming soon</span> : null}
+                </h3>
+                <p>{sl.body}</p>
+                {sl.learn ? (
+                  <span className="sr-links">
+                    {LEARN.articles.map(a => (
+                      <Link key={a.slug} href={`/library/${a.slug}`}>
+                        {a.title}
+                      </Link>
+                    ))}
+                  </span>
+                ) : null}
+              </figcaption>
+            </figure>
+          ))}
+        </ScreenRow>
+      </div>
+    </section>
+  )
+}
+
+/* B2. One feature showcase, a tab per feature. */
+function ShowcaseSection() {
+  const tabs = [
+    {
+      label: COACH.eyebrow,
+      src: '/landing/day1-coach-chat.jpg',
+      alt: 'The coach chat on day one',
+      body: (
+        <>
+          <h3 className="hw-h">{COACH.heading}</h3>
+          <p className="k-lead">{COACH.body}</p>
+          <div className="k-ev4">
+            {COACH.cards.map(c => (
+              <div key={c.title} className="k-ev">
+                <h3>{c.title}</h3>
+                <p>{c.body}</p>
+              </div>
+            ))}
+          </div>
+        </>
+      ),
+    },
+    {
+      label: CLASSES.eyebrow,
+      src: '/landing/library-appstore.jpg',
+      alt: 'The class library',
+      body: (
+        <>
+          <h3 className="hw-h">{CLASSES.heading}</h3>
+          <p className="k-lead">{CLASSES.body}</p>
+          <div className="k-ev4">
+            {CLASSES.cards.map(c => (
+              <div key={c.title} className="k-ev">
+                <h3>
+                  {c.title}
+                  {c.soon ? <span className="k-soon">Coming soon</span> : null}
+                </h3>
+                <p>{c.body}</p>
+              </div>
+            ))}
+          </div>
+        </>
+      ),
+    },
+    {
+      label: TWO_WEEKS.eyebrow,
+      src: '/landing/day-briefing.jpg',
+      alt: 'The morning briefing: today’s plan',
+      body: (
+        <>
+          <h3 className="hw-h">{TWO_WEEKS.heading}</h3>
+          <ol className="hw-steps hw-steps-col">
+            {TWO_WEEKS.days.map(d => (
+              <li key={d.label}>
+                <div className="num">{d.label}</div>
+                <h3>{d.title}</h3>
+                <p>{d.body}</p>
+              </li>
+            ))}
+          </ol>
+        </>
+      ),
+    },
+    {
+      label: JSCORE.eyebrow,
+      src: '/landing/jscore.jpg',
+      alt: 'The J Score screen, built on the eight limbs',
+      body: (
+        <>
+          <h3 className="hw-h">{JSCORE.heading}</h3>
+          <p className="k-lead">{JSCORE.body}</p>
+          <JScorePoints />
+          <LimbsFold />
+        </>
+      ),
+    },
+    {
+      label: LEARN.eyebrow,
+      src: '/landing/learn-tab.jpg',
+      alt: 'The Learn tab',
+      body: (
+        <>
+          <h3 className="hw-h">{LEARN.heading}</h3>
+          <div className="k-arts">
+            {LEARN.articles.map(a => (
+              <Link key={a.slug} href={`/library/${a.slug}`} className="k-row">
+                <div className="kind">{a.kind}</div>
+                <h3>{a.title}</h3>
+                <div className="kind">{a.line}</div>
+              </Link>
+            ))}
+          </div>
+          <p className="k-small">{LEARN.body}</p>
+        </>
+      ),
+    },
+  ]
+  return (
+    <section className="k-s" id="showcase">
+      <div className="swrap">
+        <div className="k-eye">{INSIDE_LABEL}</div>
+        <FeatureTabs tabs={tabs} label={INSIDE_LABEL} />
+      </div>
+    </section>
+  )
+}
+
 export default function HomeLanding() {
   return (
     <div className="jh jh-home jn-home-scale" id="top">
       <SiteHeader current="/" />
       <main>
         <TopSection />
-        <TwoWeeksSection />
-        <CoachSection />
-        <LimbsSection />
-        <JScoreSection />
-        <ClassesSection />
-        <LearnSection />
-        <PricingSection />
+        {/* A, the default (our pick) */}
+        <div className="hs hs-a">
+          <HowItWorksSection />
+          <InsideSection />
+        </div>
+        {/* B, ?structure=b */}
+        <div className="hs hs-b">
+          <ShowcaseSection />
+        </div>
+        {/* round 3's longer page, ?long=1, for comparison */}
+        <div className="hs hs-r3">
+          <TwoWeeksSection />
+          <CoachSection />
+          <LimbsSection />
+          <JScoreSection />
+          <ClassesSection />
+          <LearnSection />
+        </div>
         <FaqSection />
-        <DownloadSection />
         <ClosingOfferSection />
       </main>
       <SiteFooter />

@@ -88,10 +88,18 @@ export const HERO_THREAD = [
   { practice: 'Asana', gloss: 'the postures', feature: 1, src: '/landing/day2-session.jpg', alt: 'A session playing, with the poses coming up next' },
   { practice: 'Pranayama', gloss: 'the breath', feature: 2, src: '/landing/breathwork.jpg', alt: 'A breathwork session, mid breath' },
   { practice: 'Dhyana', gloss: 'stillness', feature: 3, src: '/landing/sit.jpg', alt: 'The Sit and do nothing timer' },
-  { practice: 'Abhyasa', gloss: 'steady practice', feature: 4, src: '/landing/class-library.jpg', alt: 'The class library' },
+  { practice: 'Abhyasa', gloss: 'steady practice', feature: 4, src: '/landing/library-appstore.jpg', alt: 'The class library' },
   { practice: 'Svadhyaya', gloss: 'self-study', feature: 5, src: '/landing/coach-voices.jpg', alt: 'The evening reflection with the coach' },
   { practice: "Patanjali's 8 limbs", gloss: 'the whole path', feature: 7, src: '/landing/jscore.jpg', alt: 'The J Score screen, built on the eight limbs' },
 ] as const
+
+/**
+ * ROUND 4 (Kush, Fri 13 Nov 2026, 7:18 PM: "too much repeating ... too many
+ * sections ... condense the amount of sections into just what matters"). The
+ * home page is rebuilt from the same lines into far fewer sections
+ * (HomeLanding.tsx). The one NEW line is the label below. [Arjav: words]
+ */
+export const INSIDE_LABEL = 'Inside the app'
 
 /* ── Section 2: your first two weeks ─────────────────────────────────────── */
 

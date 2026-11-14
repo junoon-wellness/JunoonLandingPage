@@ -12,7 +12,8 @@ import { REVIEW_SWITCHES, type ReviewSwitch as SwitchName } from '@/lib/theme-bo
 
 const LABELS: Record<SwitchName | 'theme', string> = {
   theme: 'Theme',
-  long: 'Home page (1 = the earlier, longer one)',
+  structure: 'Home page structure',
+  long: 'Round 3 page (1 = show it)',
 }
 
 const ROWS: { key: SwitchName | 'theme'; values: readonly string[] }[] = [

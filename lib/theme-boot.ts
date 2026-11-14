@@ -9,22 +9,23 @@
  *   3. the visitor's system setting (prefers-color-scheme)
  * It writes `data-theme` on <html>; app/theme.css reads it.
  *
- * It also reads the one review switch still open (Kush picks between drawn
- * variations on his review page). It is a `data-*` on <html>; the default is
- * our pick:
- *   ?long=1      the home page in its earlier, longer order (round 3 condense
- *                pass, Fri 13 Nov); without it, the condensed page
- *   ?review=1    shows the small switcher panel (ReviewSwitch.tsx)
- * Kush settled the round 2 switches at 6:54 PM Fri 13 Nov (no map mark, the
- * timer bar, latte Light, near-black everywhere, follow the visitor's
- * setting), so they are no longer switches.
- * Nothing here is personal data.
+ * It also reads the review switches still open (Kush picks between drawn
+ * structures of the home page on his review page). Each is a `data-*` on
+ * <html>; the first value is our pick:
+ *   ?structure=a|b   round 4 (Fri 13 Nov 7:18 PM, "condense the amount of
+ *                    sections"): A tells the 14 days to the J Score once and
+ *                    adds a swipe row of screens; B is one tabbed showcase
+ *   ?long=1          round 3's page (more sections), for comparison
+ *   ?review=1        shows the small switcher panel (ReviewSwitch.tsx)
+ * Kush settled round 2 (6:54 PM) and most of round 3 (7:18 PM), so those are
+ * no longer switches. Nothing here is personal data.
  *
  * Kept as a plain string (no imports, ES5) because it is injected as-is.
  */
 export const THEME_STORAGE_KEY = 'jn-theme'
 
 export const REVIEW_SWITCHES = {
+  structure: ['a', 'b'],
   long: ['0', '1'],
 } as const
 
