@@ -303,29 +303,25 @@ html[data-theme='light'] .jh .brand:hover .brand-mark {
   fill: none;
   stroke: var(--s-glow);
   stroke-linecap: round;
+  /* One standard darkness for every dot, north included (Arnav, 3:44 PM: "the
+     dots of the original design all need to one more standard darkness, so you
+     can properly see the animation"). Was 0.42 / 0.62 / 0.9 by tier. Sizes
+     still differ by tier. */
+  --lo: 0.4;
+  --hi: 1;
+  opacity: var(--lo);
 }
 .jh .hx-dots.t2 {
   stroke-width: 3.3;
-  --lo: 0.42;
-  --hi: 1;
-  opacity: var(--lo);
 }
 .jh .hx-dots.t1 {
   stroke-width: 3.9;
-  --lo: 0.62;
-  --hi: 1;
-  opacity: var(--lo);
 }
 .jh .hx-dots.t0 {
   stroke-width: 4.6;
-  opacity: 0.9;
 }
 html[data-theme='light'] .jh .hx-dots {
   stroke: #a8692f;
-}
-html[data-theme='light'] .jh .hx-dots.t2 {
-  --lo: 0.5;
-  --hi: 1;
 }
 /* the dimmer dots drift (Arnav, Sat 14 Nov): a soft band of light runs from
    the top of the map to the bottom, then starts again at the top: one pass in 7.2 s,
@@ -335,8 +331,7 @@ html[data-theme='light'] .jh .hx-dots.t2 {
    its first frame. Only opacity moves; at rest every dot is at --lo, its
    still value, which is all reduced motion ever shows. */
 @media (prefers-reduced-motion: no-preference) {
-  .jh .hx-dots.t1,
-  .jh .hx-dots.t2 {
+  .jh .hx-dots {
     /* Arnav, 3:39 PM: "the map looks the same nothing is happening". The first
        version (0.42 to 0.74 over a band half the map tall) ran but was too faint
        to see. Now each row lights to full and the band is about a quarter of the
