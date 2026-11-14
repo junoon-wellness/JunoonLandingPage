@@ -462,6 +462,48 @@ function DownloadSection() {
   )
 }
 
+/* ── Condensed close (round 3, Fri 13 Nov 2026): Pricing and Download, merged ──
+   Kush: "a little bit of a long scroll ... if it's not needed, condensing it
+   down somewhere else". Pricing (9) and Download (11) said the same line
+   twice ("Your first month is free, for everyone ..."), so the condensed page
+   ends on ONE band: the founding offer, both prices, the App Store badge.
+   Download's heading ("Start your free month.") is the one line dropped; the
+   pricing heading says the same. `?long=1` brings back the two sections in
+   their old places (app/theme.css, section 8). No words are new. */
+
+function ClosingOfferSection() {
+  return (
+    <section className="k-s offer k-close" id="pricing-and-download">
+      <div className="swrap">
+        <div className="k-close-grid">
+          <div>
+            <div className="k-close-head">
+              <Tree className="k-treesm" size={72} />
+              <div>
+                <div className="k-eye">{PRICING.eyebrow}</div>
+                <h2>{PRICING.heading}</h2>
+              </div>
+            </div>
+            <p className="k-lead">{PRICING.body}</p>
+            <div className="k-store">
+              <AppStoreBadge size="nav" />
+            </div>
+          </div>
+          <div className="k-close-plans">
+            {PRICING.plans.map(p => (
+              <div key={p.name} className="k-plan">
+                <h3>{p.name}</h3>
+                <p className="k-price">{p.price}</p>
+                <p>{p.included}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function HomeLanding() {
   return (
     <div className="jh jh-home jn-home-scale" id="top">
@@ -477,6 +519,7 @@ export default function HomeLanding() {
         <PricingSection />
         <FaqSection />
         <DownloadSection />
+        <ClosingOfferSection />
       </main>
       <SiteFooter />
     </div>

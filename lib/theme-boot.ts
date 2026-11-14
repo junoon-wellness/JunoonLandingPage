@@ -9,25 +9,23 @@
  *   3. the visitor's system setting (prefers-color-scheme)
  * It writes `data-theme` on <html>; app/theme.css reads it.
  *
- * It also reads the review switches (Kush picks between drawn variations on
- * the review page). Each is a `data-*` on <html>, defaults are our picks:
- *   ?pin=place|none        the hero map: a small named place, or no mark
- *   ?join=bar|none         the hero: a timer bar under the feature that is on
- *   ?ground=black|brown    Dark on Pricing, About, Library: near-black like the
- *                          home page and the app, or the rich brown of 9 Nov
- *   ?light=latte|ivory     Light: the app's latte ground, or a paler ivory
- *   ?review=1              shows the small switcher panel (ReviewSwitch.tsx)
- * Unknown values fall back to the default. Nothing here is personal data.
+ * It also reads the one review switch still open (Kush picks between drawn
+ * variations on his review page). It is a `data-*` on <html>; the default is
+ * our pick:
+ *   ?long=1      the home page in its earlier, longer order (round 3 condense
+ *                pass, Fri 13 Nov); without it, the condensed page
+ *   ?review=1    shows the small switcher panel (ReviewSwitch.tsx)
+ * Kush settled the round 2 switches at 6:54 PM Fri 13 Nov (no map mark, the
+ * timer bar, latte Light, near-black everywhere, follow the visitor's
+ * setting), so they are no longer switches.
+ * Nothing here is personal data.
  *
  * Kept as a plain string (no imports, ES5) because it is injected as-is.
  */
 export const THEME_STORAGE_KEY = 'jn-theme'
 
 export const REVIEW_SWITCHES = {
-  pin: ['place', 'none'],
-  join: ['bar', 'none'],
-  ground: ['black', 'brown'],
-  light: ['latte', 'ivory'],
+  long: ['0', '1'],
 } as const
 
 export type ReviewSwitch = keyof typeof REVIEW_SWITCHES

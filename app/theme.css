@@ -16,7 +16,8 @@
   LIGHT IS THE APP'S OWN LIGHT PALETTE (Junoon-IOS Theme.swift, JV3-879):
   latte ground #E4D6C3, cream cards #F8F2E9, ink #2A1E15, terracotta #8E4526
   carries the words, turmeric only glows (fills, dots, rings), never words.
-  `?light=ivory` swaps the ground for a paler ivory, as a variation.
+  Kush picked latte, near-black everywhere and follow-their-setting (6:54 PM
+  Fri 13 Nov); the ivory and brown variations are gone.
 
   No visible scroll bars anywhere (home.css hides the page's; the review panel
   hides its own).
@@ -41,15 +42,6 @@
   --s-ease: cubic-bezier(0.22, 1, 0.36, 1);
   color-scheme: dark;
 }
-/* Dark on the inner pages: near-black like the home page and the app (our
-   pick), or the rich brown Kush ruled on 9 Nov (`?ground=brown`). */
-html[data-ground='brown']:not(:has(.jh-home)):not([data-theme='light']) {
-  --s-ground: #2c2118;
-  --s-ground2: #261c15;
-  --s-plate: #3a2a1f;
-  --s-raise: #45332a;
-  --s-bar: rgba(44, 33, 24, 0.78);
-}
 html[data-theme='light'] {
   --s-ground: #e4d6c3;
   --s-ground2: #ecdfcd;
@@ -66,14 +58,6 @@ html[data-theme='light'] {
   --s-bar: rgba(228, 214, 195, 0.78);
   --s-shadow: rgba(74, 52, 30, 0.18);
   color-scheme: light;
-}
-html[data-theme='light'][data-light='ivory'] {
-  --s-ground: #f5f0e8;
-  --s-ground2: #efe6d9;
-  --s-plate: #fbf8f3;
-  --s-raise: #ece2d4;
-  --s-line: #ddcfbd;
-  --s-bar: rgba(245, 240, 232, 0.8);
 }
 
 /* The home page's names, and the older pages' names, read the tokens. */
@@ -157,13 +141,28 @@ html[data-scrolled] .jh .nav {
   justify-self: start;
   letter-spacing: 0.01em;
 }
-.jh .brand img {
-  width: 36px;
-  height: 36px;
-  transition: transform 0.5s var(--s-ease);
+/* The logo: the banyan alone on a transparent ground, in the theme's ink
+   (Kush, 6:54 PM Fri 13 Nov). A mask, so one picture serves both themes. */
+.brand-mark {
+  display: block;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  background-color: var(--s-ink);
+  -webkit-mask: url('/brand/junoon-tree-white-560.webp') center / contain no-repeat;
+  mask: url('/brand/junoon-tree-white-560.webp') center / contain no-repeat;
+  transition: transform 0.5s var(--s-ease), background-color 0.3s;
 }
-.jh .brand:hover img {
-  transform: rotate(-6deg) scale(1.04);
+.jh .brand:hover .brand-mark {
+  transform: scale(1.06);
+  background-color: var(--s-glow);
+}
+html[data-theme='light'] .jh .brand:hover .brand-mark {
+  background-color: var(--s-accent);
+}
+.jh .k-fl .brand-mark {
+  width: 34px;
+  height: 34px;
 }
 .jh .links {
   gap: 34px;
@@ -298,7 +297,7 @@ html[data-theme='light'] .theme-toggle .tt-sun {
   .jh .brand {
     font-size: 23px;
   }
-  .jh .brand img {
+  .jh .brand .brand-mark {
     width: 32px;
     height: 32px;
   }
@@ -368,46 +367,6 @@ html[data-theme='light'] .jh .hx-dots {
 }
 html[data-theme='light'] .jh .hx-dots.t2 {
   opacity: 0.5;
-}
-.jh .hx-place .hx-spot {
-  fill: var(--s-accent);
-  stroke: var(--s-ground);
-  stroke-width: 2.5;
-}
-.jh .hx-place text {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 19px;
-  fill: var(--s-ink);
-  paint-order: stroke;
-  stroke: var(--s-ground);
-  stroke-width: 5px;
-  stroke-linejoin: round;
-}
-.jh .hx-ring {
-  fill: none;
-  stroke: var(--s-glow);
-  stroke-width: 1.4;
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: hx-ripple 3s ease-out infinite;
-}
-.jh .hx-ring.r2 {
-  animation-delay: 1.5s;
-}
-@keyframes hx-ripple {
-  0% {
-    opacity: 0.8;
-    transform: scale(0.4);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(2.8);
-  }
-}
-html[data-pin='none'] .jh .hx-place {
-  display: none;
 }
 .jh .hx-roots figcaption {
   margin-top: 10px;
@@ -541,9 +500,6 @@ html[data-theme='light'] .jh .hx-pill[data-on] small {
     transform: scaleX(1);
   }
 }
-html[data-join='none'] .jh .hx-bar {
-  display: none;
-}
 
 /* the phone */
 .jh .hx-phone {
@@ -606,10 +562,6 @@ html[data-theme='light'] .jh .ip-body {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .jh .hx-ring {
-    animation: none;
-    opacity: 0;
-  }
   .jh .hx-pill,
   .jh .hx-list button,
   .jh .hx-img {
@@ -657,9 +609,6 @@ html[data-theme='light'] .jh .ip-body {
   .jh .hx-roots {
     width: var(--hx-map);
     justify-self: center;
-  }
-  .jh .hx-place text {
-    font-size: 24px;
   }
   .jh .hx-pills {
     flex-direction: row;
@@ -727,17 +676,9 @@ html:not([data-theme='light']):not(:has(.jh-home)) .jh.jh-foot,
 html:not([data-theme='light']):not(:has(.jh-home)) .jh.jh-foot .k-footer {
   background: #0d0907;
 }
-html[data-ground='brown']:not([data-theme='light']):not(:has(.jh-home)) .jh.jh-foot,
-html[data-ground='brown']:not([data-theme='light']):not(:has(.jh-home)) .jh.jh-foot .k-footer {
-  background: #231a13;
-}
 html[data-theme='light'] .jh .k-soc a {
   border-color: var(--s-accent);
   color: var(--s-accent);
-}
-html[data-theme='light'] .jh .brand img.brand-icon,
-html[data-theme='light'] .jh .k-fl img.brand-icon {
-  box-shadow: 0 0 0 1px rgba(42, 30, 21, 0.14), 0 4px 10px -4px rgba(42, 30, 21, 0.4);
 }
 html[data-theme='light'] .jh .k-eye {
   color: var(--s-accent);
@@ -751,8 +692,7 @@ html[data-theme='light'] .jh .k-ev,
 html[data-theme='light'] .jh .k-limb,
 html[data-theme='light'] .jh .k-dcard,
 html[data-theme='light'] .jh .k-plan,
-html[data-theme='light'] .jh .k-faq,
-html[data-theme='light'] .jh .k-row {
+html[data-theme='light'] .jh .k-faq {
   background: var(--s-plate);
   border-color: var(--s-line);
 }
@@ -911,4 +851,264 @@ html[data-theme='light'] textarea::placeholder {
   background: #e8b870;
   border-color: #e8b870;
   color: #2a1e15;
+}
+
+/* ── 8. THE CONDENSED HOME PAGE (round 3, Kush, Fri 13 Nov 6:54 PM: "a little
+   bit of a long scroll ... optimize each section to really highlight what it
+   needs to minimize the space that it takes up"). The default; `?long=1`
+   (lib/theme-boot.ts) brings back round 2's longer page exactly, so every
+   rule here sits under `html:not([data-long='1'])`. Nothing a member needs
+   is cut; it moves or tightens:
+     - Two weeks and Classes: the phones peek up from the card's floor instead
+       of standing full height (Apple's feature tiles); on phones the three
+       cards become one swipeable row with the next card peeking (the App
+       Store's "Today" rows).
+     - The eight limbs: a tight two-column list with a hairline per limb
+       instead of eight boxed cards; the ring and the J Score that follows it
+       share one band, since the J Score IS the eight limbs (one story).
+     - Coach: the four cards sit two by two on phones; the two phones shrink.
+     - Learn: a smaller phone.
+     - Pricing and Download, which repeated the same offer line, become one
+       closing band at the end of the page (HomeLanding.tsx,
+       ClosingOfferSection).
+   Patterns, from memory: Apple's product pages (cropped device tiles, one
+   closing buy band), Headspace's swipeable feature rows on phones. ─────── */
+html:not([data-long='1']) .jh #pricing,
+html:not([data-long='1']) .jh #download,
+html[data-long='1'] .jh #pricing-and-download {
+  display: none;
+}
+
+/* Two weeks, Classes: the phone peeks up from the card's floor */
+html:not([data-long='1']) .jh #two-weeks .k-dcard .pic.phone,
+html:not([data-long='1']) .jh #classes .k-dcard .pic.phone {
+  height: 250px;
+  overflow: hidden;
+  align-items: flex-start;
+  padding: 4px 22px 0;
+  -webkit-mask-image: linear-gradient(#000 78%, transparent);
+  mask-image: linear-gradient(#000 78%, transparent);
+}
+html:not([data-long='1']) .jh #two-weeks .k-dcard .pic.phone .ip,
+html:not([data-long='1']) .jh #classes .k-dcard .pic.phone .ip {
+  --ip-w: 200px;
+}
+html:not([data-long='1']) .jh #two-weeks .k-dcard .tp,
+html:not([data-long='1']) .jh #classes .k-dcard .tp {
+  padding: 16px 20px 10px;
+}
+html:not([data-long='1']) .jh #two-weeks .k-dcard .num {
+  font-size: 34px;
+}
+
+/* The eight limbs: a tight list, one hairline per limb */
+html:not([data-long='1']) .jh .k-limbs {
+  gap: 0 26px;
+  margin-top: 10px;
+}
+html:not([data-long='1']) .jh .k-limb {
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--line-d);
+  border-radius: 0;
+  padding: 8px 0 7px;
+}
+html:not([data-long='1']) .jh .k-limb .ln {
+  font-size: 22px;
+}
+html:not([data-long='1']) .jh .k-limb b {
+  font-size: 19px;
+}
+html:not([data-long='1']) .jh .k-limb .lt {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--s-ink2);
+}
+html:not([data-long='1']) .jh #eight-limbs .k-lead {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+html:not([data-long='1']) .jh .k-ring {
+  width: 380px;
+  height: 380px;
+}
+html:not([data-long='1']) .jh .k-limbs2 {
+  grid-template-columns: 380px 1fr;
+}
+/* the J Score continues the limbs' band: one story, one ground */
+html:not([data-long='1']) .jh #eight-limbs {
+  padding-bottom: 18px;
+}
+html:not([data-long='1']) .jh #j-score {
+  background: var(--n2);
+  padding-top: 18px;
+}
+html:not([data-long='1']) .jh #j-score .k-lead {
+  font-size: 16px;
+}
+
+/* Learn: a smaller phone */
+html:not([data-long='1']) .jh #learn .k-picside > .ip {
+  --ip-w: 200px;
+}
+
+/* The closing band: the offer, both prices, the badge */
+.jh .k-close-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 36px;
+  align-items: center;
+}
+.jh .k-close-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.jh .k-close .k-lead {
+  color: #e3dacf;
+  margin: 8px 0 14px;
+}
+.jh .k-close .k-eye {
+  color: #f0c58a;
+}
+.jh .k-close-plans {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.jh .k-close .k-plan {
+  background: rgba(18, 13, 10, 0.35);
+  border: 1px solid rgba(245, 240, 232, 0.16);
+  border-radius: 16px;
+  padding: 16px;
+}
+.jh .k-close .k-plan p {
+  color: #e3dacf;
+  font-size: 15px;
+}
+.jh .k-close .k-plan .k-price {
+  color: #f5f0e8;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 4px 0 2px;
+}
+html[data-theme='light'] .jh .k-close .k-plan {
+  background: rgba(18, 13, 10, 0.3);
+  border-color: rgba(245, 240, 232, 0.2);
+}
+
+@media (max-width: 1180px) {
+  .jh .k-close-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+@media (max-width: 760px) {
+  /* Two weeks, Classes: one swipeable row, the next card peeking */
+  html:not([data-long='1']) .jh #two-weeks .k-days,
+  html:not([data-long='1']) .jh #classes .k-days {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    /* bleeds to the screen edge: the phone gutter is 16px (home.css) */
+    margin: 12px -16px 0;
+    padding: 0 16px 4px;
+    scroll-padding: 0 16px;
+  }
+  html:not([data-long='1']) .jh #two-weeks .k-days::-webkit-scrollbar,
+  html:not([data-long='1']) .jh #classes .k-days::-webkit-scrollbar {
+    display: none;
+  }
+  html:not([data-long='1']) .jh #two-weeks .k-dcard,
+  html:not([data-long='1']) .jh #classes .k-dcard {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+  }
+  html:not([data-long='1']) .jh #two-weeks .k-dcard .pic.phone,
+  html:not([data-long='1']) .jh #classes .k-dcard .pic.phone {
+    height: 220px;
+  }
+  html:not([data-long='1']) .jh #two-weeks .k-dcard .pic.phone .ip,
+  html:not([data-long='1']) .jh #classes .k-dcard .pic.phone .ip {
+    --ip-w: 180px;
+  }
+  /* Coach: cards two by two, smaller phones */
+  html:not([data-long='1']) .jh .k-ev4 {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 16px;
+  }
+  html:not([data-long='1']) .jh .k-ev p {
+    font-size: 14px;
+  }
+  html:not([data-long='1']) .jh #coach .k-phones .ip {
+    --ip-w: 150px;
+  }
+  /* The eight limbs: one column, tight */
+  html:not([data-long='1']) .jh .k-limbs {
+    grid-template-columns: 1fr;
+  }
+  html:not([data-long='1']) .jh .k-ring {
+    width: 320px;
+    height: 320px;
+  }
+  html:not([data-long='1']) .jh .k-limbs2 {
+    grid-template-columns: 1fr;
+  }
+  html:not([data-long='1']) .jh #learn .k-picside > .ip {
+    --ip-w: 170px;
+  }
+  .jh .k-close-plans {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .jh .k-close .k-plan {
+    padding: 12px 14px;
+  }
+}
+
+/* ── 9. Lighter condense on About and Library (round 3). Pricing already
+   fits one screen on a computer and has no slack. Also under `?long=1`'s
+   reach, so the earlier pages stay one switch away. ─────────────────── */
+@media (max-width: 640px) {
+  /* About: the three of us in one row of small cards, not three
+     screen-tall photos (Apple's leadership page, from memory) */
+  html:not([data-long='1']) .ab-team-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  html:not([data-long='1']) .ab-team-grid .ab-person-card > :not(.ab-person-photo) {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  html:not([data-long='1']) .ab-team-grid .ab-person-name {
+    font-size: 12.5px;
+  }
+  html:not([data-long='1']) .ab-team-grid .ab-person-role {
+    font-size: 9.5px;
+  }
+}
+@media (max-width: 760px) {
+  /* Library: tighter cards, the summary held to two lines (the full text is
+     one tap away in the article) */
+  html:not([data-long='1']) .lb-grid {
+    gap: 10px;
+  }
+  html:not([data-long='1']) .lb-card {
+    padding: 14px 16px;
+    gap: 4px;
+  }
+  html:not([data-long='1']) .lb-card-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Light: the closing band stays dark, so its label stays light */
+html[data-theme='light'] .jh .k-close .k-eye {
+  color: #f0c58a;
 }

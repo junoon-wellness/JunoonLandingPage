@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import Image from 'next/image'
 import IPhoneFrame from '@/components/home/IPhoneFrame'
-import { INDIA_BOX, INDIA_DOTS, INDIA_PLACE } from '@/lib/india-dots'
+import { INDIA_BOX, INDIA_DOTS } from '@/lib/india-dots'
 import { FEATURES, HERO_MAP, HERO_THREAD } from '@/lib/landing-copy'
 
 /**
@@ -13,9 +13,9 @@ import { FEATURES, HERO_MAP, HERO_THREAD } from '@/lib/landing-copy'
  *  - India as C drew it, a field of dots; all four pieces (map, pills, words,
  *    phone) scaled to each other;
  *  - the connecting lines are gone. The one quiet join left is a thin timer
- *    bar under the feature that is on (switch `?join=none` to drop it too);
- *  - the place on the map: a small named dot (`?pin=place`, our pick) or no
- *    mark at all (`?pin=none`);
+ *    bar under the feature that is on (Kush's pick, 6:54 PM Fri 13 Nov);
+ *  - no mark on the map (Kush's pick, same time); the dots are only a little
+ *    brighter around the north;
  *  - seven features (Your Samadhi AND On demand classes), a turn about every
  *    3 seconds, and it draws in Light as well as Dark (app/theme.css).
  *
@@ -58,7 +58,7 @@ function subscribeMotion(onChange: () => void) {
 }
 const prefersStill = () => window.matchMedia(MOTION_QUERY).matches
 
-/** India as a field of dots, with the place it started marked (or not). */
+/** India as a field of dots. */
 function IndiaDots() {
   const { w, h } = INDIA_BOX
   return (
@@ -66,12 +66,6 @@ function IndiaDots() {
       <path className="hx-dots t2" d={INDIA_DOTS[2]} />
       <path className="hx-dots t1" d={INDIA_DOTS[1]} />
       <path className="hx-dots t0" d={INDIA_DOTS[0]} />
-      <g className="hx-place" transform={`translate(${INDIA_PLACE.x} ${INDIA_PLACE.y})`}>
-        <circle className="hx-ring" r="9" />
-        <circle className="hx-ring r2" r="9" />
-        <circle className="hx-spot" r="5" />
-        <text x="13" y="5">{INDIA_PLACE.name}</text>
-      </g>
     </svg>
   )
 }

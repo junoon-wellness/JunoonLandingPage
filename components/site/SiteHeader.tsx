@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { APP_STORE_URL } from '@/lib/constants'
 import { NAV_CTA } from '@/lib/landing-copy'
@@ -32,16 +31,11 @@ export default function SiteHeader({ current }: { current?: '/' | '/pricing' | '
     <div className="jh jh-bar">
       <header className="swrap nav">
         <Link href="/" className="brand" aria-label="Junoon, home">
-          <Image
-            className="brand-icon"
-            src="/brand/junoon-icon-96.png"
-            alt=""
-            aria-hidden="true"
-            width={96}
-            height={96}
-            sizes="40px"
-            priority
-          />
+          {/* The banyan alone, no tile behind it (Kush, 6:54 PM Fri 13 Nov: "remove
+              brown background so its just the tree transparent background all
+              across"). Drawn as a mask so it takes the theme's ink: ivory in
+              Dark, deep brown in Light. Styles: .brand-mark in app/theme.css. */}
+          <span className="brand-mark" aria-hidden="true" />
           Junoon
         </Link>
         <nav className="links" aria-label="Primary">
