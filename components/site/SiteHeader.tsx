@@ -2,7 +2,6 @@ import Link from 'next/link'
 import { APP_STORE_URL } from '@/lib/constants'
 import { NAV_CTA } from '@/lib/landing-copy'
 import ScrollState from '@/components/site/ScrollState'
-import ThemeToggle from '@/components/site/ThemeToggle'
 
 /**
  * THE ONE TOP BAR for every page (rework of Mon 9 Nov 2026: "redo the other
@@ -17,7 +16,7 @@ import ThemeToggle from '@/components/site/ThemeToggle'
  * Round 2 (Kush, Fri 13 Nov 2026: "header updated to feel premium like the new
  * hero"): sticky, frosted once the page scrolls (ScrollState), links in the
  * true centre with a small turmeric dot under the page you are on, and the
- * Light / Dark switch (ThemeToggle) beside the button. Styles: app/theme.css.
+ * button. Dark only (Arnav, Sat 14 Nov 2026), so there is no theme switch. Styles: app/theme.css.
  */
 const LINKS = [
   { label: 'Home', href: '/' },
@@ -33,8 +32,7 @@ export default function SiteHeader({ current }: { current?: '/' | '/pricing' | '
         <Link href="/" className="brand" aria-label="Junoon, home">
           {/* The banyan alone, no tile behind it (Kush, 6:54 PM Fri 13 Nov: "remove
               brown background so its just the tree transparent background all
-              across"). Drawn as a mask so it takes the theme's ink: ivory in
-              Dark, deep brown in Light. Styles: .brand-mark in app/theme.css. */}
+              across"). Drawn as a mask so it takes the theme's ink (ivory). Styles: .brand-mark in app/theme.css. */}
           <span className="brand-mark" aria-hidden="true" />
           Junoon
         </Link>
@@ -46,7 +44,6 @@ export default function SiteHeader({ current }: { current?: '/' | '/pricing' | '
           ))}
         </nav>
         <div className="nav-end">
-          <ThemeToggle />
           <a href={APP_STORE_URL} className="cta">
             {NAV_CTA}
           </a>
@@ -61,11 +58,6 @@ export default function SiteHeader({ current }: { current?: '/' | '/pricing' | '
                   {l.label}
                 </Link>
               ))}
-              {/* On phones the Light / Dark switch lives here, so the bar
-                  keeps room for the name and the button. */}
-              <div className="nav-menu-theme">
-                <ThemeToggle />
-              </div>
             </nav>
           </details>
         </div>

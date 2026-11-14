@@ -4,7 +4,6 @@ import { meta } from "@/lib/meta";
 import { clean } from "@/lib/text";
 import MetaPixel from "@/components/analytics/MetaPixel";
 import { Analytics } from "@vercel/analytics/next";
-import { THEME_BOOT } from "@/lib/theme-boot";
 import "./globals.css";
 // The home page's look (every rule scoped under .jh): loaded for every page
 // since the rework of Mon 9 Nov, because the shared top bar and footer
@@ -98,13 +97,10 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${cormorant.variable} ${dmSans.variable} ${dmMono.variable}`}
-      // The theme script below writes data-theme before React loads.
-      suppressHydrationWarning
+      // Dark only (Arnav, Sat 14 Nov 2026): fixed in the markup, so every
+      // visitor gets Dark on the first paint, whatever their system setting.
+      data-theme="dark"
     >
-      <head>
-        {/* Sets Light or Dark before the first paint (lib/theme-boot.ts). */}
-        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
-      </head>
       {/*
         bg/text colours deliberately live in globals.css rather than as Tailwind
         utilities here - utility classes would out-specify the `body` rule and

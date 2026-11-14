@@ -4,9 +4,9 @@
   Library brought onto the home page's look. Loaded after globals.css and
   home.css (app/layout.tsx), so the tokens here win.
 
-  HOW THE THEME WORKS. lib/theme-boot.ts writes `data-theme="light|dark"` on
-  <html> before the first paint (the visitor's toggle choice, else their system
-  setting). Every colour that changes with the theme is a token below:
+  HOW THE THEME WORKS. app/layout.tsx fixes `data-theme="dark"` on
+  <html> (Dark only since Sat 14 Nov 2026; the html[data-theme='light'] rules
+  below are dead and kept only in case Light returns). Every colour that changes with the theme is a token below:
     - the home page's own names (`--ivory`, `--muted`, `--n2` ... inside `.jh`)
     - the older pages' names (`--jn-*`, from globals.css)
   In Light, `--ivory` (the home page's word for "the text colour") becomes the
@@ -230,47 +230,11 @@ html[data-theme='light'] .jh .brand:hover .brand-mark {
   box-shadow: 0 10px 24px -10px var(--s-accent);
 }
 .jh .cta:focus-visible,
-.theme-toggle:focus-visible,
 .jh .links a:focus-visible {
   outline: 2px solid var(--s-glow);
   outline-offset: 3px;
 }
 
-/* the Light / Dark switch */
-.theme-toggle {
-  position: relative;
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  border: 1px solid var(--s-line);
-  background: transparent;
-  color: var(--s-ink);
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  transition: border-color 0.25s, background-color 0.25s;
-}
-.theme-toggle:hover {
-  border-color: var(--s-glow);
-}
-.theme-toggle svg {
-  grid-area: 1 / 1;
-  width: 18px;
-  height: 18px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: transform 0.5s var(--s-ease), opacity 0.3s;
-}
-/* Dark shows the sun (the switch to Light); Light shows the moon. */
-html:not([data-theme='light']) .theme-toggle .tt-moon,
-html[data-theme='light'] .theme-toggle .tt-sun {
-  opacity: 0;
-  transform: rotate(-70deg) scale(0.5);
-}
 .jh .nav-menu nav {
   background: var(--s-plate);
   box-shadow: 0 14px 36px var(--s-shadow);
@@ -291,9 +255,6 @@ html[data-theme='light'] .theme-toggle .tt-sun {
     padding: 9px 14px;
     font-size: 13px;
   }
-  .jh .nav-end > .theme-toggle {
-    display: none;
-  }
   .jh .brand {
     font-size: 23px;
   }
@@ -301,13 +262,6 @@ html[data-theme='light'] .theme-toggle .tt-sun {
     width: 32px;
     height: 32px;
   }
-}
-.jh .nav-menu-theme {
-  display: flex;
-  justify-content: flex-end;
-  padding: 6px 4px 2px;
-  border-top: 1px solid var(--s-line);
-  margin-top: 4px;
 }
 @media (max-width: 380px) {
   .jh .brand {
