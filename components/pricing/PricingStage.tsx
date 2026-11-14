@@ -53,6 +53,8 @@ const PIN_PADDING_TOP = 124
 const PIN_PADDING_BOTTOM = 20
 
 // useLayoutEffect warns during SSR; useEffect is the correct no-op there.
+const SCROLL_REVEAL = false
+
 const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function PricingStage({
@@ -123,7 +125,9 @@ export default function PricingStage({
       */
       const pinH = inner.scrollHeight + PIN_PADDING_TOP + PIN_PADDING_BOTTOM
       const fits = pinH <= window.innerHeight
-      if (!wideQuery.matches || stillQuery.matches || !fits) {
+      // Arnav, 5:54 PM Sat 14 Nov: show the whole page at once, no scroll reveal.
+      // The slide stays in the code; set SCROLL_REVEAL to true to bring it back.
+      if (!SCROLL_REVEAL || !wideQuery.matches || stillQuery.matches || !fits) {
         setAnimated(false)
         setShift(0)
         return
