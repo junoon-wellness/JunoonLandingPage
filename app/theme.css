@@ -1,0 +1,1193 @@
+/*
+  ROUND 2 OF THE SITE (Kush, Fri 13 Nov 2026): Light and Dark for the whole
+  website, a premium top bar, the round 2 first screen, and Pricing, About and
+  Library brought onto the home page's look. Loaded after globals.css and
+  home.css (app/layout.tsx), so the tokens here win.
+
+  HOW THE THEME WORKS. lib/theme-boot.ts writes `data-theme="light|dark"` on
+  <html> before the first paint (the visitor's toggle choice, else their system
+  setting). Every colour that changes with the theme is a token below:
+    - the home page's own names (`--ivory`, `--muted`, `--n2` ... inside `.jh`)
+    - the older pages' names (`--jn-*`, from globals.css)
+  In Light, `--ivory` (the home page's word for "the text colour") becomes the
+  dark ink. Surfaces that stay dark in Light too (phone screens, the J Score
+  card, the closing offer band) put the Dark values back locally.
+
+  LIGHT IS THE APP'S OWN LIGHT PALETTE (Junoon-IOS Theme.swift, JV3-879):
+  latte ground #E4D6C3, cream cards #F8F2E9, ink #2A1E15, terracotta #8E4526
+  carries the words, turmeric only glows (fills, dots, rings), never words.
+  Kush picked latte, near-black everywhere and follow-their-setting (6:54 PM
+  Fri 13 Nov); the ivory and brown variations are gone.
+
+  No visible scroll bars anywhere (home.css hides the page's; the swipe row
+  hides its own).
+*/
+
+/* ── 1. Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --s-ground: #120d0a;
+  --s-ground2: #1b140f;
+  --s-plate: #241a13;
+  --s-raise: #2e2219;
+  --s-line: rgba(245, 240, 232, 0.13);
+  --s-ink: #f5f0e8;
+  --s-ink2: #e3dacf; /* body text, the home page's own */
+  --s-ink3: #b4a99f;
+  --s-accent: #c4724a; /* words and the one filled button */
+  --s-accent-text: #d98a62; /* small accent words, AA on the ground */
+  --s-glow: #e8b870; /* turmeric: fills, dots, rings */
+  --s-on-glow: #2a1e15;
+  --s-bar: rgba(18, 13, 10, 0.72); /* the top bar once scrolled */
+  --s-shadow: rgba(0, 0, 0, 0.45);
+  --s-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: dark;
+}
+html[data-theme='light'] {
+  --s-ground: #e4d6c3;
+  --s-ground2: #ecdfcd;
+  --s-plate: #f8f2e9;
+  --s-raise: #eee3d4;
+  --s-line: #d3c2ab;
+  --s-ink: #2a1e15;
+  --s-ink2: #4f3f31;
+  --s-ink3: #62503f;
+  --s-accent: #8e4526;
+  --s-accent-text: #8e4526;
+  --s-glow: #e8b870;
+  --s-on-glow: #7a3a1e;
+  --s-bar: rgba(228, 214, 195, 0.78);
+  --s-shadow: rgba(74, 52, 30, 0.18);
+  color-scheme: light;
+}
+
+/* The home page's names, and the older pages' names, read the tokens. */
+.jh {
+  --ivory: var(--s-ink);
+  --muted: var(--s-ink3);
+  --line-d: var(--s-line);
+  --n2: var(--s-ground2);
+  --n3: var(--s-raise);
+  --clay: var(--s-accent);
+  background: var(--s-ground);
+}
+.jh p {
+  color: var(--s-ink2);
+}
+html,
+html:has(.jh-home) {
+  --jn-bg: var(--s-ground);
+  --jn-surface: var(--s-plate);
+  --jn-text: var(--s-ink);
+}
+html[data-theme='light'] {
+  --jn-surface-deep: #e2d3bf;
+  --jn-text-dim: #4f3f31;
+  --jn-text-soft: #4f3f31;
+  --jn-text-faint: #62503f;
+  --jn-mute: #62503f;
+  --jn-stone: #62503f;
+  --jn-clay: #8e4526;
+  --jn-turmeric: #8e4526; /* turmeric words are unreadable on latte: terracotta */
+  --jn-gold: #8e4526;
+  --jn-sage: #46604e;
+  --jn-hairline: #d3c2ab;
+  --jn-hairline-strong: #c9b79e;
+  --jn-wash: rgba(42, 30, 21, 0.04);
+}
+body {
+  background-color: var(--s-ground);
+  color: var(--s-ink);
+}
+
+/* A theme switch cross-fades colours (only while switching, so nothing else
+   ever animates its colour by accident). */
+html[data-theme-switching] *,
+html[data-theme-switching] *::before,
+html[data-theme-switching] *::after {
+  transition: background-color 0.4s var(--s-ease), color 0.4s var(--s-ease), border-color 0.4s var(--s-ease),
+    fill 0.4s var(--s-ease), stroke 0.4s var(--s-ease) !important;
+}
+
+/* ── 2. The top bar, premium (Kush: "header updated to feel premium like the
+   new hero"). Sticky, and once the page scrolls it turns to frosted glass
+   with a hairline: Apple's and Linear's top bars (from memory). The links sit
+   in the true centre; the page you are on carries a small turmeric dot (the
+   app's "now" mark); a hover line grows from the centre. ─────────────── */
+.jh.jh-bar,
+html:not(:has(.jh-home)) .jh.jh-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: transparent;
+  transition: background-color 0.35s var(--s-ease), box-shadow 0.35s var(--s-ease);
+}
+html[data-scrolled] .jh.jh-bar {
+  background: var(--s-bar);
+  -webkit-backdrop-filter: saturate(160%) blur(18px);
+  backdrop-filter: saturate(160%) blur(18px);
+  box-shadow: 0 1px 0 var(--s-line);
+}
+.jh .nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  padding: 16px 0;
+  transition: padding 0.35s var(--s-ease);
+}
+html[data-scrolled] .jh .nav {
+  padding: 10px 0;
+}
+.jh .brand {
+  justify-self: start;
+  letter-spacing: 0.01em;
+}
+/* The logo: the banyan alone on a transparent ground, in the theme's ink
+   (Kush, 6:54 PM Fri 13 Nov). A mask, so one picture serves both themes. */
+.brand-mark {
+  display: block;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  background-color: var(--s-ink);
+  -webkit-mask: url('/brand/junoon-tree-white-560.webp') center / contain no-repeat;
+  mask: url('/brand/junoon-tree-white-560.webp') center / contain no-repeat;
+  transition: transform 0.5s var(--s-ease), background-color 0.3s;
+}
+.jh .brand:hover .brand-mark {
+  transform: scale(1.06);
+  background-color: var(--s-glow);
+}
+html[data-theme='light'] .jh .brand:hover .brand-mark {
+  background-color: var(--s-accent);
+}
+.jh .k-fl .brand-mark {
+  width: 34px;
+  height: 34px;
+}
+.jh .links {
+  gap: 34px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.jh .links a {
+  position: relative;
+  padding: 6px 0;
+  color: var(--s-ink2);
+  transition: color 0.25s var(--s-ease);
+}
+.jh .links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.35s var(--s-ease);
+}
+.jh .links a:hover {
+  color: var(--s-ink);
+}
+.jh .links a:hover::after {
+  transform: scaleX(1);
+}
+.jh .links a[aria-current='page'] {
+  color: var(--s-ink);
+}
+.jh .links a[aria-current='page']::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  width: 5px;
+  height: 5px;
+  margin-left: -2.5px;
+  border-radius: 50%;
+  background: var(--s-glow);
+  box-shadow: 0 0 10px var(--s-glow);
+}
+.jh .links a[aria-current='page']::after {
+  display: none;
+}
+.jh .nav-end {
+  justify-self: end;
+  gap: 10px;
+}
+.jh .cta {
+  background: var(--s-accent);
+  color: #fff;
+  padding: 10px 18px;
+  font-size: 14px;
+  letter-spacing: 0.01em;
+  box-shadow: 0 6px 18px -8px var(--s-accent);
+  transition: transform 0.3s var(--s-ease), box-shadow 0.3s var(--s-ease), filter 0.3s;
+}
+.jh .cta:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  box-shadow: 0 10px 24px -10px var(--s-accent);
+}
+.jh .cta:focus-visible,
+.theme-toggle:focus-visible,
+.jh .links a:focus-visible {
+  outline: 2px solid var(--s-glow);
+  outline-offset: 3px;
+}
+
+/* the Light / Dark switch */
+.theme-toggle {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid var(--s-line);
+  background: transparent;
+  color: var(--s-ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  transition: border-color 0.25s, background-color 0.25s;
+}
+.theme-toggle:hover {
+  border-color: var(--s-glow);
+}
+.theme-toggle svg {
+  grid-area: 1 / 1;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.5s var(--s-ease), opacity 0.3s;
+}
+/* Dark shows the sun (the switch to Light); Light shows the moon. */
+html:not([data-theme='light']) .theme-toggle .tt-moon,
+html[data-theme='light'] .theme-toggle .tt-sun {
+  opacity: 0;
+  transform: rotate(-70deg) scale(0.5);
+}
+.jh .nav-menu nav {
+  background: var(--s-plate);
+  box-shadow: 0 14px 36px var(--s-shadow);
+}
+.jh .nav-menu summary span {
+  background: var(--s-ink);
+}
+
+@media (max-width: 760px) {
+  .jh .nav {
+    grid-template-columns: 1fr auto;
+    padding: 12px 0;
+  }
+  .jh .links {
+    display: none;
+  }
+  .jh .cta {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+  .jh .nav-end > .theme-toggle {
+    display: none;
+  }
+  .jh .brand {
+    font-size: 23px;
+  }
+  .jh .brand .brand-mark {
+    width: 32px;
+    height: 32px;
+  }
+}
+.jh .nav-menu-theme {
+  display: flex;
+  justify-content: flex-end;
+  padding: 6px 4px 2px;
+  border-top: 1px solid var(--s-line);
+  margin-top: 4px;
+}
+@media (max-width: 380px) {
+  .jh .brand {
+    font-size: 0;
+    gap: 0;
+  }
+}
+
+/* ── 3. The first screen, round 2 (components/home/HeroThread.tsx) ─────── */
+.jh .hx-top {
+  padding-top: 26px;
+}
+.jh .hx-top .h4-head h1 {
+  color: var(--s-ink);
+}
+.jh .hx {
+  --hx-map: 300px;
+  --hx-pills: 214px;
+  --hx-phone: 232px;
+  margin: 34px auto 0;
+  display: grid;
+  grid-template-columns: var(--hx-map) var(--hx-pills) minmax(0, 360px) var(--hx-phone);
+  gap: 44px;
+  justify-content: center;
+  align-items: center;
+}
+/* the map */
+.jh .hx-roots {
+  margin: 0;
+  text-align: center;
+}
+.jh .hx-map {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+.jh .hx-dots {
+  fill: none;
+  stroke: var(--s-glow);
+  stroke-linecap: round;
+}
+.jh .hx-dots.t2 {
+  stroke-width: 3.3;
+  opacity: 0.42;
+}
+.jh .hx-dots.t1 {
+  stroke-width: 3.9;
+  opacity: 0.62;
+}
+.jh .hx-dots.t0 {
+  stroke-width: 4.6;
+  opacity: 0.9;
+}
+html[data-theme='light'] .jh .hx-dots {
+  stroke: #a8692f;
+}
+html[data-theme='light'] .jh .hx-dots.t2 {
+  opacity: 0.5;
+}
+.jh .hx-roots figcaption {
+  margin-top: 10px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--s-ink3);
+}
+
+/* the practice pills */
+.jh .hx-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.jh .hx-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 14px 7px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--s-ink) 4%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--s-glow) 26%, transparent);
+  color: var(--s-ink3);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.45s var(--s-ease), box-shadow 0.45s var(--s-ease), color 0.45s, transform 0.45s var(--s-ease);
+}
+.jh .hx-pill svg {
+  width: 19px;
+  height: 19px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.jh .hx-pill b {
+  display: block;
+  font-weight: 500;
+  font-size: 14.5px;
+  color: var(--s-ink);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.jh .hx-pill small {
+  display: block;
+  font-size: 11.5px;
+  line-height: 1.25;
+  color: var(--s-ink3);
+  white-space: nowrap;
+}
+.jh .hx-pill:hover {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--s-glow) 55%, transparent);
+}
+.jh .hx-pill[data-on] {
+  background: color-mix(in srgb, var(--s-glow) 15%, transparent);
+  box-shadow: inset 0 0 0 1px var(--s-glow), 0 0 26px -8px var(--s-glow);
+  color: var(--s-glow);
+  transform: translateX(4px);
+}
+/* Light: selected is a gold pill with deep terracotta words (the app's rule 4) */
+html[data-theme='light'] .jh .hx-pill {
+  background: color-mix(in srgb, var(--s-plate) 70%, transparent);
+  box-shadow: inset 0 0 0 1px var(--s-line);
+}
+html[data-theme='light'] .jh .hx-pill[data-on] {
+  background: #f3d9a4;
+  box-shadow: inset 0 0 0 1px #e3bd7c, 0 8px 22px -12px #a06a1c;
+  color: #7a3a1e;
+}
+html[data-theme='light'] .jh .hx-pill[data-on] b,
+html[data-theme='light'] .jh .hx-pill[data-on] small {
+  color: #7a3a1e;
+}
+
+/* the feature words */
+.jh .hx-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.jh .hx-list li {
+  position: relative;
+  width: fit-content;
+  padding-bottom: 5px;
+}
+.jh .hx-list button {
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 31px;
+  line-height: 1.15;
+  color: color-mix(in srgb, var(--s-ink) 30%, transparent);
+  transition: color 0.5s var(--s-ease), transform 0.5s var(--s-ease);
+}
+.jh .hx-list button:hover {
+  color: color-mix(in srgb, var(--s-ink) 60%, transparent);
+}
+.jh .hx-list li[data-on] button {
+  color: var(--s-ink);
+}
+.jh .hx-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--s-glow), var(--s-accent));
+  transform-origin: left;
+  transform: scaleX(1);
+}
+.jh .hx[data-auto] .hx-bar {
+  animation: hx-fill var(--turn) linear both;
+}
+@keyframes hx-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* the phone */
+.jh .hx-phone {
+  display: flex;
+  justify-content: center;
+}
+.jh .ip.hx-ip {
+  --ip-w: var(--hx-phone);
+}
+.jh .hx-img {
+  opacity: 0;
+  transform: scale(1.025);
+  transition: opacity 0.6s var(--s-ease), transform 0.9s var(--s-ease);
+}
+.jh .hx-img[data-on] {
+  opacity: 1;
+  transform: none;
+}
+html[data-theme='light'] .jh .ip-body {
+  box-shadow:
+    inset 0 0 0 0.5cqw #120d0a,
+    inset 0 0 0 0.9cqw rgba(245, 240, 232, 0.16),
+    0 6cqw 14cqw rgba(74, 52, 30, 0.28);
+}
+
+/* the first screen's entrance: the four pieces settle in, one after another */
+@media (prefers-reduced-motion: no-preference) {
+  .jh .hx-top .h4-head,
+  .jh .hx > *,
+  .jh .hx-top .h4-offer {
+    animation: hx-in 0.9s var(--s-ease) both;
+  }
+  .jh .hx-top .h4-head {
+    animation-delay: 0.05s;
+  }
+  .jh .hx > :nth-child(1) {
+    animation-delay: 0.2s;
+  }
+  .jh .hx > :nth-child(2) {
+    animation-delay: 0.3s;
+  }
+  .jh .hx > :nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  .jh .hx > :nth-child(4) {
+    animation-delay: 0.5s;
+  }
+  .jh .hx-top .h4-offer {
+    animation-delay: 0.6s;
+  }
+}
+@keyframes hx-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jh .hx-pill,
+  .jh .hx-list button,
+  .jh .hx-img {
+    transition: none;
+  }
+  .jh .hx-pill[data-on] {
+    transform: none;
+  }
+}
+
+/* middle widths: map and pills on one row, words and phone on the next */
+@media (max-width: 1180px) {
+  .jh .hx {
+    --hx-map: 280px;
+    grid-template-columns: var(--hx-map) var(--hx-pills);
+    grid-template-areas: 'map pills' 'list phone';
+    row-gap: 36px;
+  }
+  .jh .hx-roots {
+    grid-area: map;
+  }
+  .jh .hx-pills {
+    grid-area: pills;
+  }
+  .jh .hx-list {
+    grid-area: list;
+  }
+  .jh .hx-phone {
+    grid-area: phone;
+  }
+}
+/* phones: the map, the pills as chips, the one feature that is on, the phone */
+@media (max-width: 760px) {
+  .jh .hx-top {
+    padding-top: 14px;
+  }
+  .jh .hx {
+    --hx-map: 210px;
+    --hx-phone: 236px;
+    margin-top: 22px;
+    grid-template-columns: 1fr;
+    grid-template-areas: 'map' 'pills' 'list' 'phone';
+    row-gap: 18px;
+  }
+  .jh .hx-roots {
+    width: var(--hx-map);
+    justify-self: center;
+  }
+  .jh .hx-pills {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+  }
+  .jh .hx-pill {
+    width: auto;
+    padding: 6px 12px 6px 9px;
+    gap: 7px;
+  }
+  .jh .hx-pill svg {
+    width: 16px;
+    height: 16px;
+  }
+  .jh .hx-pill b {
+    font-size: 13.5px;
+  }
+  .jh .hx-pill small {
+    display: none;
+  }
+  .jh .hx-pill[data-on] {
+    transform: none;
+  }
+  .jh .hx-list {
+    align-items: center;
+  }
+  .jh .hx-list li:not([data-on]) {
+    display: none;
+  }
+  .jh .hx-list button {
+    font-size: 28px;
+    text-align: center;
+  }
+}
+
+/* ── 4. Surfaces that stay dark in Light too (the app's `deep`): put the Dark
+   words back on them. ─────────────────────────────────────────────────── */
+html[data-theme='light'] .jh .ip,
+html[data-theme='light'] .jh .k-score,
+html[data-theme='light'] .jh .k-s.offer {
+  --ivory: #f5f0e8;
+  --muted: #b4a99f;
+}
+html[data-theme='light'] .jh .k-s.offer {
+  color: #f5f0e8;
+}
+html[data-theme='light'] .jh .k-s.offer p {
+  color: #e3dacf;
+}
+html[data-theme='light'] .jh .k-score {
+  color: #f5f0e8;
+}
+
+/* ── 5. The home page in Light: the few surfaces home.css draws with a fixed
+   dark colour. ────────────────────────────────────────────────────────── */
+html[data-theme='light'] .jh .k-s.k-footer,
+html[data-theme='light'] .jh.jh-foot .k-footer,
+html[data-theme='light']:not(:has(.jh-home)) .jh.jh-foot,
+html[data-theme='light']:not(:has(.jh-home)) .jh.jh-foot .k-footer {
+  background: #d9c8b0;
+}
+html:not([data-theme='light']):not(:has(.jh-home)) .jh.jh-foot,
+html:not([data-theme='light']):not(:has(.jh-home)) .jh.jh-foot .k-footer {
+  background: #0d0907;
+}
+html[data-theme='light'] .jh .k-soc a {
+  border-color: var(--s-accent);
+  color: var(--s-accent);
+}
+html[data-theme='light'] .jh .k-eye {
+  color: var(--s-accent);
+}
+html[data-theme='light'] .jh .textlink:hover,
+html[data-theme='light'] .jh .k-flinks a:hover {
+  color: var(--s-accent);
+}
+/* cards on the home page: cream plates with a latte edge */
+html[data-theme='light'] .jh .k-limb,
+html[data-theme='light'] .jh .k-dcard,
+html[data-theme='light'] .jh .k-plan,
+html[data-theme='light'] .jh .k-faq {
+  background: var(--s-plate);
+  border-color: var(--s-line);
+}
+html[data-theme='light'] .jh .k-ring .lb b {
+  background: var(--s-plate);
+  color: var(--s-ink);
+  border-color: #e3bd7c;
+}
+html[data-theme='light'] .jh .k-ring .centre {
+  color: #7a3a1e;
+}
+html[data-theme='light'] .jh .k-pts li span {
+  color: var(--s-ink2);
+}
+html[data-theme='light'] .jh .k-ring .centre small {
+  color: #5a4432;
+}
+html[data-theme='light'] .jh .k-ring .halo {
+  border-color: rgba(160, 106, 28, 0.25);
+}
+html[data-theme='light'] .jh .k-ring .spokes line {
+  stroke: rgba(160, 106, 28, 0.45);
+}
+
+/* ── 6. Pricing, About and Library on the home page's look (Kush: "on brand
+   and on theme ... clean, polished transitions and animations"). One ground,
+   the home page's cards (plate fill, hairline edge, soft lift), its type
+   (Cormorant 500 headings, DM Sans body), its small clay section labels. ─ */
+.pc-band {
+  background: radial-gradient(120% 90% at 85% 0%, color-mix(in srgb, var(--s-accent) 22%, transparent), transparent 60%),
+    linear-gradient(180deg, color-mix(in srgb, var(--s-raise) 80%, transparent), transparent);
+}
+html[data-theme='light'] .pc-band {
+  background: radial-gradient(110% 80% at 85% 0%, #f7e4bd, transparent 62%),
+    linear-gradient(180deg, #ecdfcd, transparent);
+}
+html[data-theme='light'] .pc-tree {
+  filter: invert(1) sepia(1) saturate(1.4) brightness(0.75);
+  opacity: 0.04;
+}
+/* The person cards became plates: their words need the plate's inset. */
+.ab-person-card {
+  overflow: hidden;
+  padding-bottom: 14px;
+}
+.ab-person-card > :not(.ab-person-photo) {
+  padding-left: 14px;
+  padding-right: 14px;
+}
+.eyebrow {
+  color: var(--s-accent-text);
+}
+.eyebrow::before {
+  background: var(--s-glow);
+}
+.jn-toran::after {
+  background: var(--s-line);
+}
+.lb-card,
+.pr-card,
+.ab-person-card,
+.ab-founder-card,
+.ab-tagline {
+  background: var(--s-plate);
+  border: 1px solid var(--s-line);
+  border-radius: 18px;
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--s-glow) 22%, transparent) inset, 0 18px 40px -24px var(--s-shadow);
+}
+.lb-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--s-glow) 55%, transparent);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--s-glow) 30%, transparent) inset, 0 24px 48px -24px var(--s-shadow);
+}
+.lb-card-title,
+.pr-headline,
+.ab-headline,
+.v2-section h2 {
+  color: var(--s-ink);
+}
+html[data-theme='light'] .lb-card-eyebrow,
+html[data-theme='light'] .lb-card-meta {
+  color: var(--s-ink3);
+}
+html[data-theme='light'] .v2-btn-primary,
+html[data-theme='light'] button[type='submit'] {
+  color: #fff;
+}
+html[data-theme='light'] input,
+html[data-theme='light'] textarea,
+html[data-theme='light'] select {
+  background: var(--s-plate);
+  color: var(--s-ink);
+  border-color: var(--s-line);
+}
+html[data-theme='light'] input::placeholder,
+html[data-theme='light'] textarea::placeholder {
+  color: #8c7b6b;
+}
+
+/* Every page fades in on arrival and on each move between pages (app/
+   template.tsx; Apple and Stripe: a short, quiet fade, no spinners). Opacity
+   only: a transform here would trap the sticky bar and the pricing stage.
+   It starts above zero so the largest text still counts as painted at once. */
+@media (prefers-reduced-motion: no-preference) {
+  .pg-in {
+    animation: pg-in 0.6s var(--s-ease) both;
+  }
+}
+@keyframes pg-in {
+  from {
+    opacity: 0.02;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── 8. Shared pieces from rounds 3 and 4 (Kush, Fri 13 Nov 2026): the tight
+   eight-limbs list (used by the fold in How it works) and the closing band
+   that merged Pricing and Download (his pick, 7:18 PM). Round 3's own
+   sections were deleted with round 4's pick (7:36 PM). ─────────────────── */
+
+/* The eight limbs: a tight list, one hairline per limb */
+html .jh .k-limbs {
+  gap: 0 26px;
+  margin-top: 10px;
+}
+html .jh .k-limb {
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--line-d);
+  border-radius: 0;
+  padding: 8px 0 7px;
+}
+html .jh .k-limb .ln {
+  font-size: 22px;
+}
+html .jh .k-limb b {
+  font-size: 19px;
+}
+html .jh .k-limb .lt {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--s-ink2);
+}
+
+html .jh .k-ring {
+  width: 380px;
+  height: 380px;
+}
+html .jh .k-limbs2 {
+  grid-template-columns: 380px 1fr;
+}
+
+/* The closing band: the offer, both prices, the badge */
+.jh .k-close-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 36px;
+  align-items: center;
+}
+.jh .k-close-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.jh .k-close .k-lead {
+  color: #e3dacf;
+  margin: 8px 0 14px;
+}
+.jh .k-close .k-eye {
+  color: #f0c58a;
+}
+.jh .k-close-plans {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.jh .k-close .k-plan {
+  background: rgba(18, 13, 10, 0.35);
+  border: 1px solid rgba(245, 240, 232, 0.16);
+  border-radius: 16px;
+  padding: 16px;
+}
+.jh .k-close .k-plan p {
+  color: #e3dacf;
+  font-size: 15px;
+}
+.jh .k-close .k-plan .k-price {
+  color: #f5f0e8;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 4px 0 2px;
+}
+html[data-theme='light'] .jh .k-close .k-plan {
+  background: rgba(18, 13, 10, 0.3);
+  border-color: rgba(245, 240, 232, 0.2);
+}
+
+@media (max-width: 1180px) {
+  .jh .k-close-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+@media (max-width: 760px) {
+  /* The eight limbs: one column, tight */
+  html .jh .k-limbs {
+    grid-template-columns: 1fr;
+  }
+  html .jh .k-ring {
+    width: 320px;
+    height: 320px;
+  }
+  html .jh .k-limbs2 {
+    grid-template-columns: 1fr;
+  }
+
+  .jh .k-close-plans {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .jh .k-close .k-plan {
+    padding: 12px 14px;
+  }
+}
+
+/* ── 9. Lighter condense on About and Library (round 3). Pricing already
+   fits one screen on a computer and has no slack. 
+   reach, so the earlier pages stay one switch away. ─────────────────── */
+@media (max-width: 640px) {
+  /* About: the three of us in one row of small cards, not three
+     screen-tall photos (Apple's leadership page, from memory) */
+  html .ab-team-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  html .ab-team-grid .ab-person-card > :not(.ab-person-photo) {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  html .ab-team-grid .ab-person-name {
+    font-size: 12.5px;
+  }
+  html .ab-team-grid .ab-person-role {
+    font-size: 9.5px;
+  }
+}
+@media (max-width: 760px) {
+  /* Library: tighter cards, the summary held to two lines (the full text is
+     one tap away in the article) */
+  html .lb-grid {
+    gap: 10px;
+  }
+  html .lb-card {
+    padding: 14px 16px;
+    gap: 4px;
+  }
+  html .lb-card-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Light: the closing band stays dark, so its label stays light */
+html[data-theme='light'] .jh .k-close .k-eye {
+  color: #f0c58a;
+}
+
+/* ── 10. ROUND 4: FEWER SECTIONS (Kush, Fri 13 Nov 7:18 PM; structure A
+   picked 7:36 PM). How it works and Inside the app. ───────────────────── */
+
+/* A2. how it works: three steps on one line, then the J Score with the ring */
+.jh .hw-steps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 28px;
+  margin: 18px 0 8px;
+  counter-reset: none;
+}
+.jh .hw-steps li {
+  border-top: 2px solid var(--clay);
+  padding-top: 12px;
+}
+.jh .hw-steps .num {
+  font-family: var(--serif);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--turmeric);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+html[data-theme='light'] .jh .hw-steps .num {
+  color: var(--s-accent);
+}
+.jh .hw-steps p {
+  font-size: 15px;
+}
+.jh .hw-steps-col {
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.jh .hw-score {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 44px;
+  align-items: center;
+  margin-top: 26px;
+}
+.jh .hw-score .k-ring {
+  width: 360px;
+  height: 360px;
+}
+.jh .hw-h {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 34px !important;
+  line-height: 1.08;
+  margin: 2px 0 8px;
+}
+.jh .hw-score .k-lead {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+/* the eight limbs, folded under their heading */
+.jh .k-fold {
+  margin-top: 14px;
+  border-top: 1px solid var(--line-d);
+  border-bottom: 1px solid var(--line-d);
+}
+.jh .k-fold summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 30px 12px 0;
+  position: relative;
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.jh .k-fold summary::-webkit-details-marker {
+  display: none;
+}
+.jh .k-fold summary::after {
+  content: '+';
+  position: absolute;
+  right: 4px;
+  top: 10px;
+  font-family: var(--sans);
+  font-size: 22px;
+  color: var(--turmeric);
+  transition: transform 0.3s var(--s-ease);
+}
+.jh .k-fold[open] summary::after {
+  transform: rotate(45deg);
+}
+.jh .k-fold .k-small {
+  margin: 0 0 8px;
+}
+.jh .k-fold .k-limbs {
+  padding-bottom: 12px;
+}
+
+/* A3. inside the app: full-size screens in one swipe row */
+.jh .sr {
+  position: relative;
+  margin-top: 10px;
+}
+.jh .sr-track {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 6px 2px 0;
+  outline: none;
+}
+.jh #inside {
+  padding-bottom: 30px;
+}
+.jh .sr-track::-webkit-scrollbar {
+  display: none;
+}
+.jh .sr-slide {
+  flex: 0 0 262px;
+  margin: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.jh .sr-slide .ip {
+  --ip-w: 240px;
+  margin: 0 auto;
+}
+.jh .sr-slide figcaption {
+  padding: 12px 6px 0;
+}
+.jh .sr-slide h3 {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+.jh .sr-slide p {
+  font-size: 14.5px;
+  line-height: 1.45;
+}
+.jh .sr-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.jh .sr-links a {
+  border-bottom: 1px solid var(--line-d);
+  padding-bottom: 2px;
+}
+.jh .sr-links a:hover {
+  color: var(--turmeric);
+}
+.jh .sr-nav {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  display: flex;
+  gap: 8px;
+}
+.jh .sr-nav button {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid var(--line-d);
+  background: transparent;
+  color: var(--s-ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: border-color 0.25s;
+}
+.jh .sr-nav button:hover {
+  border-color: var(--s-glow);
+}
+.jh .sr-nav svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* B2. the showcase: a row of tabs over one panel (words beside a full phone) */
+
+@media (max-width: 1180px) {
+  .jh .hw-score {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .jh .hw-score .k-ring {
+    margin: 0 auto;
+  }
+}
+@media (max-width: 760px) {
+  .jh .hw-steps {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .jh .hw-score .k-ring {
+    width: 300px;
+    height: 300px;
+  }
+  .jh .hw-h {
+    font-size: 28px !important;
+  }
+  .jh .sr-nav {
+    display: none;
+  }
+  .jh .sr-track {
+    margin: 0 -16px;
+    padding: 6px 16px 10px;
+    scroll-padding: 0 16px;
+    gap: 14px;
+  }
+  .jh .sr-slide {
+    flex: 0 0 84%;
+  }
+  .jh .sr-slide .ip {
+    --ip-w: 236px;
+  }
+
+}

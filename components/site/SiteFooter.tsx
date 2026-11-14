@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { FOOTER_LEGAL } from '@/lib/landing-copy'
 
@@ -50,7 +49,8 @@ export default function SiteFooter() {
           <p>{FOOTER_LEGAL}</p>
         </div>
         <div className="k-fl">
-          <Image className="brand-icon" src="/brand/junoon-icon-96.png" alt="" aria-hidden="true" width={96} height={96} sizes="36px" />
+          {/* the banyan alone, as in the top bar (Kush, 6:54 PM Fri 13 Nov) */}
+          <span className="brand-mark" aria-hidden="true" />
           <div className="k-soc">
             {SOCIALS.map(s => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}>
