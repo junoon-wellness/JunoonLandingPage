@@ -201,14 +201,15 @@ function ClosingOfferSection() {
       <div className="swrap">
         <div className="k-close-grid">
           <div>
+            {/* Arnav, 5:41 PM Sat 14 Nov: no tree and no "Pricing" label here, and the short founding line. */}
             <div className="k-close-head">
-              <Tree className="k-treesm" size={72} />
               <div>
-                <div className="k-eye">{PRICING.eyebrow}</div>
                 <h2>{PRICING.heading}</h2>
               </div>
             </div>
-            <p className="k-lead">{PRICING.body}</p>
+            <p className="k-lead">
+              <b>{HERO_FINE.lead}</b> {HERO_FINE.rest}
+            </p>
             <div className="k-store">
               <AppStoreBadge size="nav" />
             </div>
