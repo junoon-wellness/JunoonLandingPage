@@ -4,7 +4,6 @@ import { meta } from "@/lib/meta";
 import { clean } from "@/lib/text";
 import MetaPixel from "@/components/analytics/MetaPixel";
 import { Analytics } from "@vercel/analytics/next";
-import ReviewSwitch from "@/components/site/ReviewSwitch";
 import { THEME_BOOT } from "@/lib/theme-boot";
 import "./globals.css";
 // The home page's look (every rule scoped under .jh): loaded for every page
@@ -129,7 +128,6 @@ export default function RootLayout({
           NEXT_PUBLIC_META_PIXEL_ID is set — and /privacy must disclose the
           tracking before that happens. See components/analytics/MetaPixel.tsx.
         */}
-        <ReviewSwitch />
         <Analytics />
         <MetaPixel />
       </body>

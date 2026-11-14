@@ -19,7 +19,7 @@
   Kush picked latte, near-black everywhere and follow-their-setting (6:54 PM
   Fri 13 Nov); the ivory and brown variations are gone.
 
-  No visible scroll bars anywhere (home.css hides the page's; the review panel
+  No visible scroll bars anywhere (home.css hides the page's; the swipe row
   hides its own).
 */
 
@@ -809,92 +809,10 @@ html[data-theme='light'] textarea::placeholder {
   }
 }
 
-/* ── 7. The review-only switcher (components/site/ReviewSwitch.tsx). ───── */
-.review-switch {
-  position: fixed;
-  left: 12px;
-  bottom: 12px;
-  z-index: 60;
-  max-width: calc(100vw - 24px);
-  max-height: 70vh;
-  overflow: auto;
-  scrollbar-width: none;
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: rgba(18, 13, 10, 0.92);
-  color: #f5f0e8;
-  font: 500 12px/1.3 var(--font-sans), system-ui, sans-serif;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-  display: grid;
-  gap: 8px;
-}
-.review-switch::-webkit-scrollbar {
-  display: none;
-}
-.review-switch .rs-row {
-  display: grid;
-  gap: 4px;
-}
-.review-switch .rs-row span {
-  color: #b4a99f;
-}
-.review-switch button {
-  margin-right: 4px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(245, 240, 232, 0.25);
-  background: transparent;
-  color: #f5f0e8;
-  font: inherit;
-  cursor: pointer;
-}
-.review-switch button[aria-pressed='true'] {
-  background: #e8b870;
-  border-color: #e8b870;
-  color: #2a1e15;
-}
-
-/* ── 8. ROUND 3'S CONDENSED SECTIONS (Kush, Fri 13 Nov 6:54 PM: "a little
-   bit of a long scroll"). Since round 4 (7:18 PM: fewer sections, not smaller
-   ones) these sections live only in round 3's page, shown at `?long=1` for
-   comparison (`.hs-r3`); round 2's longer page is gone. Nothing a member needs
-   is cut; it moves or tightens:
-     - Two weeks and Classes: the phones peek up from the card's floor instead
-       of standing full height (Apple's feature tiles); on phones the three
-       cards become one swipeable row with the next card peeking (the App
-       Store's "Today" rows).
-     - The eight limbs: a tight two-column list with a hairline per limb
-       instead of eight boxed cards; the ring and the J Score that follows it
-       share one band, since the J Score IS the eight limbs (one story).
-     - Coach: the four cards sit two by two on phones; the two phones shrink.
-     - Learn: a smaller phone.
-     - Pricing and Download, which repeated the same offer line, become one
-       closing band at the end of the page (HomeLanding.tsx,
-       ClosingOfferSection).
-   Patterns, from memory: Apple's product pages (cropped device tiles, one
-   closing buy band), Headspace's swipeable feature rows on phones. ─────── */
-
-/* Two weeks, Classes: the phone peeks up from the card's floor */
-html .jh #two-weeks .k-dcard .pic.phone,
-html .jh #classes .k-dcard .pic.phone {
-  height: 250px;
-  overflow: hidden;
-  align-items: flex-start;
-  padding: 4px 22px 0;
-  -webkit-mask-image: linear-gradient(#000 78%, transparent);
-  mask-image: linear-gradient(#000 78%, transparent);
-}
-html .jh #two-weeks .k-dcard .pic.phone .ip,
-html .jh #classes .k-dcard .pic.phone .ip {
-  --ip-w: 200px;
-}
-html .jh #two-weeks .k-dcard .tp,
-html .jh #classes .k-dcard .tp {
-  padding: 16px 20px 10px;
-}
-html .jh #two-weeks .k-dcard .num {
-  font-size: 34px;
-}
+/* ── 8. Shared pieces from rounds 3 and 4 (Kush, Fri 13 Nov 2026): the tight
+   eight-limbs list (used by the fold in How it works) and the closing band
+   that merged Pricing and Download (his pick, 7:18 PM). Round 3's own
+   sections were deleted with round 4's pick (7:36 PM). ─────────────────── */
 
 /* The eight limbs: a tight list, one hairline per limb */
 html .jh .k-limbs {
@@ -919,32 +837,13 @@ html .jh .k-limb .lt {
   line-height: 1.4;
   color: var(--s-ink2);
 }
-html .jh #eight-limbs .k-lead {
-  font-size: 16px;
-  margin-bottom: 6px;
-}
+
 html .jh .k-ring {
   width: 380px;
   height: 380px;
 }
 html .jh .k-limbs2 {
   grid-template-columns: 380px 1fr;
-}
-/* the J Score continues the limbs' band: one story, one ground */
-html .jh #eight-limbs {
-  padding-bottom: 18px;
-}
-html .jh #j-score {
-  background: var(--n2);
-  padding-top: 18px;
-}
-html .jh #j-score .k-lead {
-  font-size: 16px;
-}
-
-/* Learn: a smaller phone */
-html .jh #learn .k-picside > .ip {
-  --ip-w: 200px;
 }
 
 /* The closing band: the offer, both prices, the badge */
@@ -1000,54 +899,6 @@ html[data-theme='light'] .jh .k-close .k-plan {
   }
 }
 @media (max-width: 760px) {
-  /* Two weeks, Classes: one swipeable row, the next card peeking */
-  html .jh #two-weeks .k-days,
-  html .jh #classes .k-days {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    /* bleeds to the screen edge: the phone gutter is 16px (home.css) */
-    margin: 12px -16px 0;
-    padding: 0 16px 4px;
-    scroll-padding: 0 16px;
-  }
-  html .jh #two-weeks .k-days::-webkit-scrollbar,
-  html .jh #classes .k-days::-webkit-scrollbar {
-    display: none;
-  }
-  html .jh #two-weeks .k-dcard,
-  html .jh #classes .k-dcard {
-    flex: 0 0 84%;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-  /* full-size screens, one per swipe (Kush, 7:18 PM: "swipe rows but with
-     the full sized screens") */
-  html .jh #two-weeks .k-dcard .pic.phone,
-  html .jh #classes .k-dcard .pic.phone {
-    height: auto;
-    overflow: visible;
-    padding: 4px 18px 22px;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-  html .jh #two-weeks .k-dcard .pic.phone .ip,
-  html .jh #classes .k-dcard .pic.phone .ip {
-    --ip-w: 220px;
-  }
-  /* Coach: cards two by two, smaller phones */
-  html .jh .k-ev4 {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px 16px;
-  }
-  html .jh .k-ev p {
-    font-size: 14px;
-  }
-  html .jh #coach .k-phones .ip {
-    --ip-w: 150px;
-  }
   /* The eight limbs: one column, tight */
   html .jh .k-limbs {
     grid-template-columns: 1fr;
@@ -1059,9 +910,7 @@ html[data-theme='light'] .jh .k-close .k-plan {
   html .jh .k-limbs2 {
     grid-template-columns: 1fr;
   }
-  html .jh #learn .k-picside > .ip {
-    --ip-w: 170px;
-  }
+
   .jh .k-close-plans {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -1072,7 +921,7 @@ html[data-theme='light'] .jh .k-close .k-plan {
 }
 
 /* ── 9. Lighter condense on About and Library (round 3). Pricing already
-   fits one screen on a computer and has no slack. Also under `?long=1`'s
+   fits one screen on a computer and has no slack. 
    reach, so the earlier pages stay one switch away. ─────────────────── */
 @media (max-width: 640px) {
   /* About: the three of us in one row of small cards, not three
@@ -1115,26 +964,8 @@ html[data-theme='light'] .jh .k-close .k-eye {
   color: #f0c58a;
 }
 
-
-/* ── 10. ROUND 4: FEWER SECTIONS (Kush, Fri 13 Nov 7:18 PM). Structure A is
-   the default; `?structure=b` shows B; `?long=1` shows round 3's page. All
-   three share the first screen, the questions and the closing band. ────── */
-.jh .hs-b,
-.jh .hs-r3 {
-  display: none;
-}
-html[data-structure='b']:not([data-long='1']) .jh .hs-a {
-  display: none;
-}
-html[data-structure='b']:not([data-long='1']) .jh .hs-b {
-  display: block;
-}
-html[data-long='1'] .jh .hs-a {
-  display: none;
-}
-html[data-long='1'] .jh .hs-r3 {
-  display: block;
-}
+/* ── 10. ROUND 4: FEWER SECTIONS (Kush, Fri 13 Nov 7:18 PM; structure A
+   picked 7:36 PM). How it works and Inside the app. ───────────────────── */
 
 /* A2. how it works: three steps on one line, then the J Score with the ring */
 .jh .hw-steps {
@@ -1185,8 +1016,7 @@ html[data-theme='light'] .jh .hw-steps .num {
   line-height: 1.08;
   margin: 2px 0 8px;
 }
-.jh .hw-score .k-lead,
-.jh .ft .k-lead {
+.jh .hw-score .k-lead {
   font-size: 16px;
   margin-bottom: 12px;
 }
@@ -1245,7 +1075,7 @@ html[data-theme='light'] .jh .hw-steps .num {
   outline: none;
 }
 .jh #inside {
-  padding-bottom: 26px;
+  padding-bottom: 30px;
 }
 .jh .sr-track::-webkit-scrollbar {
   display: none;
@@ -1275,15 +1105,16 @@ html[data-theme='light'] .jh .hw-steps .num {
   line-height: 1.45;
 }
 .jh .sr-links {
-  display: grid;
-  gap: 4px;
-  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 14px;
   font-size: 14px;
   font-weight: 600;
 }
 .jh .sr-links a {
   border-bottom: 1px solid var(--line-d);
-  padding-bottom: 3px;
+  padding-bottom: 2px;
 }
 .jh .sr-links a:hover {
   color: var(--turmeric);
@@ -1321,55 +1152,6 @@ html[data-theme='light'] .jh .hw-steps .num {
 }
 
 /* B2. the showcase: a row of tabs over one panel (words beside a full phone) */
-.jh .ft-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 8px 0 22px;
-}
-.jh .ft-tabs button {
-  border: 0;
-  border-radius: 999px;
-  padding: 9px 16px;
-  font: 500 15px/1 var(--sans);
-  color: var(--s-ink2);
-  background: color-mix(in srgb, var(--s-ink) 5%, transparent);
-  box-shadow: inset 0 0 0 1px var(--line-d);
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-}
-.jh .ft-tabs button[aria-selected='true'] {
-  background: color-mix(in srgb, var(--s-glow) 16%, transparent);
-  box-shadow: inset 0 0 0 1px var(--s-glow);
-  color: var(--s-ink);
-}
-html[data-theme='light'] .jh .ft-tabs button[aria-selected='true'] {
-  background: #f3d9a4;
-  box-shadow: inset 0 0 0 1px #e3bd7c;
-  color: #7a3a1e;
-}
-.jh .ft-panel {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 280px;
-  gap: 48px;
-  align-items: center;
-  min-height: 560px;
-}
-.jh .ft-panel[hidden] {
-  display: none;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .jh .ft-panel:not([hidden]) {
-    animation: pg-in 0.45s var(--s-ease) both;
-  }
-}
-.jh .ft-phone {
-  display: flex;
-  justify-content: center;
-}
-.jh .ip.ft-ip {
-  --ip-w: 250px;
-}
 
 @media (max-width: 1180px) {
   .jh .hw-score {
@@ -1407,26 +1189,5 @@ html[data-theme='light'] .jh .ft-tabs button[aria-selected='true'] {
   .jh .sr-slide .ip {
     --ip-w: 236px;
   }
-  .jh .ft-tabs {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    margin: 6px -16px 16px;
-    padding: 0 16px;
-  }
-  .jh .ft-tabs::-webkit-scrollbar {
-    display: none;
-  }
-  .jh .ft-tabs button {
-    flex: none;
-    font-size: 14px;
-  }
-  .jh .ft-panel {
-    grid-template-columns: 1fr;
-    gap: 18px;
-    min-height: 0;
-  }
-  .jh .ip.ft-ip {
-    --ip-w: 236px;
-  }
+
 }
