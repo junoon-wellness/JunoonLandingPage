@@ -151,9 +151,10 @@ export default function NewsletterJoin({
                 fontSize: '11px',
                 letterSpacing: '0.1em',
                 padding: '5px 12px',
-                border: '0.5px solid rgba(245,240,232,0.12)',
+                // Theme tokens (app/theme.css), so the two tags read in Light too.
+                border: '0.5px solid var(--jn-hairline-strong)',
                 borderRadius: '2px',
-                color: 'rgba(245,240,232,0.7)',
+                color: 'var(--jn-text-soft)',
               }}
             >
               {b}
