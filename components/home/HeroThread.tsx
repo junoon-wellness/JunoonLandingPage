@@ -58,13 +58,41 @@ function subscribeMotion(onChange: () => void) {
 }
 const prefersStill = () => window.matchMedia(MOTION_QUERY).matches
 
+/**
+ * The dimmer dots drift (Arnav, Sat 14 Nov 2026: "the darker dots transition
+ * from top to bottom slowly, fade in and out ... very smooth animation"): a
+ * soft band of light runs north to south across tiers 1 and 2 and repeats.
+ * So each of those tiers is drawn one row of dots per path, and every row
+ * carries its height on the map as --y (0 at the top, 1 at the bottom); the
+ * one keyframe in app/theme.css (hx-drift) turns that into its delay. Same
+ * dots, same look at rest; tier 0 (the bright north) stays one still path.
+ * Pure and fixed at build time, so the server draws exactly what the client
+ * does.
+ */
+type DotRow = { d: string; y: string }
+function rowsOf(path: string): DotRow[] {
+  const rows = new Map<string, string>()
+  for (const dot of path.split('M')) {
+    if (!dot) continue
+    // each dot is "x y" then "h0"
+    const y = dot.split(' ')[1].replace('h0', '')
+    rows.set(y, `${rows.get(y) ?? ''}M${dot}`)
+  }
+  return [...rows].map(([y, d]) => ({ d, y: (parseFloat(y) / INDIA_BOX.h).toFixed(3) }))
+}
+const DRIFT_ROWS: [DotRow[], DotRow[]] = [rowsOf(INDIA_DOTS[2]), rowsOf(INDIA_DOTS[1])]
+
 /** India as a field of dots. */
 function IndiaDots() {
   const { w, h } = INDIA_BOX
   return (
     <svg className="hx-map" viewBox={`-4 -4 ${w + 8} ${h + 8}`} role="img" aria-label="A map of India drawn in dots">
-      <path className="hx-dots t2" d={INDIA_DOTS[2]} />
-      <path className="hx-dots t1" d={INDIA_DOTS[1]} />
+      {DRIFT_ROWS[0].map(r => (
+        <path key={`t2-${r.y}`} className="hx-dots t2" d={r.d} style={{ '--y': r.y } as React.CSSProperties} />
+      ))}
+      {DRIFT_ROWS[1].map(r => (
+        <path key={`t1-${r.y}`} className="hx-dots t1" d={r.d} style={{ '--y': r.y } as React.CSSProperties} />
+      ))}
       <path className="hx-dots t0" d={INDIA_DOTS[0]} />
     </svg>
   )
