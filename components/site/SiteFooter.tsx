@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FOOTER_LEGAL } from '@/lib/landing-copy'
+import { FOOTER_LEGAL_LINES } from '@/lib/landing-copy'
 
 /**
  * THE ONE FOOTER for every page (rework of Mon 9 Nov 2026), moved out of the
@@ -46,7 +46,11 @@ export default function SiteFooter() {
     <footer className="k-s k-footer">
       <div className="swrap k-foot">
         <div>
-          <p>{FOOTER_LEGAL}</p>
+          <p>
+            {FOOTER_LEGAL_LINES[0]}
+            <br />
+            {FOOTER_LEGAL_LINES[1]}
+          </p>
         </div>
         <div className="k-fl">
           {/* the banyan alone, as in the top bar (Kush, 6:54 PM Fri 13 Nov) */}
