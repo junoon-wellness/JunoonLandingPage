@@ -58,7 +58,8 @@ export const HERO_MAP = {
 /** The line above the App Store badge on the first screen. */
 export const HERO_FINE = {
   lead: 'Founding members:',
-  rest: 'your first month is free, for everyone. ' + FOUNDING_LINE,
+  // Arnav, 5:36 PM Sat 14 Nov: the short form on the first screen; the full line stays below.
+  rest: 'First month is free. Join by 31 December 2026 and pay $4.99 a month.',
 }
 
 /** The eight features around the drawn phone: four left, four right. */
