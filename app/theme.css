@@ -306,11 +306,15 @@ html[data-theme='light'] .jh .brand:hover .brand-mark {
 }
 .jh .hx-dots.t2 {
   stroke-width: 3.3;
-  opacity: 0.42;
+  --lo: 0.42;
+  --hi: 0.74;
+  opacity: var(--lo);
 }
 .jh .hx-dots.t1 {
   stroke-width: 3.9;
-  opacity: 0.62;
+  --lo: 0.62;
+  --hi: 0.86;
+  opacity: var(--lo);
 }
 .jh .hx-dots.t0 {
   stroke-width: 4.6;
@@ -320,7 +324,35 @@ html[data-theme='light'] .jh .hx-dots {
   stroke: #a8692f;
 }
 html[data-theme='light'] .jh .hx-dots.t2 {
-  opacity: 0.5;
+  --lo: 0.5;
+  --hi: 0.8;
+}
+/* the dimmer dots drift (Arnav, Sat 14 Nov): a soft band of light runs from
+   the top of the map to the bottom, then starts again at the top: one pass in 7.2 s,
+   a new one every 9 s. Each row of dots (HeroThread's IndiaDots) carries its
+   height as --y, 0 at the top to 1 at the bottom, so one keyframe and a delay
+   make the band travel. The delay is negative so the map is mid-drift from
+   its first frame. Only opacity moves; at rest every dot is at --lo, its
+   still value, which is all reduced motion ever shows. */
+@media (prefers-reduced-motion: no-preference) {
+  .jh .hx-dots.t1,
+  .jh .hx-dots.t2 {
+    animation: hx-drift 9s ease-in-out infinite;
+    animation-delay: calc(var(--y, 0) * 7.2s - 9s);
+  }
+}
+@keyframes hx-drift {
+  0%,
+  30% {
+    opacity: var(--lo);
+  }
+  50% {
+    opacity: var(--hi);
+  }
+  70%,
+  100% {
+    opacity: var(--lo);
+  }
 }
 .jh .hx-roots figcaption {
   margin-top: 10px;
