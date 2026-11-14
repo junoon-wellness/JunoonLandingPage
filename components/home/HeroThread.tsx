@@ -80,7 +80,8 @@ function rowsOf(path: string): DotRow[] {
   }
   return [...rows].map(([y, d]) => ({ d, y: (parseFloat(y) / INDIA_BOX.h).toFixed(3) }))
 }
-const DRIFT_ROWS: [DotRow[], DotRow[]] = [rowsOf(INDIA_DOTS[2]), rowsOf(INDIA_DOTS[1])]
+// Arnav, 3:44 PM: all dots one standard darkness so the band reads everywhere, the north included.
+const DRIFT_ROWS: [DotRow[], DotRow[], DotRow[]] = [rowsOf(INDIA_DOTS[2]), rowsOf(INDIA_DOTS[1]), rowsOf(INDIA_DOTS[0])]
 
 /** India as a field of dots. */
 function IndiaDots() {
@@ -93,7 +94,9 @@ function IndiaDots() {
       {DRIFT_ROWS[1].map(r => (
         <path key={`t1-${r.y}`} className="hx-dots t1" d={r.d} style={{ '--y': r.y } as React.CSSProperties} />
       ))}
-      <path className="hx-dots t0" d={INDIA_DOTS[0]} />
+      {DRIFT_ROWS[2].map(r => (
+        <path key={`t0-${r.y}`} className="hx-dots t0" d={r.d} style={{ '--y': r.y } as React.CSSProperties} />
+      ))}
     </svg>
   )
 }
