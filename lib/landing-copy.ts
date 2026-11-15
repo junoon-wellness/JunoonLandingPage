@@ -197,7 +197,7 @@ export const JSCORE = {
   points: [
     {
       title:
-        'Your Samadhi tracks how consistently you practice the first seven limbs of yoga, helping you identify areas for growth as you progress toward the eighth: Samadhi.',
+        'Your Samadhi Score tracks how consistently you practice the first seven limbs of yoga, helping you identify areas for growth as you progress toward the eighth: Samadhi.',
       body: '',
     },
     { title: 'Measured against your own start', body: 'Never against other people.' },

@@ -149,7 +149,7 @@ function LimbsRing() {
         <small>
           the number in the middle:
           <br />
-          your Samadhi score
+          your Samadhi Score
         </small>
       </div>
     </InView>
