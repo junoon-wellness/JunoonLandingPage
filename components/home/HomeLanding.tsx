@@ -18,7 +18,6 @@ import {
   JSCORE,
   LEARN,
   LIMBS,
-  TWO_WEEKS,
 } from '@/lib/landing-copy'
 
 /**
@@ -230,17 +229,7 @@ function HowItWorksSection() {
   return (
     <section className="k-s alt" id="how-it-works">
       <div className="swrap">
-        <div className="k-eye">{TWO_WEEKS.eyebrow}</div>
-        <h2>{TWO_WEEKS.heading}</h2>
-        <ol className="hw-steps">
-          {TWO_WEEKS.days.map(d => (
-            <li key={d.label}>
-              <div className="num">{d.label}</div>
-              <h3>{d.title}</h3>
-              <p>{d.body}</p>
-            </li>
-          ))}
-        </ol>
+        {/* Arnav, 8:07 PM Sat 14 Nov: the "first 14 days" block is removed; the score block stays. */}
         <div className="hw-score">
           <LimbsRing />
           <div>
