@@ -141,24 +141,21 @@ html[data-scrolled] .jh .nav {
   justify-self: start;
   letter-spacing: 0.01em;
 }
-/* The logo: the banyan alone on a transparent ground, in the theme's ink
-   (Kush, 6:54 PM Fri 13 Nov). A mask, so one picture serves both themes. */
+/* The logo: the banyan alone on a transparent ground (Kush, 6:54 PM Fri 13 Nov).
+   White, always, hover included: "the one white tree on a transparent
+   background on every page" (Kush, 5:45 call Sat 14 Nov, LV5-084). */
 .brand-mark {
   display: block;
   flex: none;
   width: 38px;
   height: 38px;
-  background-color: var(--s-ink);
+  background-color: #fff;
   -webkit-mask: url('/brand/junoon-tree-white-560.webp') center / contain no-repeat;
   mask: url('/brand/junoon-tree-white-560.webp') center / contain no-repeat;
-  transition: transform 0.5s var(--s-ease), background-color 0.3s;
+  transition: transform 0.5s var(--s-ease);
 }
 .jh .brand:hover .brand-mark {
   transform: scale(1.06);
-  background-color: var(--s-glow);
-}
-html[data-theme='light'] .jh .brand:hover .brand-mark {
-  background-color: var(--s-accent);
 }
 .jh .k-fl .brand-mark {
   width: 34px;

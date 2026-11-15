@@ -79,11 +79,11 @@ function Tree({ className, size }: { className?: string; size: number }) {
   return (
     <Image
       className={className}
-      src="/landing/junoon-tree.png"
+      src="/brand/junoon-tree-white-560.webp"
       alt=""
       aria-hidden="true"
-      width={506}
-      height={520}
+      width={560}
+      height={560}
       sizes={`${size}px`}
     />
   )
@@ -124,7 +124,7 @@ function LimbsRing() {
       data-variant={RING_VARIANT}
       data-spin={RING_SPIN || undefined}
       role="img"
-      aria-label="The eight limbs of yoga in a ring, with Samadhi, your J Score, in the middle"
+      aria-label="The eight limbs of yoga in a ring, with Samadhi, your Samadhi Score, in the middle"
     >
       <div className="halo" />
       <div className="orb">
@@ -150,7 +150,7 @@ function LimbsRing() {
         <small>
           the number in the middle:
           <br />
-          your J Score
+          your Samadhi Score
         </small>
       </div>
     </InView>

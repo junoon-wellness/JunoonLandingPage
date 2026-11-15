@@ -42,11 +42,11 @@ export default function TourPage() {
           }}
         >
           <Image
-            src="/logo-clay-text-96.png"
+            src="/brand/junoon-tree-white-560.webp"
             alt=""
             aria-hidden="true"
-            width={96}
-            height={96}
+            width={560}
+            height={560}
             sizes="28px"
             style={{ height: '28px', width: '28px' }}
             loading="eager"

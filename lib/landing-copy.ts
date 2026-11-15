@@ -91,7 +91,7 @@ export const HERO_THREAD = [
   { practice: 'Dhyana', gloss: 'stillness', feature: 3, src: '/landing/sit.jpg', alt: 'The Sit and do nothing timer' },
   { practice: 'Abhyasa', gloss: 'steady practice', feature: 4, src: '/landing/library-appstore.jpg', alt: 'The class library' },
   { practice: 'Svadhyaya', gloss: 'self-study', feature: 5, src: '/landing/coach-voices.jpg', alt: 'The evening reflection with the coach' },
-  { practice: "Patanjali's 8 limbs", gloss: 'the whole path', feature: 7, src: '/landing/jscore.jpg', alt: 'The J Score screen, built on the eight limbs' },
+  { practice: "Patanjali's 8 limbs", gloss: 'the whole path', feature: 7, src: '/landing/jscore.jpg', alt: 'The Samadhi Score screen, built on the eight limbs' },
 ] as const
 
 /**
@@ -121,7 +121,7 @@ export const TWO_WEEKS = {
     {
       label: 'Day 14',
       title: 'Learning phase completion',
-      body: "A look back, and view your J score baseline, which measures your progress towards Patanjali's 8 limbs of yoga.",
+      body: "A look back, and view your Samadhi Score baseline, which measures your progress towards Patanjali's 8 limbs of yoga.",
     },
   ],
 }
@@ -191,13 +191,13 @@ export const LIMBS = {
 /* ── Section 5: your J Score ─────────────────────────────────────────────── */
 
 export const JSCORE = {
-  eyebrow: 'Your J Score',
+  eyebrow: 'Your Samadhi Score',
   heading: 'Watch your practice grow.',
-  body: "Your J Score reflects how consistently you're incorporating the first seven limbs of yoga into your practice, guiding you toward the eighth: Samadhi, the ultimate state of meditative absorption and inner awareness.",
+  body: "Your Samadhi Score reflects how consistently you're incorporating the first seven limbs of yoga into your practice, guiding you toward the eighth: Samadhi, the ultimate state of meditative absorption and inner awareness.",
   points: [
     {
       title:
-        'Your J Score tracks how consistently you practice the first seven limbs of yoga, helping you identify areas for growth as you progress toward the eighth: Samadhi.',
+        'Your Samadhi Score tracks how consistently you practice the first seven limbs of yoga, helping you identify areas for growth as you progress toward the eighth: Samadhi.',
       body: '',
     },
     { title: 'Measured against your own start', body: 'Never against other people.' },
