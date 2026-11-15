@@ -16,7 +16,7 @@ const DESCRIPTION_BASE =
   "An AI wellness coach that brings India's living traditions of yoga, breathwork and meditation into a practice built around your modern life."
 
 export const meta = {
-  title: "Junoon - Ancient Practice, Personal Coaching",
+  title: "Junoon - Ancient System, Modern solutions",
   // THE LAUNCHING-SOON SWITCH (lib/constants.ts): the Google and link-preview
   // description follows it. With the switch off this is the same string as before.
   description: LAUNCHING_SOON

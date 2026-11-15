@@ -38,7 +38,7 @@ export const NAV_CTA = 'Join Junoon for Free'
 export const HERO_HEADLINE = 'Connecting Ancient India With Modern Life'
 
 export const HERO_SUB =
-  'Junoon brings back the practices of ancient India, and connects them under one system to fit your modern day life. Yoga, meditation and breathwork rooted in how these practices were taught in India.'
+  'Junoon brings back the practices of ancient India, and connects them under one system to fit your modern day life. Yoga, meditation and breathwork rooted in exactly how the practices were taught in India.'
 
 export const HERO_CHIPS = [
   'Asana',
@@ -67,7 +67,7 @@ export const FEATURES = [
   { title: 'A coach who knows you' },
   { title: 'Sessions built for your life' },
   { title: 'Pranayama on demand' },
-  { title: 'Sit and do nothing' },
+  { title: 'Guided meditations' },
   { title: 'On demand classes' },
   { title: 'Nightly reflection' },
   { title: 'Live classes' },
@@ -85,13 +85,13 @@ export const FEATURES = [
  * review page). `feature` is the index into FEATURES.
  */
 export const HERO_THREAD = [
-  { practice: 'Guru', gloss: 'a teacher who knows you', feature: 0, src: '/landing/coach-appstore.jpg', alt: 'The coach chat in the app' },
-  { practice: 'Asana', gloss: 'the postures', feature: 1, src: '/landing/day2-session.jpg', alt: 'A session playing, with the poses coming up next' },
-  { practice: 'Pranayama', gloss: 'the breath', feature: 2, src: '/landing/breathwork.jpg', alt: 'A breathwork session, mid breath' },
-  { practice: 'Dhyana', gloss: 'stillness', feature: 3, src: '/landing/sit.jpg', alt: 'The Sit and do nothing timer' },
-  { practice: 'Abhyasa', gloss: 'steady practice', feature: 4, src: '/landing/library-appstore.jpg', alt: 'The class library' },
-  { practice: 'Svadhyaya', gloss: 'self-study', feature: 5, src: '/landing/coach-voices.jpg', alt: 'The evening reflection with the coach' },
-  { practice: "Patanjali's 8 limbs", gloss: 'the whole path', feature: 7, src: '/landing/jscore.jpg', alt: 'The Samadhi Score screen, built on the eight limbs' },
+  { practice: 'Coach', gloss: 'A guide who truly knows you', feature: 0, src: '/landing/coach-appstore.jpg', alt: 'The coach chat in the app' },
+  { practice: 'Asana', gloss: 'Movement of the body', feature: 1, src: '/landing/day2-session.jpg', alt: 'A session playing, with the poses coming up next' },
+  { practice: 'Pranayama', gloss: 'Regulation of the breath', feature: 2, src: '/landing/breathwork.jpg', alt: 'A breathwork session, mid breath' },
+  { practice: 'Dhyana and Dharana', gloss: 'Meditation', feature: 3, src: '/landing/sit.jpg', alt: 'Guided meditation photo' },
+  { practice: 'Abhyasa', gloss: 'Unwavering practice', feature: 4, src: '/landing/library-appstore.jpg', alt: 'The class library' },
+  { practice: 'Svadhyaya', gloss: 'Study of the self', feature: 5, src: '/landing/coach-voices.jpg', alt: 'The evening reflection with the coach' },
+  { practice: "Patanjali's 8 limbs", gloss: 'Patanjali’s complete system', feature: 7, src: '/landing/jscore.jpg', alt: 'The Samadhi Score screen, built on the eight limbs' },
 ] as const
 
 /**
@@ -183,7 +183,7 @@ export const LIMBS = {
     },
     {
       name: 'Samadhi',
-      body: 'A profound state of meditative awareness where the distinction between the observer and the object of meditation dissolves.',
+      body: 'A profound state of meditative and physical awareness where the distinction between the observer and the object of meditation dissolves.',
     },
   ],
 }

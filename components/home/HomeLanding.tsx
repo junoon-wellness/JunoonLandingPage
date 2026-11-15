@@ -123,7 +123,7 @@ function LimbsRing() {
       data-variant={RING_VARIANT}
       data-spin={RING_SPIN || undefined}
       role="img"
-      aria-label="The eight limbs of yoga in a ring, with Samadhi, your Samadhi Score, in the middle"
+      aria-label="The eight limbs of yoga in a ring, with Samadhi in the middle"
     >
       <div className="halo" />
       <div className="orb">
