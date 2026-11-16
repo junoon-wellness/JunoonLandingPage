@@ -50,6 +50,8 @@ export default function SiteFooter() {
             {FOOTER_LEGAL_LINES[0]}
             <br />
             {FOOTER_LEGAL_LINES[1]}
+            <br />
+            {FOOTER_LEGAL_LINES[2]}
           </p>
         </div>
         <div className="k-fl">
