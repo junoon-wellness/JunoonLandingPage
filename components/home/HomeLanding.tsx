@@ -276,16 +276,6 @@ function InsideSection() {
             </figure>
           ))}
         </ScreenRow>
-        {/* Learn's three articles sit under the row, always in view (they used
-            to sit inside the last slide, which left an empty band under the
-            row whenever that slide was off screen). */}
-        <nav className="sr-links" aria-label={LEARN.heading}>
-          {LEARN.articles.map(a => (
-            <Link key={a.slug} href={`/library/${a.slug}`}>
-              {a.title}
-            </Link>
-          ))}
-        </nav>
       </div>
     </section>
   )
