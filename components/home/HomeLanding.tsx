@@ -227,7 +227,7 @@ function JScorePoints() {
 /* A2. How it works: the 14 days, then the J Score and the limbs, one band. */
 function HowItWorksSection() {
   return (
-    <section className="k-s alt" id="how-it-works">
+    <section className="k-s" id="how-it-works">
       <div className="swrap">
         {/* Arnav, 8:07 PM Sat 14 Nov: the "first 14 days" block is removed; the score block stays. */}
         <div className="hw-score">
@@ -259,7 +259,7 @@ const INSIDE_SLIDES: { src: string; alt: string; title: string; body: string; so
 
 function InsideSection() {
   return (
-    <section className="k-s" id="inside">
+    <section className="k-s alt" id="inside">
       <div className="swrap">
         <div className="k-eye">{INSIDE_LABEL}</div>
         <ScreenRow label={INSIDE_LABEL}>
@@ -298,8 +298,9 @@ export default function HomeLanding() {
       <main>
         <TopSection />
         {/* Round 4, structure A (Kush's pick, 7:36 PM Fri 13 Nov) */}
-        <HowItWorksSection />
         <InsideSection />
+        {/* Arjav, Sun 15 Nov: the Samadhi Score section sits below Inside the app. */}
+        <HowItWorksSection />
         <FaqSection />
       </main>
       <SiteFooter />
