@@ -327,11 +327,14 @@ export const DOWNLOAD = {
   body: 'Your first month is free, for everyone. ' + FOUNDING_LINE,
 }
 
-/** The footer's legal line, as two lines: "You must be 18" starts the second
- *  (Arnav, 3:43 PM Sat 14 Nov). Same words as before. */
+/** The footer's legal line, as three lines: the company, the wellness line,
+ *  then "You must be 18" (Arnav, Mon 16 Nov: "all three lines are its own
+ *  separate line"; two lines since 3:43 PM Sat 14 Nov). Same words as before. */
 export const FOOTER_LEGAL_LINES = [
-  '© 2026 Junoon Wellness LLC · Junoon offers wellness guidance, not medical advice.',
+  '© 2026 Junoon Wellness LLC',
+  'Junoon offers wellness guidance, not medical advice.',
   'You must be 18 or older to use Junoon.',
 ] as const
 
-export const FOOTER_LEGAL = FOOTER_LEGAL_LINES.join(' ')
+/** One-line form, unchanged, for the waitlist footer. */
+export const FOOTER_LEGAL = `${FOOTER_LEGAL_LINES[0]} · ${FOOTER_LEGAL_LINES[1]} ${FOOTER_LEGAL_LINES[2]}`
