@@ -211,19 +211,6 @@ function LimbsFold() {
   )
 }
 
-function JScorePoints() {
-  return (
-    <ul className="k-pts">
-      {JSCORE.points.map(p => (
-        <li key={p.title}>
-          <b>{p.title}</b>
-          {p.body ? <span>{p.body}</span> : null}
-        </li>
-      ))}
-    </ul>
-  )
-}
-
 /* A2. How it works: the 14 days, then the J Score and the limbs, one band. */
 function HowItWorksSection() {
   return (
@@ -235,7 +222,6 @@ function HowItWorksSection() {
           <div>
             <h3 className="hw-h">{JSCORE.heading}</h3>
             <p className="k-lead">{JSCORE.body}</p>
-            <JScorePoints />
             <LimbsFold />
           </div>
         </div>

@@ -193,15 +193,6 @@ export const LIMBS = {
 export const JSCORE = {
   heading: 'Your Samadhi Score',
   body: "Your Samadhi Score reflects how consistently you're incorporating the first seven limbs of yoga into your practice, guiding you toward the eighth: Samadhi, the ultimate state of meditative absorption and inner awareness.",
-  points: [
-    {
-      title:
-        'Your Samadhi Score tracks how consistently you practice the first seven limbs of yoga, helping you identify areas for growth as you progress toward the eighth: Samadhi.',
-      body: '',
-    },
-    { title: 'Measured against your own start', body: 'Never against other people.' },
-    { title: 'Grows as you practise', body: 'Check it any time, not only on day 14.' },
-  ],
 }
 
 /* ── Section 6: classes and breathwork ───────────────────────────────────── */
