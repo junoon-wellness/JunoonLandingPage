@@ -694,8 +694,8 @@ html[data-theme='light'] .jh .k-ring .centre small {
 html[data-theme='light'] .jh .k-ring .halo {
   border-color: rgba(160, 106, 28, 0.25);
 }
-html[data-theme='light'] .jh .k-ring .spokes line {
-  stroke: rgba(160, 106, 28, 0.45);
+html[data-theme='light'] .jh .k-ring {
+  --wheel-ink: rgb(160, 106, 28);
 }
 
 /* ── 6. Pricing, About and Library on the home page's look (Kush: "on brand

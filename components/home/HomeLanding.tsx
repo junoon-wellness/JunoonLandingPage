@@ -7,6 +7,7 @@ import SiteFooter from '@/components/site/SiteFooter'
 import SiteHeader from '@/components/site/SiteHeader'
 import InView from '@/components/home/InView'
 import ScreenRow from '@/components/home/ScreenRow'
+import { buildWheel, WHEEL_R } from '@/components/home/wheel-geometry'
 import {
   CLASSES,
   COACH,
@@ -40,17 +41,8 @@ import {
  * page never shows a placeholder.
  */
 
-/** Seven spokes and seven labels around the ring; Samadhi is the centre. */
-const RING_SPOKES = [
-  [50.0, 25.0, 50.0, 13.0],
-  [69.5, 34.4, 78.9, 26.9],
-  [74.4, 55.6, 86.1, 58.2],
-  [60.8, 72.5, 66.1, 83.3],
-  [39.2, 72.5, 33.9, 83.3],
-  [25.6, 55.6, 13.9, 58.2],
-  [30.5, 34.4, 21.1, 26.9],
-]
-/** Each label's angle from the top (degrees, clockwise); all sit 42% of the
+/** Seven spokes and seven labels around the ring; Samadhi is the centre.
+ * Each label's angle from the top (degrees, clockwise); all sit 42% of the
  * ring's width from the centre (the same places as the mock-up's x/y). */
 const RING_LABELS: [string, number][] = [
   ['Yama', 0],
@@ -62,6 +54,11 @@ const RING_LABELS: [string, number][] = [
   ['Dhyana', 308.6],
 ]
 const RING_R = 42
+
+/** The ornate wheel under the labels (Arnav, HQ DM Tue 17 Nov 2026: "I want
+ * the wheel to look more artistic like this"): see components/home/wheel-geometry.ts.
+ * Its seven carved pillars are the spokes, one at each label's angle. */
+const WHEEL = buildWheel(RING_LABELS.map(([, angle]) => angle))
 
 /** Which entrance the ring plays (see app/home.css, "4b"). Kush's pick,
  * Mon 9 Nov 10:22 PM: 'orbit' ("Fan out like a clock"). 'sweep' is the
@@ -127,9 +124,35 @@ function LimbsRing() {
     >
       <div className="halo" />
       <div className="orb">
+        <svg viewBox="0 0 100 100" className="wheel" aria-hidden="true">
+          <circle className="w1" cx="50" cy="50" r={WHEEL_R.rimOuter} />
+          <circle className="w2" cx="50" cy="50" r={WHEEL_R.rimOuter2} />
+          {WHEEL.cord.map((d, i) => (
+            <path key={`cord${i}`} className="cord" d={d} />
+          ))}
+          {WHEEL.knots.map(([x, y]) => (
+            <circle key={`k${x}-${y}`} className="dot" cx={x.toFixed(2)} cy={y.toFixed(2)} r="0.22" />
+          ))}
+          <circle className="w2" cx="50" cy="50" r={WHEEL_R.rimInner2} />
+          <circle className="w1" cx="50" cy="50" r={WHEEL_R.rimInner} />
+          {WHEEL.beads.map(([x, y]) => (
+            <circle key={`b${x}-${y}`} className="dot" cx={x.toFixed(2)} cy={y.toFixed(2)} r="0.3" />
+          ))}
+          <circle className="w1" cx="50" cy="50" r={WHEEL_R.hubOuter} />
+          <circle className="w2" cx="50" cy="50" r={WHEEL_R.hubInner} />
+          <path className="tick" d={WHEEL.hubTicks} />
+          <path className="petal" d={WHEEL.lotusOuter} />
+          <path className="petal2" d={WHEEL.lotusInner} />
+          <path className="petal2" d={WHEEL.lotusBack} />
+          <circle className="w1" cx="50" cy="50" r={WHEEL_R.lotusBase} />
+        </svg>
         <svg viewBox="0 0 100 100" className="spokes" aria-hidden="true">
-          {RING_SPOKES.map(([x1, y1, x2, y2], i) => (
-            <line key={`${x1}-${y1}`} x1={x1} y1={y1} x2={x2} y2={y2} pathLength={1} style={{ '--i': i } as React.CSSProperties} />
+          {WHEEL.pillars.map((p, i) => (
+            <g key={RING_LABELS[i][0]} style={{ '--i': i } as React.CSSProperties}>
+              <path className="po" d={p.outline} pathLength={1} />
+              <path className="pb" d={p.bands} pathLength={1} />
+              <path className="pf" d={p.flute} pathLength={1} />
+            </g>
           ))}
         </svg>
         {RING_LABELS.map(([name, angle], i) => (
