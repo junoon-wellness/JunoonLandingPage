@@ -158,9 +158,7 @@ function FaqSection() {
     <section className="k-s alt" id="questions">
       <div className="swrap">
         <div className="k-prhead">
-          <Tree className="k-treesm" size={92} />
           <div>
-            <div className="k-eye">{FAQ_COPY.eyebrow}</div>
             <h2>{FAQ_COPY.heading}</h2>
           </div>
         </div>
