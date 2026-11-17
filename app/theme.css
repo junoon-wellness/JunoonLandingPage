@@ -1062,7 +1062,7 @@ html[data-theme='light'] .jh .hw-steps .num {
   font: inherit;
 }
 .jh .k-ring .lb > b {
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.4s var(--s-ease), box-shadow 0.4s var(--s-ease);
 }
 .jh .k-ring .lb:hover > b {
   border-color: rgba(232, 184, 112, 0.75);
@@ -1082,7 +1082,7 @@ html[data-theme='light'] .jh .hw-steps .num {
 .jh .k-ring .centre {
   padding: 14px 0;
   border-radius: 999px;
-  transition: text-shadow 0.2s;
+  transition: text-shadow 0.4s var(--s-ease);
 }
 .jh .k-ring .centre:focus-visible {
   outline: 2px solid var(--turmeric);
@@ -1125,26 +1125,22 @@ html[data-theme='light'] .jh .k-ring .centre[aria-pressed='true'] {
   border-radius: 16px;
   background: var(--s-plate);
 }
+/* Round 2 (Arnav, 5:38 PM): no number before the name, and the box steps on by
+   itself, so the outgoing and incoming limbs cross-fade over the hero's 0.6 s
+   (visibility rides the same transition, so the old one stays visible while it
+   fades). */
 .jh .k-limbbox-i {
   grid-area: 1 / 1;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 12px;
-  align-items: baseline;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.25s var(--s-ease);
+  transition: opacity 0.6s var(--s-ease), visibility 0.6s;
 }
 .jh .k-limbbox-i[data-on] {
   visibility: visible;
   opacity: 1;
-}
-.jh .k-limbbox-i .ln {
-  grid-row: span 2;
-  font-family: var(--serif);
-  font-size: 26px;
-  line-height: 1;
-  color: var(--clay);
 }
 .jh .k-limbbox-i b {
   font-family: var(--serif);
@@ -1165,30 +1161,68 @@ html[data-theme='light'] .jh .k-limbbox-i b {
     transition: none;
   }
 }
-/* One column (tablet and phone): the heading and paragraph first, then the
-   ring, then the box right under it, so a tapped limb's words show on screen
-   next to the ring. */
+/* Round 2 layout (Arnav, HQ DM Tue 17 Nov 2026, 5:41 PM): "I dont like how the
+   wheel/pranayama got so close to the paragraph", the paragraph "to only be on
+   two lines not three", and "that entire area could be spaced out a little
+   nicer". Measured: the paragraph needs 840px for two lines at its 16px, and the
+   turning chips (with their glow) reach 64px past the 360px wheel on every side.
+   Side by side that is about 1370px, more than a 1280 screen's 1232px, so the
+   heading and paragraph run across the top, and the wheel and the box sit side
+   by side under them, the box centred against the wheel and 104px (the chips'
+   64px reach plus 40px) clear of the wheel's edge. The wheel's column is 64px
+   wider than the wheel, so the chips' reach on the left stays inside the page
+   too (at 1280 it used to run 24px off the screen's edge). */
+.jh .hw-score.hw-limbs {
+  grid-template-columns: 424px minmax(0, 1fr);
+  grid-template-areas:
+    'head head'
+    'lead lead'
+    'ring box';
+  column-gap: 104px;
+  row-gap: 0;
+  align-items: center;
+}
+.jh .hw-limbs .hw-text {
+  display: contents;
+}
+.jh .hw-limbs .hw-h {
+  grid-area: head;
+  margin: 0 0 14px;
+}
+.jh .hw-limbs .k-lead {
+  grid-area: lead;
+  max-width: 880px;
+  margin: 0 0 64px;
+}
+.jh .hw-score.hw-limbs .k-ring {
+  grid-area: ring;
+  justify-self: end;
+  margin: 0;
+}
+.jh .hw-limbs .k-limbbox {
+  grid-area: box;
+  margin: 0;
+  max-width: 640px;
+}
+/* One column (tablet and phone): heading, paragraph, the ring, then the box
+   right under it, so a tapped limb's words show on screen next to the ring. */
 @media (max-width: 1180px) {
   .jh .hw-score.hw-limbs {
-    row-gap: 0;
-  }
-  .jh .hw-limbs .hw-text {
-    display: contents;
-  }
-  .jh .hw-limbs .hw-h {
-    order: 0;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'head'
+      'lead'
+      'ring'
+      'box';
   }
   .jh .hw-limbs .k-lead {
-    order: 1;
-    margin-bottom: 22px;
+    margin-bottom: 48px;
   }
   .jh .hw-score.hw-limbs .k-ring {
-    order: 2;
-    margin: 0 auto 22px;
+    justify-self: center;
+    margin: 0 0 36px;
   }
   .jh .hw-limbs .k-limbbox {
-    order: 3;
-    margin-top: 0;
     width: 100%;
     max-width: 560px;
     justify-self: center;

@@ -1650,8 +1650,11 @@ html:has(.jh) body::-webkit-scrollbar {
   inset: 0;
 }
 /* A turning square's corners reach past the ring; keep them from widening
-   the page on a phone (they are empty, so nothing visible is cut). */
-.jh #eight-limbs {
+   the page on a phone (they are empty, so nothing visible is cut). The ring
+   now lives in How it works; #eight-limbs no longer exists, so that section
+   carries the clip too (Tue 17 Nov 2026: the phone page was 409px wide at 390). */
+.jh #eight-limbs,
+.jh #how-it-works {
   overflow-x: hidden;
   overflow-x: clip;
 }
