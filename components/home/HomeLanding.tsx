@@ -233,7 +233,6 @@ function HowItWorksSection() {
         <div className="hw-score">
           <LimbsRing />
           <div>
-            <div className="k-eye">{JSCORE.eyebrow}</div>
             <h3 className="hw-h">{JSCORE.heading}</h3>
             <p className="k-lead">{JSCORE.body}</p>
             <JScorePoints />
