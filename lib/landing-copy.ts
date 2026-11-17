@@ -191,8 +191,7 @@ export const LIMBS = {
 /* ── Section 5: your J Score ─────────────────────────────────────────────── */
 
 export const JSCORE = {
-  eyebrow: 'Your Samadhi Score',
-  heading: 'Watch your practice grow.',
+  heading: 'Your Samadhi Score',
   body: "Your Samadhi Score reflects how consistently you're incorporating the first seven limbs of yoga into your practice, guiding you toward the eighth: Samadhi, the ultimate state of meditative absorption and inner awareness.",
   points: [
     {
