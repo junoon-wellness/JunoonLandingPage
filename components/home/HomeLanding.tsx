@@ -4,9 +4,8 @@ import HeroThread from '@/components/home/HeroThread'
 import IPhoneFrame from '@/components/home/IPhoneFrame'
 import SiteFooter from '@/components/site/SiteFooter'
 import SiteHeader from '@/components/site/SiteHeader'
-import InView from '@/components/home/InView'
+import LimbsWheel from '@/components/home/LimbsWheel'
 import ScreenRow from '@/components/home/ScreenRow'
-import { buildWheel, WHEEL_R } from '@/components/home/wheel-geometry'
 import {
   CLASSES,
   COACH,
@@ -17,7 +16,6 @@ import {
   HERO_SUB,
   JSCORE,
   LEARN,
-  LIMBS,
 } from '@/lib/landing-copy'
 
 /**
@@ -40,35 +38,8 @@ import {
  * page never shows a placeholder.
  */
 
-/** Seven spokes and seven labels around the ring; Samadhi is the centre.
- * Each label's angle from the top (degrees, clockwise); all sit 42% of the
- * ring's width from the centre (the same places as the mock-up's x/y). */
-const RING_LABELS: [string, number][] = [
-  ['Yama', 0],
-  ['Niyama', 51.4],
-  ['Asana', 102.9],
-  ['Pranayama', 154.3],
-  ['Pratyahara', 205.7],
-  ['Dharana', 257.1],
-  ['Dhyana', 308.6],
-]
-const RING_R = 42
-
-/** The ornate wheel under the labels (Arnav, HQ DM Tue 17 Nov 2026: "I want
- * the wheel to look more artistic like this"): see components/home/wheel-geometry.ts.
- * Its seven carved pillars are the spokes, one at each label's angle. */
-const WHEEL = buildWheel(RING_LABELS.map(([, angle]) => angle))
-
-/** Which entrance the ring plays (see app/home.css, "4b"). Kush's pick,
- * Mon 9 Nov 10:22 PM: 'orbit' ("Fan out like a clock"). 'sweep' is the
- * other one, kept so a switch back is this one line. */
-const RING_VARIANT: 'sweep' | 'orbit' = 'orbit'
-
-/** Round 2 (Kush, 9:30 call Tue 10 Nov: "a version of ... the fan one ...
- * rotating in a circle after it's been fanned out just slowly"): once the ring
- * has fanned out, the seven limbs and their spokes turn slowly round Samadhi,
- * the labels staying upright. `false` brings back the still ring. */
-const RING_SPIN = true
+/* The ring of the limbs, its wheel and the one-limb box: components/home/LimbsWheel.tsx
+   (option A, Arnav, Tue 17 Nov 2026). */
 
 
 /* ── 1. The top ──────────────────────────────────────────────────────────── */
@@ -95,66 +66,6 @@ function TopSection() {
         </div>
       </div>
     </section>
-  )
-}
-
-function LimbsRing() {
-  return (
-    <InView
-      className="k-ring"
-      data-variant={RING_VARIANT}
-      data-spin={RING_SPIN || undefined}
-      role="img"
-      aria-label="The eight limbs of yoga in a ring, with Samadhi in the middle"
-    >
-      <div className="halo" />
-      <div className="orb">
-        <svg viewBox="0 0 100 100" className="wheel" aria-hidden="true">
-          <circle className="w1" cx="50" cy="50" r={WHEEL_R.rimOuter} />
-          <circle className="w2" cx="50" cy="50" r={WHEEL_R.rimOuter2} />
-          {WHEEL.cord.map((d, i) => (
-            <path key={`cord${i}`} className="cord" d={d} />
-          ))}
-          {WHEEL.knots.map(([x, y]) => (
-            <circle key={`k${x}-${y}`} className="dot" cx={x.toFixed(2)} cy={y.toFixed(2)} r="0.22" />
-          ))}
-          <circle className="w2" cx="50" cy="50" r={WHEEL_R.rimInner2} />
-          <circle className="w1" cx="50" cy="50" r={WHEEL_R.rimInner} />
-          {WHEEL.beads.map(([x, y]) => (
-            <circle key={`b${x}-${y}`} className="dot" cx={x.toFixed(2)} cy={y.toFixed(2)} r="0.3" />
-          ))}
-          <circle className="w1" cx="50" cy="50" r={WHEEL_R.hubOuter} />
-          <circle className="w2" cx="50" cy="50" r={WHEEL_R.hubInner} />
-          <path className="tick" d={WHEEL.hubTicks} />
-          <path className="petal" d={WHEEL.lotusOuter} />
-          <path className="petal2" d={WHEEL.lotusInner} />
-          <path className="petal2" d={WHEEL.lotusBack} />
-          <circle className="w1" cx="50" cy="50" r={WHEEL_R.lotusBase} />
-        </svg>
-        <svg viewBox="0 0 100 100" className="spokes" aria-hidden="true">
-          {WHEEL.pillars.map((p, i) => (
-            <g key={RING_LABELS[i][0]} style={{ '--i': i } as React.CSSProperties}>
-              <path className="po" d={p.outline} pathLength={1} />
-              <path className="pb" d={p.bands} pathLength={1} />
-              <path className="pf" d={p.flute} pathLength={1} />
-            </g>
-          ))}
-        </svg>
-        {RING_LABELS.map(([name, angle], i) => (
-          <span
-            key={name}
-            className="lb"
-            style={{ '--a': `${angle}deg`, '--r': RING_R, '--i': i } as React.CSSProperties}
-            aria-hidden="true"
-          >
-            <b>{name}</b>
-          </span>
-        ))}
-      </div>
-      <div className="centre" aria-hidden="true">
-        Samadhi
-      </div>
-    </InView>
   )
 }
 
@@ -193,38 +104,18 @@ function FaqSection() {
    pricing heading says the same. Kush picked the merge at 7:18 PM; the two
    old sections are deleted. No words are new. */
 
-function LimbsFold() {
-  return (
-    <details className="k-fold">
-      <summary>{LIMBS.heading}</summary>
-      <p className="k-small">{LIMBS.body}</p>
-      <div className="k-limbs">
-        {LIMBS.items.map((l, i) => (
-          <div key={l.name} className="k-limb">
-            <span className="ln">{i + 1}</span>
-            <b>{l.name}</b>
-            <span className="lt">{l.body}</span>
-          </div>
-        ))}
-      </div>
-    </details>
-  )
-}
-
 /* A2. How it works: the 14 days, then the J Score and the limbs, one band. */
 function HowItWorksSection() {
   return (
     <section className="k-s" id="how-it-works">
       <div className="swrap">
         {/* Arnav, 8:07 PM Sat 14 Nov: the "first 14 days" block is removed; the score block stays. */}
-        <div className="hw-score">
-          <LimbsRing />
-          <div>
-            <h3 className="hw-h">{JSCORE.heading}</h3>
-            <p className="k-lead">{JSCORE.body}</p>
-            <LimbsFold />
-          </div>
-        </div>
+        {/* Option A (Arnav, Tue 17 Nov 2026): the fold of the eight limbs is gone; the
+            ring's chips are buttons and one box under the paragraph explains the chosen limb. */}
+        <LimbsWheel>
+          <h3 className="hw-h">{JSCORE.heading}</h3>
+          <p className="k-lead">{JSCORE.body}</p>
+        </LimbsWheel>
       </div>
     </section>
   )
