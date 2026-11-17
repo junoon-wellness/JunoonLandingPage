@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import AppStoreBadge from '@/components/waitlist/AppStoreBadge'
 import HeroThread from '@/components/home/HeroThread'
@@ -70,20 +69,6 @@ const RING_VARIANT: 'sweep' | 'orbit' = 'orbit'
  * has fanned out, the seven limbs and their spokes turn slowly round Samadhi,
  * the labels staying upright. `false` brings back the still ring. */
 const RING_SPIN = true
-
-function Tree({ className, size }: { className?: string; size: number }) {
-  return (
-    <Image
-      className={className}
-      src="/brand/junoon-tree-white-560.webp"
-      alt=""
-      aria-hidden="true"
-      width={560}
-      height={560}
-      sizes={`${size}px`}
-    />
-  )
-}
 
 
 /* ── 1. The top ──────────────────────────────────────────────────────────── */
@@ -167,7 +152,6 @@ function LimbsRing() {
         ))}
       </div>
       <div className="centre" aria-hidden="true">
-        <Tree size={64} />
         Samadhi
       </div>
     </InView>
