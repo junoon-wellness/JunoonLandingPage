@@ -271,7 +271,7 @@ export const PRICING = {
 
 export const FAQ_COPY = {
   eyebrow: 'Questions',
-  heading: 'Questions people ask.',
+  heading: 'Questions people ask:',
   items: [
     {
       q: 'What is Junoon?',
