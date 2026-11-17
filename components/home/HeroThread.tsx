@@ -38,8 +38,11 @@ const ICONS: React.ReactNode[] = [
   <path key="g" d="M12 4.8a3.2 3.2 0 1 1 0 6.4 3.2 3.2 0 0 1 0-6.4zM5.5 20c.8-3.6 3.4-5.6 6.5-5.6s5.7 2 6.5 5.6" />,
   // Asana: a standing pose
   <path key="a" d="M12 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM12 7v7M12 14l-3.5 6M12 14l3.5 6M6 10.5l6-2 6 2" />,
-  // Pranayama: the breath
-  <path key="p" d="M3 9c3-3 6 3 9 0s6 3 9 0M3 15c3-3 6 3 9 0s6 3 9 0" />,
+  // Pranayama: the breath. The app's own Breathwork glyph (Arnav, Tue 17 Nov 2026:
+  // "match the same ones on the app"), copied from the iOS sheet's i-breathwork in
+  // Junoon-IOS/DesignKit/v01/assets/junoon-icons-chrome.svg. Same 24 box, and the
+  // app draws it at 15pt with a 1.5 design stroke, the stroke this list already uses.
+  <path key="p" d="M2.6 8.6h9.2a2.6 2.6 0 1 0-2.6-2.6M2.6 13.6h14a2.8 2.8 0 1 1 2.8 2.8M2.6 18.6h8.6" />,
   // Dhyana: a seated figure
   <path key="d" d="M12 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM12 8v5M7 17c2-1.6 3.5-4 5-4s3 2.4 5 4M5 19h14" />,
   // Abhyasa: a class, played on demand
