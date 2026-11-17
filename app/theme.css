@@ -1163,38 +1163,35 @@ html[data-theme='light'] .jh .k-limbbox-i b {
     transition: none;
   }
 }
-/* Round 2 layout (Arnav, HQ DM Tue 17 Nov 2026, 5:41 PM): "I dont like how the
-   wheel/pranayama got so close to the paragraph", the paragraph "to only be on
-   two lines not three", and "that entire area could be spaced out a little
-   nicer". Measured: the paragraph needs 840px for two lines at its 16px, and the
-   turning chips (with their glow) reach 64px past the 360px wheel on every side.
-   Side by side that is about 1370px, more than a 1280 screen's 1232px, so the
-   heading and paragraph run across the top, and the wheel and the box sit side
-   by side under them, the box centred against the wheel and 104px (the chips'
-   64px reach plus 40px) clear of the wheel's edge. The wheel's column is 64px
-   wider than the wheel, so the chips' reach on the left stays inside the page
-   too (at 1280 it used to run 24px off the screen's edge). */
+/* Round 3 layout (Arnav, HQ DM Tue 17 Nov 2026, 6:26 PM): "I dont like how
+   'Your Samadhi Score / Your Samadhi Score reflects how consistently...' is on
+   top of the wheel and there is so much empy space to the right. I would rather
+   have this part go right of the wheel". So the wheel sits on the left and one
+   column on the right holds the heading, the paragraph and the box, centred on
+   the wheel and running to the container's right edge. The paragraph wraps to
+   three lines there: two would need 840px, and beside the wheel the column has
+   672px (round 2's measurement; Arnav chose side by side over two lines).
+   Kept from round 2: the column starts 104px past the wheel's edge (the turning
+   chips reach 64px with their glow, plus 40px clear), and the wheel's column is
+   64px wider than the wheel so the left chips stay inside the page at 1280. */
 .jh .hw-score.hw-limbs {
   grid-template-columns: 424px minmax(0, 1fr);
-  grid-template-areas:
-    'head head'
-    'lead lead'
-    'ring box';
+  grid-template-areas: 'ring text';
   column-gap: 104px;
   row-gap: 0;
   align-items: center;
 }
 .jh .hw-limbs .hw-text {
-  display: contents;
+  grid-area: text;
+  display: flex;
+  flex-direction: column;
 }
 .jh .hw-limbs .hw-h {
-  grid-area: head;
   margin: 0 0 14px;
 }
 .jh .hw-limbs .k-lead {
-  grid-area: lead;
-  max-width: 880px;
-  margin: 0 0 64px;
+  max-width: none;
+  margin: 0 0 28px;
 }
 .jh .hw-score.hw-limbs .k-ring {
   grid-area: ring;
@@ -1202,9 +1199,7 @@ html[data-theme='light'] .jh .k-limbbox-i b {
   margin: 0;
 }
 .jh .hw-limbs .k-limbbox {
-  grid-area: box;
   margin: 0;
-  max-width: 640px;
 }
 /* One column (tablet and phone): heading, paragraph, the ring, then the box
    right under it, so a tapped limb's words show on screen next to the ring. */
@@ -1217,7 +1212,15 @@ html[data-theme='light'] .jh .k-limbbox-i b {
       'ring'
       'box';
   }
+  .jh .hw-limbs .hw-text {
+    display: contents;
+  }
+  .jh .hw-limbs .hw-h {
+    grid-area: head;
+  }
   .jh .hw-limbs .k-lead {
+    grid-area: lead;
+    max-width: 880px;
     margin-bottom: 48px;
   }
   .jh .hw-score.hw-limbs .k-ring {
@@ -1225,6 +1228,7 @@ html[data-theme='light'] .jh .k-limbbox-i b {
     margin: 0 0 36px;
   }
   .jh .hw-limbs .k-limbbox {
+    grid-area: box;
     width: 100%;
     max-width: 560px;
     justify-self: center;
