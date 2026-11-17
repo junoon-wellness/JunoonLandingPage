@@ -146,11 +146,6 @@ function LimbsRing() {
       <div className="centre" aria-hidden="true">
         <Tree size={64} />
         Samadhi
-        <small>
-          the number in the middle:
-          <br />
-          your Samadhi Score
-        </small>
       </div>
     </InView>
   )
