@@ -193,20 +193,6 @@ html[data-scrolled] .jh .nav {
 .jh .links a[aria-current='page'] {
   color: var(--s-ink);
 }
-.jh .links a[aria-current='page']::before {
-  /* A small 24-spoke wheel marks the current page (Arnav, 17 Nov: like the chakra he shared). */
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -17px;
-  width: 14px;
-  height: 14px;
-  margin-left: -7px;
-  background: var(--s-glow);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10.6' fill='none' stroke='black' stroke-width='1.4'/%3E%3Ccircle cx='12' cy='12' r='2.1'/%3E%3Cpath d='M14.00 12.00L17.19 12.36L21.90 12.00L17.19 11.64Z'/%3E%3Cpath d='M13.93 12.52L16.92 13.69L21.56 14.56L17.10 12.99Z'/%3E%3Cpath d='M13.73 13.00L16.31 14.91L20.57 16.95L16.67 14.28Z'/%3E%3Cpath d='M13.41 13.41L15.41 15.93L19.00 19.00L15.93 15.41Z'/%3E%3Cpath d='M13.00 13.73L14.28 16.67L16.95 20.57L14.91 16.31Z'/%3E%3Cpath d='M12.52 13.93L12.99 17.10L14.56 21.56L13.69 16.92Z'/%3E%3Cpath d='M12.00 14.00L11.64 17.19L12.00 21.90L12.36 17.19Z'/%3E%3Cpath d='M11.48 13.93L10.31 16.92L9.44 21.56L11.01 17.10Z'/%3E%3Cpath d='M11.00 13.73L9.09 16.31L7.05 20.57L9.72 16.67Z'/%3E%3Cpath d='M10.59 13.41L8.07 15.41L5.00 19.00L8.59 15.93Z'/%3E%3Cpath d='M10.27 13.00L7.33 14.28L3.43 16.95L7.69 14.91Z'/%3E%3Cpath d='M10.07 12.52L6.90 12.99L2.44 14.56L7.08 13.69Z'/%3E%3Cpath d='M10.00 12.00L6.81 11.64L2.10 12.00L6.81 12.36Z'/%3E%3Cpath d='M10.07 11.48L7.08 10.31L2.44 9.44L6.90 11.01Z'/%3E%3Cpath d='M10.27 11.00L7.69 9.09L3.43 7.05L7.33 9.72Z'/%3E%3Cpath d='M10.59 10.59L8.59 8.07L5.00 5.00L8.07 8.59Z'/%3E%3Cpath d='M11.00 10.27L9.72 7.33L7.05 3.43L9.09 7.69Z'/%3E%3Cpath d='M11.48 10.07L11.01 6.90L9.44 2.44L10.31 7.08Z'/%3E%3Cpath d='M12.00 10.00L12.36 6.81L12.00 2.10L11.64 6.81Z'/%3E%3Cpath d='M12.52 10.07L13.69 7.08L14.56 2.44L12.99 6.90Z'/%3E%3Cpath d='M13.00 10.27L14.91 7.69L16.95 3.43L14.28 7.33Z'/%3E%3Cpath d='M13.41 10.59L15.93 8.59L19.00 5.00L15.41 8.07Z'/%3E%3Cpath d='M13.73 11.00L16.67 9.72L20.57 7.05L16.31 9.09Z'/%3E%3Cpath d='M13.93 11.48L17.10 11.01L21.56 9.44L16.92 10.31Z'/%3E%3C/svg%3E") center / contain no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10.6' fill='none' stroke='black' stroke-width='1.4'/%3E%3Ccircle cx='12' cy='12' r='2.1'/%3E%3Cpath d='M14.00 12.00L17.19 12.36L21.90 12.00L17.19 11.64Z'/%3E%3Cpath d='M13.93 12.52L16.92 13.69L21.56 14.56L17.10 12.99Z'/%3E%3Cpath d='M13.73 13.00L16.31 14.91L20.57 16.95L16.67 14.28Z'/%3E%3Cpath d='M13.41 13.41L15.41 15.93L19.00 19.00L15.93 15.41Z'/%3E%3Cpath d='M13.00 13.73L14.28 16.67L16.95 20.57L14.91 16.31Z'/%3E%3Cpath d='M12.52 13.93L12.99 17.10L14.56 21.56L13.69 16.92Z'/%3E%3Cpath d='M12.00 14.00L11.64 17.19L12.00 21.90L12.36 17.19Z'/%3E%3Cpath d='M11.48 13.93L10.31 16.92L9.44 21.56L11.01 17.10Z'/%3E%3Cpath d='M11.00 13.73L9.09 16.31L7.05 20.57L9.72 16.67Z'/%3E%3Cpath d='M10.59 13.41L8.07 15.41L5.00 19.00L8.59 15.93Z'/%3E%3Cpath d='M10.27 13.00L7.33 14.28L3.43 16.95L7.69 14.91Z'/%3E%3Cpath d='M10.07 12.52L6.90 12.99L2.44 14.56L7.08 13.69Z'/%3E%3Cpath d='M10.00 12.00L6.81 11.64L2.10 12.00L6.81 12.36Z'/%3E%3Cpath d='M10.07 11.48L7.08 10.31L2.44 9.44L6.90 11.01Z'/%3E%3Cpath d='M10.27 11.00L7.69 9.09L3.43 7.05L7.33 9.72Z'/%3E%3Cpath d='M10.59 10.59L8.59 8.07L5.00 5.00L8.07 8.59Z'/%3E%3Cpath d='M11.00 10.27L9.72 7.33L7.05 3.43L9.09 7.69Z'/%3E%3Cpath d='M11.48 10.07L11.01 6.90L9.44 2.44L10.31 7.08Z'/%3E%3Cpath d='M12.00 10.00L12.36 6.81L12.00 2.10L11.64 6.81Z'/%3E%3Cpath d='M12.52 10.07L13.69 7.08L14.56 2.44L12.99 6.90Z'/%3E%3Cpath d='M13.00 10.27L14.91 7.69L16.95 3.43L14.28 7.33Z'/%3E%3Cpath d='M13.41 10.59L15.93 8.59L19.00 5.00L15.41 8.07Z'/%3E%3Cpath d='M13.73 11.00L16.67 9.72L20.57 7.05L16.31 9.09Z'/%3E%3Cpath d='M13.93 11.48L17.10 11.01L21.56 9.44L16.92 10.31Z'/%3E%3C/svg%3E") center / contain no-repeat;
-  filter: drop-shadow(0 0 3px var(--s-glow));
-}
 .jh .links a[aria-current='page']::after {
   display: none;
 }
