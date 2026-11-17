@@ -279,7 +279,7 @@ export const FAQ_COPY = {
   items: [
     {
       q: 'What is Junoon?',
-      a: "Junoon is a yoga, breathwork and meditation app rooted in India's eight limbs, with a coach that fits your practice to your real day.",
+      a: "Junoon is a complete wellness app with yoga, breathwork and meditation sessions rooted in Patanjali's eight limbs of yoga, and a guide that fits your practice to your real day.",
     },
     {
       q: 'Do I need to know yoga already?',
