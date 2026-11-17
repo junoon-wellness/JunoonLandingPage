@@ -1000,6 +1000,10 @@ html[data-theme='light'] .jh .hw-steps .num {
   line-height: 1.08;
   margin: 2px 0 8px;
 }
+.jh .hw-score .k-lead .k-term {
+  color: #fff;
+  font-weight: 700;
+}
 .jh .hw-score .k-lead {
   font-size: 16px;
   margin-bottom: 12px;

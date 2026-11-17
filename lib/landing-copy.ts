@@ -192,9 +192,11 @@ export const LIMBS = {
 
 export const JSCORE = {
   heading: 'Your Samadhi Score',
-  // Shown as two lines: the second starts on its own line (Arnav, 17 Nov). Same words.
-  body: "Your Samadhi Score reflects how consistently you're incorporating the first seven limbs of yoga into your practice, guiding you toward the eighth:",
-  bodySecond: 'Samadhi, the ultimate state of meditative absorption and inner awareness.',
+  // Arnav, 17 Nov: the second line starts on its own line, with the term in bold white.
+  // समाधि is Samadhi in Devanagari (sa, ma, aa, dha, i).
+  body: "Your Score reflects how consistently you're incorporating the first seven limbs of yoga into your practice, guiding you toward the eighth:",
+  bodyTerm: 'Samadhi/समाधि',
+  bodySecond: ': the ultimate state of meditative absorption and inner awareness.',
 }
 
 /* ── Section 6: classes and breathwork ───────────────────────────────────── */

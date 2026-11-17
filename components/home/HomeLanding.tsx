@@ -117,6 +117,9 @@ function HowItWorksSection() {
           <p className="k-lead">
             {JSCORE.body}
             <br />
+            <strong className="k-term" lang="sa">
+              {JSCORE.bodyTerm}
+            </strong>
             {JSCORE.bodySecond}
           </p>
         </LimbsWheel>
