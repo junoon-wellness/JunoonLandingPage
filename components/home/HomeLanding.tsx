@@ -114,7 +114,11 @@ function HowItWorksSection() {
             ring's chips are buttons and one box under the paragraph explains the chosen limb. */}
         <LimbsWheel>
           <h3 className="hw-h">{JSCORE.heading}</h3>
-          <p className="k-lead">{JSCORE.body}</p>
+          <p className="k-lead">
+            {JSCORE.body}
+            <br />
+            {JSCORE.bodySecond}
+          </p>
         </LimbsWheel>
       </div>
     </section>
