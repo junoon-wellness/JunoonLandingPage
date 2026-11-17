@@ -1042,6 +1042,170 @@ html[data-theme='light'] .jh .hw-steps .num {
   padding-bottom: 12px;
 }
 
+/* The limbs wheel, option A (Arnav, Tue 17 Nov 2026): the fold above is no
+   longer rendered. The ring's seven chips and Samadhi are buttons
+   (components/home/LimbsWheel.tsx); the chosen one gets a gold edge, its spoke
+   brightens, and one box under the paragraph shows that limb. */
+.jh .k-ring .lb,
+.jh .k-ring .centre {
+  appearance: none;
+  background: none;
+  border: 0;
+  margin: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+/* The button is centred on the chip's place, so this padding grows the tap
+   target to about 38px high without moving the chip. */
+.jh .k-ring .lb {
+  padding: 8px 6px;
+  font: inherit;
+}
+.jh .k-ring .lb > b {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.jh .k-ring .lb:hover > b {
+  border-color: rgba(232, 184, 112, 0.75);
+}
+.jh .k-ring .lb[aria-pressed='true'] > b {
+  border-color: var(--turmeric);
+  box-shadow: 0 0 0 1px var(--turmeric), 0 0 16px rgba(232, 184, 112, 0.45);
+}
+.jh .k-ring .lb:focus-visible,
+.jh .k-ring .centre:focus-visible {
+  outline: none;
+}
+.jh .k-ring .lb:focus-visible > b {
+  outline: 2px solid var(--turmeric);
+  outline-offset: 3px;
+}
+.jh .k-ring .centre {
+  padding: 14px 0;
+  border-radius: 999px;
+  transition: text-shadow 0.2s;
+}
+.jh .k-ring .centre:focus-visible {
+  outline: 2px solid var(--turmeric);
+  outline-offset: 2px;
+}
+.jh .k-ring .centre[aria-pressed='true'] {
+  text-shadow: 0 0 18px rgba(232, 184, 112, 0.6);
+}
+.jh .k-ring .spokes g.on .po {
+  stroke-width: 0.55;
+  stroke-opacity: 1;
+}
+.jh .k-ring .spokes g.on .pb,
+.jh .k-ring .spokes g.on .pf {
+  stroke-opacity: 0.95;
+}
+/* The slow turn holds still while the pointer is over the ring or a chip has
+   keyboard focus, so a chip can be clicked. */
+.jh .k-ring[data-spin][data-anim='in']:hover .orb,
+.jh .k-ring[data-spin][data-anim='in']:hover .lb > b,
+.jh .k-ring[data-spin][data-anim='in']:focus-within .orb,
+.jh .k-ring[data-spin][data-anim='in']:focus-within .lb > b {
+  animation-play-state: paused;
+}
+html[data-theme='light'] .jh .k-ring .lb[aria-pressed='true'] > b {
+  border-color: rgb(160, 106, 28);
+  box-shadow: 0 0 0 1px rgb(160, 106, 28), 0 0 14px rgba(160, 106, 28, 0.3);
+}
+html[data-theme='light'] .jh .k-ring .centre[aria-pressed='true'] {
+  text-shadow: 0 0 16px rgba(160, 106, 28, 0.35);
+}
+
+/* The one box: all eight entries share one grid cell and only the chosen one
+   shows, so the box is as tall as the longest at every width and never jumps. */
+.jh .k-limbbox {
+  display: grid;
+  margin-top: 4px;
+  padding: 14px 18px;
+  border: 1px solid var(--line-d);
+  border-radius: 16px;
+  background: var(--s-plate);
+}
+.jh .k-limbbox-i {
+  grid-area: 1 / 1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 12px;
+  align-items: baseline;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.25s var(--s-ease);
+}
+.jh .k-limbbox-i[data-on] {
+  visibility: visible;
+  opacity: 1;
+}
+.jh .k-limbbox-i .ln {
+  grid-row: span 2;
+  font-family: var(--serif);
+  font-size: 26px;
+  line-height: 1;
+  color: var(--clay);
+}
+.jh .k-limbbox-i b {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--turmeric);
+}
+.jh .k-limbbox-i .lt {
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--s-ink2);
+}
+html[data-theme='light'] .jh .k-limbbox-i b {
+  color: #7a3a1e;
+}
+@media (prefers-reduced-motion: reduce) {
+  .jh .k-limbbox-i {
+    transition: none;
+  }
+}
+/* One column (tablet and phone): the heading and paragraph first, then the
+   ring, then the box right under it, so a tapped limb's words show on screen
+   next to the ring. */
+@media (max-width: 1180px) {
+  .jh .hw-score.hw-limbs {
+    row-gap: 0;
+  }
+  .jh .hw-limbs .hw-text {
+    display: contents;
+  }
+  .jh .hw-limbs .hw-h {
+    order: 0;
+  }
+  .jh .hw-limbs .k-lead {
+    order: 1;
+    margin-bottom: 22px;
+  }
+  .jh .hw-score.hw-limbs .k-ring {
+    order: 2;
+    margin: 0 auto 22px;
+  }
+  .jh .hw-limbs .k-limbbox {
+    order: 3;
+    margin-top: 0;
+    width: 100%;
+    max-width: 560px;
+    justify-self: center;
+  }
+}
+@media (max-width: 760px) {
+  .jh .k-limbbox {
+    padding: 12px 14px;
+  }
+  .jh .k-limbbox-i b {
+    font-size: 20px;
+  }
+  .jh .k-limbbox-i .lt {
+    font-size: 14px;
+  }
+}
+
 /* A3. inside the app: full-size screens in one swipe row */
 .jh .sr {
   position: relative;
