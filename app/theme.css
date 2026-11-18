@@ -1056,6 +1056,14 @@ html[data-theme='light'] .jh .hw-steps .num {
 .jh .k-ring .lb > b {
   transition: border-color 0.4s var(--s-ease), box-shadow 0.4s var(--s-ease);
 }
+/* Every pill the same size (Arnav, 17 Nov: "all the same standard size"),
+   sized to the longest name (Pratyahara, Pranayama), text centred. In em so
+   it scales with each breakpoint's font size. */
+.jh .k-ring .lb > b {
+  box-sizing: border-box;
+  width: 6.4em;
+  text-align: center;
+}
 .jh .k-ring .lb:hover > b {
   border-color: rgba(232, 184, 112, 0.75);
 }
