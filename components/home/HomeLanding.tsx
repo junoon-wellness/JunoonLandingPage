@@ -9,7 +9,6 @@ import ScreenRow from '@/components/home/ScreenRow'
 import {
   CLASSES,
   COACH,
-  FAQ_COPY,
   HERO_FINE,
   HERO_HEADLINE,
   INSIDE_LABEL,
@@ -63,32 +62,6 @@ function TopSection() {
           <Link href="/pricing" className="textlink">
             1 MONTH FREE
           </Link>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ── 10. Questions ───────────────────────────────────────────────────────── */
-
-function FaqSection() {
-  return (
-    <section className="k-s alt" id="questions">
-      <div className="swrap">
-        <div className="k-prhead">
-          <div>
-            <h2>{FAQ_COPY.heading}</h2>
-          </div>
-        </div>
-        <div className="k-two2">
-          {FAQ_COPY.items.map(item => (
-            <details key={item.q} className="k-faq">
-              <summary>
-                <h3>{item.q}</h3>
-              </summary>
-              <p>{item.a}</p>
-            </details>
-          ))}
         </div>
       </div>
     </section>
@@ -174,7 +147,6 @@ export default function HomeLanding() {
         <InsideSection />
         {/* Arjav, Sun 15 Nov: the Samadhi Score section sits below Inside the app. */}
         <HowItWorksSection />
-        <FaqSection />
       </main>
       <SiteFooter />
     </div>
