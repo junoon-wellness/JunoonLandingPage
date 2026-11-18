@@ -43,8 +43,14 @@ const ICONS: React.ReactNode[] = [
   // Junoon-IOS/DesignKit/v01/assets/junoon-icons-chrome.svg. Same 24 box, and the
   // app draws it at 15pt with a 1.5 design stroke, the stroke this list already uses.
   <path key="p" d="M2.6 8.6h9.2a2.6 2.6 0 1 0-2.6-2.6M2.6 13.6h14a2.8 2.8 0 1 1 2.8 2.8M2.6 18.6h8.6" />,
-  // Dhyana: a seated figure
-  <path key="d" d="M12 4a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM12 8v5M7 17c2-1.6 3.5-4 5-4s3 2.4 5 4M5 19h14" />,
+  // Dhyana: a seated figure. The app's own Sit glyph (Arnav, Tue 17 Nov 2026: "draw sit
+  // icon"), i-sit in Junoon-IOS/DesignKit/v01/assets/junoon-icons-chrome.svg, our own
+  // drawing that replaces the SF Symbol on the app's Sit tile. Copied path for path; its
+  // head circle is written as two arcs so the whole glyph is one path, like its neighbours.
+  <path
+    key="d"
+    d="M12 2.2a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4zM12 7v7.4M5.6 15.8l1.2-4.8c.4-1.6 1.6-2.4 3.2-2.4h4c1.6 0 2.8.8 3.2 2.4l1.2 4.8M2.8 17.6c2.8-1.6 6.2-2.4 9.2-2.4 3 0 6.4.8 9.2 2.4M2.8 17.6c2.2 1.8 7.4 2.4 12.4.8M21.2 17.6c-2.2 1.8-7.4 2.4-12.4.8"
+  />,
   // Abhyasa: a class, played on demand
   <path key="c" d="M3.5 6.5h17v11h-17zM10.5 9.6v4.8l4-2.4z" />,
   // Svadhyaya: the evening, a moon
