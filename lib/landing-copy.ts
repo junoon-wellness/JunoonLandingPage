@@ -64,14 +64,14 @@ export const HERO_FINE = {
 
 /** The eight features around the drawn phone: four left, four right. */
 export const FEATURES = [
-  { title: 'A coach who knows you' },
+  { title: 'Your personalized coach' },
   { title: 'Sessions built for your life' },
   { title: 'Pranayama on demand' },
   { title: 'Guided meditations' },
   { title: 'On demand classes' },
   { title: 'Nightly reflection' },
   { title: 'Live classes' },
-  { title: 'Your Samadhi' },
+  { title: 'Samadhi Score' },
 ]
 
 /**
