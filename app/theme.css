@@ -542,6 +542,31 @@ html[data-theme='light'] .jh .ip-body {
   }
 }
 
+/* Each feature line sits level with its pill (Arnav, 17 Nov: "the text aligns
+   with its corresponding pill"). Wide screens only, where the two columns sit
+   side by side: one row height and one gap for both, so row N of the list is
+   row N of the pills. */
+@media (min-width: 1181px) {
+  .jh .hx {
+    --hx-row: 46px;
+  }
+  .jh .hx-pill {
+    min-height: var(--hx-row);
+  }
+  .jh .hx-list {
+    gap: 8px;
+  }
+  .jh .hx-list li {
+    height: var(--hx-row);
+    display: flex;
+    align-items: center;
+    padding-bottom: 0;
+  }
+  .jh .hx-bar {
+    bottom: 1px;
+  }
+}
+
 /* middle widths: map and pills on one row, words and phone on the next */
 @media (max-width: 1180px) {
   .jh .hx {
