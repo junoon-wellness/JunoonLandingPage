@@ -152,6 +152,9 @@ const INSTRUCTORS: Person[] = [
     role: 'Intro Yoga · Pranayama · Mobility',
     objectPosition: '50% 50%',
     photo: '/instructors/durva-head-v2.jpg',
+    // Arnav, Sun 22 Nov 2026: "for durva profile please use the same bio that is used in the app".
+    // Verbatim from the app (Junoon-IOS Fixtures.swift, teacher-durva: Arjav's words, JV4-541).
+    bio: "Hi, I'm Durva, a yoga and dance teacher based in Mumbai. I've been teaching yoga for 10 years and have certifications with the Shri Shri yoga school, Ashtanga Yoga in Mysore, and Yoga therapy.",
   },
 ]
 
@@ -309,24 +312,7 @@ export default function AboutPage() {
           is gone by the same ruling. Story wording stays VERBATIM — the
           accent <em> wraps below add and remove no words. */}
       <section className="ab-band ab-founder-letter" aria-label="A letter from our founder">
-        <Reveal className="ab-letter-media" x={-36} y={0} scale={0.96} duration={0.9} amount={0.15}>
-          <div className="ab-founder-card ab-founder-card-lg">
-            <div className="ab-founder-photo">
-              <Image
-                src="/arjav-photo.jpg"
-                alt="Arjav, founder of Junoon Wellness"
-                width={720}
-                height={900}
-                sizes="(max-width: 768px) 78vw, 360px"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%' }}
-              />
-            </div>
-            <div className="ab-founder-caption">
-              <div className="ab-founder-name">Arjav Chhabra</div>
-              <div className="ab-founder-role">Founder &amp; CEO</div>
-            </div>
-          </div>
-        </Reveal>
+        {/* Arnav, Sun 22 Nov 2026: "remove arjav photo here and center the text please". */}
         <Reveal className="ab-band-copy ab-letter-copy" x={36} y={0} duration={0.9} delay={0.15} amount={0.15}>
           <span className="ab-letter-quotemark" aria-hidden="true">&ldquo;</span>
           <p>{STORY_PARAGRAPHS[0]}</p>

@@ -2715,7 +2715,10 @@ body::before {
   padding: 24px 0;
 }
 .ab-founder-letter {
-  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  /* Arnav, Sun 22 Nov 2026: no photo, the letter centred. */
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  text-align: center;
   gap: 56px;
   align-items: start;
   padding-top: 30px;
@@ -3137,7 +3140,6 @@ body::before {
   .ab-hero { padding: 80px 32px 8px; }
   .ab-contact-section { padding: 32px 32px 48px; }
   .ab-tagline-band { padding: 22px 32px 0; }
-  .ab-founder-letter { grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 36px; }
   .ab-founder-card.ab-founder-card-lg { --ab-person-w: 300px; }
 }
 
