@@ -9,7 +9,6 @@ import Jaali from '@/components/brand/Jaali'
 import Reveal from '@/components/motion/Reveal'
 import Toran from '@/components/brand/Toran'
 import SectionLabel from '@/components/brand/SectionLabel'
-import BioDisclosure from '@/components/about/BioDisclosure'
 /* LV5-032 (Kush: "a better animation/transition as the user scrolls"): each
    band's media slides in from ITS OWN side (x ±36, settling from scale 0.96)
    and the copy from the opposite side 0.15s later, 0.9s each. Band 2 is the
@@ -130,21 +129,21 @@ const INSTRUCTORS: Person[] = [
     // replacement serves stale bytes) + his full bio, VERBATIM from the
     // app's Fixtures.swift (Kush: "theres a better one in the app").
     photo: '/instructors/shoam-head.jpg',
-    bio: "Namaste, I am Shoam Mehta, Yoga Instructor and Sadhaka.\n\nYoga has been a game-changer for me. It helped me acknowledge my flaws, work on them, and become a better and more complete version of myself. It has given me the strength and patience to face the different challenges life has thrown my way, and helped me see those challenges as opportunities rather than problems - opportunities to learn something and grow.\n\nMy motto in life is that nothing is permanent. I live by that belief, knowing that things and people can change for the better or for the good. This has helped me become extremely grateful for what I have and patient for things to change in my favor. This is what made me a passionate yoga coach and trainer.",
+    bio: "Namaste, I'm Shoam, a yoga coach and sadhaka. Yoga helped me face my flaws and meet life's challenges as chances to grow. My motto is that nothing is permanent, so I practice with gratitude and patience.",
     objectPosition: '50% 50%',
   },
   {
     name: 'Amman Advaita',
     role: 'Hatha · Iyengar · Meditation',
     photo: '/instructors/amman-head-v2.jpg',
-    bio: "At 14, a visit to Rumtek Monastery lit something that hasn't gone out since. That spark led to a Yoga Shastri certification under Dr. Hansraj Yadav, fifteen years of deepening study in Hatha and Iyengar methodologies, and formal training in the Sri Vidya tantric tradition, Tibetan Buddhism, and Tibetan Yantra Yoga.",
+    bio: "A visit to Rumtek Monastery at 14 started my path. I am a certified Yoga Shastri, have studied Hatha and Iyengar for fifteen years, and trained in the Sri Vidya tradition and Tibetan Yantra Yoga.",
     objectPosition: '50% 50%',
   },
   {
     name: 'Divya Sahasrabuddhe',
     role: 'Hatha Yoga · Pranayama',
     photo: '/instructors/divya-head.jpg',
-    bio: "Hi, I'm Divya Sahasrabuddhe, a certified Hatha Yoga and pranayama teacher from Goa with 18 years of dedicated practice. What began as a personal journey to build strength, balance, and mental clarity gradually deepened into a lifelong commitment, leading me to train at the Sivananda Ashram and share these practices with others.",
+    bio: "Hi, I'm Divya, a Hatha Yoga and pranayama teacher from Goa with 18 years of practice. What began as a search for strength and clarity became a lifelong commitment, with training at the Sivananda Ashram.",
     objectPosition: '50% 50%',
   },
   {
@@ -154,7 +153,7 @@ const INSTRUCTORS: Person[] = [
     photo: '/instructors/durva-head-v2.jpg',
     // Arnav, Sun 22 Nov 2026: "for durva profile please use the same bio that is used in the app".
     // Verbatim from the app (Junoon-IOS Fixtures.swift, teacher-durva: Arjav's words, JV4-541).
-    bio: "Hi, I'm Durva, a yoga and dance teacher based in Mumbai. I've been teaching yoga for 10 years and have certifications with the Shri Shri yoga school, Ashtanga Yoga in Mysore, and Yoga therapy.",
+    bio: "Hi, I'm Durva, a yoga and dance teacher based in Mumbai. I've taught yoga for 10 years, with certifications from the Shri Shri yoga school, Ashtanga Yoga in Mysore, and Yoga therapy.",
   },
 ]
 
@@ -234,9 +233,11 @@ function PeopleGrid({
             </div>
           )}
           <div className="ab-person-name">{p.name}</div>
-          <div className="ab-person-role">{p.role}</div>
-          {/* Kush, 2026-08-23: bios hide behind a sage chevron toggle. */}
-          {p.bio && <BioDisclosure bio={p.bio} />}
+          {/* Arnav, Sun 22 Nov 2026: "Just remove the words and lets have the bio be visible.
+              Lets make each bio for the instructors concise and the about the same length so
+              their card sizes are the same size". The specialty line and the Bio toggle
+              (Kush, 2026-08-23) are gone; each bio is shortened to two sentences. */}
+          {p.bio && <p className="ab-person-bio">{p.bio}</p>}
         </div>
       ))}
     </div>
