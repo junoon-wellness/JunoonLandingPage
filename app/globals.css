@@ -450,7 +450,12 @@ body::before {
 @media (min-width: 769px) {
   /* The extra top air is a desktop ask; the phone/tablet 84px / 76px rules
      below keep their own values (this 3-class selector would beat them). */
-  .v2-section.v2-section-top.v2-section-newsletter { padding-top: 104px; }
+  .v2-section.v2-section-top.v2-section-newsletter { padding-top: 40px; }
+}
+/* Arnav, Sun 22 Nov 2026: "I feel like we can reduce the space between the content and the top tabs
+   on this page too" (Library; was 104px desktop, 84px tablet, 76px phone, as the same ask cut About to 24px). */
+@media (max-width: 768px) {
+  .v2-section.v2-section-top.v2-section-newsletter { padding-top: 28px; }
 }
 /* ─── Hero ───
    `align-items: start` so the copy column's top edge lines up with the phone
