@@ -2187,6 +2187,19 @@ body::before {
 
 
 /* LV5-032: the free-month callout that leads the sliding-in column. */
+/* Arnav, Sat 21 Nov 2026: "What's coming next" is the right column's main section, one row per item. */
+.pr-next-list { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; }
+.pr-next-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 18px;
+  border: 1px solid rgba(232, 184, 112, 0.18);
+  border-radius: 16px;
+  background: rgba(44, 33, 24, 0.45);
+}
+.pr-next-title { font-size: 17px; color: var(--jn-text); }
+.pr-next-line { font-size: 15px; line-height: 1.5; color: var(--jn-text-muted, rgba(245, 240, 232, 0.66)); }
 .pr-free-callout-title {
   font-family: var(--font-cormorant), serif;
   font-size: clamp(24px, 2.4vw, 30px);
