@@ -93,8 +93,8 @@ export default function PricingPage() {
              time the slide finished, so "everything fits on one screen at the
              end state" could not be true by construction. */
           <header className="pr-head">
-            <SectionLabel align="center">Pricing</SectionLabel>
-            <h1 className="pr-headline">One membership. Everything included.</h1>
+            {/* Arnav, Sat 21 Nov 7:31 PM: "PRICING should be the main heading we dont need that line underneath it". */}
+            <h1 className="pr-headline">Pricing</h1>
           </header>
         }
         card={<PricingCard />}
