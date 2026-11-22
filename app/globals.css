@@ -2191,7 +2191,9 @@ body::before {
 /* Arnav, Sat 21 Nov 2026: "What's coming next" is the right column's main section, one row per item.
    Its title sits on the card's top line at the card's own headline size, so the two columns read as one row. */
 .pr-next .pr-free-callout-title { font-size: clamp(22px, 2vw, 28px); margin: 0; }
-.pr-next-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+/* Arnav, Sun 22 Nov 2026: "the way the title fits on top of the pills is a bit weird". The list's
+   inline margin: 0 was overriding this gap, so the title sat on the first card. */
+.pr-next-list { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 0; }
 .pr-next-item {
   display: flex;
   flex-direction: column;

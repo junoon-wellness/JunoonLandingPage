@@ -89,7 +89,7 @@ export default function PricingPage() {
               <h2 className="pr-free-callout-title">
                 What&apos;s coming <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>next.</em>
               </h2>
-              <ul className="pr-next-list" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              <ul className="pr-next-list" style={{ listStyle: 'none', padding: 0 }}>
                 {NEXT_ITEMS.map(item => (
                   <li key={item.title} className="pr-next-item">
                     <span className="pr-next-title">{item.title}</span>
