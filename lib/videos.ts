@@ -98,3 +98,31 @@ export function playbackSrc(v: LibraryVideo): string | null {
   }
   return v.video_url
 }
+
+/**
+ * Arnav, Sun 22 Nov 2026: "I want the videos to be listed on the page like
+ * this (similar to how articles are) and when you click into it you get the
+ * view with more information." Each class has its own page at
+ * /library/videos/<slug>; the slug is the title, lower-cased.
+ */
+export function videoSlug(v: LibraryVideo): string {
+  return v.title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+export function getVideoBySlug(slug: string): LibraryVideo | undefined {
+  return getLibraryVideos().find(v => videoSlug(v) === slug)
+}
+
+/**
+ * A card's picture: Mux's public still, 20 seconds in (the first seconds of
+ * each class are the Junoon logo card; at 20 s the teacher is on screen),
+ * through Next's image route. Falls back to the stored thumbnail.
+ */
+export function cardThumb(v: LibraryVideo): string {
+  return v.mux_public_playback_id
+    ? `https://image.mux.com/${v.mux_public_playback_id}/thumbnail.jpg?time=20&width=960`
+    : v.thumbnail_url
+}

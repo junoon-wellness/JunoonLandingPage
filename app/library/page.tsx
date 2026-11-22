@@ -8,20 +8,11 @@ import NewsletterJoin from '@/components/waitlist/NewsletterJoin'
 import Jaali from '@/components/brand/Jaali'
 import { ARTICLE_GROUPS, articleGroup, getAllArticles } from '@/lib/library'
 import ArticleFilter from '@/components/library/ArticleFilter'
-import Image from 'next/image'
 import LibraryTabs from '@/components/library/LibraryTabs'
-import ClassVideo from '@/components/library/ClassVideo'
-import {
-  getLibraryVideos,
-  isPreviewed,
-  playbackSrc,
-  posterSrc,
-  PREVIEW_SECONDS,
-  teacherHeadshot,
-  videoMinutes,
-  type LibraryVideo,
-} from '@/lib/videos'
-import { APP_STORE_URL, normaliseSource } from '@/lib/constants'
+import ClassCard from '@/components/library/ClassCard'
+import { APP_URL } from '@/components/library/ClassBlock'
+import { getLibraryVideos } from '@/lib/videos'
+import { normaliseSource } from '@/lib/constants'
 import { clean } from '@/lib/text'
 
 /**
@@ -122,12 +113,13 @@ export default function LibraryPage() {
         }
         videos={
           <>
-            {/* Arnav, Sun 22 Nov 2026: Glo's class page, one class per block
-                ("I want to copy the same style and also cap our videos at 2 minutes"). */}
+            {/* Arnav, Sun 22 Nov 2026: "I want the videos to be listed on the page like
+                this (similar to how articles are) and when you click into it you get
+                the view with more information." The same 3-column grid as the articles. */}
             <section className="lb-grid-section" aria-label="Videos">
-              <div className="lb-classes">
+              <div className="lb-grid">
                 {videos.map(v => (
-                  <ClassBlock key={v.id} video={v} />
+                  <ClassCard key={v.id} video={v} />
                 ))}
               </div>
             </section>
@@ -151,76 +143,3 @@ export default function LibraryPage() {
   )
 }
 
-const APP_URL = 'https://app.junoonwellness.com'
-
-/**
- * One class on the Videos tab, laid out after Glo's class page (Arnav, Sun 22
- * Nov 2026): the player across the full width, with the 60 second preview pill
- * on it; then the title, the teacher's round photo beside "Teacher • Category"
- * and the length, and the class's own description. A Props or Level line shows
- * only when the snapshot has one. A row with a public stream or file plays
- * inline; any other row is its poster, linking to the app.
- */
-function ClassBlock({ video: v }: { video: LibraryVideo }) {
-  const minutes = videoMinutes(v.duration_seconds)
-  const photo = teacherHeadshot(v.instructor)
-  const src = playbackSrc(v)
-  return (
-    <article className="lb-class">
-      {src ? (
-        <div className="lb-card-thumb lb-class-player">
-          <ClassVideo
-            src={src}
-            thumbnail={v.thumbnail_url}
-            poster={posterSrc(v.thumbnail_url)}
-            title={v.title}
-            previewSeconds={isPreviewed(v) ? PREVIEW_SECONDS : null}
-            fullMinutes={minutes}
-            fullClassHref={APP_STORE_URL}
-          />
-        </div>
-      ) : (
-        <a
-          href={APP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="lb-card-thumb lb-class-player"
-        >
-          <Image
-            src={v.thumbnail_url}
-            alt={v.title}
-            fill
-            loading="lazy"
-            sizes="(max-width: 1024px) 100vw, 960px"
-          />
-        </a>
-      )}
-      <h3 className="lb-class-title">{v.title}</h3>
-      <div className="lb-class-teacher">
-        {photo && (
-          <Image
-            src={photo}
-            alt=""
-            width={44}
-            height={44}
-            className="lb-class-photo"
-          />
-        )}
-        <div className="lb-class-meta">
-          <span>
-            {v.instructor} • {v.category}
-          </span>
-          <span>
-            {minutes} min{v.level ? ` • ${v.level}` : ''}
-          </span>
-        </div>
-      </div>
-      {v.description && <p className="lb-class-desc">{v.description}</p>}
-      {v.props && (
-        <p className="lb-class-props">
-          <strong>Props:</strong> {v.props}
-        </p>
-      )}
-    </article>
-  )
-}

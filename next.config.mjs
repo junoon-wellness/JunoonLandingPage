@@ -111,6 +111,13 @@ const nextConfig = {
         pathname: "/storage/v1/object/public/thumbnails/**",
         search: "",
       },
+      // Mux's public still for a class card (the query carries time and width)
+      {
+        protocol: "https",
+        hostname: "image.mux.com",
+        port: "",
+        pathname: "/*/thumbnail.jpg",
+      },
     ],
   },
 
