@@ -3088,6 +3088,8 @@ body::before {
 .ab-bio-toggle[aria-expanded='true'] .ab-bio-chevron {
   transform: rotate(180deg);
 }
+/* Every instructor card the same height (Arnav, Sun 22 Nov 2026). */
+.ab-instructor-grid .ab-person-card { height: 100%; }
 .ab-bio-toggle + .ab-person-bio {
   margin: 2px 0 0;
 }
