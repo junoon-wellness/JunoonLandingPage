@@ -13,7 +13,7 @@ import { PREVIEW_WORDS } from '@/lib/preview-copy'
  * loads hls.js then, and only then.
  * One class plays at a time: starting one pauses any other on the page.
  *
- * The 2 minute preview (Arnav, Sun 22 Nov 2026: "cap our videos at 2 minutes",
+ * The 60 second preview (Kush's D1 pick, Arnav: "60 seconds confirmed"; first asked as 2 minutes,
  * after Glo's class page). When `previewSeconds` is set, a pill at the top-left
  * says it is a preview, and the player stops itself there: playback pauses at
  * that second, a seek past it is pulled back, and an end card offers the full

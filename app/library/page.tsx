@@ -155,7 +155,7 @@ const APP_URL = 'https://app.junoonwellness.com'
 
 /**
  * One class on the Videos tab, laid out after Glo's class page (Arnav, Sun 22
- * Nov 2026): the player across the full width, with the 2 minute preview pill
+ * Nov 2026): the player across the full width, with the 60 second preview pill
  * on it; then the title, the teacher's round photo beside "Teacher • Category"
  * and the length, and the class's own description. A Props or Level line shows
  * only when the snapshot has one. A row with a public stream or file plays

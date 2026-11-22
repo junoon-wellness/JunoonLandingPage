@@ -3478,7 +3478,7 @@ body::before {
 }
 .lb-class-props strong { font-weight: 600; color: var(--s-ink2); }
 
-/* the 2 minute preview: the pill at the player's top-left, and the end card
+/* the 60 second preview: the pill at the player's top-left, and the end card
    once it stops. Both sit on the video, so they stay dark in either theme. */
 .lb-preview-pill {
   position: absolute;

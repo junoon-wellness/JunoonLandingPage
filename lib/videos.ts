@@ -37,13 +37,14 @@ export interface LibraryVideo {
 }
 
 /**
- * Every class plays as a 2 minute preview (Arnav, Sun 22 Nov 2026: "cap our
- * videos at 2 minutes"). Two layers: the Mux URL asks for the first 120 s only
- * (instant clipping, below), and the player stops at 120 s on its own as well.
+ * Every class plays as a 60 second preview (Kush, Sun 22 Nov 2026 call triage D1:
+ * "Previews of 30 to 60 seconds, then a subscribe ask"; Arnav, same day: "60
+ * seconds confirmed"). Two layers: the Mux URL asks for the first 60 s only
+ * (instant clipping, below), and the player stops at 60 s on its own as well.
  * The full assets stay public on Mux, so this is a soft cap: a hard one needs
- * separate 2 minute clip assets.
+ * separate 60 second clip assets.
  */
-export const PREVIEW_SECONDS = 120
+export const PREVIEW_SECONDS = 60
 
 /** True when a class runs longer than the preview, so it is cut and shows the pill. */
 export function isPreviewed(v: LibraryVideo): boolean {
@@ -85,10 +86,10 @@ export function posterSrc(thumbnailUrl: string): string {
 
 /**
  * Where a class plays from: the public Mux stream, else a public file, else
- * nothing. A class longer than the preview asks Mux for its first 120 s only,
+ * nothing. A class longer than the preview asks Mux for its first PREVIEW_SECONDS only,
  * with Mux's instant clipping params for on-demand assets (asset_start_time /
  * asset_end_time, mux.com/docs/guides/create-instant-clips). Checked 22 Nov
- * 2026 on all four classes: the clipped playlist's segments add up to 120.00 s.
+ * 2026 on all four classes: the clipped playlist's segments add up to the cap.
  */
 export function playbackSrc(v: LibraryVideo): string | null {
   if (v.mux_public_playback_id) {
