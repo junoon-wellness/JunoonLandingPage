@@ -73,7 +73,6 @@ const STORY_PARAGRAPHS = [
 ] as const
 
 
-const TAGLINE = 'Ancient Indian Wisdom, Modern Solutions.'
 const SIGNATURE = 'Arjav, Founder and CEO'
 
 interface Person {
@@ -299,15 +298,8 @@ export default function AboutPage() {
       )}
 
         <div className="ab-side-letter">
-      {/* Kush, 2026-08-24: "put the ancient traditions banner below the
-          video" — a full-width band directly under the cinematic slot. */}
-      <section className="ab-tagline-band" aria-label="Ancient Indian Wisdom, Modern Solutions">
-        <Reveal y={18} duration={0.9} amount={0.3}>
-          <div className="ab-tagline-panel">
-            <div className="ab-tagline-text">{TAGLINE}</div>
-          </div>
-        </Reveal>
-      </section>
+      {/* Arnav, Sun 22 Nov 2026: the "Ancient Indian Wisdom, Modern Solutions." line is removed
+          ("remove this please, and move the rest of the text up"). */}
 
       {/* Kush, 2026-08-24: "all 4 of those paragraphs are one quote so we
           need one sign off so keep the bottom one… arjavs picture on one
