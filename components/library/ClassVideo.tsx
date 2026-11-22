@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useEffect, useRef, useState, type SyntheticEvent } from 'react'
 import type HlsType from 'hls.js'
+import { PREVIEW_WORDS } from '@/lib/preview-copy'
 
 /**
  * A class that plays on /library's Videos tab (Arnav, Sat 21 Nov 2026: "A
@@ -11,6 +12,13 @@ import type HlsType from 'hls.js'
  * load. On press, Safari and iOS get the stream directly; every other browser
  * loads hls.js then, and only then.
  * One class plays at a time: starting one pauses any other on the page.
+ *
+ * The 2 minute preview (Arnav, Sun 22 Nov 2026: "cap our videos at 2 minutes",
+ * after Glo's class page). When `previewSeconds` is set, a pill at the top-left
+ * says it is a preview, and the player stops itself there: playback pauses at
+ * that second, a seek past it is pulled back, and an end card offers the full
+ * class. The stream itself is already cut to that length by Mux (see
+ * playbackSrc in lib/videos.ts); this is the second layer.
  */
 function pauseOthers(e: SyntheticEvent<HTMLVideoElement>) {
   const me = e.currentTarget
@@ -24,13 +32,23 @@ export default function ClassVideo({
   thumbnail,
   poster,
   title,
+  previewSeconds,
+  fullMinutes,
+  fullClassHref,
 }: {
   src: string
   thumbnail: string
   poster: string
   title: string
+  /** Stop here; null plays the whole class with no pill. */
+  previewSeconds: number | null
+  /** The full class length in minutes, for the pill. */
+  fullMinutes: number
+  /** Where "Get the full class" goes. */
+  fullClassHref: string
 }) {
   const [started, setStarted] = useState(false)
+  const [ended, setEnded] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   const hlsRef = useRef<HlsType | null>(null)
 
@@ -67,6 +85,39 @@ export default function ClassVideo({
     })
   }
 
+  /** The preview's stop: pause, hold the frame at the limit, show the end card. */
+  function stopAtLimit(video: HTMLVideoElement) {
+    if (previewSeconds === null) return
+    video.pause()
+    if (video.currentTime > previewSeconds) video.currentTime = previewSeconds
+    setEnded(true)
+  }
+
+  function onTimeUpdate(e: SyntheticEvent<HTMLVideoElement>) {
+    const video = e.currentTarget
+    if (previewSeconds !== null && video.currentTime >= previewSeconds) stopAtLimit(video)
+  }
+
+  function onSeeking(e: SyntheticEvent<HTMLVideoElement>) {
+    const video = e.currentTarget
+    if (previewSeconds !== null && video.currentTime > previewSeconds) stopAtLimit(video)
+  }
+
+  function onEnded() {
+    // The clipped stream ends at the limit by itself.
+    if (previewSeconds !== null) setEnded(true)
+  }
+
+  function onPlay(e: SyntheticEvent<HTMLVideoElement>) {
+    const video = e.currentTarget
+    // A play from the limit (the keyboard, say) does not run past it.
+    if (previewSeconds !== null && video.currentTime >= previewSeconds) {
+      stopAtLimit(video)
+      return
+    }
+    pauseOthers(e)
+  }
+
   return (
     <>
       <video
@@ -74,23 +125,38 @@ export default function ClassVideo({
         className="lb-card-video"
         data-lb-class=""
         poster={poster}
-        controls={started}
+        controls={started && !ended}
         preload="none"
         playsInline
         aria-label={title}
-        onPlay={pauseOthers}
+        onPlay={onPlay}
+        onTimeUpdate={onTimeUpdate}
+        onSeeking={onSeeking}
+        onEnded={onEnded}
       />
       {!started && (
         <button type="button" className="lb-card-play" onClick={start} aria-label={`Play ${title}`}>
-          <Image
-            src={thumbnail}
-            alt={title}
-            fill
-            loading="lazy"
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          />
+          <Image src={thumbnail} alt={title} fill loading="lazy" sizes="(max-width: 1024px) 100vw, 960px" />
           <span className="lb-card-play-mark" aria-hidden="true" />
         </button>
+      )}
+      {previewSeconds !== null && !ended && (
+        <div className="lb-preview-pill">
+          <span className="lb-preview-pill-text">{PREVIEW_WORDS.pill(fullMinutes)}</span>
+          <a href={fullClassHref} className="lb-preview-btn">
+            {PREVIEW_WORDS.button}
+            <span aria-hidden="true" className="lb-preview-chev" />
+          </a>
+        </div>
+      )}
+      {ended && (
+        <div className="lb-preview-end" role="status">
+          <p className="lb-preview-end-line">{PREVIEW_WORDS.endCard}</p>
+          <a href={fullClassHref} className="lb-preview-btn lb-preview-btn--big">
+            {PREVIEW_WORDS.button}
+            <span aria-hidden="true" className="lb-preview-chev" />
+          </a>
+        </div>
       )}
     </>
   )
