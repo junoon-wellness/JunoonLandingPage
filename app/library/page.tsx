@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Toran from '@/components/brand/Toran'
-import SectionLabel from '@/components/brand/SectionLabel'
 import Link from 'next/link'
 import SiteHeader from '@/components/site/SiteHeader'
 import PageCrest from '@/components/site/PageCrest'
@@ -8,6 +7,10 @@ import SiteFooter from '@/components/site/SiteFooter'
 import NewsletterJoin from '@/components/waitlist/NewsletterJoin'
 import Jaali from '@/components/brand/Jaali'
 import { getAllArticles } from '@/lib/library'
+import Image from 'next/image'
+import LibraryTabs from '@/components/library/LibraryTabs'
+import ClassVideo from '@/components/library/ClassVideo'
+import { getLibraryVideos, posterSrc, videoMinutes, type LibraryVideo } from '@/lib/videos'
 import { normaliseSource } from '@/lib/constants'
 import { clean } from '@/lib/text'
 
@@ -34,7 +37,7 @@ const LIBRARY_JAALI = false // rework 9 Nov: one plain ground, as on the home pa
 export const metadata: Metadata = {
   title: clean('Library - Junoon'),
   description: clean(
-    'Articles on Ayurveda, yoga and breathwork from Junoon, plus updates by email.'
+    'Articles and videos on Ayurveda, yoga and breathwork from Junoon, plus updates by email.'
   ),
 }
 
@@ -44,6 +47,7 @@ export const metadata: Metadata = {
 export default function LibraryPage() {
   const source = normaliseSource(undefined)
   const articles = getAllArticles()
+  const videos = getLibraryVideos()
 
   return (
     <div id="top">
@@ -63,32 +67,110 @@ export default function LibraryPage() {
 
       {/* Kush, 2026-08-23: toran divider between the newsletter and the articles */}
       <Toran />
-      <section className="lb-grid-section" aria-label="Articles">
-        <SectionLabel className="lb-grid-heading">Articles</SectionLabel>
-        <div className="lb-grid">
-          {articles.map(a => (
-            <Link key={a.slug} href={`/library/${a.slug}`} className="v2-link lb-card">
-              <span className="lb-card-eyebrow">{a.type}</span>
-              <span className="lb-card-title">{a.title}</span>
-              <span className="lb-card-desc">{a.description}</span>
-              <span className="lb-card-meta jn-mono">{a.minutes} min read</span>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* Arnav, Sat 21 Nov 2026: "add another tab for videos please so there will
+          be two tabs". Articles stays exactly as it was; the "Articles" label is
+          now the first tab. */}
+      <LibraryTabs
+        articles={
+          <>
+            <section className="lb-grid-section" aria-label="Articles">
+              <div className="lb-grid">
+                {articles.map(a => (
+                  <Link key={a.slug} href={`/library/${a.slug}`} className="v2-link lb-card">
+                    <span className="lb-card-eyebrow">{a.type}</span>
+                    <span className="lb-card-title">{a.title}</span>
+                    <span className="lb-card-desc">{a.description}</span>
+                    <span className="lb-card-meta jn-mono">{a.minutes} min read</span>
+                  </Link>
+                ))}
+              </div>
+            </section>
 
-      <div className="lb-app-link-row">
-        <a
-          href="https://app.junoonwellness.com/education"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="v2-link lb-app-link"
-        >
-          Read more on the app →
-        </a>
-      </div>
+            <div className="lb-app-link-row">
+              <a
+                href="https://app.junoonwellness.com/education"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="v2-link lb-app-link"
+              >
+                Read more on the app →
+              </a>
+            </div>
+          </>
+        }
+        videos={
+          <>
+            <section className="lb-grid-section" aria-label="Videos">
+              <div className="lb-grid">
+                {videos.map(v => (
+                  <VideoCard key={v.id} video={v} />
+                ))}
+              </div>
+            </section>
+
+            <div className="lb-app-link-row">
+              <a
+                href={APP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="v2-link lb-app-link"
+              >
+                Watch them all in the app →
+              </a>
+            </div>
+          </>
+        }
+      />
 
       <SiteFooter />
     </div>
+  )
+}
+
+const APP_URL = 'https://app.junoonwellness.com'
+
+/**
+ * One class on the Videos tab, in the article cards' grid and style: the
+ * thumbnail on top, then category, title, teacher and length. A row with a
+ * public file plays inline; every other row is its poster, linking to the app
+ * (the classes themselves are for members).
+ */
+function VideoCard({ video: v }: { video: LibraryVideo }) {
+  const text = (
+    <>
+      <span className="lb-card-eyebrow">{v.category}</span>
+      <span className="lb-card-title">{v.title}</span>
+      <span className="lb-card-desc">{v.instructor}</span>
+      <span className="lb-card-meta jn-mono">{videoMinutes(v.duration_seconds)} min</span>
+    </>
+  )
+  if (v.video_url) {
+    return (
+      <div className="lb-card lb-card--video">
+        <div className="lb-card-thumb">
+          <ClassVideo src={v.video_url} poster={posterSrc(v.thumbnail_url)} title={v.title} />
+        </div>
+        {text}
+      </div>
+    )
+  }
+  return (
+    <a
+      href={APP_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="v2-link lb-card lb-card--video"
+    >
+      <span className="lb-card-thumb">
+        <Image
+          src={v.thumbnail_url}
+          alt={v.title}
+          fill
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+        />
+      </span>
+      {text}
+    </a>
   )
 }

@@ -1,0 +1,41 @@
+{
+  "snapshot_at": "2026-11-22T00:56:52Z",
+  "videos": [
+    {
+      "id": "9492ee90-b390-443d-b16b-225517f19f73",
+      "title": "Guided Meditation: Awareness",
+      "category": "Meditation",
+      "instructor": "Amman Advaita",
+      "duration_seconds": 594,
+      "thumbnail_url": "https://zpgjfcgjuzgafgdujpvu.supabase.co/storage/v1/object/public/thumbnails/Guided%20Meditation%20-%20Natural%20Awareness.png",
+      "video_url": null
+    },
+    {
+      "id": "2629587b-22c9-498c-a832-ddde3c8e4a9e",
+      "title": "Yamas and Niyamas the Foundation of Yoga",
+      "category": "Education",
+      "instructor": "Amman Advaita",
+      "duration_seconds": 187,
+      "thumbnail_url": "https://zpgjfcgjuzgafgdujpvu.supabase.co/storage/v1/object/public/thumbnails/Yamas%20and%20Niyamas%20-%20The%20Foundation%20of%20Yoga.png",
+      "video_url": null
+    },
+    {
+      "id": "595b4571-16dc-4019-9936-cf9ad30f3036",
+      "title": "Anulom Vilom Pranayama",
+      "category": "Pranayama",
+      "instructor": "Divya Sahasrabuddhe",
+      "duration_seconds": 275,
+      "thumbnail_url": "https://zpgjfcgjuzgafgdujpvu.supabase.co/storage/v1/object/public/thumbnails/Anulom%20Vilom%20Pranayama.png",
+      "video_url": null
+    },
+    {
+      "id": "4964a43d-d5b8-4e5c-b24d-9d93284800a3",
+      "title": "Ashtanga Surya Namaskar",
+      "category": "Modern Yoga",
+      "instructor": "Shoam Mehta",
+      "duration_seconds": 229,
+      "thumbnail_url": "https://zpgjfcgjuzgafgdujpvu.supabase.co/storage/v1/object/public/thumbnails/Ashtanga%20Surya%20Namaskar.png",
+      "video_url": null
+    }
+  ]
+}

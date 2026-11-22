@@ -88,6 +88,24 @@ const SECURITY_HEADERS = [
 const nextConfig = {
   reactStrictMode: true,
 
+  /**
+   * /library's Videos tab shows each class's thumbnail from the app's public
+   * thumbnails folder (Arnav, Sat 21 Nov 2026: "add another tab for videos").
+   * next/image fetches it and serves it from this site's own origin, so the
+   * CSP's img-src above needs no new host. Exactly this host and folder.
+   */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "zpgjfcgjuzgafgdujpvu.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/public/thumbnails/**",
+        search: "",
+      },
+    ],
+  },
+
   // Vercel already omits this, but the setting makes it explicit and survives
   // a move to any other host.
   poweredByHeader: false,
