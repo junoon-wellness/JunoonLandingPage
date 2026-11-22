@@ -13,7 +13,7 @@
  *   plan       tabPlanStrokes()      calendar with the day dot
  *   coach      tabCoachStrokes()     speech bubble
  *   meditation (the lotus, below)     the seven-path outline lotus (redrawn 12 Nov)
- *   yoga       yogaStrokes()         seated figure
+ *   yoga       the home page's Asana glyph, a standing pose
  *   live       playCircleStrokes()   play in a ring
  *   ritual     habitStrokes()        the loop with its sweep
  *
@@ -74,14 +74,9 @@ export default function FeatureIcon({
           <path d="M12 18.4 C14.6 15.8 18.4 15.2 21.4 16.4 C18.8 19 15.1 19.8 12 18.4 Z" />
         </>
       )}
-      {name === 'yoga' && (
-        <>
-          <circle cx="12" cy="4.8" r="2.2" />
-          <path d="M12 7.4 L12 12.2" />
-          <path d="M5.6 12.2 C8.2 14 9.8 14.6 12 14.6 C14.2 14.6 15.8 14 18.4 12.2" />
-          <path d="M12 12.2 L7.6 18.8 L16.4 18.8 Z" />
-        </>
-      )}
+      {/* Arnav, Sat 21 Nov 2026: "Change the symbol on pricing to match the ASANA symbol on home":
+          the home page's Asana glyph (components/home/HeroThread.tsx), a standing pose. */}
+      {name === 'yoga' && <path d="M12 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM12 7v7M12 14l-3.5 6M12 14l3.5 6M6 10.5l6-2 6 2" />}
 
       {name === 'live' && (
         <>

@@ -23,9 +23,9 @@ const THRESHOLD = 24
 
 const NAV_LINKS = [
   { label: 'Home', href: '/' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Library', href: '/library' },
   { label: 'About', href: '/about' },
+  { label: 'Library', href: '/library' },
+  { label: 'Pricing', href: '/pricing' },
 ] as const
 
 export default function NavV2() {

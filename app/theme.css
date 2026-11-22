@@ -723,10 +723,6 @@ html[data-theme='light'] .pc-band {
   background: radial-gradient(110% 80% at 85% 0%, #f7e4bd, transparent 62%),
     linear-gradient(180deg, #ecdfcd, transparent);
 }
-html[data-theme='light'] .pc-tree {
-  filter: invert(1) sepia(1) saturate(1.4) brightness(0.75);
-  opacity: 0.04;
-}
 /* The person cards became plates: their words need the plate's inset. */
 .ab-person-card {
   overflow: hidden;

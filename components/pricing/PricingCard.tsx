@@ -86,8 +86,7 @@ export default function PricingCard() {
         </div>
 
         <p className="pr-offer-line">
-          A limited-time founding price for anyone who joins by 31 December 2026, kept for life.
-          Everyone&apos;s first month is free.
+          Join by 31 December 2026 and keep this price for life.
         </p>
 
         <ul className="pr-checklist">
