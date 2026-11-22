@@ -77,10 +77,10 @@ export default function PricingPage() {
              above the section. Above it, it had scrolled off the top by the
              time the slide finished, so "everything fits on one screen at the
              end state" could not be true by construction. */
-          <header className="pr-head">
-            {/* Arnav, Sat 21 Nov 7:31 PM: "PRICING should be the main heading we dont need that line underneath it". */}
-            <h1 className="pr-headline">Pricing</h1>
-          </header>
+          /* Arnav, Sun 22 Nov 2026: "can we just remove the pricing header from the page feels like its
+             unnecessary". The visible heading is gone; the page keeps one heading for screen readers
+             and search, hidden from view. */
+          <h1 className="pr-sr-only">Pricing</h1>
         }
         card={<PricingCard />}
         side={
