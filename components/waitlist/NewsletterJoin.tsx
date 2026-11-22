@@ -1,7 +1,7 @@
 'use client'
 
 import SignupForm from './SignupForm'
-import Reveal, { RevealGroup, RevealItem } from '@/components/motion/Reveal'
+import Reveal from '@/components/motion/Reveal'
 
 interface NewsletterJoinProps {
   source: string
@@ -25,13 +25,6 @@ interface NewsletterJoinProps {
  * — this component IS rendered on /library, so that link would point at
  * itself.
  */
-const TOPICS = [
-  'App updates and news',
-  'Wellness articles',
-  'Live class announcements',
-  'Recipes and more',
-]
-
 export default function NewsletterJoin({
   source,
   onSignupSuccess,
@@ -71,10 +64,8 @@ export default function NewsletterJoin({
               letterSpacing: '-0.008em',
             }}
           >
-            Get updates by email.{' '}
-            <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>
-              Join the newsletter.
-            </em>
+            Join the{' '}
+            <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>newsletter.</em>
           </h3>
           <p
             style={{
@@ -86,81 +77,13 @@ export default function NewsletterJoin({
               marginBottom: '18px',
             }}
           >
-            {/* Kush, 2026-08-23: his exact replacement line — verbatim. The
-                TOPICS chips below stay unchanged, his ruling the same day. */}
-            Deepen your understanding of ancient Indian wellness practices and discover how they
-            connect with modern science and everyday life.
+            {/* Arnav, Sat 21 Nov 2026 7:38 PM: "Information here needs to be cleaner/more concise".
+                One line replaces Kush's 23 Aug paragraph; the topic bullets and the No spam /
+                Unsubscribe tags are gone (the form already says "No spam. Unsubscribe anytime."). */}
+            Ancient Indian practices, the science behind them, and what&apos;s new in Junoon.
           </p>
         </Reveal>
 
-        <RevealGroup
-          stagger={0.05}
-          delayChildren={0.1}
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '8px 16px',
-            maxWidth: '380px',
-            marginBottom: '18px',
-          }}
-        >
-          {TOPICS.map(topic => (
-            <RevealItem
-              key={topic}
-              as="span"
-              y={10}
-              className="jn-mono"
-              style={{
-                display: 'flex',
-                alignItems: 'baseline',
-                gap: '8px',
-                fontSize: '11px',
-                letterSpacing: '0.08em',
-                textTransform: 'none',
-                color: 'var(--jn-text-soft)',
-                lineHeight: 1.5,
-              }}
-            >
-              <span
-                aria-hidden="true"
-                style={{
-                  width: '4px',
-                  height: '4px',
-                  borderRadius: '50%',
-                  background: 'var(--jn-sage)',
-                  flexShrink: 0,
-                }}
-              />
-              {topic}
-            </RevealItem>
-          ))}
-        </RevealGroup>
-
-        <RevealGroup
-          stagger={0.07}
-          delayChildren={0.12}
-          style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}
-        >
-          {['No spam', 'Unsubscribe anytime'].map(b => (
-            <RevealItem
-              key={b}
-              as="span"
-              y={10}
-              className="jn-mono"
-              style={{
-                fontSize: '11px',
-                letterSpacing: '0.1em',
-                padding: '5px 12px',
-                // Theme tokens (app/theme.css), so the two tags read in Light too.
-                border: '0.5px solid var(--jn-hairline-strong)',
-                borderRadius: '2px',
-                color: 'var(--jn-text-soft)',
-              }}
-            >
-              {b}
-            </RevealItem>
-          ))}
-        </RevealGroup>
       </div>
 
       <Reveal delay={0.1} style={{ position: 'relative', zIndex: 1 }}>
