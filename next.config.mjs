@@ -28,6 +28,8 @@ import { dirname } from "node:path";
  * They do nothing until NEXT_PUBLIC_META_PIXEL_ID is set, and listing them now
  * means the pixel cannot be broken by a policy nobody remembered to update.
  */
+const MUX_HOSTS = "https://stream.mux.com https://*.edgemv.mux.com https://*.fastly.mux.com";
+
 const CSP = [
   "default-src 'self'",
   "base-uri 'self'",
@@ -42,8 +44,14 @@ const CSP = [
   "img-src 'self' data: blob: https://www.facebook.com",
   // Fonts are self-hosted (subset WOFF2), so no external font host is needed.
   "font-src 'self'",
-  "media-src 'self'",
-  "connect-src 'self' https://www.facebook.com",
+  // Mux, for /library's four classes (Arnav, Sat 21 Nov 2026: "A approved go").
+  // stream.mux.com serves the first playlist; it points at region hosts on two
+  // CDNs, seen with ?redundant_streams=true: manifest-<region>.edgemv.mux.com
+  // and manifest-<region>.fastly.mux.com, with the video at chunk-<region> on
+  // the same CDN. The region varies by visitor, so the CDN is pinned, not the
+  // region. blob: is for hls.js (Media Source). No Mux analytics host.
+  `media-src 'self' blob: ${MUX_HOSTS}`,
+  `connect-src 'self' https://www.facebook.com ${MUX_HOSTS}`,
   "upgrade-insecure-requests",
 ].join("; ");
 

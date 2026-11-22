@@ -11,7 +11,7 @@ import ArticleFilter from '@/components/library/ArticleFilter'
 import Image from 'next/image'
 import LibraryTabs from '@/components/library/LibraryTabs'
 import ClassVideo from '@/components/library/ClassVideo'
-import { getLibraryVideos, posterSrc, videoMinutes, type LibraryVideo } from '@/lib/videos'
+import { getLibraryVideos, playbackSrc, posterSrc, videoMinutes, type LibraryVideo } from '@/lib/videos'
 import { normaliseSource } from '@/lib/constants'
 import { clean } from '@/lib/text'
 
@@ -145,8 +145,8 @@ const APP_URL = 'https://app.junoonwellness.com'
 /**
  * One class on the Videos tab, in the article cards' grid and style: the
  * thumbnail on top, then category, title, teacher and length. A row with a
- * public file plays inline; every other row is its poster, linking to the app
- * (the classes themselves are for members).
+ * public stream or file plays inline; any other row is its poster, linking to
+ * the app.
  */
 function VideoCard({ video: v }: { video: LibraryVideo }) {
   const text = (
@@ -157,11 +157,17 @@ function VideoCard({ video: v }: { video: LibraryVideo }) {
       <span className="lb-card-meta jn-mono">{videoMinutes(v.duration_seconds)} min</span>
     </>
   )
-  if (v.video_url) {
+  const src = playbackSrc(v)
+  if (src) {
     return (
       <div className="lb-card lb-card--video">
         <div className="lb-card-thumb">
-          <ClassVideo src={v.video_url} poster={posterSrc(v.thumbnail_url)} title={v.title} />
+          <ClassVideo
+            src={src}
+            thumbnail={v.thumbnail_url}
+            poster={posterSrc(v.thumbnail_url)}
+            title={v.title}
+          />
         </div>
         {text}
       </div>

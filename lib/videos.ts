@@ -10,11 +10,12 @@ import snapshot from '@/content/videos.json'
  * statically generated with no runtime call to Supabase. Teacher names are the
  * About page's names.
  *
- * `video_url` is null on every row today: the app's class files are not public
- * (signed Mux playback, and a storage bucket that is not public). A row plays
- * inline on the page only once it carries a PUBLIC file's URL, and that also
- * needs the CSP's media-src in next.config.mjs opened for the file's host.
- * Until then a card is the class's poster, linking to the app.
+ * The classes play on the page from Mux, through a PUBLIC playback id made for
+ * the website (Arnav, Sat 21 Nov 2026: "A approved go"). The app's database
+ * holds only the signed ids, so the public ones live in this snapshot. To stop
+ * a class playing here, delete its public playback id in Mux: the card then
+ * falls back to its poster linking to the app once the id is removed here.
+ * `video_url` stays null (the app's storage files are not public).
  */
 export interface LibraryVideo {
   id: string
@@ -24,6 +25,7 @@ export interface LibraryVideo {
   duration_seconds: number
   thumbnail_url: string
   video_url: string | null
+  mux_public_playback_id?: string | null
 }
 
 export function getLibraryVideos(): LibraryVideo[] {
@@ -43,4 +45,10 @@ export function videoMinutes(seconds: number): number {
  */
 export function posterSrc(thumbnailUrl: string): string {
   return `/_next/image?url=${encodeURIComponent(thumbnailUrl)}&w=828&q=75`
+}
+
+/** Where a card plays from: the public Mux stream, else a public file, else nothing. */
+export function playbackSrc(v: LibraryVideo): string | null {
+  if (v.mux_public_playback_id) return `https://stream.mux.com/${v.mux_public_playback_id}.m3u8`
+  return v.video_url
 }
