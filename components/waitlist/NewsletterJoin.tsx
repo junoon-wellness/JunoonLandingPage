@@ -73,7 +73,10 @@ export default function NewsletterJoin({
               fontWeight: 300,
               color: 'var(--jn-text-soft)',
               lineHeight: 1.75,
-              maxWidth: '440px',
+              // Arnav, Sat 21 Nov 2026: "I dont like how Junoon just hangs off and starts over on the second
+              // line". Wide enough for the one line on desktop; balanced wrapping so a phone never strands a word.
+              maxWidth: '560px',
+              textWrap: 'balance',
               marginBottom: '18px',
             }}
           >
