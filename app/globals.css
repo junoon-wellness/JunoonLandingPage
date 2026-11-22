@@ -2715,10 +2715,12 @@ body::before {
   padding: 24px 0;
 }
 .ab-founder-letter {
-  /* Arnav, Sun 22 Nov 2026: no photo, the letter centred. */
+  /* Arnav, Sun 22 Nov 2026: no photo; the letter's column sits in the middle of
+     the page and its text reads left aligned ("I ment left aligned but center in
+     the page for this text"). */
   grid-template-columns: minmax(0, 1fr);
   justify-items: center;
-  text-align: center;
+  text-align: left;
   gap: 56px;
   align-items: start;
   padding-top: 30px;
