@@ -44,7 +44,7 @@ export default function ArticleFilter({
             type="button"
             className="lb-chip"
             aria-pressed={c.id === current}
-            onClick={() => setHash(c.id === 'all' ? null : `articles-${c.id}`)}
+            onClick={() => setHash(c.id === 'all' ? 'articles' : `articles-${c.id}`)}
           >
             {c.label}
             <span className="lb-chip-count">{c.count}</span>

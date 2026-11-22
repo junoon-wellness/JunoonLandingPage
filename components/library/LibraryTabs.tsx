@@ -12,15 +12,17 @@ import { hashSnapshot, serverHashSnapshot, setHash, subscribeHash } from './hash
  * rendered on the server (as children props), so the page stays statically
  * generated and both lists are in the HTML; the switcher only shows one.
  *
- * The choice lives in the URL hash so a tab can be linked: /library#videos
+ * The choice lives in the URL hash so a tab can be linked: /library#articles (no hash = Videos)
  * opens on Videos. Articles is the default and carries no hash, or an article
  * filter's "#articles-<group>" (see ArticleFilter). No element on the page has
  * those ids, so the hash never makes the browser jump.
  */
 type Tab = 'articles' | 'videos'
+// Videos first and open by default (Arnav, Sat 21 Nov 2026: "Can we have the videos first and articles second to
+// the right of it so when users open library they see the videos first").
 const TABS: { id: Tab; label: string }[] = [
-  { id: 'articles', label: 'Articles' },
   { id: 'videos', label: 'Videos' },
+  { id: 'articles', label: 'Articles' },
 ]
 export default function LibraryTabs({
   articles,
@@ -30,12 +32,13 @@ export default function LibraryTabs({
   videos: ReactNode
 }) {
   const hash = useSyncExternalStore(subscribeHash, hashSnapshot, serverHashSnapshot)
-  const current: Tab = hash === '#videos' ? 'videos' : 'articles'
+  // No hash is Videos; "#articles" or any "#articles-<group>" filter is Articles.
+  const current: Tab = hash === '#articles' || hash.startsWith('#articles-') ? 'articles' : 'videos'
   const tabRefs = useRef<Record<Tab, HTMLButtonElement | null>>({ articles: null, videos: null })
 
   function select(tab: Tab) {
     if (tab === current) return // keeps an article filter when Articles is pressed again
-    setHash(tab === 'videos' ? 'videos' : null)
+    setHash(tab === 'articles' ? 'articles' : null)
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLButtonElement>) {
