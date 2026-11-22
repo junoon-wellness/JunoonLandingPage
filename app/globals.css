@@ -3665,17 +3665,11 @@ body::before {
   .pc { height: 620px; }
 }
 
-/* Section labels open with a small turmeric dot (no glow ring: round 2,
-   Kush, 9:30 call Tue 10 Nov, "don't like the glow"). */
+/* Section labels have NO dot (Arnav, Sat 21 Nov 2026: "remove all the small dots next to the headings").
+   It was a small turmeric dot (Kush, Tue 10 Nov round 2). */
 .eyebrow::before {
-  content: '';
-  display: inline-block;
-  flex: none;
-  width: 7px;
-  height: 7px;
-  margin-right: 10px;
-  border-radius: 50%;
-  background: #E8B870;
+  content: none;
+  display: none;
 }
 
 /* The section divider stays the home page's plain hairline (above). Round 2
