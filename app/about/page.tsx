@@ -26,8 +26,10 @@ import { clean } from '@/lib/text'
    these, so they can be flipped independently.
    ══════════════════════════════════════════════════════════════════ */
 
-/** Instructor headshots sit inside the jharokha arch instead of a 4:5 box. */
-const INSTRUCTOR_ARCH = true
+/** Instructor headshots sit inside the jharokha arch instead of a 4:5 box.
+ *  Off: Arnav, Sat 21 Nov 2026 ("remove the cutout shape for the backgrounds and make it normal"), so
+ *  instructors use the same plain photo box as Our team. */
+const INSTRUCTOR_ARCH = false
 
 /**
  * LV5-022 SC5 / LV5-024: the panel behind the instructor grid. Moved here
