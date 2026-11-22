@@ -280,6 +280,8 @@ export default function AboutPage() {
 
           preload="metadata" matters: without it browsers pull all 18MB on page
           load for a video most visitors never press play on. */}
+      {/* Arnav, Sun 22 Nov 2026: "can we format this so the video and and about text can be side by side". */}
+      <div className="ab-side-row">
       {FOUNDER_VIDEO_SRC && (
         <section className="ab-hero-video" aria-label="Founder video">
           <Reveal y={24} scale={0.98} duration={1} amount={0.2}>
@@ -296,6 +298,7 @@ export default function AboutPage() {
         </section>
       )}
 
+        <div className="ab-side-letter">
       {/* Kush, 2026-08-24: "put the ancient traditions banner below the
           video" — a full-width band directly under the cinematic slot. */}
       <section className="ab-tagline-band" aria-label="Ancient Indian Wisdom, Modern Solutions">
@@ -339,6 +342,8 @@ export default function AboutPage() {
           </div>
         </Reveal>
       </section>
+        </div>
+      </div>
 
       {/* Kush, 2026-08-23: toran divider between the story and the people */}
       <Toran />

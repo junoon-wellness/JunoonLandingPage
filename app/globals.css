@@ -3140,6 +3140,37 @@ body::before {
   color: var(--jn-on-clay) !important;
 }
 
+/* Arnav, Sun 22 Nov 2026: video left, letter right on wide screens; below
+   1100px the two stack as before, video first. */
+.ab-side-row { position: relative; z-index: 2; }
+@media (min-width: 1100px) {
+  .ab-side-row {
+    display: grid;
+    grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+    gap: 64px;
+    align-items: start;
+    max-width: calc(1360px + 96px);
+    margin: 0 auto;
+    padding: 28px 48px 0;
+  }
+  .ab-side-row .ab-hero-video {
+    position: sticky;
+    top: 96px;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+  .ab-side-row .ab-tagline-band { padding: 0; }
+  .ab-side-row .ab-tagline-band .ab-tagline-panel { max-width: none; text-align: left; padding: 0 0 20px; }
+  .ab-side-row .ab-founder-letter {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    justify-items: start;
+  }
+  .ab-side-row .ab-letter-copy { max-width: none; }
+}
+
 @media (max-width: 1024px) {
   .ab-band { gap: 32px; padding: 28px 32px; }
   .ab-people-section { padding: 24px 32px; }
