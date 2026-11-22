@@ -88,39 +88,6 @@ interface Person {
   objectPosition?: string
 }
 
-// LV5-026: Kush, 2026-08-23 - "Arjav's box remove from the row of 4 and
-// just have the remaining 3 of us on the about page." Arjav stays on the
-// page only as the band-03 founder card + signature above, not in this
-// row. Kush's real headshot (public/team/kush.jpg, cropped from
-// ~/Downloads/IMG_7670.jpg) is in; Arnav and Tej still render the
-// clay-light silhouette placeholder below until their files arrive.
-const TEAM: Person[] = [
-  {
-    name: 'Kush Jain',
-    role: 'Operations',
-    photo: '/team/kush.jpg',
-    objectPosition: '50% 30%',
-  },
-  {
-    name: 'Arnav Jain',
-    role: 'Engineering',
-    // Kush, 2026-08-23: ~/Downloads/DSC01837.JPG (4896x3672, EXIF-rotated to
-    // portrait) cropped head-and-shoulders at 4:5, flash red-eye reduced, and
-    // the pink wall keyed out to the same light-grey ground as Kush's photo
-    // ("make arnav's background white and consistent with mine").
-    photo: '/team/arnav-grey.jpg',
-    objectPosition: '50% 35%',
-  },
-  {
-    name: 'Tej Chhabra',
-    role: 'Technology',
-    // Kush, 2026-08-23: ~/Downloads/upscalemedia-transformed.jpeg (1600x1600
-    // studio headshot) cropped 4:5 centred on the face.
-    photo: '/team/tej.jpg',
-    objectPosition: '50% 40%',
-  },
-]
-
 // Specialty + first bio paragraph quoted verbatim from
 // junoon-wellness-app/Junoon-IOS/Junoon/Core/Fixtures.swift `Fixtures.teachers`.
 // Durva's bio is a placeholder in the fixture ("will be added soon"), so her
@@ -388,10 +355,7 @@ export default function AboutPage() {
 
       {/* Kush, 2026-08-23: toran divider between the story and the people */}
       <Toran />
-      <section className="ab-people-section" aria-label="Our team">
-        <SectionLabel align="center" className="ab-people-heading">Our team</SectionLabel>
-        <PeopleGrid people={TEAM} className="ab-team-grid" />
-      </section>
+      {/* Arnav, Sat 21 Nov 2026: "remove the our team section". The instructors follow the story directly. */}
 
       <section className="ab-people-section ab-people-panel" aria-label="Meet our instructors">
         {/* LV5-022 SC5 / LV5-024: the instructor-grid panel used to render
