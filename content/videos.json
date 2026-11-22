@@ -9,7 +9,8 @@
       "duration_seconds": 594,
       "thumbnail_url": "https://zpgjfcgjuzgafgdujpvu.supabase.co/storage/v1/object/public/thumbnails/Guided%20Meditation%20-%20Natural%20Awareness.png",
       "video_url": null,
-      "mux_public_playback_id": "RAcugJSBkQzEsu4X7eOoTbt8EaIHspDSwuj1BwTXykQ"
+      "mux_public_playback_id": "RAcugJSBkQzEsu4X7eOoTbt8EaIHspDSwuj1BwTXykQ",
+      "description": "Natural Awareness is the recognition that consciousness itself is the ground of all experience: open, effortless, already present. This meditation guides you into that recognition without forcing or manufacturing a state, drawing from the non-dual traditions woven throughout South Asian contemplative wisdom. Less doing, more being, and a taste of what's always already here."
     },
     {
       "id": "2629587b-22c9-498c-a832-ddde3c8e4a9e",
@@ -19,7 +20,8 @@
       "duration_seconds": 187,
       "thumbnail_url": "https://zpgjfcgjuzgafgdujpvu.supabase.co/storage/v1/object/public/thumbnails/Yamas%20and%20Niyamas%20-%20The%20Foundation%20of%20Yoga.png",
       "video_url": null,
-      "mux_public_playback_id": "n1siOLYHiSCjcJ01OLcoa941Acr1pLy9T00T8voAHw00RM"
+      "mux_public_playback_id": "n1siOLYHiSCjcJ01OLcoa941Acr1pLy9T00T8voAHw00RM",
+      "description": "Before the postures, before the breathwork, before any technique, there are the Yamas and Niyamas. These ten ethical and personal observances from Patanjali's Yoga Sutras form the true foundation of the yogic path, offering a framework for how to live, not just how to practice. This session introduces each one and explores how they show up, and how to apply them, in the context of modern life."
     },
     {
       "id": "595b4571-16dc-4019-9936-cf9ad30f3036",
@@ -29,7 +31,8 @@
       "duration_seconds": 275,
       "thumbnail_url": "https://zpgjfcgjuzgafgdujpvu.supabase.co/storage/v1/object/public/thumbnails/Anulom%20Vilom%20Pranayama.png",
       "video_url": null,
-      "mux_public_playback_id": "44eSAr7gNOSVsIg00gG9dbn902s1T0100giWNMxqTezhzPM"
+      "mux_public_playback_id": "44eSAr7gNOSVsIg00gG9dbn902s1T0100giWNMxqTezhzPM",
+      "description": "Anulom Vilom is an alternate-nostril breathing technique from the Hatha Yoga tradition, documented in classical texts like the Hatha Yoga Pradipika. You breathe in and out through one nostril at a time, a practice yogic philosophy describes as balancing the ida and pingala nadis (energy channels). Many people use it to slow down, settle the mind and sharpen focus."
     },
     {
       "id": "4964a43d-d5b8-4e5c-b24d-9d93284800a3",
@@ -39,7 +42,8 @@
       "duration_seconds": 229,
       "thumbnail_url": "https://zpgjfcgjuzgafgdujpvu.supabase.co/storage/v1/object/public/thumbnails/Ashtanga%20Surya%20Namaskar.png",
       "video_url": null,
-      "mux_public_playback_id": "rvtcC5ACz41rFUkD01gaoXaDY8hqIQiGURWMZWVVVjzc"
+      "mux_public_playback_id": "rvtcC5ACz41rFUkD01gaoXaDY8hqIQiGURWMZWVVVjzc",
+      "description": "The Ashtanga Sun Salutation is the dynamic, breath-led foundation of one of yoga's most rigorous classical traditions. This sequence works the whole body, builds heat, and asks for steady focus. Whether you're new to Ashtanga or deepening an existing practice, surya namaskar is a staple morning practice."
     }
   ]
 }

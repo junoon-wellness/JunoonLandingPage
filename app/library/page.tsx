@@ -11,8 +11,17 @@ import ArticleFilter from '@/components/library/ArticleFilter'
 import Image from 'next/image'
 import LibraryTabs from '@/components/library/LibraryTabs'
 import ClassVideo from '@/components/library/ClassVideo'
-import { getLibraryVideos, playbackSrc, posterSrc, videoMinutes, type LibraryVideo } from '@/lib/videos'
-import { normaliseSource } from '@/lib/constants'
+import {
+  getLibraryVideos,
+  isPreviewed,
+  playbackSrc,
+  posterSrc,
+  PREVIEW_SECONDS,
+  teacherHeadshot,
+  videoMinutes,
+  type LibraryVideo,
+} from '@/lib/videos'
+import { APP_STORE_URL, normaliseSource } from '@/lib/constants'
 import { clean } from '@/lib/text'
 
 /**
@@ -113,10 +122,12 @@ export default function LibraryPage() {
         }
         videos={
           <>
+            {/* Arnav, Sun 22 Nov 2026: Glo's class page, one class per block
+                ("I want to copy the same style and also cap our videos at 2 minutes"). */}
             <section className="lb-grid-section" aria-label="Videos">
-              <div className="lb-grid">
+              <div className="lb-classes">
                 {videos.map(v => (
-                  <VideoCard key={v.id} video={v} />
+                  <ClassBlock key={v.id} video={v} />
                 ))}
               </div>
             </section>
@@ -143,53 +154,73 @@ export default function LibraryPage() {
 const APP_URL = 'https://app.junoonwellness.com'
 
 /**
- * One class on the Videos tab, in the article cards' grid and style: the
- * thumbnail on top, then category, title, teacher and length. A row with a
- * public stream or file plays inline; any other row is its poster, linking to
- * the app.
+ * One class on the Videos tab, laid out after Glo's class page (Arnav, Sun 22
+ * Nov 2026): the player across the full width, with the 60 second preview pill
+ * on it; then the title, the teacher's round photo beside "Teacher • Category"
+ * and the length, and the class's own description. A Props or Level line shows
+ * only when the snapshot has one. A row with a public stream or file plays
+ * inline; any other row is its poster, linking to the app.
  */
-function VideoCard({ video: v }: { video: LibraryVideo }) {
-  const text = (
-    <>
-      <span className="lb-card-eyebrow">{v.category}</span>
-      <span className="lb-card-title">{v.title}</span>
-      <span className="lb-card-desc">{v.instructor}</span>
-      <span className="lb-card-meta jn-mono">{videoMinutes(v.duration_seconds)} min</span>
-    </>
-  )
+function ClassBlock({ video: v }: { video: LibraryVideo }) {
+  const minutes = videoMinutes(v.duration_seconds)
+  const photo = teacherHeadshot(v.instructor)
   const src = playbackSrc(v)
-  if (src) {
-    return (
-      <div className="lb-card lb-card--video">
-        <div className="lb-card-thumb">
+  return (
+    <article className="lb-class">
+      {src ? (
+        <div className="lb-card-thumb lb-class-player">
           <ClassVideo
             src={src}
             thumbnail={v.thumbnail_url}
             poster={posterSrc(v.thumbnail_url)}
             title={v.title}
+            previewSeconds={isPreviewed(v) ? PREVIEW_SECONDS : null}
+            fullMinutes={minutes}
+            fullClassHref={APP_STORE_URL}
           />
         </div>
-        {text}
+      ) : (
+        <a
+          href={APP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="lb-card-thumb lb-class-player"
+        >
+          <Image
+            src={v.thumbnail_url}
+            alt={v.title}
+            fill
+            loading="lazy"
+            sizes="(max-width: 1024px) 100vw, 960px"
+          />
+        </a>
+      )}
+      <h3 className="lb-class-title">{v.title}</h3>
+      <div className="lb-class-teacher">
+        {photo && (
+          <Image
+            src={photo}
+            alt=""
+            width={44}
+            height={44}
+            className="lb-class-photo"
+          />
+        )}
+        <div className="lb-class-meta">
+          <span>
+            {v.instructor} • {v.category}
+          </span>
+          <span>
+            {minutes} min{v.level ? ` • ${v.level}` : ''}
+          </span>
+        </div>
       </div>
-    )
-  }
-  return (
-    <a
-      href={APP_URL}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="v2-link lb-card lb-card--video"
-    >
-      <span className="lb-card-thumb">
-        <Image
-          src={v.thumbnail_url}
-          alt={v.title}
-          fill
-          loading="lazy"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
-      </span>
-      {text}
-    </a>
+      {v.description && <p className="lb-class-desc">{v.description}</p>}
+      {v.props && (
+        <p className="lb-class-props">
+          <strong>Props:</strong> {v.props}
+        </p>
+      )}
+    </article>
   )
 }

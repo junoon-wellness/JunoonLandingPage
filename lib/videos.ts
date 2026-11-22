@@ -16,6 +16,11 @@ import snapshot from '@/content/videos.json'
  * a class playing here, delete its public playback id in Mux: the card then
  * falls back to its poster linking to the app once the id is removed here.
  * `video_url` stays null (the app's storage files are not public).
+ *
+ * `description` is copied word for word from the app's Library row (the admin
+ * door's videos list, Sun 22 Nov 2026). The rows carry no props and no level,
+ * so neither is in the snapshot; the page shows a Props or Level line only for
+ * a class whose snapshot has one.
  */
 export interface LibraryVideo {
   id: string
@@ -26,6 +31,38 @@ export interface LibraryVideo {
   thumbnail_url: string
   video_url: string | null
   mux_public_playback_id?: string | null
+  description?: string | null
+  props?: string | null
+  level?: string | null
+}
+
+/**
+ * Every class plays as a 60 second preview (Kush, Sun 22 Nov 2026 call triage D1:
+ * "Previews of 30 to 60 seconds, then a subscribe ask"; Arnav, same day: "60
+ * seconds confirmed"). Two layers: the Mux URL asks for the first 60 s only
+ * (instant clipping, below), and the player stops at 60 s on its own as well.
+ * The full assets stay public on Mux, so this is a soft cap: a hard one needs
+ * separate 60 second clip assets.
+ */
+export const PREVIEW_SECONDS = 60
+
+/** True when a class runs longer than the preview, so it is cut and shows the pill. */
+export function isPreviewed(v: LibraryVideo): boolean {
+  return v.duration_seconds > PREVIEW_SECONDS
+}
+
+/**
+ * The teacher's round headshot under public/instructors/, matched by first
+ * name ("Amman Advaita" -> amman). A teacher with no headshot gets none.
+ */
+const HEADSHOTS: Record<string, string> = {
+  amman: '/instructors/amman-head-v2.jpg',
+  divya: '/instructors/divya-head.jpg',
+  durva: '/instructors/durva-head-v2.jpg',
+  shoam: '/instructors/shoam-head.jpg',
+}
+export function teacherHeadshot(instructor: string): string | null {
+  return HEADSHOTS[instructor.trim().split(/\s+/)[0]?.toLowerCase() ?? ''] ?? null
 }
 
 export function getLibraryVideos(): LibraryVideo[] {
@@ -47,8 +84,17 @@ export function posterSrc(thumbnailUrl: string): string {
   return `/_next/image?url=${encodeURIComponent(thumbnailUrl)}&w=828&q=75`
 }
 
-/** Where a card plays from: the public Mux stream, else a public file, else nothing. */
+/**
+ * Where a class plays from: the public Mux stream, else a public file, else
+ * nothing. A class longer than the preview asks Mux for its first PREVIEW_SECONDS only,
+ * with Mux's instant clipping params for on-demand assets (asset_start_time /
+ * asset_end_time, mux.com/docs/guides/create-instant-clips). Checked 22 Nov
+ * 2026 on all four classes: the clipped playlist's segments add up to the cap.
+ */
 export function playbackSrc(v: LibraryVideo): string | null {
-  if (v.mux_public_playback_id) return `https://stream.mux.com/${v.mux_public_playback_id}.m3u8`
+  if (v.mux_public_playback_id) {
+    const base = `https://stream.mux.com/${v.mux_public_playback_id}.m3u8`
+    return isPreviewed(v) ? `${base}?asset_start_time=0&asset_end_time=${PREVIEW_SECONDS}` : base
+  }
   return v.video_url
 }
