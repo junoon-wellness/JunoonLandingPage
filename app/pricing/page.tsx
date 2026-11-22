@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import SectionLabel from '@/components/brand/SectionLabel'
 import SiteHeader from '@/components/site/SiteHeader'
 import PageCrest from '@/components/site/PageCrest'
 import SiteFooter from '@/components/site/SiteFooter'
@@ -7,7 +6,6 @@ import PricingCard from '@/components/pricing/PricingCard'
 import PricingStage from '@/components/pricing/PricingStage'
 import Jaali from '@/components/brand/Jaali'
 import { clean } from '@/lib/text'
-import { LAUNCHING_SOON } from '@/lib/constants'
 
 /**
  * LV5-024: the lattice panel that lights the page ground behind the pricing
@@ -51,30 +49,17 @@ export const metadata: Metadata = {
   ),
 }
 
-const NEXT_CHIPS = [
-  'Personalized recipes and meal plans',
-  'More live classes',
-  'Monthly progress insights',
-  'Read articles inside the app',
-  'Android',
-]
-
-const FAQ = [
-  {
-    q: 'What does the free month include?',
-    a: 'Everything in the app. The weekly plan, the AI coach, live classes, guided meditation and breathwork, from day one. There is no separate free tier.',
-  },
-  {
-    q: 'What happens after the free month?',
-    a: 'Your membership is $8.99 a month. If you join by 31 December 2026, you pay $4.99 a month instead, and that price is yours for life.',
-  },
-  {
-    q: 'Can I cancel?',
-    // THE LAUNCHING-SOON SWITCH (lib/constants.ts): off = the original answer.
-    a: LAUNCHING_SOON
-      ? 'Yes, any time. Once the app launches, you cancel right in the App Store.'
-      : 'Yes, any time, right in the App Store.',
-  },
+/* Arnav, Sat 21 Nov 2026 7:30 PM: "we are just restating the same information. Instead we can focus
+   more on what we're building next". Each item gets one line (DRAFT words for Arjav; the list was
+   locked under LV5-010, so Kush and Arjav okay this before it merges). "Read articles inside the app"
+   left the list: the app already has Learn and the reader. "Talk in Hindi and Hinglish" is the 1.1.1
+   item Arnav asked for (JV4-756). */
+const NEXT_ITEMS = [
+  { title: 'Personalized recipes and meal plans', line: 'Meals that fit your plan and your body.' },
+  { title: 'More live classes', line: 'Practise live with our teachers, more often.' },
+  { title: 'Monthly progress insights', line: 'See how your practice is changing you, month by month.' },
+  { title: 'Talk in Hindi and Hinglish', line: 'Your Acharya understands Hindi, Hinglish and Sanskrit pose names.' },
+  { title: 'Android', line: 'Junoon on every phone.' },
 ]
 
 export default function PricingPage() {
@@ -100,43 +85,18 @@ export default function PricingPage() {
         card={<PricingCard />}
         side={
           <>
-            {/* LV5-032 (Kush: "much more obvious that the first month is free
-                ... especially when the user scrolls and gets the other info"):
-                the first thing the sliding-in column says. No card/auto-renew
-                wording, no future price (LV4-016 rulings). */}
-            <section className="pr-side-block pr-free-callout" aria-label="Free month">
+            <section className="pr-side-block pr-next" aria-label="What's coming next">
               <h2 className="pr-free-callout-title">
-                Start with a{' '}
-                <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>free month.</em>
+                What&apos;s coming <em style={{ fontStyle: 'italic', color: 'var(--jn-turmeric)' }}>next.</em>
               </h2>
-              <p className="pr-free-callout-body">
-                Everyone&apos;s first month is free. If you join by 31 December 2026, you then pay
-                $4.99 a month instead of $8.99, for life.
-              </p>
-            </section>
-
-            <section className="pr-side-block" aria-label="What we're building next">
-              <div className="pr-next-heading">
-                <SectionLabel>What we&apos;re building next</SectionLabel>
-              </div>
-              <ul className="pr-chips" style={{ listStyle: 'none', padding: 0 }}>
-                {NEXT_CHIPS.map(c => (
-                  <li key={c} className="pr-chip">
-                    {c}
+              <ul className="pr-next-list" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {NEXT_ITEMS.map(item => (
+                  <li key={item.title} className="pr-next-item">
+                    <span className="pr-next-title">{item.title}</span>
+                    <span className="pr-next-line">{item.line}</span>
                   </li>
                 ))}
               </ul>
-            </section>
-
-            <section className="pr-side-block" aria-label="Frequently asked questions">
-              <div className="pr-faq">
-                {FAQ.map(item => (
-                  <details key={item.q} className="pr-faq-item">
-                    <summary>{item.q}</summary>
-                    <p className="pr-faq-answer">{item.a}</p>
-                  </details>
-                ))}
-              </div>
             </section>
           </>
         }
