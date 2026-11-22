@@ -3264,6 +3264,154 @@ body::before {
   text-decoration: none;
 }
 
+/* ── Articles and Videos tabs ──
+   Arnav, Sat 21 Nov 2026: "add another tab for videos please so there will be
+   two tabs". The tabs sit where the "Articles" label was, in the same small
+   DM Sans capitals; the active one is turmeric and underlined. The bar takes
+   the section's top padding, so the grid below starts where it always did. */
+.lb-tabs-bar {
+  position: relative;
+  z-index: 2;
+  padding: 36px 48px 0;
+}
+.lb-tabs {
+  display: flex;
+  gap: 28px;
+  margin-bottom: 22px;
+}
+.lb-tab {
+  appearance: none;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 0 0 6px;
+  font-family: var(--font-sans), 'DM Sans', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--s-ink3);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.lb-tab:hover { color: var(--jn-turmeric); }
+.lb-tab[aria-selected='true'] {
+  color: var(--jn-turmeric);
+  border-bottom-color: var(--jn-turmeric);
+}
+.lb-tab:focus-visible {
+  outline: 2px solid var(--jn-turmeric);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+.lb-tabpanel > .lb-grid-section { padding-top: 0; }
+
+/* the Articles filter chips (Arnav, Sat 21 Nov 2026: "a filter to organize
+   the articles by"): small round pills with the home page's thin gold ring;
+   the chosen one is filled turmeric. Every card stays in the HTML; CSS hides
+   the other groups'. */
+.lb-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.lb-chip {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 13px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--jn-turmeric) 32%, transparent);
+  font-family: var(--font-sans), 'DM Sans', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--s-ink3);
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+.lb-chip:hover {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--jn-turmeric) 60%, transparent);
+  color: var(--jn-turmeric);
+}
+.lb-chip[aria-pressed='true'] {
+  background: var(--jn-turmeric);
+  box-shadow: inset 0 0 0 1px var(--jn-turmeric);
+  color: #2C2118;
+}
+.lb-chip:focus-visible {
+  outline: 2px solid var(--jn-turmeric);
+  outline-offset: 2px;
+}
+.lb-chip-count {
+  font-size: 11px;
+  opacity: 0.75;
+}
+.lb-filterable[data-filter='ayurveda'] .lb-card:not([data-group='ayurveda']),
+.lb-filterable[data-filter='yoga'] .lb-card:not([data-group='yoga']),
+.lb-filterable[data-filter='junoon'] .lb-card:not([data-group='junoon']) {
+  display: none;
+}
+
+/* a class card: the thumbnail (or the playing class) on top, 16:9 */
+.lb-card-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.lb-card-thumb img { object-fit: cover; }
+.lb-card-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+/* the thumbnail and its play button, laid over the video until it is pressed */
+.lb-card-play {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.lb-card-play:focus-visible {
+  outline: 2px solid var(--jn-turmeric);
+  outline-offset: -2px;
+}
+.lb-card-play-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 52px;
+  height: 52px;
+  margin: -26px 0 0 -26px;
+  border-radius: 50%;
+  background: rgba(18, 13, 10, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(232, 184, 112, 0.6);
+  transition: background-color 0.2s ease;
+}
+.lb-card-play-mark::after {
+  content: '';
+  position: absolute;
+  left: 21px;
+  top: 16px;
+  border-style: solid;
+  border-width: 10px 0 10px 16px;
+  border-color: transparent transparent transparent var(--jn-turmeric);
+}
+.lb-card-play:hover .lb-card-play-mark { background: rgba(18, 13, 10, 0.75); }
+
 /* ── /library/[slug] reader ── */
 .lb-reader-hero {
   position: relative;
@@ -3361,11 +3509,13 @@ body::before {
 
 @media (max-width: 1024px) {
   .lb-grid-section { padding: 32px 32px 20px; }
+  .lb-tabs-bar { padding: 32px 32px 0; }
   .lb-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
   .lb-grid-section { padding: 28px 24px 16px; }
+  .lb-tabs-bar { padding: 28px 24px 0; }
   .lb-grid { grid-template-columns: 1fr; }
   .lb-app-link-row { padding: 20px 24px 40px; }
   .lb-reader-hero { padding: 76px 20px 20px; }
