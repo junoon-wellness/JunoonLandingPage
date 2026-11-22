@@ -1270,6 +1270,36 @@ html[data-theme='light'] .jh .k-limbbox-i b {
   position: relative;
   margin-top: 10px;
 }
+/* The row's two edges blur out instead of cutting off hard (Arnav, Sun 22 Nov 2026: "on the side
+   where the screen disappears out, can we make it look like a blur in those areas instead of it
+   just going into black"). A strip on each side blurs what passes under it, strongest at the edge
+   and fading to nothing inward. Purely visual: no pointer events, so swiping still works. */
+.jh .sr::before,
+.jh .sr::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 72px;
+  z-index: 2;
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.jh .sr::before {
+  left: 0;
+  -webkit-mask-image: linear-gradient(to right, #000, transparent);
+  mask-image: linear-gradient(to right, #000, transparent);
+}
+.jh .sr::after {
+  right: 0;
+  -webkit-mask-image: linear-gradient(to left, #000, transparent);
+  mask-image: linear-gradient(to left, #000, transparent);
+}
+@media (max-width: 640px) {
+  .jh .sr::before,
+  .jh .sr::after { width: 32px; }
+}
 .jh .sr-track {
   display: flex;
   gap: 20px;
