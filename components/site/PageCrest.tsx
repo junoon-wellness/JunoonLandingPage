@@ -17,9 +17,9 @@
  * body (the same containing block the jaali panels used).
  */
 export default function PageCrest() {
-  return (
-    <div className="pc" aria-hidden="true">
-      <div className="pc-band" />
-    </div>
-  )
+  // The bark to soil band is gone too: every page sits on the home page's black
+  // (Arnav, Sun 22 Nov 2026: "The backgrounds on the other tabs are completely
+  // dark/black like Home screen?"). Nothing is drawn now; the `.pc-*` styles stay
+  // unused so the band can come back by restoring this one line.
+  return null
 }
