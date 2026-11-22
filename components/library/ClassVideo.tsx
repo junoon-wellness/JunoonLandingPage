@@ -142,7 +142,10 @@ export default function ClassVideo({
       )}
       {previewSeconds !== null && !ended && (
         <div className="lb-preview-pill">
-          <span className="lb-preview-pill-text">{PREVIEW_WORDS.pill(fullMinutes)}</span>
+          <span className="lb-preview-pill-text">
+            <span className="lb-preview-pill-line">{PREVIEW_WORDS.pillLead}</span>{' '}
+            <span className="lb-preview-pill-line">{PREVIEW_WORDS.pillRest(fullMinutes)}</span>
+          </span>
           <a href={fullClassHref} className="lb-preview-btn">
             {PREVIEW_WORDS.button}
             <span aria-hidden="true" className="lb-preview-chev" />
