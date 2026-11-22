@@ -3307,6 +3307,58 @@ body::before {
 }
 .lb-tabpanel > .lb-grid-section { padding-top: 0; }
 
+/* the Articles filter chips (Arnav, Sat 21 Nov 2026: "a filter to organize
+   the articles by"): small round pills with the home page's thin gold ring;
+   the chosen one is filled turmeric. Every card stays in the HTML; CSS hides
+   the other groups'. */
+.lb-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.lb-chip {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 13px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--jn-turmeric) 32%, transparent);
+  font-family: var(--font-sans), 'DM Sans', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--s-ink3);
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+.lb-chip:hover {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--jn-turmeric) 60%, transparent);
+  color: var(--jn-turmeric);
+}
+.lb-chip[aria-pressed='true'] {
+  background: var(--jn-turmeric);
+  box-shadow: inset 0 0 0 1px var(--jn-turmeric);
+  color: #2C2118;
+}
+.lb-chip:focus-visible {
+  outline: 2px solid var(--jn-turmeric);
+  outline-offset: 2px;
+}
+.lb-chip-count {
+  font-size: 11px;
+  opacity: 0.75;
+}
+.lb-filterable[data-filter='ayurveda'] .lb-card:not([data-group='ayurveda']),
+.lb-filterable[data-filter='yoga'] .lb-card:not([data-group='yoga']),
+.lb-filterable[data-filter='junoon'] .lb-card:not([data-group='junoon']) {
+  display: none;
+}
+
 /* a class card: the thumbnail (or the playing class) on top, 16:9 */
 .lb-card-thumb {
   position: relative;

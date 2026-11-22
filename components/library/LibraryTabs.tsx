@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useSyncExternalStore, type KeyboardEvent, type ReactNode } from 'react'
+import { hashSnapshot, serverHashSnapshot, setHash, subscribeHash } from './hashStore'
 
 /**
  * /library's two tabs, Articles and Videos.
@@ -12,28 +13,15 @@ import { useRef, useSyncExternalStore, type KeyboardEvent, type ReactNode } from
  * generated and both lists are in the HTML; the switcher only shows one.
  *
  * The choice lives in the URL hash so a tab can be linked: /library#videos
- * opens on Videos. Articles is the default and carries no hash. No element on
- * the page has id="videos", so the hash never makes the browser jump.
+ * opens on Videos. Articles is the default and carries no hash, or an article
+ * filter's "#articles-<group>" (see ArticleFilter). No element on the page has
+ * those ids, so the hash never makes the browser jump.
  */
 type Tab = 'articles' | 'videos'
 const TABS: { id: Tab; label: string }[] = [
   { id: 'articles', label: 'Articles' },
   { id: 'videos', label: 'Videos' },
 ]
-const TAB_EVENT = 'lb-tab-change'
-
-function subscribe(onChange: () => void) {
-  window.addEventListener('hashchange', onChange)
-  window.addEventListener(TAB_EVENT, onChange)
-  return () => {
-    window.removeEventListener('hashchange', onChange)
-    window.removeEventListener(TAB_EVENT, onChange)
-  }
-}
-const hashSnapshot = () => window.location.hash
-// The server (and the first client render) always shows Articles.
-const serverSnapshot = () => ''
-
 export default function LibraryTabs({
   articles,
   videos,
@@ -41,15 +29,13 @@ export default function LibraryTabs({
   articles: ReactNode
   videos: ReactNode
 }) {
-  const hash = useSyncExternalStore(subscribe, hashSnapshot, serverSnapshot)
+  const hash = useSyncExternalStore(subscribeHash, hashSnapshot, serverHashSnapshot)
   const current: Tab = hash === '#videos' ? 'videos' : 'articles'
   const tabRefs = useRef<Record<Tab, HTMLButtonElement | null>>({ articles: null, videos: null })
 
   function select(tab: Tab) {
-    const { pathname, search } = window.location
-    // replaceState, not location.hash: no scroll jump and no extra history entry.
-    window.history.replaceState(null, '', tab === 'videos' ? '#videos' : pathname + search)
-    window.dispatchEvent(new Event(TAB_EVENT))
+    if (tab === current) return // keeps an article filter when Articles is pressed again
+    setHash(tab === 'videos' ? 'videos' : null)
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLButtonElement>) {

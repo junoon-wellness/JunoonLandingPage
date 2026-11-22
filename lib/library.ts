@@ -38,3 +38,22 @@ export function getAllArticles(): LibraryArticle[] {
 export function getArticleBySlug(slug: string): LibraryArticle | undefined {
   return getAllArticles().find(a => a.slug === slug)
 }
+
+/**
+ * The Articles tab's filter groups, from each article's existing tags.
+ * Arnav, Sat 21 Nov 2026: "make the articles a little more organized too by
+ * having a filter to organize the articles by".
+ * An article whose tags fit no group still shows under All.
+ */
+export type ArticleGroup = 'ayurveda' | 'yoga' | 'junoon'
+
+export const ARTICLE_GROUPS: { id: ArticleGroup; label: string; tags: string[] }[] = [
+  { id: 'ayurveda', label: 'Ayurveda', tags: ['charaka', 'ayurveda'] },
+  { id: 'yoga', label: 'Yoga', tags: ['patanjali', 'krishnamacharya', 'hatha yoga pradipika'] },
+  { id: 'junoon', label: 'From Junoon', tags: ['junoon'] },
+]
+
+export function articleGroup(a: LibraryArticle): ArticleGroup | null {
+  const tags = a.tags.map(t => t.toLowerCase())
+  return ARTICLE_GROUPS.find(g => g.tags.some(t => tags.includes(t)))?.id ?? null
+}

@@ -6,7 +6,8 @@ import PageCrest from '@/components/site/PageCrest'
 import SiteFooter from '@/components/site/SiteFooter'
 import NewsletterJoin from '@/components/waitlist/NewsletterJoin'
 import Jaali from '@/components/brand/Jaali'
-import { getAllArticles } from '@/lib/library'
+import { ARTICLE_GROUPS, articleGroup, getAllArticles } from '@/lib/library'
+import ArticleFilter from '@/components/library/ArticleFilter'
 import Image from 'next/image'
 import LibraryTabs from '@/components/library/LibraryTabs'
 import ClassVideo from '@/components/library/ClassVideo'
@@ -48,6 +49,11 @@ export default function LibraryPage() {
   const source = normaliseSource(undefined)
   const articles = getAllArticles()
   const videos = getLibraryVideos()
+  const chips = ARTICLE_GROUPS.map(g => ({
+    id: g.id,
+    label: g.label,
+    count: articles.filter(a => articleGroup(a) === g.id).length,
+  }))
 
   return (
     <div id="top">
@@ -74,16 +80,23 @@ export default function LibraryPage() {
         articles={
           <>
             <section className="lb-grid-section" aria-label="Articles">
-              <div className="lb-grid">
-                {articles.map(a => (
-                  <Link key={a.slug} href={`/library/${a.slug}`} className="v2-link lb-card">
-                    <span className="lb-card-eyebrow">{a.type}</span>
-                    <span className="lb-card-title">{a.title}</span>
-                    <span className="lb-card-desc">{a.description}</span>
-                    <span className="lb-card-meta jn-mono">{a.minutes} min read</span>
-                  </Link>
-                ))}
-              </div>
+              <ArticleFilter chips={chips} total={articles.length}>
+                <div className="lb-grid">
+                  {articles.map(a => (
+                    <Link
+                      key={a.slug}
+                      href={`/library/${a.slug}`}
+                      className="v2-link lb-card"
+                      data-group={articleGroup(a) ?? undefined}
+                    >
+                      <span className="lb-card-eyebrow">{a.type}</span>
+                      <span className="lb-card-title">{a.title}</span>
+                      <span className="lb-card-desc">{a.description}</span>
+                      <span className="lb-card-meta jn-mono">{a.minutes} min read</span>
+                    </Link>
+                  ))}
+                </div>
+              </ArticleFilter>
             </section>
 
             <div className="lb-app-link-row">
