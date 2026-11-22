@@ -3742,7 +3742,9 @@ body::before {
      soil #4A3728). The home page keeps its near-black (the rule below).
      Contrast on bark, measured: ivory 13.8:1, body text at 64% 6.5:1,
      --jn-mute 6.8:1, turmeric 8.6:1, section labels #D98A62 5.8:1. */
-  --jn-bg: #2C2118;
+  /* Arnav, Sun 22 Nov 2026: "I like the black background color on this screen. Lets keep that color
+     consistent with the other pages". Every page now sits on the home page's near-black. */
+  --jn-bg: #120D0A;
   --jn-surface: #3A2A1F;
   --jn-surface-deep: #4A3728;
   /* Was #93826F: 4.23:1 on bark, under AA. */
@@ -3760,10 +3762,6 @@ html:has(.jh-home) {
 /* The shared top bar and footer take the brown on the other pages. */
 html:not(:has(.jh-home)) .jh.jh-bar {
   background: transparent;
-}
-html:not(:has(.jh-home)) .jh.jh-foot,
-html:not(:has(.jh-home)) .jh.jh-foot .k-footer {
-  background: #231A13;
 }
 body::before {
   display: none;
