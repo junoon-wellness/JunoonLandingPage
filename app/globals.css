@@ -2707,6 +2707,12 @@ body::before {
   max-width: 1120px;
   margin: 0 auto;
   text-align: center;
+  /* Arnav, Sat 21 Nov 2026: "remove the orange background highlight from heading": the line stands on the page,
+     with no panel colour, outline or clay bar. */
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 24px 0;
 }
 .ab-founder-letter {
   grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
