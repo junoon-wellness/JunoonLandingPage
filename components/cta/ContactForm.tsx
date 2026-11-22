@@ -40,10 +40,11 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
+      // Light type on the dark page (Arnav, Sun 22 Nov 2026: "can barely see the Message Sent text").
       <div className="rounded-md border border-sage/40 bg-sage/10 px-6 py-5">
-        <p className="font-serif text-2xl font-light text-bark">Message sent.</p>
-        <p className="mt-2 font-sans text-sm text-soil">
-          We&apos;ll get back to you at <span className="font-medium">{email}</span> as soon as possible.
+        <p className="font-serif text-2xl font-light text-[color:var(--jn-text)]">Message sent.</p>
+        <p className="mt-2 font-sans text-sm text-[color:var(--jn-text-soft)]">
+          We&apos;ll get back to you at <span className="font-medium text-[color:var(--jn-text)]">{email}</span> as soon as possible.
         </p>
       </div>
     );
