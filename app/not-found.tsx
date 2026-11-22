@@ -70,7 +70,7 @@ export default function NotFound() {
             margin: 0,
           }}
         >
-          The address you followed doesn&apos;t match anything here — try one of these instead.
+          The address you followed doesn&apos;t match anything here. Try one of these instead.
         </p>
 
         <div

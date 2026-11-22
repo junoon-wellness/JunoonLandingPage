@@ -66,14 +66,11 @@ export const metadata: Metadata = {
 const STORY_PARAGRAPHS = [
   'Before starting Junoon, we noticed a growing trend around us: people were feeling more stressed, facing more health issues, and becoming increasingly disconnected from their body and mind.',
   'We knew something needed to change.',
-  "That's when we decided to look back to where it all began. Thousands of years ago, ancient India developed a holistic system designed to support human well-being in a deep, lasting way. Today, these time-tested practices remain our most effective tools for modern-day problems—when applied correctly.",
+  "That's when we decided to look back to where it all began. Thousands of years ago, ancient India developed a holistic system designed to support human well-being in a deep, lasting way. Today, these time-tested practices remain our most effective tools for modern-day problems, when applied correctly.",
   'We created Junoon because we believe deeply in this approach. Junoon is a space and a community dedicated to helping you return to your roots. We draw directly from ancient texts on yoga, meditation, and breathwork, personalizing these timeless practices to fit your daily life.',
   "Our team built this platform with Junoon (passion), purpose, and intention. Having you here means everything to us. Let's do this together.",
 ] as const
 
-/* LV5-022 SC3: the /about sub-line. Kush may edit this wording. */
-const SUBLINE =
-  'Yoga, breathwork and meditation, rooted in ancient India, built for modern life.'
 
 const TAGLINE = 'Ancient Indian Wisdom, Modern Solutions.'
 const SIGNATURE = 'Arjav, Founder and CEO'
@@ -298,7 +295,6 @@ export default function AboutPage() {
         <h1 className="ab-headline">
           Reclaiming <em>Ancient Indian practices</em> for the <em>Modern Life</em>.
         </h1>
-        <p className="ab-subline">{SUBLINE}</p>
       </header>
 
       {/* Kush, 2026-08-23: "make the text span across the screen more like a
