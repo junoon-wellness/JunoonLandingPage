@@ -1270,35 +1270,53 @@ html[data-theme='light'] .jh .k-limbbox-i b {
   position: relative;
   margin-top: 10px;
 }
-/* The row's two edges blur out instead of cutting off hard (Arnav, Sun 22 Nov 2026: "on the side
-   where the screen disappears out, can we make it look like a blur in those areas instead of it
-   just going into black"). A strip on each side blurs what passes under it, strongest at the edge
-   and fading to nothing inward. Purely visual: no pointer events, so swiping still works. */
+/* The row runs to the edges of the screen, and the side margins blur what slides into them (Arnav,
+   Sun 22 Nov 2026: "on the side where the screen disappears out, can we make it look like a blur in
+   those areas instead of it just going into black", then "i meant blurring out this black edge").
+   --sr-gutter is the page margin outside .swrap (min(1200px, 100% - 48px); 100% - 32px on phones).
+   The row bleeds out by that much, its first card still lines up with the page's left edge, and a
+   strip the width of each margin blurs what passes under it, fading out toward the content.
+   No pointer events, so swiping and the arrows still work. */
+.jh #inside {
+  --sr-gutter: max(24px, calc((100vw - 1200px) / 2));
+  overflow-x: clip;
+}
+.jh #inside .sr {
+  margin-left: calc(-1 * var(--sr-gutter));
+  margin-right: calc(-1 * var(--sr-gutter));
+}
+.jh #inside .sr-track {
+  padding-left: var(--sr-gutter);
+  padding-right: var(--sr-gutter);
+  scroll-padding-left: var(--sr-gutter);
+}
+.jh #inside .sr-nav {
+  right: var(--sr-gutter);
+}
 .jh .sr::before,
 .jh .sr::after {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 72px;
+  width: calc(var(--sr-gutter, 24px) + 24px);
   z-index: 2;
   pointer-events: none;
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 .jh .sr::before {
   left: 0;
-  -webkit-mask-image: linear-gradient(to right, #000, transparent);
-  mask-image: linear-gradient(to right, #000, transparent);
+  -webkit-mask-image: linear-gradient(to right, #000 60%, transparent);
+  mask-image: linear-gradient(to right, #000 60%, transparent);
 }
 .jh .sr::after {
   right: 0;
-  -webkit-mask-image: linear-gradient(to left, #000, transparent);
-  mask-image: linear-gradient(to left, #000, transparent);
+  -webkit-mask-image: linear-gradient(to left, #000 60%, transparent);
+  mask-image: linear-gradient(to left, #000 60%, transparent);
 }
-@media (max-width: 640px) {
-  .jh .sr::before,
-  .jh .sr::after { width: 32px; }
+@media (max-width: 760px) {
+  .jh #inside { --sr-gutter: 16px; }
 }
 .jh .sr-track {
   display: flex;
