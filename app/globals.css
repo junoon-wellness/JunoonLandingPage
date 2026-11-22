@@ -2590,7 +2590,8 @@ body::before {
      is capped so the line length stays readable at 1440+.
      Kush, 2026-08-24: "center both the main and sub text at the top". */
   text-align: center;
-  padding: 84px 48px 8px;
+  /* Arnav, Sun 22 Nov 2026: "the space between the tabs and header is too much" (was 84px on top). */
+  padding: 24px 48px 8px;
   max-width: none;
 }
 .ab-eyebrow { margin-bottom: 10px; }
@@ -3174,14 +3175,14 @@ body::before {
 @media (max-width: 1024px) {
   .ab-band { gap: 32px; padding: 28px 32px; }
   .ab-people-section { padding: 24px 32px; }
-  .ab-hero { padding: 80px 32px 8px; }
+  .ab-hero { padding: 24px 32px 8px; }
   .ab-contact-section { padding: 32px 32px 48px; }
   .ab-tagline-band { padding: 22px 32px 0; }
   .ab-founder-card.ab-founder-card-lg { --ab-person-w: 300px; }
 }
 
 @media (max-width: 768px) {
-  .ab-hero { padding: 76px 24px 8px; }
+  .ab-hero { padding: 20px 24px 8px; }
   .ab-hero-video { padding: 16px 24px 0; }
   .ab-video-slot.ab-video-cinema { aspect-ratio: 4 / 3; }
   .ab-band {
