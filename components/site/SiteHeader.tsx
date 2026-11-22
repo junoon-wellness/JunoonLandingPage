@@ -20,9 +20,9 @@ import ScrollState from '@/components/site/ScrollState'
  */
 const LINKS = [
   { label: 'Home', href: '/' },
-  { label: 'Pricing', href: '/pricing' },
   { label: 'About', href: '/about' },
   { label: 'Library', href: '/library' },
+  { label: 'Pricing', href: '/pricing' },
 ] as const
 
 export default function SiteHeader({ current }: { current?: '/' | '/pricing' | '/about' | '/library' }) {

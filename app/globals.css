@@ -3639,17 +3639,8 @@ body::before {
   -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
   mask-image: linear-gradient(to bottom, #000 45%, transparent 100%);
 }
-.pc-tree {
-  position: absolute;
-  right: -70px;
-  top: 64px;
-  width: 540px;
-  height: auto;
-  opacity: 0.06;
-}
 @media (max-width: 760px) {
   .pc { height: 620px; }
-  .pc-tree { width: 300px; right: -90px; top: 70px; opacity: 0.05; }
 }
 
 /* Section labels open with a small turmeric dot (no glow ring: round 2,

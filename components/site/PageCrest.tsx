@@ -6,8 +6,9 @@
  * One quiet layer behind the top of the page, in the Design System's own
  * terms (DesignKit DESIGN-GUIDE, "Surface hierarchy": the Deep surface is the
  * bark to soil gradient, for "hero moments"): a bark to soil band that fades
- * into the page, and the white banyan from the logo, large and faint, at the
- * right. Round 2 (Kush, 9:30 call Tue 10 Nov, "don't like the glow") took out
+ * into the page. The white banyan that sat large and faint at the right was
+ * removed (Arnav, Sat 21 Nov 7:19 PM: "remove the banyan tree from the price,
+ * about, library page in the background"). Round 2 (Kush, 9:30 call Tue 10 Nov, "don't like the glow") took out
  * the turmeric halo that sat behind the top.
  * Nothing else: no jaali, no grain, no garland. Styles: `.pc-*` in
  * app/globals.css.
@@ -19,8 +20,6 @@ export default function PageCrest() {
   return (
     <div className="pc" aria-hidden="true">
       <div className="pc-band" />
-      {/* eslint-disable-next-line @next/next/no-img-element -- a decorative CSS-sized layer; next/image adds nothing here */}
-      <img className="pc-tree" src="/brand/junoon-tree-white-560.webp" alt="" width={560} height={560} />
     </div>
   )
 }
