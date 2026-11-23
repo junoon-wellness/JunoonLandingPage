@@ -191,7 +191,7 @@ export const LIMBS = {
 /* ── Section 5: your J Score ─────────────────────────────────────────────── */
 
 export const JSCORE = {
-  heading: 'Your Samadhi Score',
+  heading: 'Samadhi Score',
   // Arnav, 17 Nov: the second line starts on its own line, with the term in bold white.
   // समाधि is Samadhi in Devanagari (sa, ma, aa, dha, i).
   body: "Your Score reflects how consistently you're incorporating the first seven limbs of yoga into your practice, guiding you toward the eighth:",
