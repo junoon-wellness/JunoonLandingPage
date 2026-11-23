@@ -89,7 +89,7 @@ export default function LibraryPage() {
                       className="v2-link lb-card"
                       data-group={articleGroup(a) ?? undefined}
                     >
-                      <span className="lb-card-eyebrow">{a.type}</span>
+                      {/* Arnav, Sun 22 Nov 2026: "remove the blue \"ARTICLE\" and \"GUIDE\" labels on the articles". */}
                       <span className="lb-card-title">{a.title}</span>
                       <span className="lb-card-desc">{a.description}</span>
                       <span className="lb-card-meta jn-mono">{a.minutes} min read</span>
