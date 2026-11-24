@@ -34,6 +34,13 @@ export interface LibraryVideo {
   description?: string | null
   props?: string | null
   level?: string | null
+  /**
+   * The one class that plays in full for visitors, with no preview cap, no pill
+   * and no 1:00 end card (Arnav, HQ Tue 24 Nov 2026 6:01 PM: "Can we add that full
+   * class which we plan to add on the look around, also here in the landing page
+   * and make it the first video"; Arjav's pick, JV5-009). Absent on every other class.
+   */
+  full?: boolean
 }
 
 /**
@@ -46,9 +53,12 @@ export interface LibraryVideo {
  */
 export const PREVIEW_SECONDS = 60
 
-/** True when a class runs longer than the preview, so it is cut and shows the pill. */
+/**
+ * True when a class runs longer than the preview, so it is cut and shows the pill.
+ * A `full` class is never cut: both layers (the Mux clip and the player's stop) key off this.
+ */
 export function isPreviewed(v: LibraryVideo): boolean {
-  return v.duration_seconds > PREVIEW_SECONDS
+  return !v.full && v.duration_seconds > PREVIEW_SECONDS
 }
 
 /**

@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useEffect, useRef, useState, type SyntheticEvent } from 'react'
 import type HlsType from 'hls.js'
 import { PREVIEW_WORDS } from '@/lib/preview-copy'
+import { NAV_CTA } from '@/lib/landing-copy'
 
 /**
  * A class that plays on /library's Videos tab (Arnav, Sat 21 Nov 2026: "A
@@ -19,6 +20,11 @@ import { PREVIEW_WORDS } from '@/lib/preview-copy'
  * that second, a seek past it is pulled back, and an end card offers the full
  * class. The stream itself is already cut to that length by Mux (see
  * playbackSrc in lib/videos.ts); this is the second layer.
+ *
+ * The one class free in full (JV5-009, `full` in content/videos.json) has no
+ * previewSeconds, so none of the above: no pill, no stop. With `endCardAtEnd`
+ * it shows the end card's sign-up button only at its real end, worded as the
+ * nav's own button (NAV_CTA), since "Get the full class" no longer fits there.
  */
 function pauseOthers(e: SyntheticEvent<HTMLVideoElement>) {
   const me = e.currentTarget
@@ -33,6 +39,7 @@ export default function ClassVideo({
   poster,
   title,
   previewSeconds,
+  endCardAtEnd = false,
   fullMinutes,
   fullClassHref,
 }: {
@@ -42,6 +49,8 @@ export default function ClassVideo({
   title: string
   /** Stop here; null plays the whole class with no pill. */
   previewSeconds: number | null
+  /** A whole class (no preview): show the sign-up end card when it really ends. */
+  endCardAtEnd?: boolean
   /** The full class length in minutes, for the pill. */
   fullMinutes: number
   /** Where "Get the full class" goes. */
@@ -104,8 +113,8 @@ export default function ClassVideo({
   }
 
   function onEnded() {
-    // The clipped stream ends at the limit by itself.
-    if (previewSeconds !== null) setEnded(true)
+    // The clipped stream ends at the limit by itself; a full class ends at its real end.
+    if (previewSeconds !== null || endCardAtEnd) setEnded(true)
   }
 
   function onPlay(e: SyntheticEvent<HTMLVideoElement>) {
@@ -152,7 +161,15 @@ export default function ClassVideo({
           </a>
         </div>
       )}
-      {ended && (
+      {ended && endCardAtEnd && previewSeconds === null && (
+        <div className="lb-preview-end" role="status">
+          <a href={fullClassHref} className="lb-preview-btn lb-preview-btn--big">
+            {NAV_CTA}
+            <span aria-hidden="true" className="lb-preview-chev" />
+          </a>
+        </div>
+      )}
+      {ended && previewSeconds !== null && (
         <div className="lb-preview-end" role="status">
           <p className="lb-preview-end-line">{PREVIEW_WORDS.endCard}</p>
           <a href={fullClassHref} className="lb-preview-btn lb-preview-btn--big">

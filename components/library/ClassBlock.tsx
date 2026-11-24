@@ -35,6 +35,7 @@ export default function ClassBlock({ video: v }: { video: LibraryVideo }) {
             poster={posterSrc(v.thumbnail_url)}
             title={v.title}
             previewSeconds={isPreviewed(v) ? PREVIEW_SECONDS : null}
+            endCardAtEnd={v.full === true}
             fullMinutes={minutes}
             fullClassHref={APP_STORE_URL}
           />
