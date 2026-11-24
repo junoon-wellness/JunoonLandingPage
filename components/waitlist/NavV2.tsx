@@ -23,8 +23,8 @@ const THRESHOLD = 24
 
 const NAV_LINKS = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
   { label: 'Library', href: '/library' },
+  { label: 'About', href: '/about' },
   { label: 'Pricing', href: '/pricing' },
 ] as const
 
