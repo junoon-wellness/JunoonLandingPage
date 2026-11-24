@@ -2,6 +2,18 @@
   "snapshot_at": "2026-11-22T00:56:52Z",
   "videos": [
     {
+      "id": "d755a8df-1189-421b-90d5-25d965b3cd11",
+      "title": "Atma Vichara · Self and Other",
+      "category": "Meditation",
+      "instructor": "Amman Advaita",
+      "duration_seconds": 637,
+      "thumbnail_url": "https://zpgjfcgjuzgafgdujpvu.supabase.co/storage/v1/object/public/thumbnails/Guided%20Meditation%2C%20Self%20and%20Other.png",
+      "video_url": null,
+      "mux_public_playback_id": "5PcLD1chPkVp006bQJQgC027WOO6T5iWX33aMK9UdJ7Mg",
+      "description": "This meditation explores one of the deepest questions in contemplative practice: where does \"I\" end and \"other\" begin? Drawing from yogic and Vedantic inquiry traditions, this guided session invites you to examine the boundary between self and world with curiosity rather than assumption. A practice that has the potential to quietly shift how you move through every relationship in your life.",
+      "full": true
+    },
+    {
       "id": "9492ee90-b390-443d-b16b-225517f19f73",
       "title": "Guided Meditation: Awareness",
       "category": "Meditation",
