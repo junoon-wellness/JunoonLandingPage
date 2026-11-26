@@ -14,6 +14,18 @@
       "full": true
     },
     {
+      "id": "4964a43d-d5b8-4e5c-b24d-9d93284800a3",
+      "title": "Ashtanga Surya Namaskar",
+      "category": "Modern Yoga",
+      "instructor": "Shoam Mehta",
+      "duration_seconds": 229,
+      "thumbnail_url": "https://zpgjfcgjuzgafgdujpvu.supabase.co/storage/v1/object/public/thumbnails/Ashtanga%20Surya%20Namaskar.png",
+      "video_url": null,
+      "mux_public_playback_id": "rvtcC5ACz41rFUkD01gaoXaDY8hqIQiGURWMZWVVVjzc",
+      "description": "The Ashtanga Sun Salutation is the dynamic, breath-led foundation of one of yoga's most rigorous classical traditions. This sequence works the whole body, builds heat, and asks for steady focus. Whether you're new to Ashtanga or deepening an existing practice, surya namaskar is a staple morning practice.",
+      "full": true
+    },
+    {
       "id": "595b4571-16dc-4019-9936-cf9ad30f3036",
       "title": "Anulom Vilom Pranayama",
       "category": "Pranayama",
@@ -23,17 +35,6 @@
       "video_url": null,
       "mux_public_playback_id": "44eSAr7gNOSVsIg00gG9dbn902s1T0100giWNMxqTezhzPM",
       "description": "Anulom Vilom is an alternate-nostril breathing technique from the Hatha Yoga tradition, documented in classical texts like the Hatha Yoga Pradipika. You breathe in and out through one nostril at a time, a practice yogic philosophy describes as balancing the ida and pingala nadis (energy channels). Many people use it to slow down, settle the mind and sharpen focus."
-    },
-    {
-      "id": "4964a43d-d5b8-4e5c-b24d-9d93284800a3",
-      "title": "Ashtanga Surya Namaskar",
-      "category": "Modern Yoga",
-      "instructor": "Shoam Mehta",
-      "duration_seconds": 229,
-      "thumbnail_url": "https://zpgjfcgjuzgafgdujpvu.supabase.co/storage/v1/object/public/thumbnails/Ashtanga%20Surya%20Namaskar.png",
-      "video_url": null,
-      "mux_public_playback_id": "rvtcC5ACz41rFUkD01gaoXaDY8hqIQiGURWMZWVVVjzc",
-      "description": "The Ashtanga Sun Salutation is the dynamic, breath-led foundation of one of yoga's most rigorous classical traditions. This sequence works the whole body, builds heat, and asks for steady focus. Whether you're new to Ashtanga or deepening an existing practice, surya namaskar is a staple morning practice."
     },
     {
       "id": "9492ee90-b390-443d-b16b-225517f19f73",

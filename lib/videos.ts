@@ -35,10 +35,12 @@ export interface LibraryVideo {
   props?: string | null
   level?: string | null
   /**
-   * The one class that plays in full for visitors, with no preview cap, no pill
-   * and no 1:00 end card (Arnav, HQ Tue 24 Nov 2026 6:01 PM: "Can we add that full
-   * class which we plan to add on the look around, also here in the landing page
-   * and make it the first video"; Arjav's pick, JV5-009). Absent on every other class.
+   * A class that plays in full for visitors, with no preview cap, no pill
+   * and no 1:00 end card. Two today: Atma Vichara (Arnav, HQ Tue 24 Nov 2026 6:01 PM:
+   * "Can we add that full class which we plan to add on the look around, also here in
+   * the landing page and make it the first video"; Arjav's pick, JV5-009) and Ashtanga
+   * Surya Namaskar (Arnav, HQ Thu 26 Nov 2026 2:39 PM: "On the landing page lets also
+   * make Surya Namaskar whole class available"). Absent on every other class.
    */
   full?: boolean
 }
